@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="123虚拟机：ubuntu14045登录账号：llx密码：ubuntu   什么是Shell 现在人们使用的操作系统（Windows、Android、iOS等）都带有图形界面，简单直观，容易上手。然而早期的计算机并没有图形界面，人们只能使用烦琐的命令来控制计算机。其实，真正能够控制计算机硬件（CPU、内存、显示器）的只有操作系统内核（Kernel），图形界面和命令行都是架设在用户和内核之间的桥梁，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Shell初始,编辑器使用">
+<meta property="og:url" content="http://example.com/2023/04/18/1.Shell%E5%88%9D%E8%AF%86%EF%BC%8C%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name">
+<meta property="og:description" content="123虚拟机：ubuntu14045登录账号：llx密码：ubuntu   什么是Shell 现在人们使用的操作系统（Windows、Android、iOS等）都带有图形界面，简单直观，容易上手。然而早期的计算机并没有图形界面，人们只能使用烦琐的命令来控制计算机。其实，真正能够控制计算机硬件（CPU、内存、显示器）的只有操作系统内核（Kernel），图形界面和命令行都是架设在用户和内核之间的桥梁，">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/2023/04/18/1.Shell%E5%88%9D%E8%AF%86%EF%BC%8C%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8/Untitled.png">
+<meta property="og:image" content="http://example.com/2023/04/18/1.Shell%E5%88%9D%E8%AF%86%EF%BC%8C%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8/Untitled%201.png">
+<meta property="og:image" content="http://example.com/2023/04/18/1.Shell%E5%88%9D%E8%AF%86%EF%BC%8C%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8/Untitled%202.png">
+<meta property="og:image" content="http://example.com/2023/04/18/1.Shell%E5%88%9D%E8%AF%86%EF%BC%8C%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8/Untitled%203.png">
+<meta property="article:published_time" content="2023-04-18T03:31:23.000Z">
+<meta property="article:modified_time" content="2023-04-18T15:20:32.063Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2023/04/18/1.Shell%E5%88%9D%E8%AF%86%EF%BC%8C%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8/Untitled.png">
+
+
+<link rel="canonical" href="http://example.com/2023/04/18/1.Shell%E5%88%9D%E8%AF%86%EF%BC%8C%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-Hans","comments":true,"permalink":"http://example.com/2023/04/18/1.Shell%E5%88%9D%E8%AF%86%EF%BC%8C%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8/","path":"2023/04/18/1.Shell初识，编辑器使用/","title":"Shell初始,编辑器使用"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Shell初始,编辑器使用 | </title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title"></p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name"></p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/18/1.Shell%E5%88%9D%E8%AF%86%EF%BC%8C%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Shell初始,编辑器使用 | null">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Shell初始,编辑器使用
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2023-04-18 11:31:23 / Modified: 23:20:32" itemprop="dateCreated datePublished" datetime="2023-04-18T11:31:23+08:00">2023-04-18</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">虚拟机：ubuntu14045</span><br><span class="line">登录账号：llx</span><br><span class="line">密码：ubuntu</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>什么是Shell 现在人们使用的操作系统（Windows、Android、iOS等）都带有图形界面，简单直观，容易上手。然而早期的计算机并没有图形界面，人们只能使用烦琐的命令来控制计算机。其实，真正能够控制计算机硬件（CPU、内存、显示器）的只有操作系统内核（Kernel），图形界面和命令行都是架设在用户和内核之间的桥梁，是为了方便用户控制计算机而存在的。由于安全等原因，用户不能直接接触内核，因此需要在用户和内核之间增加“命令解释器”，既能简化用户的操作，又能保障内核的安全。在Linux下的命令解释器叫作“Shell”，它能让用户更加高效、安全、低成本地使用Linux内核。 <img src="Untitled.png" alt="Untitled"></li>
+<li>Shell的各种版本：<ol>
+<li>Bourne shell（sh）是Unix系统中最古老的shell，也是现在大多数shell的基础。它的命令行语法较为简单，缺乏一些高级特性，但是在大多数Unix系统中都内置了这个shell，因此可以保证可移植性。尽管Bourne shell已经被多种先进的shell所取代，但它作为shell编程的鼻祖，仍然具有重要的历史和学习价值。</li>
+<li>Bourne Again Shell （bash）是Linux操作系统所使用的Shell，它是Bourne Shell的扩展，简称bash。bash与Bourne Shell完全向下兼容，也就是说bash可以兼容相同版本的Bourne Shell。bash在Bourne Shell的基础上增加、增强了很多特性，所以它比Bourne Shell能力更强。</li>
+<li>zsh（Z shell）是Bourne shell（sh）的一个增强版本。与bash相比，zsh具有更好的命令补全功能、更好的主题和插件支持、更好的脚本语言、更好的历史命令管理和更好的可定制性。它还有许多其他功能，如自动提示，文件名扩展，别名扩展等。zsh是一种功能强大、易于使用和高度可定制的Shell，适用于任何需要使用命令行的用户。</li>
+<li>练习：查看Shell版本、更换默认Shell</li>
+</ol>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">##查看当前Shell版本</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$SHELL</span></span><br><span class="line"></span><br><span class="line"><span class="comment">##查看系统当前可用Shell</span></span><br><span class="line"><span class="built_in">cat</span> /etc/shells</span><br><span class="line"></span><br><span class="line"><span class="comment">##更换默认Shell</span></span><br><span class="line">chsh -s /bin/zsh</span><br><span class="line"></span><br><span class="line"><span class="comment">##退出当前登录状态重新登录</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>Shell的启动方式和提示符<ol>
+<li>终端上启动 Shell会以交互模式启动，提示符会显示在屏幕上，等待用户输入命令。 用户输入命令后，Shell会解释和执行这些命令，并将执行结果输出到终端上。 在终端启动模式下，Shell会自动设置一些环境变量，如PATH等，以便用户可以方便地执行命令。</li>
+<li>脚本启动 脚本启动是将Shell命令写入一个脚本文件中，然后通过执行这个脚本文件来启动Shell。它的基本过程如下： （1）创建一个包含Shell命令的脚本文件（通常以.sh作为扩展名）。 （2）将脚本文件保存到磁盘上，并赋予执行权限。 （3）在终端中输入脚本文件的路径，并按下回车键。 （4）Shell会读取脚本文件中的命令，并依次执行这些命令。 脚本启动模式适用于需要重复执行的一系列命令，可以将这些命令写入脚本文件中，并通过脚本文件来执行这些命令。此外，脚本启动模式还支持各种Shell的内置命令和选项。</li>
+<li>练习修改系统提示符: <code>vim ~/.bashrc</code> 中的PS1变量 <img src="Untitled%201.png" alt="Untitled"></li>
+</ol>
+</li>
+<li>Linux的文件系统结构<ul>
+<li>Linux和Windows文件目录的比较</li>
+<li>Linux各目录的作用</li>
+<li>遍历目录</li>
+</ul>
+</li>
+<li>文件目录相关命令<ol>
+<li>文件权限 <img src="Untitled%202.png" alt="Untitled"></li>
+<li><strong>Linux基本文件和目录命令使用综合练习题</strong><ol>
+<li>新建一个名为<code>test</code>的目录，进入该目录并新建一个名为<code>file.txt</code>的文件。</li>
+<li>将<code>file.txt</code>复制到<code>test</code>目录下，并将其重命名为<code>file2.txt</code>。</li>
+<li>在当前目录下，新建一个名为<code>newdir</code>的目录。</li>
+<li>将<code>file2.txt</code>移动到<code>newdir</code>目录下。</li>
+<li>在当前目录下，使用<code>touch</code>命令创建一个名为<code>empty.txt</code>的空文件。</li>
+<li>在<code>newdir</code>目录下，使用<code>find</code>命令查找以<code>.txt</code>结尾的文件，并将结果输出到名为<code>result.txt</code>的文件中。</li>
+<li>在<code>newdir</code>目录下，使用<code>chmod</code>命令将<code>file2.txt</code>的权限设置为只读。</li>
+<li>在当前目录下，使用<code>mkdir</code>命令递归创建一个名为<code>parent/child/grandchild</code>的目录树。 答案： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#1</span></span><br><span class="line"><span class="built_in">mkdir</span> <span class="built_in">test</span></span><br><span class="line"><span class="built_in">cd</span> <span class="built_in">test</span></span><br><span class="line"><span class="built_in">touch</span> file.txt</span><br><span class="line"></span><br><span class="line"><span class="comment">#2</span></span><br><span class="line"><span class="built_in">cp</span> file.txt file2.txt</span><br><span class="line"></span><br><span class="line"><span class="comment">#3</span></span><br><span class="line"><span class="built_in">mkdir</span> newdir</span><br><span class="line"></span><br><span class="line"><span class="comment">#4</span></span><br><span class="line"><span class="built_in">mv</span> file2.txt newdir/</span><br><span class="line"></span><br><span class="line"><span class="comment">#5</span></span><br><span class="line"><span class="built_in">touch</span> empty.txt</span><br><span class="line"></span><br><span class="line"><span class="comment">#6</span></span><br><span class="line"><span class="built_in">cd</span> newdir</span><br><span class="line">find . -name <span class="string">&quot;*.txt&quot;</span> -<span class="built_in">type</span> f &gt; result.txt</span><br><span class="line"></span><br><span class="line"><span class="comment">#7</span></span><br><span class="line"><span class="built_in">chmod</span> 444 file2.txt</span><br><span class="line"></span><br><span class="line"><span class="comment">#8</span></span><br><span class="line"><span class="built_in">mkdir</span> -p parent/child/grandchild</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>VIM使用<ol>
+<li>学习平台： <a target="_blank" rel="noopener" href="https://yianwillis.github.io/vimcdoc/doc/intro.html#intro.txt">VIM官方文档</a> <a target="_blank" rel="noopener" href="https://command-lab.com/cat-vim-ch-s/">VIM基础练习平台</a> <a target="_blank" rel="noopener" href="https://github.com/MeiTianT/vim-galore-zh_cn#%E6%8C%89%E9%94%AE%E6%98%A0%E5%B0%84">VIM进阶</a> <a target="_blank" rel="noopener" href="https://www.vimgolf.com/">vimgolf：国外VIM进阶练习</a></li>
+<li>vim常用命令</li>
+</ol>
+ <img src="Untitled%203.png" alt="Untitled"></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/04/18/2.%E6%9E%84%E5%BB%BA%E5%9F%BA%E6%9C%AC%E8%84%9A%E6%9C%AC/" rel="prev" title="构建基本脚本">
+                  <i class="fa fa-chevron-left"></i> 构建基本脚本
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder"></span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

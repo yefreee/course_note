@@ -1,0 +1,186 @@
+{
+  "main": {
+    "id": "ac306d527f26aab4",
+    "type": "split",
+    "children": [
+      {
+        "id": "a2635a04fff264e8",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "0d2d5e492fb53090",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "1.Shell初识，编辑器使用.md",
+                "mode": "preview",
+                "source": false
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "fc8b7164dbfa31a8",
+    "type": "split",
+    "children": [
+      {
+        "id": "8caff76444e38abd",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "dbe5dd597bf946fb",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "bbc8bff9525c9e98",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "33b4fdccfd68ed29",
+            "type": "leaf",
+            "state": {
+              "type": "starred",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 281.5
+  },
+  "right": {
+    "id": "1581c968d899d0b6",
+    "type": "split",
+    "children": [
+      {
+        "id": "c80b263072b4a12d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "f6481fec696ecc8d",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "1.Shell初识，编辑器使用.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "a2c3fecd0ac3966e",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "1.Shell初识，编辑器使用.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "29254888b4361c04",
+            "type": "leaf",
+            "state": {
+              "type": "advanced-tables-toolbar",
+              "state": {}
+            }
+          },
+          {
+            "id": "942f7856bb7b7eb9",
+            "type": "leaf",
+            "state": {
+              "type": "quiet-outline",
+              "state": {}
+            }
+          },
+          {
+            "id": "b08ede826b2a2ea6",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          }
+        ],
+        "currentTab": 3
+      }
+    ],
+    "direction": "horizontal",
+    "width": 301.5
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false,
+      "table-editor-obsidian:Advanced Tables Toolbar": false
+    }
+  },
+  "active": "dbe5dd597bf946fb",
+  "lastOpenFiles": [
+    "2.构建基本脚本.md",
+    "1.Shell初识，编辑器使用.md",
+    "3.Shell条件测试.md",
+    "5.处理用户输入.md",
+    "Read_Note/System/深入理解Linux内核.md",
+    "Read_Note/System/深入理解计算机系统.md",
+    "Read_Note/PL/Python编程：从入门到实践.md",
+    "Learnning/GM/Shell/Common_Tools.md",
+    "Pasted image 20230419183426.png.md",
+    "Pasted image 20230419183426.png",
+    "Learnning/L_Todo.md",
+    "Learnning/GM/Others.md",
+    "Learnning/GM/WSL2/WSL2开发环境.md",
+    "Learnning/GM/Shell/Vim.md",
+    "Learnning/PL/Markdown.md",
+    "Learnning/GM/Git.md",
+    "Learnning/GM/docker_.md",
+    "Learnning/GM/Shell/Shell_Script基本语法.md",
+    "新建文本文档.txt",
+    "Learnning/OS/BootLoader/UEFI.md",
+    "Learnning/GM/Network_Protocol_.md",
+    "Read_Note/System/Clipper/程序的本质之二ELF文件的文件头、section header和program header.md",
+    "Learnning/GM/Regular Expression.md",
+    "Learnning/GM/Notion.md",
+    "Learnning/GM/assembly/函数调用过程中寄存器和栈帧的变化.md",
+    "_resources/WebClipper.png",
+    "_resources/SubNotebooks.png"
+  ]
+}

@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="正则表达式定义：由一系列特定字符组成的字符串，用来匹配目标文本中符合指定条件的字符或者字符串。 在编写处理字符串的程序或网页时，经常会有查找符合某些复杂规则的字符串的需要。正则表达式就是用于描述这些规则的工具。换句话说，正则表达式就是记录文本规则的代码。  如果你想查找某个目录下的所有的Word文档的话，你会搜索*.doc。在这里，*会被解释成任意的字符串。和通配符类似，正则表达式也是用来进行文本">
+<meta property="og:type" content="article">
+<meta property="og:title" content="正则表达式">
+<meta property="og:url" content="http://example.com/2023/04/18/8.%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/index.html">
+<meta property="og:site_name">
+<meta property="og:description" content="正则表达式定义：由一系列特定字符组成的字符串，用来匹配目标文本中符合指定条件的字符或者字符串。 在编写处理字符串的程序或网页时，经常会有查找符合某些复杂规则的字符串的需要。正则表达式就是用于描述这些规则的工具。换句话说，正则表达式就是记录文本规则的代码。  如果你想查找某个目录下的所有的Word文档的话，你会搜索*.doc。在这里，*会被解释成任意的字符串。和通配符类似，正则表达式也是用来进行文本">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/2023/04/18/8.%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/Untitled%2041.png">
+<meta property="article:published_time" content="2023-04-18T03:31:23.000Z">
+<meta property="article:modified_time" content="2023-04-18T15:18:38.734Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2023/04/18/8.%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/Untitled%2041.png">
+
+
+<link rel="canonical" href="http://example.com/2023/04/18/8.%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-Hans","comments":true,"permalink":"http://example.com/2023/04/18/8.%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/","path":"2023/04/18/8.正则表达式/","title":"正则表达式"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>正则表达式 | </title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title"></p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A5%E9%97%A8"><span class="nav-number">1.</span> <span class="nav-text">入门</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%83%E5%AD%97%E7%AC%A6"><span class="nav-number">2.</span> <span class="nav-text">元字符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E8%BD%AC%E4%B9%89"><span class="nav-number">3.</span> <span class="nav-text">字符转义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E7%B1%BB"><span class="nav-number">4.</span> <span class="nav-text">字符类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E7%BB%84"><span class="nav-number">5.</span> <span class="nav-text">分组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8D%E4%B9%89"><span class="nav-number">6.</span> <span class="nav-text">反义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B4%AA%E5%A9%AA%E4%B8%8E%E6%87%92%E6%83%B0"><span class="nav-number">7.</span> <span class="nav-text">贪婪与懒惰</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#grep%E5%91%BD%E4%BB%A4"><span class="nav-number">8.</span> <span class="nav-text">grep命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#grep%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95"><span class="nav-number">8.1.</span> <span class="nav-text">grep基本用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#grep%E7%BB%93%E5%90%88%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%94%A8%E6%B3%95"><span class="nav-number">8.2.</span> <span class="nav-text">grep结合正则表达式用法</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name"></p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/18/8.%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="正则表达式 | null">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          正则表达式
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2023-04-18 11:31:23 / Modified: 23:18:38" itemprop="dateCreated datePublished" datetime="2023-04-18T11:31:23+08:00">2023-04-18</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>正则表达式定义：由一系列特定字符组成的字符串，用来匹配目标文本中符合指定条件的字符或者字符串。</p>
+<p>在编写处理字符串的程序或网页时，经常会有查找符合某些复杂规则的字符串的需要。<strong>正则表达式</strong><br>就是用于描述这些规则的工具。换句话说，正则表达式就是记录文本规则的代码。</p>
+<p><img src="Untitled%2041.png" alt="Untitled"></p>
+<p>如果你想查找某个目录下的所有的Word文档的话，你会搜索<code>*.doc</code>。在这里，<code>*</code>会被解释成任意的字符串。和通配符类似，正则表达式也是用来进行文本匹配的工具，只不过比起通配符，它能更精确地描述你的需求——当然，代价就是更复杂——比如你可以编写一个正则表达式，用来查找所有以0开头，后面跟着2-3个数字，然后是一个连字号“-”，最后是7或8位数字的字符串(像<em>010-12345678</em>或<em>0376-7654321</em>)。</p>
+<h2 id="入门"><a href="#入门" class="headerlink" title="入门"></a>入门</h2><p>正则表达式练习平台：<a target="_blank" rel="noopener" href="https://tool.oschina.net/regex/">https://tool.oschina.net/regex/</a></p>
+<p>最简单的正则表达式举例： <code>hi</code> ，它可以精确匹配这样的字符串：由两个字符组成，前一个字符是<code>h</code>,后一个是<code>i</code>。通常，处理正则表达式的工具会提供一个忽略大小写的选项，如果选中了这个选项，它可以匹配*<code>hi*,*HI*,*Hi*,*hI*</code>这四种情况中的任意一种。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@sh:~$ <span class="built_in">echo</span> <span class="string">&quot;hi,Hi&quot;</span> |grep -i <span class="string">&quot;hi&quot;</span></span><br><span class="line">hi,Hi</span><br><span class="line">ubuntu@sh:~$</span><br><span class="line">ubuntu@sh:~$ <span class="built_in">echo</span> <span class="string">&quot;hi,Hi,HI,hI&quot;</span> |grep -i <span class="string">&quot;hi&quot;</span></span><br><span class="line">hi,Hi,HI,hI</span><br></pre></td></tr></table></figure>
+
+<h2 id="元字符"><a href="#元字符" class="headerlink" title="元字符"></a>元字符</h2><p>当目标文本中包含很多字符，比如*<code>him*,*history*,*high*</code>等等。用hi来查找的话，这里边的*<code>hi</code>*也会被找出来。如果要精确地查找hi这个单词的话，我们应该使用<code>\bhi\b</code>。\b是正则表达式规定的一个特殊代码（<strong>元字符，metacharacter</strong>），代表着单词的开头或结尾，也就是单词的分界处。</p>
+<p>假如要找的是<code>hi</code>后面不远处跟着一个<code>Lucy</code>，应该用<code>\bhi\b.*\bLucy\b</code>。</p>
+<p>这里，<code>.</code>是另一个元字符，匹配除了换行符以外的任意字符。<em>同样是元字符，不过它代表的不是字符，也不是位置，而是数量——它指定</em>前边的内容可以连续重复使用任意次以使整个表达式得到匹配。因此，<code>.</code>*连在一起就意味着任意数量的不包含换行的字符。现在<code>\bhi\b.**\bLucy\b</code>的意思就很明显：先是一个单词<code>hi</code>,然后是任意个任意字符(但不能是换行)，最后是<code>Lucy</code>这个单词。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@sh:~$ <span class="built_in">echo</span> <span class="string">&quot;hi,Hi,HI,hI,Lucy&quot;</span> |grep -o <span class="string">&quot;\bhi\b.*\bLucy\b&quot;</span></span><br><span class="line">hi,Hi,HI,hI,Lucy</span><br></pre></td></tr></table></figure>
+
+<p><code>0\d\d-\d\d\d\d\d\d\d\d</code>匹配这样的字符串：以0开头，然后是两个数字，然后是一个连字号“-”，最后是8个数字(也就是中国的电话号码)。这里的<code>\d</code>是个新的元字符，匹配一位数字(0，或1，或2，或……)。-不是元字符，只匹配它本身——连字符。</p>
+<p>也可以这样写这个表达式：<code>0\d&#123;2&#125;-\d&#123;8&#125;</code>。这里<code>\d</code>后面的<code>&#123;2&#125;(&#123;8&#125;)</code>的意思是前面<code>\d</code>必须连续重复匹配<code>2次(8次)</code>。</p>
+<p>练习1：匹配国际格式的电话号码<code>+086-185-553-24528</code> </p>
+<p>练习2：匹配国内电话号码<code>0511-4405222、021-87888822</code></p>
+<ul>
+<li>常用的元字符</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>代码</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>.</td>
+<td>匹配除换行符以外的任意字符</td>
+</tr>
+<tr>
+<td>\w</td>
+<td>匹配字母或数字或下划线或汉字</td>
+</tr>
+<tr>
+<td>\s</td>
+<td>匹配任意的空白符</td>
+</tr>
+<tr>
+<td>\d</td>
+<td>匹配数字</td>
+</tr>
+<tr>
+<td>\b</td>
+<td>匹配单词的开始或结束</td>
+</tr>
+<tr>
+<td>^</td>
+<td>匹配字符串的开始</td>
+</tr>
+<tr>
+<td>$</td>
+<td>匹配字符串的结束</td>
+</tr>
+</tbody></table>
+<p>元字符<code>^</code>（和数字6在同一个键位上的符号）和<code>$</code>都匹配一个位置，这和<code>\b</code>有点类似。^匹配你要用来查找的字符串的开头，$匹配结尾。这两个代码在验证输入的内容时非常有用，比如一个网站如果要求你填写的QQ号必须为5位到12位数字时，可以使用：<code>^\d&#123;5,12&#125;$</code>。</p>
+<ul>
+<li>常用的限定符</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>代码/语法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>*</td>
+<td>重复零次或更多次</td>
+</tr>
+<tr>
+<td>+</td>
+<td>重复一次或更多次</td>
+</tr>
+<tr>
+<td>?</td>
+<td>重复零次或一次</td>
+</tr>
+<tr>
+<td>{n}</td>
+<td>重复n次</td>
+</tr>
+<tr>
+<td>{n,}</td>
+<td>重复n次或更多次</td>
+</tr>
+<tr>
+<td>{n,m}</td>
+<td>重复n到m次</td>
+</tr>
+</tbody></table>
+<ol>
+<li><code>\ba\w*\b</code>匹配以字母<code>a</code>开头的单词——先是某个单词开始处<code>(\b)</code>，然后是字母<code>a</code>,然后是任意数量的字母或数字<code>(\w*)</code>，最后是单词结束处<code>(\b)</code>。</li>
+<li><code>\d+</code>匹配1个或更多连续的数字。这里的<code>+</code>是和<em>类似的元字符，不同的是</em>匹配重复任意次(可能是0次)，而<code>+</code>则匹配重复1次或更多次。</li>
+<li><code>\b\w&#123;6&#125;\b</code> 匹配刚好6个字符的单词。</li>
+</ol>
+<h2 id="字符转义"><a href="#字符转义" class="headerlink" title="字符转义"></a>字符转义</h2><p>如果想查找元字符本身的话，比如查找<code>.</code>,或者<code>*</code>,就出现了问题：你没办法指定它们，因为它们会被解释成别的意思。这时就得使用<code>\</code>来取消这些字符的特殊意义。因此，应该使用<code>\.</code>和<code>\*</code>。当然，要查找<code>\</code>本身，也得用<code>\\</code>.</p>
+<p>例如：<code>deerchao\.cn</code>匹配<code>deerchao.cn</code>，<code>C:\\Windows</code>匹配<code>C:\Windows</code>。</p>
+<h2 id="字符类"><a href="#字符类" class="headerlink" title="字符类"></a>字符类</h2><p>要想查找数字，字母或数字，空白是很简单的，因为已经有了对应这些字符集合的元字符，但是如果想匹配没有预定义元字符的字符集合，需要在方括号中列出他们：<code>[aeiou]</code>就匹配任何一个英文元音字母，<code>[.?!]</code>匹配标点符号(.或?或!)。</p>
+<p>练习3：匹配*(010)88886666<em>，或</em>022-22334455<em>，或</em>02912345678。*</p>
+<h2 id="分组"><a href="#分组" class="headerlink" title="分组"></a>分组</h2><p>想要重复多个字符又该怎么办？可以用小括号来指定<strong>子表达式</strong>(也叫做<strong>分组</strong>)，然后就可以指定这个子表达式的重复次数了。<code>(\d&#123;1,3&#125;\.)&#123;3&#125;\d&#123;1,3&#125;</code>是一个简单的IP地址匹配表达式。要理解这个表达式，按下列顺序分析它：</p>
+<ol>
+<li><code>\d&#123;1,3&#125;</code>匹配1到3位的数字</li>
+<li><code>(\d&#123;1,3&#125;\.)&#123;3&#125;</code>匹配三位数字加上一个英文句号(这个整体也就是这个<strong>分组</strong>)重复3次</li>
+<li>最后再加上一个一到三位的数字<code>(\d&#123;1,3&#125;)</code>。</li>
+</ol>
+<p>它也将匹配*<code>256.300.888.999</code>*这种不可能存在的IP地址。如果能使用算术比较的话，或许能简单地解决这个问题，但是正则表达式中并不提供关于数学的任何功能，所以只能使用冗长的分组，选择，字符类来描述一个正确的IP地址：<code>((2[0-4]\d|25[0-5]|[01]?\d\d?)\.)&#123;3&#125;(2[0-4]\d|25[0-5]|[01]?\d\d?)</code>。</p>
+<p>理解这个表达式的关键是理解<code>2[0-4]\d|25[0-5]|[01]?\d\d?</code>。</p>
+<h2 id="反义"><a href="#反义" class="headerlink" title="反义"></a>反义</h2><p>有时需要查找不属于某个能简单定义的字符类的字符。比如想查找除了数字以外，其它任意字符都行的情况，这时需要用到<strong>反义。</strong></p>
+<table>
+<thead>
+<tr>
+<th>代码/语法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>\W</td>
+<td>匹配任意不是字母，数字，下划线，汉字的字符</td>
+</tr>
+<tr>
+<td>\S</td>
+<td>匹配任意不是空白符的字符</td>
+</tr>
+<tr>
+<td>\D</td>
+<td>匹配任意非数字的字符</td>
+</tr>
+<tr>
+<td>\B</td>
+<td>匹配不是单词开头或结束的位置</td>
+</tr>
+<tr>
+<td>[^x]</td>
+<td>匹配除了x以外的任意字符</td>
+</tr>
+<tr>
+<td>[^aeiou]</td>
+<td>匹配除了aeiou这几个字母以外的任意字符</td>
+</tr>
+</tbody></table>
+<p>例子：<code>\S+</code>匹配不包含空白符的字符串。</p>
+<p><code>&lt;a[^&gt;]+&gt;</code>匹配用尖括号括起来的以a开头的字符串。</p>
+<h2 id="贪婪与懒惰"><a href="#贪婪与懒惰" class="headerlink" title="贪婪与懒惰"></a>贪婪与懒惰</h2><p>当正则表达式中包含能接受重复的限定符时，通常的行为是（在使整个表达式能得到匹配的前提下）匹配<strong>尽可能多</strong>的字符。以这个表达式为例：<code>a.*b</code>，它将会匹配最长的以<code>a</code>开始，以<code>b</code>结束的字符串。如果用它来搜索*<code>aabab</code>*的话，它会匹配整个字符串<code>aabab</code>。这被称为<strong>贪婪</strong>匹配。</p>
+<p>有时，我们更需要<strong>懒惰</strong>匹配，也就是匹配<strong>尽可能少</strong>的字符。前面给出的限定符都可以被转化为懒惰匹配模式，只要在它后面加上一个问号<code>?</code>。这样<code>.*?</code>就意味着匹配任意数量的重复，但是在能使整个匹配成功的前提下使用最少的重复。</p>
+<p>举例：<code>a.*?b</code>匹配最短的，以<code>a</code>开始，以<code>b</code>结束的字符串。如果把它应用于*<code>aabab</code>*的话，它会匹配<code>aab</code>（第一到第三个字符）和<code>ab</code>（第四到第五个字符）。</p>
+<table>
+<thead>
+<tr>
+<th>代码/语法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>*?</td>
+<td>重复任意次，但尽可能少重复</td>
+</tr>
+<tr>
+<td>+?</td>
+<td>重复1次或更多次，但尽可能少重复</td>
+</tr>
+<tr>
+<td>??</td>
+<td>重复0次或1次，但尽可能少重复</td>
+</tr>
+<tr>
+<td>{n,m}?</td>
+<td>重复n到m次，但尽可能少重复</td>
+</tr>
+<tr>
+<td>{n,}?</td>
+<td>重复n次以上，但尽可能少重复</td>
+</tr>
+</tbody></table>
+<h2 id="grep命令"><a href="#grep命令" class="headerlink" title="grep命令"></a>grep命令</h2><h3 id="grep基本用法"><a href="#grep基本用法" class="headerlink" title="grep基本用法"></a>grep基本用法</h3><p><code>Linux grep (global regular expression)</code> 命令用于查找文件里符合条件的字符串或正则表达式。</p>
+<p>grep 指令用于查找内容包含指定的范本样式的文件，如果发现某文件的内容符合所指定的范本样式，预设 grep 指令会把含有范本样式的那一列显示出来。若不指定任何文件名称，或是所给予的文件名为 **<code>-</code>**，则 grep 指令会从标准输入设备读取数据。</p>
+<ul>
+<li>基于目标文件进行查找  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@sh:~$ grep <span class="string">&quot;ubuntu&quot;</span> /etc/passwd</span><br><span class="line">ubuntu:x:1000:1000:ubuntu,,,:/home/ubuntu:/bin/bash</span><br></pre></td></tr></table></figure>
+</li>
+<li>基于标准输入进行查找  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@sh:~$ ps -aux |grep ssh</span><br><span class="line">root        864  0.0  0.1  65508  5424 ?        Ss   Mar26   0:00 /usr/sbin/sshd -D</span><br><span class="line">root      18851  0.0  0.1  92796  6836 ?        Ss   Apr06   0:00 sshd: ubuntu [priv]</span><br><span class="line">ubuntu    18878  0.0  0.0  92796  3988 ?        S    Apr06   0:02 sshd: ubuntu@pts/0</span><br><span class="line">ubuntu    23726  0.0  0.0  14220  1028 pts/0    S+   21:08   0:00 grep --color=auto ssh</span><br></pre></td></tr></table></figure>
+</li>
+<li>常用选项<ul>
+<li><code>i</code>：忽略大小写进行匹配。</li>
+<li><code>v</code>：反向查找，只打印不匹配的行。</li>
+<li><code>n</code>：显示匹配行的行号。</li>
+<li><code>r</code>：递归查找子目录中的文件。</li>
+<li><code>l</code>：只打印匹配的文件名。</li>
+<li><code>c</code>：只打印匹配的行数。</li>
+</ul>
+</li>
+</ul>
+<h3 id="grep结合正则表达式用法"><a href="#grep结合正则表达式用法" class="headerlink" title="grep结合正则表达式用法"></a>grep结合正则表达式用法</h3><ul>
+<li>已有文本文件<code>example.txt</code>，其中存储了一些人的信息，包括姓名、年龄和职业，每行一个人的信息：  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">John Smith, 25, Engineer</span><br><span class="line">Alice Brown, 30, Teacher</span><br><span class="line">Bob Johnson, 40, Lawyer</span><br></pre></td></tr></table></figure>
+  查找年龄在 30 岁及以上的人的信息，可以使用以下命令：  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep <span class="string">&#x27;[3-9][0-9],.*&#x27;</span> example.txt</span><br></pre></td></tr></table></figure>
+</li>
+<li>找出<code>~</code>目录下以<code>.sh</code>结尾的文件名  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find ~ -name <span class="string">&quot;*.sh&quot;</span> |grep -Eo <span class="string">&quot;[^/]+\.sh&quot;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>练习4：显示/etc/passwd中不以<code>/bin/bash</code>结尾的行</p>
+<p>‘</p>
+<p>练习1答案：<code>\+\d&#123;3&#125;-\d&#123;3&#125;-\d&#123;3&#125;-\d&#123;5&#125;</code></p>
+<p>练习2答案：<code>0\d&#123;3&#125;-\d&#123;7&#125;|0\d&#123;2&#125;-\d&#123;8&#125;</code></p>
+<p>练习3答案：<code>\(?0\d&#123;2&#125;[)-]?\d&#123;8&#125;</code></p>
+<p>练习4答案：<code>cat /etc/passwd |grep -Ev &quot;(/bin/bash)$”</code></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/04/18/9.%E6%B5%81%E7%BC%96%E8%BE%91%E5%99%A8sed/" rel="prev" title="流编辑器sed">
+                  <i class="fa fa-chevron-left"></i> 流编辑器sed
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/04/18/7.Shell%E5%87%BD%E6%95%B0/" rel="next" title="Shell函数">
+                  Shell函数 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder"></span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
