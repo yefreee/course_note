@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="awk简介awk是一种用于处理文本数据的工具，可以从文本文件或者标准输入、一个或多个文件中提取和处理数据。awk以逐行扫描方式处理数据，从第一行到最后一行以查找匹配某个特定模式的文本行，并且对这些文本行执行指定动作。 awk版本awk有众多版本包括传统awk、新版awk、gawk等，其中gawk是GNU组织开发的版本，也是目前最流行和最广泛使用的awk版本。gawk在传统awk和nawk的基础上添">
+<meta property="og:type" content="article">
+<meta property="og:title" content="文本处理工具awk">
+<meta property="og:url" content="http://example.com/2023/04/23/linux_shell/10.text-processing-tools-awk/index.html">
+<meta property="og:site_name">
+<meta property="og:description" content="awk简介awk是一种用于处理文本数据的工具，可以从文本文件或者标准输入、一个或多个文件中提取和处理数据。awk以逐行扫描方式处理数据，从第一行到最后一行以查找匹配某个特定模式的文本行，并且对这些文本行执行指定动作。 awk版本awk有众多版本包括传统awk、新版awk、gawk等，其中gawk是GNU组织开发的版本，也是目前最流行和最广泛使用的awk版本。gawk在传统awk和nawk的基础上添">
+<meta property="og:locale">
+<meta property="og:image" content="https://raw.githubusercontent.com/yefreee/picture/main/note10.text-processing-tools-awk-2023-04-24-09-42-32.png">
+<meta property="article:published_time" content="2023-04-23T05:26:57.000Z">
+<meta property="article:modified_time" content="2023-04-25T15:02:24.582Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/yefreee/picture/main/note10.text-processing-tools-awk-2023-04-24-09-42-32.png">
+
+
+<link rel="canonical" href="http://example.com/2023/04/23/linux_shell/10.text-processing-tools-awk/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-Hans","comments":true,"permalink":"http://example.com/2023/04/23/linux_shell/10.text-processing-tools-awk/","path":"2023/04/23/linux_shell/10.text-processing-tools-awk/","title":"文本处理工具awk"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>文本处理工具awk | </title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title"></p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#awk%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">awk简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#awk%E7%89%88%E6%9C%AC"><span class="nav-number">2.</span> <span class="nav-text">awk版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#awk%E6%A0%BC%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">awk格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8E%E6%A0%87%E5%87%86%E8%BE%93%E5%85%A5%E8%AF%BB%E5%8F%96%E6%95%B0%E6%8D%AE"><span class="nav-number">4.</span> <span class="nav-text">从标准输入读取数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%AF%BB%E5%8F%96%E6%95%B0%E6%8D%AE"><span class="nav-number">4.1.</span> <span class="nav-text">从命令行读取数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E7%AE%A1%E9%81%93%E7%AC%A6%E5%8F%B7%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%AF%BB%E5%8F%96%E6%95%B0%E6%8D%AE"><span class="nav-number">4.2.</span> <span class="nav-text">通过管道符号从命令读取数据</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8E%E6%96%87%E4%BB%B6%E4%B8%AD%E8%AF%BB%E5%8F%96%E6%95%B0%E6%8D%AE%E5%92%8C%E5%91%BD%E4%BB%A4"><span class="nav-number">5.</span> <span class="nav-text">从文件中读取数据和命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#awk%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-number">6.</span> <span class="nav-text">awk工作原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%BC%E5%BC%8F%E5%8C%96%E8%BE%93%E5%87%BA"><span class="nav-number">7.</span> <span class="nav-text">格式化输出</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#print%E5%87%BD%E6%95%B0"><span class="nav-number">7.1.</span> <span class="nav-text">print函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#printf%E5%87%BD%E6%95%B0"><span class="nav-number">7.2.</span> <span class="nav-text">printf函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%B0%E5%BD%95%E4%B8%8E%E5%AD%97%E6%AE%B5"><span class="nav-number">8.</span> <span class="nav-text">记录与字段</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%B0%E5%BD%95"><span class="nav-number">8.1.</span> <span class="nav-text">记录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E6%AE%B5"><span class="nav-number">8.2.</span> <span class="nav-text">字段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E6%AE%B5%E5%88%86%E9%9A%94%E7%AC%A6"><span class="nav-number">8.3.</span> <span class="nav-text">字段分隔符</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8C%B9%E9%85%8D%E6%A8%A1%E5%BC%8F%E4%B8%8E%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">9.</span> <span class="nav-text">匹配模式与正则表达式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8C%B9%E9%85%8D%E6%A8%A1%E5%BC%8F"><span class="nav-number">9.1.</span> <span class="nav-text">匹配模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%A8%A1%E5%BC%8F%E4%B8%8E%E6%93%8D%E4%BD%9C"><span class="nav-number">9.2.</span> <span class="nav-text">正则表达式模式与操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%83%E4%B9%A0"><span class="nav-number">10.</span> <span class="nav-text">练习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%98%BE%E7%A4%BA%E7%B3%BB%E7%BB%9F%E4%B8%8B%E5%90%84%E7%94%A8%E6%88%B7%E6%89%80%E4%BD%BF%E7%94%A8%E7%9A%84shell"><span class="nav-number">10.1.</span> <span class="nav-text">显示系统下各用户所使用的shell</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name"></p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/23/linux_shell/10.text-processing-tools-awk/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="文本处理工具awk | ">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          文本处理工具awk
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-04-23 13:26:57" itemprop="dateCreated datePublished" datetime="2023-04-23T13:26:57+08:00">2023-04-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-04-25 23:02:24" itemprop="dateModified" datetime="2023-04-25T23:02:24+08:00">2023-04-25</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="awk简介"><a href="#awk简介" class="headerlink" title="awk简介"></a>awk简介</h2><p>awk是一种用于处理文本数据的工具，可以从文本文件或者标准输入、一个或多个文件中提取和处理数据。<br>awk以逐行扫描方式处理数据，从第一行到最后一行以查找匹配某个特定模式的文本行，并且对这些文本行执行指定动作。</p>
+<h2 id="awk版本"><a href="#awk版本" class="headerlink" title="awk版本"></a>awk版本</h2><p>awk有众多版本包括传统awk、新版awk、gawk等，其中gawk是GNU组织开发的版本，也是目前最流行和最广泛使用的awk版本。gawk在传统awk和nawk的基础上添加了许多新功能和改进，例如更丰富的正则表达式支持、高级的数学和字符串处理函数、用户自定义函数等。gawk通常作为<code>/bin/gawk</code>或<code>/usr/bin/gawk</code>提供，是GNU工具集中的一部分，可以在多个平台上使用。<br>不同的awk可能在语法、功能和性能方面略有不同，在使用awk时应注意选择合适的版本，根据具体需求和系统环境来决定使用哪个版本。</p>
+<h2 id="awk格式"><a href="#awk格式" class="headerlink" title="awk格式"></a>awk格式</h2><p>awk基本格式如下：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">awk &#x27;pattern &#123; action &#125;&#x27; file</span><br><span class="line">awk &#x27;&#123; action &#125;&#x27; file</span><br><span class="line">awk &#x27;pattern&#x27; file</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>pattern</code>: 可以是一个正则表达式，也可以是一个字符串或数字，用于匹配文本中的某个字段或整行</li>
+<li><code>action</code>: 是在匹配到的文本上执行的操作，可以是一个或多个命令，多个命令之间用换行或分号 <code>;</code> 分隔</li>
+<li><code>file</code>: 是输入文件的名称，没有<code>file</code>参数时从标准输入读取数据</li>
+</ul>
+<p>在awk命令中，<code>pattern</code>和<code>action</code>之间通过大括号 <code>&#123;&#125;</code> 进行分隔，<code>pattern</code>用于匹配文本行，当匹配成功时，对应的<code>action</code>将被执行。</p>
+<p>awk还支持在处理数据前和处理数据后运行命令，完整格式如下：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk &#x27;BEGIN &#123;command&#125; pattern &#123; action &#125; END &#123;command&#125;&#x27; file</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;10 20 30 40 50&quot;</span> | awk <span class="string">&#x27;BEGIN &#123;sum = 0; print &quot;sum:&quot;, sum&#125; &#123;sum += $1&#125; END &#123;print &quot;Sum:&quot;, sum&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/yefreee/picture/main/note10.text-processing-tools-awk-2023-04-24-09-42-32.png" alt="10.text-processing-tools-awk-2023-04-24-09-42-32"></p>
+<h2 id="从标准输入读取数据"><a href="#从标准输入读取数据" class="headerlink" title="从标准输入读取数据"></a>从标准输入读取数据</h2><h3 id="从命令行读取数据"><a href="#从命令行读取数据" class="headerlink" title="从命令行读取数据"></a>从命令行读取数据</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@6e455ed15da7:~$ awk <span class="string">&#x27;&#123;print &quot;Hello World&quot;&#125;&#x27;</span></span><br><span class="line"><span class="built_in">test</span></span><br><span class="line">Hello World</span><br><span class="line">abc</span><br><span class="line">Hello World</span><br></pre></td></tr></table></figure>
+
+<p>以上awk命令没有指定<code>file</code>参数，awk不会直接给出运行结果，它会等待标准输入的数据，当用户输入字符后awk会执行相应的命令并产生输出。如果要终止awk程序需要使用<code>Ctrl+D</code>产生一个EOF字符，此时会返回到命令行下。</p>
+<h3 id="通过管道符号从命令读取数据"><a href="#通过管道符号从命令读取数据" class="headerlink" title="通过管道符号从命令读取数据"></a>通过管道符号从命令读取数据</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@6e455ed15da7:~$ ps -aux|awk <span class="string">&#x27;/bash/&#x27;</span></span><br><span class="line">root           1  0.0  0.0  18228  3012 pts/0    Ss+  Apr22   0:00 /bin/bash</span><br><span class="line">root          11  0.0  0.0  18232  3240 pts/1    Ss   13:36   0:00 /bin/bash</span><br><span class="line">ubuntu       269  0.0  0.0  18228  3144 pts/1    S    13:39   0:00 bash</span><br></pre></td></tr></table></figure>
+
+<p>以上awk命令通过管道符号<code>|</code>从前面一个命令的输出结果从读取数据进行处理。</p>
+<h2 id="从文件中读取数据和命令"><a href="#从文件中读取数据和命令" class="headerlink" title="从文件中读取数据和命令"></a>从文件中读取数据和命令</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@6e455ed15da7:~$ awk <span class="string">&#x27;/Alice/&#x27;</span> example.txt</span><br><span class="line">Alice,25,Female,New York</span><br><span class="line">ubuntu@6e455ed15da7:~$ awk <span class="string">&#x27;/Male/&#x27;</span> example.txt</span><br><span class="line">Bob,30,Male,Los Angeles</span><br><span class="line">Charlie,22,Male,Chicago</span><br><span class="line">David,35,Male,Houston</span><br></pre></td></tr></table></figure>
+
+<p>以上awk命令指定了<code>file</code>参数，awk会从文件中以行为单位读取数据并且使用<code>pattern</code>所表示的匹配模式进行数据匹配，由于没有指定<code>action</code>参数，awk将匹配到的数据直接输出到标准输出。</p>
+<p>awk和sed一样可以从文件中读取命令：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk -f script_file.awk example.txt</span><br></pre></td></tr></table></figure>
+
+<h2 id="awk工作原理"><a href="#awk工作原理" class="headerlink" title="awk工作原理"></a>awk工作原理</h2><ol>
+<li>awk对文件或者标准输入的内容一次只处理一行，将获取到的这一行数据赋给变量$0</li>
+<li>这一行的内容按awk内部变量FS定义的分隔符（缺省为空格，包括制表符tab）分解成多个字段，每一个字段存储在从$1开始的变量中。</li>
+</ol>
+<p>以以下数据为例：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Name Age Gender City</span><br><span class="line">Alice 25 Female New York</span><br><span class="line">Bob 30 Male Los Angeles</span><br><span class="line">Charlie 22 Male Chicago</span><br><span class="line">David 35 Male Houston</span><br><span class="line">Eve 28 Female Miami</span><br></pre></td></tr></table></figure>
+
+<p>以下awk命令的运行结果：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@6e455ed15da7:~$ awk <span class="string">&#x27;&#123;print $1,$3&#125;&#x27;</span> example.txt</span><br><span class="line">Name Gender</span><br><span class="line">Alice Female</span><br><span class="line">Bob Male</span><br><span class="line">Charlie Male</span><br><span class="line">David Male</span><br><span class="line">Eve Female</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>awk首先将第一行数据存放在变量$0中进行处理。</li>
+<li>将<code>$0</code>中的数据以空格为分隔符（内部变量<code>FS</code>所定义）进行分解，分别存放在从<code>$1</code>开始的内部变量中。</li>
+<li>在输出结果的每一行中第一个字段是存放在<code>$1</code>中的数据，第二个字段是存放在<code>$3</code>中的数据。</li>
+<li>awk命令中的逗号映射为一个内部变量-输出字段分隔符<code>OFS</code>（默认为空格）两个字段之间由空格间隔。</li>
+<li>处理完一行数据后读取下一行数据到<code>$0</code>中进行处理直到所以数据处理完毕。</li>
+</ol>
+<h2 id="格式化输出"><a href="#格式化输出" class="headerlink" title="格式化输出"></a>格式化输出</h2><h3 id="print函数"><a href="#print函数" class="headerlink" title="print函数"></a>print函数</h3><p>print函数用于打印不需要特别编排格式的简单输出。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@6e455ed15da7:~$ awk <span class="string">&#x27;&#123;print &quot;Name:&quot; $1 &quot;Age:&quot; $2&#125;&#x27;</span> example.txt</span><br><span class="line">Name:NameAge:Age</span><br><span class="line">Name:AliceAge:25</span><br><span class="line">Name:BobAge:30</span><br><span class="line">Name:CharlieAge:22</span><br><span class="line">Name:DavidAge:35</span><br><span class="line">Name:EveAge:28</span><br><span class="line">ubuntu@6e455ed15da7:~$ awk <span class="string">&#x27;&#123;print &quot;Name:&quot; $1, &quot;Age:&quot; $2&#125;&#x27;</span> example.txt</span><br><span class="line">Name:Name Age:Age</span><br><span class="line">Name:Alice Age:25</span><br><span class="line">Name:Bob Age:30</span><br><span class="line">Name:Charlie Age:22</span><br><span class="line">Name:David Age:35</span><br><span class="line">Name:Eve Age:28</span><br></pre></td></tr></table></figure>
+
+<p>逗号<code>,</code>表示内部变量<code>OFS</code>（用来表示输出字段的分隔符，默认为空格）。<br>print还支持以下转义序列：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">\b：退格符（ASCII 008）</span><br><span class="line">\t：制表符（ASCII 009）</span><br><span class="line">\n：换行符（ASCII 010）</span><br><span class="line">\f：换页符（ASCII 012）</span><br><span class="line">\r：回车符（ASCII 013）</span><br></pre></td></tr></table></figure>
+
+<p>print中使用转义序列进行数据输出：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@6e455ed15da7:~$ awk <span class="string">&#x27;&#123;print &quot;Name:&quot; $1 &quot;\tAge:&quot; $2&#125;&#x27;</span> example.txt</span><br><span class="line">Name:Name       Age:Age</span><br><span class="line">Name:Alice      Age:25</span><br><span class="line">Name:Bob        Age:30</span><br><span class="line">Name:Charlie    Age:22</span><br><span class="line">Name:David      Age:35</span><br><span class="line">Name:Eve        Age:28</span><br></pre></td></tr></table></figure>
+
+<h3 id="printf函数"><a href="#printf函数" class="headerlink" title="printf函数"></a>printf函数</h3><p><code>printf</code>函数能够进行更加精细的格式化输出，用法和C语言中<code>printf</code>函数的用法一样。语句中包含一个加引号的控制串，控制串中包含若干格式说明和修饰符。控制串后面跟一个逗号，之后是一列由逗号分隔的表达式。<code>printf</code>会根据控制串来编排表达式的格式。<br><code>printf</code>和<code>print</code>不同的是printf在行尾不会自动换行，如果要换行必须使用转义字符<code>\n</code></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@6e455ed15da7:~$ awk <span class="string">&#x27;&#123;printf &quot;[Name:%-10s]\tAge:%s&quot;, $1, $2&#125;&#x27;</span> example.txt</span><br><span class="line">[Name:Name      ]       Age:Age[Name:Alice     ]        Age:25[Name:Bob       ] Age:30[Name:Charlie   ]      Age:22[Name:David     ] Age:35[Name:Eve       ] Age:28ubuntu@6e455ed15da7:~$ awk <span class="string">&#x27;&#123;printf &quot;[Name:%-10s]\tAge:%s\n&quot;, $1, $2&#125;&#x27;</span> example.txt</span><br><span class="line">[Name:Name      ]       Age:Age</span><br><span class="line">[Name:Alice     ]       Age:25</span><br><span class="line">[Name:Bob       ]       Age:30</span><br><span class="line">[Name:Charlie   ]       Age:22</span><br><span class="line">[Name:David     ]       Age:35</span><br><span class="line">[Name:Eve       ]       Age:28</span><br></pre></td></tr></table></figure>
+
+<h2 id="记录与字段"><a href="#记录与字段" class="headerlink" title="记录与字段"></a>记录与字段</h2><h3 id="记录"><a href="#记录" class="headerlink" title="记录"></a>记录</h3><p>在awk中每一行数据称为一条记录，以换行符结束。</p>
+<ul>
+<li>记录分隔符：默认情况下，输入和输出记录的分隔符都是回车符，分别保存在内部变量<code>ORS</code>和<code>RS</code>中。</li>
+<li>变量<code>$0</code>表示当前整条记录，变量NR表示当前记录的记录号，每处理一条记录，NR值加一。</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@6e455ed15da7:~$ awk <span class="string">&#x27;&#123;print NR,$0&#125;&#x27;</span> example.txt</span><br><span class="line">1 Name Age Gender City</span><br><span class="line">2 Alice 25 Female New York</span><br><span class="line">3 Bob 30 Male Los Angeles</span><br><span class="line">4 Charlie 22 Male Chicago</span><br><span class="line">5 David 35 Male Houston</span><br><span class="line">6 Eve 28 Female Miami</span><br></pre></td></tr></table></figure>
+
+<h3 id="字段"><a href="#字段" class="headerlink" title="字段"></a>字段</h3><p>每一条记录都是由称为字段的词组成，默认情况下字段之间用空白符（空格或者制表符）分隔。<code>NF</code>变量保存每个记录的字段数量。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@6e455ed15da7:~$ awk <span class="string">&#x27;&#123;print NF,$0&#125;&#x27;</span> example.txt</span><br><span class="line">4 Name Age Gender City</span><br><span class="line">5 Alice 25 Female New York</span><br><span class="line">5 Bob 30 Male Los Angeles</span><br><span class="line">4 Charlie 22 Male Chicago</span><br><span class="line">4 David 35 Male Houston</span><br><span class="line">4 Eve 28 Female Miami</span><br></pre></td></tr></table></figure>
+
+<h3 id="字段分隔符"><a href="#字段分隔符" class="headerlink" title="字段分隔符"></a>字段分隔符</h3><p>字段分隔符由内部变量<code>FS</code>保存，可以在命令中通过<code>-F</code>选项修改<code>FS</code>的值。<br>先使用<code>sed</code>命令将<code>example.txt</code>文件中的空格替换为逗号：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@6e455ed15da7:~$ sed -i <span class="string">&#x27;s/ /,/g&#x27;</span> example.txt</span><br><span class="line">ubuntu@6e455ed15da7:~$ <span class="built_in">cat</span> example.txt</span><br><span class="line">Name,Age,Gender,City</span><br><span class="line">Alice,25,Female,New,York</span><br><span class="line">Bob,30,Male,Los,Angeles</span><br><span class="line">Charlie,22,Male,Chicago</span><br><span class="line">David,35,Male,Houston</span><br><span class="line">Eve,28,Female,Miami</span><br></pre></td></tr></table></figure>
+
+<p>然后使用awk并通过<code>-F</code>选项替换分隔符进行输出：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@6e455ed15da7:~$ awk <span class="string">&#x27;&#123;print &quot;Name:&quot; $1, &quot;Age:&quot; $2&#125;&#x27;</span> example.txt</span><br><span class="line">Name:Name,Age,Gender,City Age:</span><br><span class="line">Name:Alice,25,Female,New,York Age:</span><br><span class="line">Name:Bob,30,Male,Los,Angeles Age:</span><br><span class="line">Name:Charlie,22,Male,Chicago Age:</span><br><span class="line">Name:David,35,Male,Houston Age:</span><br><span class="line">Name:Eve,28,Female,Miami Age:</span><br><span class="line">ubuntu@6e455ed15da7:~$ awk -F, <span class="string">&#x27;&#123;print &quot;Name:&quot; $1, &quot;Age:&quot; $2&#125;&#x27;</span> example.txt</span><br><span class="line">Name:Name Age:Age</span><br><span class="line">Name:Alice Age:25</span><br><span class="line">Name:Bob Age:30</span><br><span class="line">Name:Charlie Age:22</span><br><span class="line">Name:David Age:35</span><br><span class="line">Name:Eve Age:28</span><br></pre></td></tr></table></figure>
+
+<h2 id="匹配模式与正则表达式"><a href="#匹配模式与正则表达式" class="headerlink" title="匹配模式与正则表达式"></a>匹配模式与正则表达式</h2><h3 id="匹配模式"><a href="#匹配模式" class="headerlink" title="匹配模式"></a>匹配模式</h3><p>awk中的模式可以是一个正则表达式或者用来判定条件真伪的表达式。</p>
+<p>使用<code>Alice</code>进行数据匹配：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@6e455ed15da7:~$ <span class="built_in">cat</span> example.txt</span><br><span class="line">Name Age Gender City</span><br><span class="line">Alice 25 Female New York</span><br><span class="line">Bob 30 Male Los Angeles</span><br><span class="line">Charlie 22 Male Chicago</span><br><span class="line">David 35 Male Houston</span><br><span class="line">Eve 28 Female Miami</span><br><span class="line">ubuntu@6e455ed15da7:~$ awk <span class="string">&#x27;/Alice/&#x27;</span> example.txt</span><br><span class="line">Alice 25 Female New York</span><br></pre></td></tr></table></figure>
+
+<p>使用条件表达式进行数据匹配：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@6e455ed15da7:~$ <span class="built_in">cat</span> example.txt</span><br><span class="line">Name Age Gender City</span><br><span class="line">Alice 25 Female New York</span><br><span class="line">Bob 30 Male Los Angeles</span><br><span class="line">Charlie 22 Male Chicago</span><br><span class="line">David 35 Male Houston</span><br><span class="line">Eve 28 Female Miami</span><br><span class="line">ubuntu@6e455ed15da7:~$ awk <span class="string">&#x27;$2 &lt; 25&#x27;</span> example.txt</span><br><span class="line">Charlie 22 Male Chicago</span><br></pre></td></tr></table></figure>
+
+<h3 id="正则表达式模式与操作"><a href="#正则表达式模式与操作" class="headerlink" title="正则表达式模式与操作"></a>正则表达式模式与操作</h3><p>使用正则表达式模式<code>Alice</code>进行数据匹配，然后通过<code>print</code>函数进行格式化输出：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@6e455ed15da7:~$ awk <span class="string">&#x27;/Alice/&#123;print &quot;Name:&quot; $1&#125;&#x27;</span> example.txt</span><br><span class="line">Name:Alice</span><br><span class="line">ubuntu@6e455ed15da7:~$ <span class="built_in">cat</span> example.txt</span><br><span class="line">Name Age Gender City</span><br><span class="line">Alice 25 Female New York</span><br><span class="line">Bob 30 Male Los Angeles</span><br><span class="line">Charlie 22 Male Chicago</span><br><span class="line">David 35 Male Houston</span><br><span class="line">Eve 28 Female Miami</span><br><span class="line">ubuntu@6e455ed15da7:~$ awk <span class="string">&#x27;/Alice/&#123;print &quot;Name:&quot; $1&#125;&#x27;</span> example.txt</span><br><span class="line">Name:Alice</span><br></pre></td></tr></table></figure>
+
+<p>格式化输出<code>example.txt</code>文件中所有以大写字母<code>A-C</code>开头的行：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@6e455ed15da7:~$ <span class="built_in">cat</span> example.txt</span><br><span class="line">Name Age Gender City</span><br><span class="line">Alice 25 Female New York</span><br><span class="line">Bob 30 Male Los Angeles</span><br><span class="line">Charlie 22 Male Chicago</span><br><span class="line">David 35 Male Houston</span><br><span class="line">Eve 28 Female Miami</span><br><span class="line">ubuntu@6e455ed15da7:~$ awk <span class="string">&#x27;/^[A-C]+.*/&#123;print &quot;Name:&quot; $1&#125;&#x27;</span> example.txt</span><br><span class="line">Name:Alice</span><br><span class="line">Name:Bob</span><br><span class="line">Name:Charlie</span><br></pre></td></tr></table></figure>
+
+<h2 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h2><h3 id="显示系统下各用户所使用的shell"><a href="#显示系统下各用户所使用的shell" class="headerlink" title="显示系统下各用户所使用的shell"></a>显示系统下各用户所使用的shell</h3><p>查看当前<code>/etc/passwd</code>格式：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@6e455ed15da7:~$ <span class="built_in">cat</span> /etc/passwd|<span class="built_in">head</span></span><br><span class="line">root:x:0:0:root:/root:/bin/bash</span><br></pre></td></tr></table></figure>
+
+<p>使用awk显示各用户使用的shell:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">User:root Shell:/bin/bash</span><br><span class="line">User:daemon Shell:/usr/sbin/nologin</span><br><span class="line">User:bin Shell:/usr/sbin/nologin</span><br><span class="line">User:sys Shell:/usr/sbin/nologin</span><br><span class="line">User:<span class="built_in">sync</span> Shell:/bin/sync</span><br><span class="line">User:games Shell:/usr/sbin/nologin</span><br><span class="line">User:man Shell:/usr/sbin/nologin</span><br><span class="line">User:lp Shell:/usr/sbin/nologin</span><br><span class="line">User:mail Shell:/usr/sbin/nologin</span><br><span class="line">User:news Shell:/usr/sbin/nologin</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/04/18/linux_shell/1.Shell%E5%88%9D%E8%AF%86%EF%BC%8C%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8/" rel="prev" title="Shell初始,编辑器使用">
+                  <i class="fa fa-chevron-left"></i> Shell初始,编辑器使用
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/06/09/c_program/1.%E7%AC%AC%E4%B8%80%E5%91%A8/" rel="next" title="第一周">
+                  第一周 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder"></span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

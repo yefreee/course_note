@@ -118,7 +118,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-count">11</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -145,7 +145,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/18/1.Shell%E5%88%9D%E8%AF%86%EF%BC%8C%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/06/09/c_program/1.%E7%AC%AC%E4%B8%80%E5%91%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -158,12 +158,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | null">
+      <meta itemprop="name" content="undefined | ">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/04/18/1.Shell%E5%88%9D%E8%AF%86%EF%BC%8C%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8/" class="post-title-link" itemprop="url">Shell初始,编辑器使用</a>
+          <a href="/2023/06/09/c_program/1.%E7%AC%AC%E4%B8%80%E5%91%A8/" class="post-title-link" itemprop="url">第一周</a>
         </h2>
 
         <div class="post-meta-container">
@@ -175,7 +175,478 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2023-04-18 11:31:23 / Modified: 23:20:32" itemprop="dateCreated datePublished" datetime="2023-04-18T11:31:23+08:00">2023-04-18</time>
+      <time title="Created: 2023-06-09 11:31:25 / Modified: 11:37:02" itemprop="dateCreated datePublished" datetime="2023-06-09T11:31:25+08:00">2023-06-09</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="名词解释"><a href="#名词解释" class="headerlink" title="名词解释"></a>名词解释</h2><ol>
+<li><p>高级语言、低级语言、机器语言</p>
+<ol>
+<li>高级语言（High-Level Language）：<br>高级语言是一种相对抽象和易于理解的编程语言，其目的是提供更高层次的抽象和功能，使程序员能够更容易地编写复杂的程序。高级语言使用人类可读的语法和结构，使用更高级别的概念和抽象，使得程序的编写更容易、更快速。高级语言通常需要通过编译或解释器转换为机器语言才能在计算机上执行。常见的高级语言包括C、C++、Java、Python和JavaScript等。</li>
+<li>低级语言（Low-Level Language）：<br>低级语言是与计算机硬件更接近的编程语言，它使用更接近机器语言的语法和结构。低级语言通常直接操作计算机的底层硬件和资源，提供了对硬件细节的更多控制。低级语言可以更高效地利用计算机的资源，但编写和理解低级语言程序相对更困难。汇编语言和机器语言都属于低级语言。</li>
+<li>机器语言（Machine Language）：<br>机器语言是计算机硬件直接能理解和执行的语言。它由二进制位组成，表示计算机指令和数据。机器语言是计算机可以直接执行的最底层的语言。每个计算机的机器语言是特定于该计算机体系结构的。编写机器语言程序需要对机器指令和二进制表示有深入的了解。由于机器语言的复杂性和难以理解，通常使用高级语言来编写程序，然后通过编译器或解释器将其转换为机器语言。</li>
+</ol>
+</li>
+<li><p>解释型语言和编译型语</p>
+<p> <img src="https://raw.githubusercontent.com/yefreee/picture/main/note1.%E7%AC%AC%E4%B8%80%E5%91%A8-2023-06-09-10-53-51.png" alt="1.第一周-2023-06-09-10-53-51"></p>
+<p> Python 如此设计的原因在于将程序的执行与底层硬件进一步地分离，无需担心程序的编译、汇编以及链接过程，使得 Python 程序相较于 C 程序而言更加易于移植。</p>
+</li>
+<li><p>C语言源代码到可执行文件的过程</p>
+<ol>
+<li>C源代码：<br>程序员使用C语言编写源代码，源代码以**<code>.c</code>**为扩展名。源代码包含了程序的逻辑和功能的定义。</li>
+<li>预处理：<br>在编译之前，C预处理器会处理源代码。预处理器执行宏展开、条件编译等操作，生成经过预处理的源代码。</li>
+<li>编译：<br>经过预处理的源代码会被编译器翻译成汇编代码。编译器将C源代码转换为汇编语言表示，生成汇编代码文件（**<code>.s</code>**文件）。</li>
+<li>汇编：<br>汇编器将汇编代码转换为机器码指令。它将汇编代码文件翻译成机器可执行的指令，并生成目标文件（**<code>.o</code>**文件）。</li>
+<li>链接：<br>链接器将目标文件与其他必要的库文件进行链接，生成最终的可执行文件。链接器解析目标文件中的符号引用，并将其与库函数和其他目标文件中的符号定义进行关联。链接器生成一个包含所有必要信息的可执行文件。</li>
+<li>可执行文件：<br>最终的可执行文件是操作系统可以直接执行的二进制文件。它包含了程序的机器码指令、数据和其他必要的信息。可执行文件可以通过命令行或操作系统的运行环境来执行。</li>
+</ol>
+</li>
+<li><p>静态语言和动态语言</p>
+<ol>
+<li><p>静态语言（Static Language）：<br>静态语言是在编译时进行类型检查的语言。在静态语言中，变量的类型在编译时确定，并且编译器会对类型进行检查。在编译过程中，变量的类型和使用方法需要在代码中明确声明和定义。静态语言的编译器会检查变量的类型是否与其使用方式相匹配，以避免类型错误。常见的静态语言包括C、C++、Java等。</p>
+<p> 优点：</p>
+<ol>
+<li>更早地发现类型错误，提前检测潜在的编程错误。</li>
+<li>在编译时进行类型检查，提高代码的稳定性和可靠性。</li>
+<li>性能较好，由于类型已经确定，编译器可以进行更多的优化。</li>
+</ol>
+<p> 缺点：</p>
+<ol>
+<li>代码相对冗长，需要显式声明和定义类型。</li>
+<li>编译时间较长，需要进行较多的类型检查和编译过程。</li>
+</ol>
+</li>
+<li><p>动态语言（Dynamic Language）：<br>动态语言是在运行时进行类型检查的语言。在动态语言中，变量的类型可以根据其赋值进行推断，并且可以在运行时动态地改变变量的类型。动态语言的编译器或解释器在运行时进行类型检查和解析。常见的动态语言包括Python、JavaScript、Ruby等。</p>
+<p> 优点：</p>
+<ol>
+<li>灵活性高，可以在运行时动态地改变变量的类型和行为。</li>
+<li>代码相对简洁，无需显式声明和定义类型，灵活性提高了开发效率。</li>
+</ol>
+<p> 缺点：</p>
+<ol>
+<li>需要在运行时进行类型检查和解析，性能可能相对较低。</li>
+<li>容易出现运行时类型错误，只能在运行时才能发现。</li>
+</ol>
+</li>
+</ol>
+<p> 需要注意的是，静态语言和动态语言并非绝对的对立关系，很多语言在某些方面可以具备静态语言和动态语言的特性。例如，Java是静态语言，但具备一些动态语言的特性，如反射和动态代理。同样，Python是动态语言，但也可以通过类型注解等方式实现静态类型检查。</p>
+</li>
+</ol>
+<h2 id="C语言开发环境"><a href="#C语言开发环境" class="headerlink" title="C语言开发环境"></a>C语言开发环境</h2><ol>
+<li><p>在线运行平台（一键运行）：</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://www.nhooo.com/tool/c/">https://www.nhooo.com/tool/c/</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.bejson.com/runcode/c740/">https://www.bejson.com/runcode/c740/</a></li>
+</ol>
+</li>
+<li><p>IDE（集成开发环境）：</p>
+<ol>
+<li><p>Visual Studio（一站式安装，一键编译运行）</p>
+<p> <a target="_blank" rel="noopener" href="https://visualstudio.microsoft.com/zh-hans/">Visual Studio下载地址</a>，<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/71110525">中文安装教程</a></p>
+</li>
+<li><p>VSCode + mingw（配置灵活且繁琐，一键编译运行）</p>
+<p> <a target="_blank" rel="noopener" href="https://code.visualstudio.com/download">VSCode下载地址，</a><a target="_blank" rel="noopener" href="https://github.com/msys2/msys2-installer/releases/download/2023-05-26/msys2-x86_64-20230526.exe">mingw下载地址</a>，<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/354400717">使用教程</a></p>
+</li>
+</ol>
+</li>
+<li><p>Linux环境（vim+gcc）</p>
+<p> 编译命令<code>gcc -o 目标文件名 源文件</code></p>
+<p> 例：<code>gcc -o test test.c</code> 将名为<code>test.c</code>的源文件编译成名为<code>test</code>的目标文件</p>
+</li>
+</ol>
+<h2 id="C语言程序的结构"><a href="#C语言程序的结构" class="headerlink" title="C语言程序的结构"></a>C语言程序的结构</h2><ul>
+<li><p>简单的C程序实例</p>
+  <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">/* 定义一个名为num的变量 */</span></span><br><span class="line">    <span class="type">int</span> num;</span><br><span class="line">    <span class="comment">/* 为num赋一个值 */</span></span><br><span class="line">    num = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 使用printf()函数 */</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;I am a simple &quot;</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;computer.\n&quot;</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;My favorite number is %d because it is first.\n&quot;</span>, num);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<ol>
+<li><p><code>#include</code>指令和头文件</p>
+<p> <code>#include</code>这行代码是一条C预处理器指令。通常，C编译器在编译前会对源代码做一些准备工作，即预处理。</p>
+<p> <code>#include &lt;stdio.h&gt;</code>的作用相当于把<code>stdio.h</code>文件中的所有内容都输入该行所在的位置。实际上，这是一种“拷贝-粘贴”的操作。</p>
+</li>
+<li><p><code>main()</code>函数</p>
+<p> C程序从<code>main()</code>函数开始执行。除了<code>main()</code>函数，你可以任意命名其他函数，而且main()函数必须是开始的函数。<code>int</code>是main()函数的返回类型。这表明main()函数返回的值是整数。返回到哪里？返回给操作系统通常，函数名后面的圆括号中包含一些传入函数的信息。该例中没有传递任何信息。因此，圆括号内是单词<code>void</code> 。</p>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//错误的main函数定义1</span></span><br><span class="line">main()</span><br><span class="line"></span><br><span class="line"><span class="comment">//错误的main函数定义2</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//正确的main函数定义1</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//正确的main函数定义2</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span></span><br></pre></td></tr></table></figure>
+
+<p> <strong><code>int main(int argc, char *argv[])</code></strong> 是C语言中常见的**<code>main</code>**函数的定义方式，它用于接收命令行参数。</p>
+<p> 参数解释：</p>
+<ul>
+<li>**<code>int argc</code>**：表示命令行参数的数量（Argument Count）。</li>
+<li>**<code>char *argv[]</code>**：表示命令行参数的数组（Argument Vector），是一个指针数组，每个指针指向一个以null结尾的字符串，即命令行参数的值。</li>
+</ul>
+<p> 使用这种方式定义的**<code>main</code>**函数可以接收命令行传递的参数，如下所示：</p>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span> &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;argc: %d\n&quot;</span>, argc);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; argc; i++) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;argv[%d]: %s\n&quot;</span>, i, argv[i]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> 运行该程序并传递参数，例如：</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./program arg1 arg2 arg3</span><br></pre></td></tr></table></figure>
+
+<p> 程序运行结果会输出命令行参数的数量以及每个参数的值，如：</p>
+ <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">argc: 4</span><br><span class="line">argv[0]: ./program</span><br><span class="line">argv[1]: arg1</span><br><span class="line">argv[2]: arg2</span><br><span class="line">argv[3]: arg3</span><br></pre></td></tr></table></figure></li>
+<li><p>注释</p>
+<p> 在程序中，被两个<code>/* */</code>符号括起来的部分是程序的注释。写注释能让他人（包括自己）更容易明白你所写的程序。C 语言注释的好处之一是，可将注释放在任意的地方，甚至是与要解释的内容在同一行。较长的注释可单独放一行或多行。所有的注释都会被编译器忽略。</p>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 这是一条C注释。 */</span></span><br><span class="line"><span class="comment">/* 这也是一条注释，</span></span><br><span class="line"><span class="comment">被分成两行。*/</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">也可以这样写注释。</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="comment">/* 这条注释无效，因为缺少了结束标记。</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">// 这种注释只能写成一行</span></span><br></pre></td></tr></table></figure></li>
+<li><p>花括号、函数体和块</p>
+<p> 花括号把main()函数括起来。一般而言，所有的C函数都使用<code>花括号</code>标记<code>函数体的开始和结束</code>。这是规定，不能省略。只有花括号（{}）能起这种作用，圆括号（()）和方括号（[]）都不行。花括号还可用于把函数中的多条语句<code>合并</code>为一个<code>单元或块</code>。</p>
+</li>
+<li><p>声明（declaration）</p>
+<p> 声明是C语言最重要的特性之一。在该例中，声明完成了两件事。其一，在函数中有一个名为<br> num的变量（<code>variable</code>）。其二，<code>int</code>表明<code>num</code>是一个<code>整数</code>（即，没有小数点或小数部分的数）。<code>int</code>是一种数据类型。编译器使用这些信息为<code>num</code>变量在内存中分配存储空间。</p>
+</li>
+<li><p>赋值</p>
+<p> 赋值是C语言的基本操作之一。该行代码的意思是“把值1赋给变量num”。在执行int num;声明时，编译器在计算机内存中为变量num预留了空间，然后在执行这行赋值表达式语句时，把值储存在之前预留的位置。可以给num赋不同的值，这就是num之所以被称为变量（variable）的原因。</p>
+</li>
+<li><p><code>printf()</code>函数</p>
+<p> 示例代码中有3行代码都使用了C语言的一个标准函数：<code>printf()</code>。圆括号表明printf是一个函数名。圆括号中的内容是从main()函数传递给printf()函数的信息。例如，上面的第1行把<code>I am a simple</code>传递给printf()函数。该信息被称为参数。</p>
+<p> 换行符是一个转义序列（escape sequence）。转义序列用于代表难以表示或无法输入的字符。如，\t代表Tab键，\b代表Backspace键（退格键）。每个转义序列都以反斜杠字符（\）开始</p>
+</li>
+<li><p><code>return</code>语句</p>
+<p> return语句是示例程序中的最后一条语句。<code>int main(void)</code>中的int表明main()函数应返回一个<code>整数</code>。C标准要求main()这样做。有返回值的C函数要有return语句。该语句以return关键字开始，后面是待返回的值，并以分号结尾。如果遗漏 main()函数中的 return 语句，程序在运行至最外面的右花括号（}）时会返回0。因此，可以省略main()函数末尾的return语句。但是，不要在其他有返回值的函数中漏掉它。</p>
+</li>
+</ol>
+<h2 id="C语言源程序的书写格式"><a href="#C语言源程序的书写格式" class="headerlink" title="C语言源程序的书写格式"></a>C语言源程序的书写格式</h2><ol>
+<li><p>缩进：使用适当的缩进来表示代码块的层次结构，常见的缩进为4个空格或一个制表符（Tab）。</p>
+</li>
+<li><p>大括号：对于控制结构、函数等代码块，使用大括号将其括起来，以表示代码块的开始和结束。</p>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (condition) &#123;</span><br><span class="line">    <span class="comment">// 代码块</span></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>空格：在运算符、逗号、分号等符号周围添加适当的空格，以提高代码的可读性。</p>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> sum = a + b;</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>注释：使用注释来解释代码的功能、目的、算法等，以增加代码的可读性和可维护性。</p>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 计算两个数的和</span></span><br><span class="line"><span class="type">int</span> sum = a + b;</span><br></pre></td></tr></table></figure></li>
+<li><p>命名规范：使用有意义的变量名、函数名和常量名，遵循命名规范，以提高代码的可读性和可维护性。</p>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> numberOfStudents = <span class="number">10</span>;</span><br><span class="line"><span class="type">void</span> <span class="title function_">printMessage</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="comment">// 函数体</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>换行：在较长的语句中，适当地进行换行，以保持代码的可读性。</p>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">longResult = (longValue1 + longValue2 + longValue3) /</span><br><span class="line">             (longValue4 - longValue5);</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="C语言数据类型"><a href="#C语言数据类型" class="headerlink" title="C语言数据类型"></a>C语言数据类型</h2><ol>
+<li><p>整型（Integer）：</p>
+<ul>
+<li>**<code>int</code>**：表示整数类型。通常占用4个字节。</li>
+<li>**<code>short</code>**：表示短整数类型。通常占用2个字节。</li>
+<li>**<code>long</code>**：表示长整数类型。通常占用4个或8个字节，取决于编译器和操作系统。</li>
+</ul>
+<p> 示例代码：</p>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> num1 = <span class="number">10</span>;</span><br><span class="line"><span class="type">short</span> num2 = <span class="number">20</span>;</span><br><span class="line"><span class="type">long</span> num3 = <span class="number">30L</span>;  <span class="comment">// 后缀L表示长整数类型</span></span><br></pre></td></tr></table></figure></li>
+<li><p>浮点型（Floating-point）：</p>
+<ul>
+<li>**<code>float</code>**：表示单精度浮点数类型。通常占用4个字节。</li>
+<li>**<code>double</code>**：表示双精度浮点数类型。通常占用8个字节。</li>
+</ul>
+<p> 示例代码：</p>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">float</span> num1 = <span class="number">3.14f</span>;  <span class="comment">// 后缀f表示单精度浮点数类型</span></span><br><span class="line"><span class="type">double</span> num2 = <span class="number">2.71828</span>;</span><br></pre></td></tr></table></figure></li>
+<li><p>字符型（Character）：</p>
+<ul>
+<li>**<code>char</code>**：表示字符类型。通常占用1个字节。</li>
+</ul>
+<p> 示例代码：</p>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> ch1 = <span class="string">&#x27;A&#x27;</span>;</span><br><span class="line"><span class="type">char</span> ch2 = <span class="string">&#x27;B&#x27;</span>;</span><br></pre></td></tr></table></figure></li>
+<li><p>布尔型（Boolean）：</p>
+<ul>
+<li>**<code>bool</code><strong>：表示布尔类型，只能取</strong><code>true</code><strong>（非零值）或</strong><code>false</code>**（零值）。</li>
+</ul>
+<p> 示例代码：</p>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdbool.h&gt;</span>  <span class="comment">// 需要包含stdbool.h头文件</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">bool</span> flag1 = <span class="literal">true</span>;</span><br><span class="line"><span class="type">bool</span> flag2 = <span class="literal">false</span>;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="数据类型示例代码"><a href="#数据类型示例代码" class="headerlink" title="数据类型示例代码"></a>数据类型示例代码</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdbool.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span> &#123;</span><br><span class="line">    <span class="comment">// 整型示例</span></span><br><span class="line">    <span class="type">int</span> num1 = <span class="number">10</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;整数num1 = %d，整型大小: %u 字节\n&quot;</span>, num1, <span class="keyword">sizeof</span>(num1));</span><br><span class="line"></span><br><span class="line">    <span class="type">short</span> num2 = <span class="number">20</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;短整数num2 = %hd，短整数大小: %u 字节\n&quot;</span>, num2, <span class="keyword">sizeof</span>(num2));</span><br><span class="line"></span><br><span class="line">    <span class="type">long</span> num3 = <span class="number">30L</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;长整数num3 = %ld，长整数大小: %u 字节\n&quot;</span>, num3, <span class="keyword">sizeof</span>(num3));</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 浮点型示例</span></span><br><span class="line">    <span class="type">float</span> num4 = <span class="number">3.14f</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;单精度浮点数num4 = %f，单精度浮点数大小: %u 字节\n&quot;</span>, num4, <span class="keyword">sizeof</span>(num4));</span><br><span class="line"></span><br><span class="line">    <span class="type">double</span> num5 = <span class="number">2.71828</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;双精度浮点数num5 = %lf，双精度浮点数大小: %u 字节\n&quot;</span>, num5, <span class="keyword">sizeof</span>(num5));</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 字符型示例</span></span><br><span class="line">    <span class="type">char</span> ch1 = <span class="string">&#x27;A&#x27;</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;字符ch1 = %c，字符大小: %u 字节\n&quot;</span>, ch1, <span class="keyword">sizeof</span>(ch1));</span><br><span class="line"></span><br><span class="line">    <span class="type">char</span> ch2 = <span class="number">66</span>;  <span class="comment">// ASCII码值</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;字符ch2 = %c，字符大小: %u 字节\n&quot;</span>, ch2, <span class="keyword">sizeof</span>(ch2));</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 布尔型示例</span></span><br><span class="line">    <span class="type">bool</span> flag1 = <span class="literal">true</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;布尔数flag1 = %d，布尔值大小: %u 字节\n&quot;</span>, flag1, <span class="keyword">sizeof</span>(flag1));</span><br><span class="line"></span><br><span class="line">    <span class="type">bool</span> flag2 = <span class="literal">false</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;布尔数flag2 = %d，布尔值大小: %u 字节\n&quot;</span>, flag2, <span class="keyword">sizeof</span>(flag2));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="C语言的运算符"><a href="#C语言的运算符" class="headerlink" title="C语言的运算符"></a>C语言的运算符</h2><p>C语言中有多种类型的运算符，用于执行各种算术、逻辑和位操作。以下是C语言中常见的运算符类型：</p>
+<ol>
+<li>算术运算符：用于执行基本的算术操作，如加法、减法、乘法、除法、取模等。<ul>
+<li>**<code>+</code>**：加法运算</li>
+<li><code>-</code>：减法运算</li>
+<li>*：乘法运算</li>
+<li>**<code>/</code>**：除法运算</li>
+<li>**<code>%</code>**：取模（取余）运算</li>
+</ul>
+</li>
+<li>关系运算符：用于比较两个值之间的关系，返回一个布尔值（1表示真，0表示假）。<ul>
+<li>**<code>==</code>**：等于</li>
+<li>**<code>!=</code>**：不等于</li>
+<li>**<code>&lt;</code>**：小于</li>
+<li>**<code>&gt;</code>**：大于</li>
+<li>**<code>&lt;=</code>**：小于等于</li>
+<li>**<code>&gt;=</code>**：大于等于</li>
+</ul>
+</li>
+<li>逻辑运算符：用于执行逻辑操作，对布尔值进行组合和求反。<ul>
+<li>**<code>&amp;&amp;</code>**：逻辑与（与）</li>
+<li>**<code>||</code>**：逻辑或（或）</li>
+<li>**<code>!</code>**：逻辑非（非）</li>
+</ul>
+</li>
+<li>位运算符：用于对二进制数据的位进行操作。<ul>
+<li>**<code>&amp;</code>**：按位与</li>
+<li>**<code>|</code>**：按位或</li>
+<li>**<code>^</code>**：按位异或</li>
+<li>**<code>~</code>**：按位取反</li>
+<li>**<code>&lt;&lt;</code>**：左移</li>
+<li>**<code>&gt;&gt;</code>**：右移</li>
+</ul>
+</li>
+<li>赋值运算符：用于给变量赋值。<ul>
+<li>**<code>=</code>**：简单赋值</li>
+<li>**<code>+=</code>**：加法赋值</li>
+<li>**<code>=</code>**：减法赋值</li>
+<li>**<code>=</code>**：乘法赋值</li>
+<li>**<code>/=</code>**：除法赋值</li>
+<li>**<code>%=</code>**：取模赋值</li>
+<li>**<code>&lt;&lt;=</code>**：左移赋值</li>
+<li>**<code>&gt;&gt;=</code>**：右移赋值</li>
+<li>**<code>&amp;=</code>**：按位与赋值</li>
+<li>**<code>|=</code>**：按位或赋值</li>
+<li>**<code>^=</code>**：按位异或赋值</li>
+</ul>
+</li>
+<li>自增和自减运算符：用于对变量进行递增或递减操作。<ul>
+<li>**<code>++</code>**：自增</li>
+<li>**<code>-</code>**：自减</li>
+</ul>
+</li>
+<li>条件运算符：用于根据条件选择不同的值。<ul>
+<li>**<code>? :</code>**：条件表达式，也称为三元运算符。</li>
+</ul>
+</li>
+<li>其他运算符：还有一些其他类型的运算符，如指针运算符、sizeof运算符、类型转换运算符等。</li>
+</ol>
+<h3 id="运算符优先级"><a href="#运算符优先级" class="headerlink" title="运算符优先级"></a>运算符优先级</h3><p><img src="https://raw.githubusercontent.com/yefreee/picture/main/note1.%E7%AC%AC%E4%B8%80%E5%91%A8-2023-06-09-11-36-00.png" alt="1.第一周-2023-06-09-11-36-00"></p>
+<p><img src="https://raw.githubusercontent.com/yefreee/picture/main/note1.%E7%AC%AC%E4%B8%80%E5%91%A8-2023-06-09-11-36-08.png" alt="1.第一周-2023-06-09-11-36-08"></p>
+<p><img src="https://raw.githubusercontent.com/yefreee/picture/main/note1.%E7%AC%AC%E4%B8%80%E5%91%A8-2023-06-09-11-36-21.png" alt="1.第一周-2023-06-09-11-36-21"></p>
+<h3 id="运算符优先级示例代码"><a href="#运算符优先级示例代码" class="headerlink" title="运算符优先级示例代码"></a>运算符优先级示例代码</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    int a = 5, b = 3, c = 7;</span><br><span class="line">    int result1 = a + b * c;        // 5 + 3 * 7 = 26</span><br><span class="line">    int result2 = (a + b) * c;      // (5 + 3) * 7 = 56</span><br><span class="line">    int result3 = a * b / c;        // 5 * 3 / 7 = 2</span><br><span class="line">    int result4 = a * (b / c);      // 5 * (3 / 7) = 0</span><br><span class="line">    int result5 = a % b + c;        // 5 % 3 + 7 = 9</span><br><span class="line">    int result6 = a &lt;&lt; b + c;       // 5 &lt;&lt; (3 + 7) = 512</span><br><span class="line">    int result7 = (a &lt;&lt; b) + c;     // (5 &lt;&lt; 3) + 7 = 47</span><br><span class="line">    int result8 = a &lt; b &amp;&amp; b &lt; c;   // 5 &lt; 3 &amp;&amp; 3 &lt; 7 = 0 (false)</span><br><span class="line">    int result9 = a &lt; b || b &lt; c;   // 5 &lt; 3 || 3 &lt; 7 = 1 (true)</span><br><span class="line">    int result10 = a == b ? c : a;  // 5 == 3 ? 7 : 5 = 5</span><br><span class="line"></span><br><span class="line">    printf(&quot;Result 1: %d\n&quot;, result1);</span><br><span class="line">    printf(&quot;Result 2: %d\n&quot;, result2);</span><br><span class="line">    printf(&quot;Result 3: %d\n&quot;, result3);</span><br><span class="line">    printf(&quot;Result 4: %d\n&quot;, result4);</span><br><span class="line">    printf(&quot;Result 5: %d\n&quot;, result5);</span><br><span class="line">    printf(&quot;Result 6: %d\n&quot;, result6);</span><br><span class="line">    printf(&quot;Result 7: %d\n&quot;, result7);</span><br><span class="line">    printf(&quot;Result 8: %d\n&quot;, result8);</span><br><span class="line">    printf(&quot;Result 9: %d\n&quot;, result9);</span><br><span class="line">    printf(&quot;Result 10: %d\n&quot;, result10);</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/23/linux_shell/10.text-processing-tools-awk/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/04/23/linux_shell/10.text-processing-tools-awk/" class="post-title-link" itemprop="url">文本处理工具awk</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-04-23 13:26:57" itemprop="dateCreated datePublished" datetime="2023-04-23T13:26:57+08:00">2023-04-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-04-25 23:02:24" itemprop="dateModified" datetime="2023-04-25T23:02:24+08:00">2023-04-25</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="awk简介"><a href="#awk简介" class="headerlink" title="awk简介"></a>awk简介</h2><p>awk是一种用于处理文本数据的工具，可以从文本文件或者标准输入、一个或多个文件中提取和处理数据。<br>awk以逐行扫描方式处理数据，从第一行到最后一行以查找匹配某个特定模式的文本行，并且对这些文本行执行指定动作。</p>
+<h2 id="awk版本"><a href="#awk版本" class="headerlink" title="awk版本"></a>awk版本</h2><p>awk有众多版本包括传统awk、新版awk、gawk等，其中gawk是GNU组织开发的版本，也是目前最流行和最广泛使用的awk版本。gawk在传统awk和nawk的基础上添加了许多新功能和改进，例如更丰富的正则表达式支持、高级的数学和字符串处理函数、用户自定义函数等。gawk通常作为<code>/bin/gawk</code>或<code>/usr/bin/gawk</code>提供，是GNU工具集中的一部分，可以在多个平台上使用。<br>不同的awk可能在语法、功能和性能方面略有不同，在使用awk时应注意选择合适的版本，根据具体需求和系统环境来决定使用哪个版本。</p>
+<h2 id="awk格式"><a href="#awk格式" class="headerlink" title="awk格式"></a>awk格式</h2><p>awk基本格式如下：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">awk &#x27;pattern &#123; action &#125;&#x27; file</span><br><span class="line">awk &#x27;&#123; action &#125;&#x27; file</span><br><span class="line">awk &#x27;pattern&#x27; file</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>pattern</code>: 可以是一个正则表达式，也可以是一个字符串或数字，用于匹配文本中的某个字段或整行</li>
+<li><code>action</code>: 是在匹配到的文本上执行的操作，可以是一个或多个命令，多个命令之间用换行或分号 <code>;</code> 分隔</li>
+<li><code>file</code>: 是输入文件的名称，没有<code>file</code>参数时从标准输入读取数据</li>
+</ul>
+<p>在awk命令中，<code>pattern</code>和<code>action</code>之间通过大括号 <code>&#123;&#125;</code> 进行分隔，<code>pattern</code>用于匹配文本行，当匹配成功时，对应的<code>action</code>将被执行。</p>
+<p>awk还支持在处理数据前和处理数据后运行命令，完整格式如下：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk &#x27;BEGIN &#123;command&#125; pattern &#123; action &#125; END &#123;command&#125;&#x27; file</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;10 20 30 40 50&quot;</span> | awk <span class="string">&#x27;BEGIN &#123;sum = 0; print &quot;sum:&quot;, sum&#125; &#123;sum += $1&#125; END &#123;print &quot;Sum:&quot;, sum&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/yefreee/picture/main/note10.text-processing-tools-awk-2023-04-24-09-42-32.png" alt="10.text-processing-tools-awk-2023-04-24-09-42-32"></p>
+<h2 id="从标准输入读取数据"><a href="#从标准输入读取数据" class="headerlink" title="从标准输入读取数据"></a>从标准输入读取数据</h2><h3 id="从命令行读取数据"><a href="#从命令行读取数据" class="headerlink" title="从命令行读取数据"></a>从命令行读取数据</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@6e455ed15da7:~$ awk <span class="string">&#x27;&#123;print &quot;Hello World&quot;&#125;&#x27;</span></span><br><span class="line"><span class="built_in">test</span></span><br><span class="line">Hello World</span><br><span class="line">abc</span><br><span class="line">Hello World</span><br></pre></td></tr></table></figure>
+
+<p>以上awk命令没有指定<code>file</code>参数，awk不会直接给出运行结果，它会等待标准输入的数据，当用户输入字符后awk会执行相应的命令并产生输出。如果要终止awk程序需要使用<code>Ctrl+D</code>产生一个EOF字符，此时会返回到命令行下。</p>
+<h3 id="通过管道符号从命令读取数据"><a href="#通过管道符号从命令读取数据" class="headerlink" title="通过管道符号从命令读取数据"></a>通过管道符号从命令读取数据</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@6e455ed15da7:~$ ps -aux|awk <span class="string">&#x27;/bash/&#x27;</span></span><br><span class="line">root           1  0.0  0.0  18228  3012 pts/0    Ss+  Apr22   0:00 /bin/bash</span><br><span class="line">root          11  0.0  0.0  18232  3240 pts/1    Ss   13:36   0:00 /bin/bash</span><br><span class="line">ubuntu       269  0.0  0.0  18228  3144 pts/1    S    13:39   0:00 bash</span><br></pre></td></tr></table></figure>
+
+<p>以上awk命令通过管道符号<code>|</code>从前面一个命令的输出结果从读取数据进行处理。</p>
+<h2 id="从文件中读取数据和命令"><a href="#从文件中读取数据和命令" class="headerlink" title="从文件中读取数据和命令"></a>从文件中读取数据和命令</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@6e455ed15da7:~$ awk <span class="string">&#x27;/Alice/&#x27;</span> example.txt</span><br><span class="line">Alice,25,Female,New York</span><br><span class="line">ubuntu@6e455ed15da7:~$ awk <span class="string">&#x27;/Male/&#x27;</span> example.txt</span><br><span class="line">Bob,30,Male,Los Angeles</span><br><span class="line">Charlie,22,Male,Chicago</span><br><span class="line">David,35,Male,Houston</span><br></pre></td></tr></table></figure>
+
+<p>以上awk命令指定了<code>file</code>参数，awk会从文件中以行为单位读取数据并且使用<code>pattern</code>所表示的匹配模式进行数据匹配，由于没有指定<code>action</code>参数，awk将匹配到的数据直接输出到标准输出。</p>
+<p>awk和sed一样可以从文件中读取命令：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk -f script_file.awk example.txt</span><br></pre></td></tr></table></figure>
+
+<h2 id="awk工作原理"><a href="#awk工作原理" class="headerlink" title="awk工作原理"></a>awk工作原理</h2><ol>
+<li>awk对文件或者标准输入的内容一次只处理一行，将获取到的这一行数据赋给变量$0</li>
+<li>这一行的内容按awk内部变量FS定义的分隔符（缺省为空格，包括制表符tab）分解成多个字段，每一个字段存储在从$1开始的变量中。</li>
+</ol>
+<p>以以下数据为例：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Name Age Gender City</span><br><span class="line">Alice 25 Female New York</span><br><span class="line">Bob 30 Male Los Angeles</span><br><span class="line">Charlie 22 Male Chicago</span><br><span class="line">David 35 Male Houston</span><br><span class="line">Eve 28 Female Miami</span><br></pre></td></tr></table></figure>
+
+<p>以下awk命令的运行结果：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@6e455ed15da7:~$ awk <span class="string">&#x27;&#123;print $1,$3&#125;&#x27;</span> example.txt</span><br><span class="line">Name Gender</span><br><span class="line">Alice Female</span><br><span class="line">Bob Male</span><br><span class="line">Charlie Male</span><br><span class="line">David Male</span><br><span class="line">Eve Female</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>awk首先将第一行数据存放在变量$0中进行处理。</li>
+<li>将<code>$0</code>中的数据以空格为分隔符（内部变量<code>FS</code>所定义）进行分解，分别存放在从<code>$1</code>开始的内部变量中。</li>
+<li>在输出结果的每一行中第一个字段是存放在<code>$1</code>中的数据，第二个字段是存放在<code>$3</code>中的数据。</li>
+<li>awk命令中的逗号映射为一个内部变量-输出字段分隔符<code>OFS</code>（默认为空格）两个字段之间由空格间隔。</li>
+<li>处理完一行数据后读取下一行数据到<code>$0</code>中进行处理直到所以数据处理完毕。</li>
+</ol>
+<h2 id="格式化输出"><a href="#格式化输出" class="headerlink" title="格式化输出"></a>格式化输出</h2><h3 id="print函数"><a href="#print函数" class="headerlink" title="print函数"></a>print函数</h3><p>print函数用于打印不需要特别编排格式的简单输出。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@6e455ed15da7:~$ awk <span class="string">&#x27;&#123;print &quot;Name:&quot; $1 &quot;Age:&quot; $2&#125;&#x27;</span> example.txt</span><br><span class="line">Name:NameAge:Age</span><br><span class="line">Name:AliceAge:25</span><br><span class="line">Name:BobAge:30</span><br><span class="line">Name:CharlieAge:22</span><br><span class="line">Name:DavidAge:35</span><br><span class="line">Name:EveAge:28</span><br><span class="line">ubuntu@6e455ed15da7:~$ awk <span class="string">&#x27;&#123;print &quot;Name:&quot; $1, &quot;Age:&quot; $2&#125;&#x27;</span> example.txt</span><br><span class="line">Name:Name Age:Age</span><br><span class="line">Name:Alice Age:25</span><br><span class="line">Name:Bob Age:30</span><br><span class="line">Name:Charlie Age:22</span><br><span class="line">Name:David Age:35</span><br><span class="line">Name:Eve Age:28</span><br></pre></td></tr></table></figure>
+
+<p>逗号<code>,</code>表示内部变量<code>OFS</code>（用来表示输出字段的分隔符，默认为空格）。<br>print还支持以下转义序列：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">\b：退格符（ASCII 008）</span><br><span class="line">\t：制表符（ASCII 009）</span><br><span class="line">\n：换行符（ASCII 010）</span><br><span class="line">\f：换页符（ASCII 012）</span><br><span class="line">\r：回车符（ASCII 013）</span><br></pre></td></tr></table></figure>
+
+<p>print中使用转义序列进行数据输出：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@6e455ed15da7:~$ awk <span class="string">&#x27;&#123;print &quot;Name:&quot; $1 &quot;\tAge:&quot; $2&#125;&#x27;</span> example.txt</span><br><span class="line">Name:Name       Age:Age</span><br><span class="line">Name:Alice      Age:25</span><br><span class="line">Name:Bob        Age:30</span><br><span class="line">Name:Charlie    Age:22</span><br><span class="line">Name:David      Age:35</span><br><span class="line">Name:Eve        Age:28</span><br></pre></td></tr></table></figure>
+
+<h3 id="printf函数"><a href="#printf函数" class="headerlink" title="printf函数"></a>printf函数</h3><p><code>printf</code>函数能够进行更加精细的格式化输出，用法和C语言中<code>printf</code>函数的用法一样。语句中包含一个加引号的控制串，控制串中包含若干格式说明和修饰符。控制串后面跟一个逗号，之后是一列由逗号分隔的表达式。<code>printf</code>会根据控制串来编排表达式的格式。<br><code>printf</code>和<code>print</code>不同的是printf在行尾不会自动换行，如果要换行必须使用转义字符<code>\n</code></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@6e455ed15da7:~$ awk <span class="string">&#x27;&#123;printf &quot;[Name:%-10s]\tAge:%s&quot;, $1, $2&#125;&#x27;</span> example.txt</span><br><span class="line">[Name:Name      ]       Age:Age[Name:Alice     ]        Age:25[Name:Bob       ] Age:30[Name:Charlie   ]      Age:22[Name:David     ] Age:35[Name:Eve       ] Age:28ubuntu@6e455ed15da7:~$ awk <span class="string">&#x27;&#123;printf &quot;[Name:%-10s]\tAge:%s\n&quot;, $1, $2&#125;&#x27;</span> example.txt</span><br><span class="line">[Name:Name      ]       Age:Age</span><br><span class="line">[Name:Alice     ]       Age:25</span><br><span class="line">[Name:Bob       ]       Age:30</span><br><span class="line">[Name:Charlie   ]       Age:22</span><br><span class="line">[Name:David     ]       Age:35</span><br><span class="line">[Name:Eve       ]       Age:28</span><br></pre></td></tr></table></figure>
+
+<h2 id="记录与字段"><a href="#记录与字段" class="headerlink" title="记录与字段"></a>记录与字段</h2><h3 id="记录"><a href="#记录" class="headerlink" title="记录"></a>记录</h3><p>在awk中每一行数据称为一条记录，以换行符结束。</p>
+<ul>
+<li>记录分隔符：默认情况下，输入和输出记录的分隔符都是回车符，分别保存在内部变量<code>ORS</code>和<code>RS</code>中。</li>
+<li>变量<code>$0</code>表示当前整条记录，变量NR表示当前记录的记录号，每处理一条记录，NR值加一。</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@6e455ed15da7:~$ awk <span class="string">&#x27;&#123;print NR,$0&#125;&#x27;</span> example.txt</span><br><span class="line">1 Name Age Gender City</span><br><span class="line">2 Alice 25 Female New York</span><br><span class="line">3 Bob 30 Male Los Angeles</span><br><span class="line">4 Charlie 22 Male Chicago</span><br><span class="line">5 David 35 Male Houston</span><br><span class="line">6 Eve 28 Female Miami</span><br></pre></td></tr></table></figure>
+
+<h3 id="字段"><a href="#字段" class="headerlink" title="字段"></a>字段</h3><p>每一条记录都是由称为字段的词组成，默认情况下字段之间用空白符（空格或者制表符）分隔。<code>NF</code>变量保存每个记录的字段数量。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@6e455ed15da7:~$ awk <span class="string">&#x27;&#123;print NF,$0&#125;&#x27;</span> example.txt</span><br><span class="line">4 Name Age Gender City</span><br><span class="line">5 Alice 25 Female New York</span><br><span class="line">5 Bob 30 Male Los Angeles</span><br><span class="line">4 Charlie 22 Male Chicago</span><br><span class="line">4 David 35 Male Houston</span><br><span class="line">4 Eve 28 Female Miami</span><br></pre></td></tr></table></figure>
+
+<h3 id="字段分隔符"><a href="#字段分隔符" class="headerlink" title="字段分隔符"></a>字段分隔符</h3><p>字段分隔符由内部变量<code>FS</code>保存，可以在命令中通过<code>-F</code>选项修改<code>FS</code>的值。<br>先使用<code>sed</code>命令将<code>example.txt</code>文件中的空格替换为逗号：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@6e455ed15da7:~$ sed -i <span class="string">&#x27;s/ /,/g&#x27;</span> example.txt</span><br><span class="line">ubuntu@6e455ed15da7:~$ <span class="built_in">cat</span> example.txt</span><br><span class="line">Name,Age,Gender,City</span><br><span class="line">Alice,25,Female,New,York</span><br><span class="line">Bob,30,Male,Los,Angeles</span><br><span class="line">Charlie,22,Male,Chicago</span><br><span class="line">David,35,Male,Houston</span><br><span class="line">Eve,28,Female,Miami</span><br></pre></td></tr></table></figure>
+
+<p>然后使用awk并通过<code>-F</code>选项替换分隔符进行输出：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@6e455ed15da7:~$ awk <span class="string">&#x27;&#123;print &quot;Name:&quot; $1, &quot;Age:&quot; $2&#125;&#x27;</span> example.txt</span><br><span class="line">Name:Name,Age,Gender,City Age:</span><br><span class="line">Name:Alice,25,Female,New,York Age:</span><br><span class="line">Name:Bob,30,Male,Los,Angeles Age:</span><br><span class="line">Name:Charlie,22,Male,Chicago Age:</span><br><span class="line">Name:David,35,Male,Houston Age:</span><br><span class="line">Name:Eve,28,Female,Miami Age:</span><br><span class="line">ubuntu@6e455ed15da7:~$ awk -F, <span class="string">&#x27;&#123;print &quot;Name:&quot; $1, &quot;Age:&quot; $2&#125;&#x27;</span> example.txt</span><br><span class="line">Name:Name Age:Age</span><br><span class="line">Name:Alice Age:25</span><br><span class="line">Name:Bob Age:30</span><br><span class="line">Name:Charlie Age:22</span><br><span class="line">Name:David Age:35</span><br><span class="line">Name:Eve Age:28</span><br></pre></td></tr></table></figure>
+
+<h2 id="匹配模式与正则表达式"><a href="#匹配模式与正则表达式" class="headerlink" title="匹配模式与正则表达式"></a>匹配模式与正则表达式</h2><h3 id="匹配模式"><a href="#匹配模式" class="headerlink" title="匹配模式"></a>匹配模式</h3><p>awk中的模式可以是一个正则表达式或者用来判定条件真伪的表达式。</p>
+<p>使用<code>Alice</code>进行数据匹配：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@6e455ed15da7:~$ <span class="built_in">cat</span> example.txt</span><br><span class="line">Name Age Gender City</span><br><span class="line">Alice 25 Female New York</span><br><span class="line">Bob 30 Male Los Angeles</span><br><span class="line">Charlie 22 Male Chicago</span><br><span class="line">David 35 Male Houston</span><br><span class="line">Eve 28 Female Miami</span><br><span class="line">ubuntu@6e455ed15da7:~$ awk <span class="string">&#x27;/Alice/&#x27;</span> example.txt</span><br><span class="line">Alice 25 Female New York</span><br></pre></td></tr></table></figure>
+
+<p>使用条件表达式进行数据匹配：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@6e455ed15da7:~$ <span class="built_in">cat</span> example.txt</span><br><span class="line">Name Age Gender City</span><br><span class="line">Alice 25 Female New York</span><br><span class="line">Bob 30 Male Los Angeles</span><br><span class="line">Charlie 22 Male Chicago</span><br><span class="line">David 35 Male Houston</span><br><span class="line">Eve 28 Female Miami</span><br><span class="line">ubuntu@6e455ed15da7:~$ awk <span class="string">&#x27;$2 &lt; 25&#x27;</span> example.txt</span><br><span class="line">Charlie 22 Male Chicago</span><br></pre></td></tr></table></figure>
+
+<h3 id="正则表达式模式与操作"><a href="#正则表达式模式与操作" class="headerlink" title="正则表达式模式与操作"></a>正则表达式模式与操作</h3><p>使用正则表达式模式<code>Alice</code>进行数据匹配，然后通过<code>print</code>函数进行格式化输出：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@6e455ed15da7:~$ awk <span class="string">&#x27;/Alice/&#123;print &quot;Name:&quot; $1&#125;&#x27;</span> example.txt</span><br><span class="line">Name:Alice</span><br><span class="line">ubuntu@6e455ed15da7:~$ <span class="built_in">cat</span> example.txt</span><br><span class="line">Name Age Gender City</span><br><span class="line">Alice 25 Female New York</span><br><span class="line">Bob 30 Male Los Angeles</span><br><span class="line">Charlie 22 Male Chicago</span><br><span class="line">David 35 Male Houston</span><br><span class="line">Eve 28 Female Miami</span><br><span class="line">ubuntu@6e455ed15da7:~$ awk <span class="string">&#x27;/Alice/&#123;print &quot;Name:&quot; $1&#125;&#x27;</span> example.txt</span><br><span class="line">Name:Alice</span><br></pre></td></tr></table></figure>
+
+<p>格式化输出<code>example.txt</code>文件中所有以大写字母<code>A-C</code>开头的行：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@6e455ed15da7:~$ <span class="built_in">cat</span> example.txt</span><br><span class="line">Name Age Gender City</span><br><span class="line">Alice 25 Female New York</span><br><span class="line">Bob 30 Male Los Angeles</span><br><span class="line">Charlie 22 Male Chicago</span><br><span class="line">David 35 Male Houston</span><br><span class="line">Eve 28 Female Miami</span><br><span class="line">ubuntu@6e455ed15da7:~$ awk <span class="string">&#x27;/^[A-C]+.*/&#123;print &quot;Name:&quot; $1&#125;&#x27;</span> example.txt</span><br><span class="line">Name:Alice</span><br><span class="line">Name:Bob</span><br><span class="line">Name:Charlie</span><br></pre></td></tr></table></figure>
+
+<h2 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h2><h3 id="显示系统下各用户所使用的shell"><a href="#显示系统下各用户所使用的shell" class="headerlink" title="显示系统下各用户所使用的shell"></a>显示系统下各用户所使用的shell</h3><p>查看当前<code>/etc/passwd</code>格式：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@6e455ed15da7:~$ <span class="built_in">cat</span> /etc/passwd|<span class="built_in">head</span></span><br><span class="line">root:x:0:0:root:/root:/bin/bash</span><br></pre></td></tr></table></figure>
+
+<p>使用awk显示各用户使用的shell:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">User:root Shell:/bin/bash</span><br><span class="line">User:daemon Shell:/usr/sbin/nologin</span><br><span class="line">User:bin Shell:/usr/sbin/nologin</span><br><span class="line">User:sys Shell:/usr/sbin/nologin</span><br><span class="line">User:<span class="built_in">sync</span> Shell:/bin/sync</span><br><span class="line">User:games Shell:/usr/sbin/nologin</span><br><span class="line">User:man Shell:/usr/sbin/nologin</span><br><span class="line">User:lp Shell:/usr/sbin/nologin</span><br><span class="line">User:mail Shell:/usr/sbin/nologin</span><br><span class="line">User:news Shell:/usr/sbin/nologin</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/18/linux_shell/1.Shell%E5%88%9D%E8%AF%86%EF%BC%8C%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/04/18/linux_shell/1.Shell%E5%88%9D%E8%AF%86%EF%BC%8C%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8/" class="post-title-link" itemprop="url">Shell初始,编辑器使用</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-04-18 11:31:25" itemprop="dateCreated datePublished" datetime="2023-04-18T11:31:25+08:00">2023-04-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-06-09 00:25:07" itemprop="dateModified" datetime="2023-06-09T00:25:07+08:00">2023-06-09</time>
     </span>
 
   
@@ -191,19 +662,19 @@
           <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">虚拟机：ubuntu14045</span><br><span class="line">登录账号：llx</span><br><span class="line">密码：ubuntu</span><br></pre></td></tr></table></figure>
 
 <ol>
-<li>什么是Shell 现在人们使用的操作系统（Windows、Android、iOS等）都带有图形界面，简单直观，容易上手。然而早期的计算机并没有图形界面，人们只能使用烦琐的命令来控制计算机。其实，真正能够控制计算机硬件（CPU、内存、显示器）的只有操作系统内核（Kernel），图形界面和命令行都是架设在用户和内核之间的桥梁，是为了方便用户控制计算机而存在的。由于安全等原因，用户不能直接接触内核，因此需要在用户和内核之间增加“命令解释器”，既能简化用户的操作，又能保障内核的安全。在Linux下的命令解释器叫作“Shell”，它能让用户更加高效、安全、低成本地使用Linux内核。 <img src="Untitled.png" alt="Untitled"></li>
+<li>什么是Shell 现在人们使用的操作系统（Windows、Android、iOS等）都带有图形界面，简单直观，容易上手。然而早期的计算机并没有图形界面，人们只能使用烦琐的命令来控制计算机。其实，真正能够控制计算机硬件（CPU、内存、显示器）的只有操作系统内核（Kernel），图形界面和命令行都是架设在用户和内核之间的桥梁，是为了方便用户控制计算机而存在的。由于安全等原因，用户不能直接接触内核，因此需要在用户和内核之间增加“命令解释器”，既能简化用户的操作，又能保障内核的安全。在Linux下的命令解释器叫作“Shell”，它能让用户更加高效、安全、低成本地使用Linux内核。 <img src="https://raw.githubusercontent.com/yefreee/picture/main/note1.Shell%E5%88%9D%E8%AF%86%EF%BC%8C%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8-2023-04-19-18-53-43.png" alt="1.Shell初识，编辑器使用-2023-04-19-18-53-43"></li>
 <li>Shell的各种版本：<ol>
 <li>Bourne shell（sh）是Unix系统中最古老的shell，也是现在大多数shell的基础。它的命令行语法较为简单，缺乏一些高级特性，但是在大多数Unix系统中都内置了这个shell，因此可以保证可移植性。尽管Bourne shell已经被多种先进的shell所取代，但它作为shell编程的鼻祖，仍然具有重要的历史和学习价值。</li>
 <li>Bourne Again Shell （bash）是Linux操作系统所使用的Shell，它是Bourne Shell的扩展，简称bash。bash与Bourne Shell完全向下兼容，也就是说bash可以兼容相同版本的Bourne Shell。bash在Bourne Shell的基础上增加、增强了很多特性，所以它比Bourne Shell能力更强。</li>
 <li>zsh（Z shell）是Bourne shell（sh）的一个增强版本。与bash相比，zsh具有更好的命令补全功能、更好的主题和插件支持、更好的脚本语言、更好的历史命令管理和更好的可定制性。它还有许多其他功能，如自动提示，文件名扩展，别名扩展等。zsh是一种功能强大、易于使用和高度可定制的Shell，适用于任何需要使用命令行的用户。</li>
 <li>练习：查看Shell版本、更换默认Shell</li>
 </ol>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">##查看当前Shell版本</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$SHELL</span></span><br><span class="line"></span><br><span class="line"><span class="comment">##查看系统当前可用Shell</span></span><br><span class="line"><span class="built_in">cat</span> /etc/shells</span><br><span class="line"></span><br><span class="line"><span class="comment">##更换默认Shell</span></span><br><span class="line">chsh -s /bin/zsh</span><br><span class="line"></span><br><span class="line"><span class="comment">##退出当前登录状态重新登录</span></span><br></pre></td></tr></table></figure>
+ <figure class="highlight bash"><figcaption><span>##查看当前Shell版本</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="variable">$SHELL</span></span><br><span class="line"></span><br><span class="line"><span class="comment">##查看系统当前可用Shell</span></span><br><span class="line"><span class="built_in">cat</span> /etc/shells</span><br><span class="line"></span><br><span class="line"><span class="comment">##更换默认Shell</span></span><br><span class="line">chsh -s /bin/zsh</span><br><span class="line"></span><br><span class="line"><span class="comment">##退出当前登录状态重新登录</span></span><br></pre></td></tr></table></figure>
 </li>
 <li>Shell的启动方式和提示符<ol>
 <li>终端上启动 Shell会以交互模式启动，提示符会显示在屏幕上，等待用户输入命令。 用户输入命令后，Shell会解释和执行这些命令，并将执行结果输出到终端上。 在终端启动模式下，Shell会自动设置一些环境变量，如PATH等，以便用户可以方便地执行命令。</li>
 <li>脚本启动 脚本启动是将Shell命令写入一个脚本文件中，然后通过执行这个脚本文件来启动Shell。它的基本过程如下： （1）创建一个包含Shell命令的脚本文件（通常以.sh作为扩展名）。 （2）将脚本文件保存到磁盘上，并赋予执行权限。 （3）在终端中输入脚本文件的路径，并按下回车键。 （4）Shell会读取脚本文件中的命令，并依次执行这些命令。 脚本启动模式适用于需要重复执行的一系列命令，可以将这些命令写入脚本文件中，并通过脚本文件来执行这些命令。此外，脚本启动模式还支持各种Shell的内置命令和选项。</li>
-<li>练习修改系统提示符: <code>vim ~/.bashrc</code> 中的PS1变量 <img src="Untitled%201.png" alt="Untitled"></li>
+<li>练习修改系统提示符: <code>vim ~/.bashrc</code> 中的PS1变量 <img src="https://raw.githubusercontent.com/yefreee/picture/main/note1.Shell%E5%88%9D%E8%AF%86%EF%BC%8C%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8-2023-04-19-19-21-30.png" alt="1.Shell初识，编辑器使用-2023-04-19-19-21-30"></li>
 </ol>
 </li>
 <li>Linux的文件系统结构<ul>
@@ -213,7 +684,7 @@
 </ul>
 </li>
 <li>文件目录相关命令<ol>
-<li>文件权限 <img src="Untitled%202.png" alt="Untitled"></li>
+<li>文件权限 <img src="https://raw.githubusercontent.com/yefreee/picture/main/note1.Shell%E5%88%9D%E8%AF%86%EF%BC%8C%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8-2023-04-19-23-41-03.png" alt="1.Shell初识，编辑器使用-2023-04-19-23-41-03"></li>
 <li><strong>Linux基本文件和目录命令使用综合练习题</strong><ol>
 <li>新建一个名为<code>test</code>的目录，进入该目录并新建一个名为<code>file.txt</code>的文件。</li>
 <li>将<code>file.txt</code>复制到<code>test</code>目录下，并将其重命名为<code>file2.txt</code>。</li>
@@ -230,9 +701,9 @@
 </li>
 <li>VIM使用<ol>
 <li>学习平台： <a target="_blank" rel="noopener" href="https://yianwillis.github.io/vimcdoc/doc/intro.html#intro.txt">VIM官方文档</a> <a target="_blank" rel="noopener" href="https://command-lab.com/cat-vim-ch-s/">VIM基础练习平台</a> <a target="_blank" rel="noopener" href="https://github.com/MeiTianT/vim-galore-zh_cn#%E6%8C%89%E9%94%AE%E6%98%A0%E5%B0%84">VIM进阶</a> <a target="_blank" rel="noopener" href="https://www.vimgolf.com/">vimgolf：国外VIM进阶练习</a></li>
-<li>vim常用命令</li>
+<li>vim常用命令 <img src="https://raw.githubusercontent.com/yefreee/picture/main/note1.Shell%E5%88%9D%E8%AF%86%EF%BC%8C%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8-2023-04-19-23-41-33.png" alt="1.Shell初识，编辑器使用-2023-04-19-23-41-33"></li>
 </ol>
- <img src="Untitled%203.png" alt="Untitled"></li>
+</li>
 </ol>
 
       
@@ -260,7 +731,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/18/2.%E6%9E%84%E5%BB%BA%E5%9F%BA%E6%9C%AC%E8%84%9A%E6%9C%AC/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/18/linux_shell/2.%E6%9E%84%E5%BB%BA%E5%9F%BA%E6%9C%AC%E8%84%9A%E6%9C%AC/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -273,12 +744,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | null">
+      <meta itemprop="name" content="undefined | ">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/04/18/2.%E6%9E%84%E5%BB%BA%E5%9F%BA%E6%9C%AC%E8%84%9A%E6%9C%AC/" class="post-title-link" itemprop="url">构建基本脚本</a>
+          <a href="/2023/04/18/linux_shell/2.%E6%9E%84%E5%BB%BA%E5%9F%BA%E6%9C%AC%E8%84%9A%E6%9C%AC/" class="post-title-link" itemprop="url">构建基本脚本</a>
         </h2>
 
         <div class="post-meta-container">
@@ -288,9 +759,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2023-04-18 11:31:23 / Modified: 23:20:11" itemprop="dateCreated datePublished" datetime="2023-04-18T11:31:23+08:00">2023-04-18</time>
+      <time title="Created: 2023-04-18 11:31:23" itemprop="dateCreated datePublished" datetime="2023-04-18T11:31:23+08:00">2023-04-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-04-25 23:02:24" itemprop="dateModified" datetime="2023-04-25T23:02:24+08:00">2023-04-25</time>
     </span>
 
   
@@ -416,7 +893,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/18/3.Shell%E6%9D%A1%E4%BB%B6%E6%B5%8B%E8%AF%95/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/18/linux_shell/3.Shell%E6%9D%A1%E4%BB%B6%E6%B5%8B%E8%AF%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -429,12 +906,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | null">
+      <meta itemprop="name" content="undefined | ">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/04/18/3.Shell%E6%9D%A1%E4%BB%B6%E6%B5%8B%E8%AF%95/" class="post-title-link" itemprop="url">Shell条件测试</a>
+          <a href="/2023/04/18/linux_shell/3.Shell%E6%9D%A1%E4%BB%B6%E6%B5%8B%E8%AF%95/" class="post-title-link" itemprop="url">Shell条件测试</a>
         </h2>
 
         <div class="post-meta-container">
@@ -444,9 +921,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2023-04-18 11:31:23 / Modified: 23:19:49" itemprop="dateCreated datePublished" datetime="2023-04-18T11:31:23+08:00">2023-04-18</time>
+      <time title="Created: 2023-04-18 11:31:23" itemprop="dateCreated datePublished" datetime="2023-04-18T11:31:23+08:00">2023-04-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-04-25 23:02:24" itemprop="dateModified" datetime="2023-04-25T23:02:24+08:00">2023-04-25</time>
     </span>
 
   
@@ -543,7 +1026,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/18/4.Shell%E5%BE%AA%E7%8E%AF/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/18/linux_shell/4.Shell%E5%BE%AA%E7%8E%AF/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -556,12 +1039,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | null">
+      <meta itemprop="name" content="undefined | ">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/04/18/4.Shell%E5%BE%AA%E7%8E%AF/" class="post-title-link" itemprop="url">Shell循环</a>
+          <a href="/2023/04/18/linux_shell/4.Shell%E5%BE%AA%E7%8E%AF/" class="post-title-link" itemprop="url">Shell循环</a>
         </h2>
 
         <div class="post-meta-container">
@@ -571,9 +1054,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2023-04-18 11:31:23 / Modified: 23:19:28" itemprop="dateCreated datePublished" datetime="2023-04-18T11:31:23+08:00">2023-04-18</time>
+      <time title="Created: 2023-04-18 11:31:23" itemprop="dateCreated datePublished" datetime="2023-04-18T11:31:23+08:00">2023-04-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-04-25 23:02:24" itemprop="dateModified" datetime="2023-04-25T23:02:24+08:00">2023-04-25</time>
     </span>
 
   
@@ -645,7 +1134,7 @@
 
 <p>其中，<code>条件</code>是一个可以执行的测试命令或表达式，如果返回值为0，则为假，循环继续执行；否则为真，循环结束。</p>
 <p>例如，下面的代码中，<code>until</code> 循环会一直执行，直到变量 <code>i</code> 的值达到 5：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">i=1</span><br><span class="line">until [ <span class="variable">$i</span> -gt 5 ]</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;当前变量的值是 <span class="variable">$i</span>&quot;</span></span><br><span class="line">    i=$(( <span class="variable">$i</span> + <span class="number">1</span> ))</span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">i=1</span><br><span class="line"><span class="keyword">until</span> [ <span class="variable">$i</span> -gt 5 ]</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;当前变量的值是 <span class="variable">$i</span>&quot;</span></span><br><span class="line">    i=$(( <span class="variable">$i</span> + <span class="number">1</span> ))</span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>以上代码会输出以下结果：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">当前变量的值是 1</span><br><span class="line">当前变量的值是 2</span><br><span class="line">当前变量的值是 3</span><br><span class="line">当前变量的值是 4</span><br><span class="line">当前变量的值是 5</span><br><span class="line"></span><br></pre></td></tr></table></figure>
@@ -686,7 +1175,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/18/5.%E5%A4%84%E7%90%86%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/18/linux_shell/5.%E5%A4%84%E7%90%86%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -699,12 +1188,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | null">
+      <meta itemprop="name" content="undefined | ">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/04/18/5.%E5%A4%84%E7%90%86%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5/" class="post-title-link" itemprop="url">处理用户输入</a>
+          <a href="/2023/04/18/linux_shell/5.%E5%A4%84%E7%90%86%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5/" class="post-title-link" itemprop="url">处理用户输入</a>
         </h2>
 
         <div class="post-meta-container">
@@ -714,9 +1203,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2023-04-18 11:31:23 / Modified: 23:19:03" itemprop="dateCreated datePublished" datetime="2023-04-18T11:31:23+08:00">2023-04-18</time>
+      <time title="Created: 2023-04-18 11:31:23" itemprop="dateCreated datePublished" datetime="2023-04-18T11:31:23+08:00">2023-04-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-04-25 23:02:24" itemprop="dateModified" datetime="2023-04-25T23:02:24+08:00">2023-04-25</time>
     </span>
 
   
@@ -813,7 +1308,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/18/6.%E4%BD%BF%E7%94%A8%E9%87%8D%E5%AE%9A%E5%90%91%E5%91%88%E7%8E%B0%E6%95%B0%E6%8D%AE/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/18/linux_shell/6.%E4%BD%BF%E7%94%A8%E9%87%8D%E5%AE%9A%E5%90%91%E5%91%88%E7%8E%B0%E6%95%B0%E6%8D%AE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -826,12 +1321,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | null">
+      <meta itemprop="name" content="undefined | ">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/04/18/6.%E4%BD%BF%E7%94%A8%E9%87%8D%E5%AE%9A%E5%90%91%E5%91%88%E7%8E%B0%E6%95%B0%E6%8D%AE/" class="post-title-link" itemprop="url">使用重定向呈现数据</a>
+          <a href="/2023/04/18/linux_shell/6.%E4%BD%BF%E7%94%A8%E9%87%8D%E5%AE%9A%E5%90%91%E5%91%88%E7%8E%B0%E6%95%B0%E6%8D%AE/" class="post-title-link" itemprop="url">使用重定向呈现数据</a>
         </h2>
 
         <div class="post-meta-container">
@@ -841,9 +1336,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2023-04-18 11:31:23 / Modified: 23:18:23" itemprop="dateCreated datePublished" datetime="2023-04-18T11:31:23+08:00">2023-04-18</time>
+      <time title="Created: 2023-04-18 11:31:23" itemprop="dateCreated datePublished" datetime="2023-04-18T11:31:23+08:00">2023-04-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-04-25 23:02:24" itemprop="dateModified" datetime="2023-04-25T23:02:24+08:00">2023-04-25</time>
     </span>
 
   
@@ -963,7 +1464,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/18/7.Shell%E5%87%BD%E6%95%B0/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/18/linux_shell/7.Shell%E5%87%BD%E6%95%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -976,12 +1477,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | null">
+      <meta itemprop="name" content="undefined | ">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/04/18/7.Shell%E5%87%BD%E6%95%B0/" class="post-title-link" itemprop="url">Shell函数</a>
+          <a href="/2023/04/18/linux_shell/7.Shell%E5%87%BD%E6%95%B0/" class="post-title-link" itemprop="url">Shell函数</a>
         </h2>
 
         <div class="post-meta-container">
@@ -991,9 +1492,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2023-04-18 11:31:23 / Modified: 23:17:50" itemprop="dateCreated datePublished" datetime="2023-04-18T11:31:23+08:00">2023-04-18</time>
+      <time title="Created: 2023-04-18 11:31:23" itemprop="dateCreated datePublished" datetime="2023-04-18T11:31:23+08:00">2023-04-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-04-25 23:02:24" itemprop="dateModified" datetime="2023-04-25T23:02:24+08:00">2023-04-25</time>
     </span>
 
   
@@ -1114,7 +1621,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/18/8.%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/18/linux_shell/8.%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -1127,12 +1634,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | null">
+      <meta itemprop="name" content="undefined | ">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/04/18/8.%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="post-title-link" itemprop="url">正则表达式</a>
+          <a href="/2023/04/18/linux_shell/8.%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="post-title-link" itemprop="url">正则表达式</a>
         </h2>
 
         <div class="post-meta-container">
@@ -1142,9 +1649,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2023-04-18 11:31:23 / Modified: 23:18:38" itemprop="dateCreated datePublished" datetime="2023-04-18T11:31:23+08:00">2023-04-18</time>
+      <time title="Created: 2023-04-18 11:31:23" itemprop="dateCreated datePublished" datetime="2023-04-18T11:31:23+08:00">2023-04-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-04-25 23:02:24" itemprop="dateModified" datetime="2023-04-25T23:02:24+08:00">2023-04-25</time>
     </span>
 
   
@@ -1380,140 +1893,9 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/18/9.%E6%B5%81%E7%BC%96%E8%BE%91%E5%99%A8sed/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | null">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/04/18/9.%E6%B5%81%E7%BC%96%E8%BE%91%E5%99%A8sed/" class="post-title-link" itemprop="url">流编辑器sed</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2023-04-18 11:31:23 / Modified: 23:18:44" itemprop="dateCreated datePublished" datetime="2023-04-18T11:31:23+08:00">2023-04-18</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="sed编辑器定义："><a href="#sed编辑器定义：" class="headerlink" title="sed编辑器定义："></a>sed编辑器定义：</h2><p>用于处理文本文件中的数据流。它是一种非交互式的编辑器，可以从标准输入（stdin）或文件中读取输入，然后将文本进行转换、替换、删除、添加等操作，最后将处理后的文本输出到标准输出（stdout）或文件中。它的名字来源于“流编辑器（stream editor）”。</p>
-<h2 id="sed编辑器特点："><a href="#sed编辑器特点：" class="headerlink" title="sed编辑器特点："></a>sed编辑器特点：</h2><p>与传统的文本编辑器（如vi和emacs）不同，sed对文件进行的修改是非常快速和高效的，因为它不需要打开文件并读取整个文件内容，而是按行处理文件，只处理必要的部分。此外，sed支持正则表达式，可以在文本文件中进行高级搜索和替换操作。</p>
-<h2 id="sed编辑器的工作流程："><a href="#sed编辑器的工作流程：" class="headerlink" title="sed编辑器的工作流程："></a>sed编辑器的工作流程：</h2><ol>
-<li>一次从输入中读取一行数据</li>
-<li>根据所提供的编辑器命令匹配数据</li>
-<li>按照命令修改流中的数据</li>
-<li>将新的数据输出到STDOUT</li>
-</ol>
-<p>在执行过程中，sed编辑器使用的是基于行的处理方式，即每次处理一行数据。而指令则是根据正则表达式来匹配和处理数据的。通过指令的组合使用，可以实现很多文本处理和编辑的功能，比如替换、删除、插入等操作。</p>
-<h2 id="sed编辑器基础"><a href="#sed编辑器基础" class="headerlink" title="sed编辑器基础"></a>sed编辑器基础</h2><h3 id="sed命令格式"><a href="#sed命令格式" class="headerlink" title="sed命令格式"></a>sed命令格式</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed options <span class="string">&#x27;command&#x27;</span> inputfile</span><br></pre></td></tr></table></figure>
-
-<p>其中，**<code>options</code><strong>是可选项，</strong><code>command</code><strong>是sed命令，</strong><code>inputfile</code><strong>是要处理的文件名。如果不指定</strong><code>inputfile</code>**，sed将从标准输入读取数据。</p>
-<h3 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed <span class="string">&#x27;s/oldstring/newstring/&#x27;</span> inputfile</span><br></pre></td></tr></table></figure>
-
-<p>其中，**<code>s</code><strong>表示替换操作，</strong><code>oldstring</code><strong>表示要被替换的字符串，</strong><code>newstring</code><strong>表示替换后的字符串，</strong><code>inputfile</code><strong>表示要处理的文件名。此命令将替换文件中的第一个匹配项。如果要替换所有匹配项，则需要使用</strong><code>g</code>**选项，如下所示：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed <span class="string">&#x27;s/oldstring/newstring/g&#x27;</span> inputfile</span><br></pre></td></tr></table></figure>
-
-<p>除了**<code>s</code><strong>命令，sed还有其他命令，如</strong><code>p</code><strong>命令（打印指定的行）、</strong><code>d</code><strong>命令（删除指定的行）、</strong><code>a</code>**命令（在指定行后添加一行文本）等。这些命令可以组合使用，构成一个完整的sed脚本，用于对文本进行复杂的处理。</p>
-<ul>
-<li>双引号和单引号的区别  在使用 <strong><code>sed</code></strong> 命令时，单引号和双引号的使用是有区别的。在单引号中，所有的特殊字符都会被视为普通字符，而在双引号中，除了 <strong><code>$</code></strong> 和**```**之外，其他的特殊字符都会被视为普通字符。  具体来说，在单引号中，变量和命令替换不会被执行，而在双引号中，会先进行变量和命令替换，然后再执行 <strong><code>sed</code></strong> 命令。  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ name=<span class="string">&quot;universe&quot;</span></span><br><span class="line">$ sed <span class="string">&quot;s/world/<span class="variable">$name</span>/&quot;</span> test.txt</span><br></pre></td></tr></table></figure>
-</li>
-<li>常见选项<ul>
-<li>**<code>n</code>**：取消默认输出，使用print命令完成输出。</li>
-<li>**<code>e</code>**：允许多个 sed 命令被执行。  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed -e <span class="string">&#x27;s/apple/orange/g&#x27;</span> -e <span class="string">&#x27;s/\s*$//&#x27;</span> file.txt</span><br></pre></td></tr></table></figure>
-</li>
-<li>**<code>f</code>**：指定 sed 命令文件。  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed -f commands.sed file.txt</span><br></pre></td></tr></table></figure>
-  commands.sed文件内容：  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">s/Hello/Hi/</span><br><span class="line">s/World/There/</span><br></pre></td></tr></table></figure>
-</li>
-<li>**<code>i</code>**：直接修改文件，而不是输出到终端。</li>
-<li><strong><code>r</code></strong> 或 **<code>E</code>**：使用扩展正则表达式。</li>
-</ul>
-</li>
-<li>常见命令<ul>
-<li><code>**s**</code>：替换字符  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将文件中的 apple 替换为 banana</span></span><br><span class="line">sed <span class="string">&#x27;s/apple/banana/g&#x27;</span> file.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将每行的第一个 apple 替换为 banana</span></span><br><span class="line">sed <span class="string">&#x27;s/apple/banana/&#x27;</span> file.txt</span><br></pre></td></tr></table></figure>
-</li>
-<li><code>**d**</code>：删除命令，用于删除文件中的指定行或指定模式。  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 删除匹配模式的行</span></span><br><span class="line">sed <span class="string">&#x27;/pattern/d&#x27;</span> file.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除 :10 到 20 行</span></span><br><span class="line">sed <span class="string">&#x27;10,20d&#x27;</span> file.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除空行</span></span><br><span class="line">sed <span class="string">&#x27;/^$/d&#x27;</span> file.txt</span><br></pre></td></tr></table></figure>
-</li>
-<li><code>**a**</code>：添加命令，用于在文件中的指定行后面添加新的内容。  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在匹配模式所在行的下一行添加新的内容</span></span><br><span class="line">sed <span class="string">&#x27;/pattern/a new line&#x27;</span> file.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在指定行号的下一行添加新的内容</span></span><br><span class="line">sed <span class="string">&#x27;3a new line&#x27;</span> file.txt</span><br></pre></td></tr></table></figure>
-</li>
-<li><code>**i**</code>：插入命令，用于在文件中的指定行前面插入新的内容。  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在匹配模式所在行的上一行插入新的内容</span></span><br><span class="line">sed <span class="string">&#x27;/pattern/i new line&#x27;</span> file.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在指定行号的上一行插入新的内容</span></span><br><span class="line">sed <span class="string">&#x27;3i new line&#x27;</span> file.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在文件中插入新的文本行：</span></span><br><span class="line">sed <span class="string">&#x27;1i\New Text&#x27;</span> filename</span><br></pre></td></tr></table></figure>
-</li>
-<li><code>**c**</code>：替换命令，用于将指定行替换为新的内容。  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将匹配模式所在行替换为新的内容</span></span><br><span class="line">sed <span class="string">&#x27;/pattern/c new line&#x27;</span> file.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将指定行号替换为新的内容</span></span><br><span class="line">sed <span class="string">&#x27;3c new line&#x27;</span> file.txt</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="sed正则表达式用法"><a href="#sed正则表达式用法" class="headerlink" title="sed正则表达式用法"></a>sed正则表达式用法</h2><ol>
-<li>删除文件中的空行： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed <span class="string">&#x27;/^$/d&#x27;</span> filename</span><br></pre></td></tr></table></figure>
- 使用正则表达式匹配空行（以行首和行尾之间没有任何字符的行），然后使用 <strong><code>d</code></strong> 命令删除这些行。</li>
-<li>删除文件中的注释行： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed <span class="string">&#x27;/^#/d&#x27;</span> filename</span><br></pre></td></tr></table></figure>
- 使用正则表达式匹配以 **<code>#</code>**开头的行，然后使用 **<code>d</code>**命令删除这些行。</li>
-<li>按照指定格式输出文件内容： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed <span class="string">&#x27;s/\(.*\)/&lt;p&gt;\1&lt;\/p&gt;/&#x27;</span> filename</span><br></pre></td></tr></table></figure>
-</li>
-<li>指定行前添加#号： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed -r <span class="string">&#x27;1,5s/(.*)/#\1/&#x27;</span> filename</span><br></pre></td></tr></table></figure>
-</li>
-<li>将文本文件中的每一行都替换为该行的第一个单词： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed <span class="string">&#x27;s/\([a-zA-Z]*\).*/\1/&#x27;</span> test.txt</span><br></pre></td></tr></table></figure>
-</li>
-<li>提取文本文件中的URL： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed -nE <span class="string">&#x27;s#.*(https?://[^ ]*).*#\1#p&#x27;</span> test.txt</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h2 id="vim中的sed用法"><a href="#vim中的sed用法" class="headerlink" title="vim中的sed用法"></a>vim中的sed用法</h2><ol>
-<li>替换文件中的指定字符串 在Vim中，可以使用“:%s/old/new/g”命令来替换文件中的指定字符串，其中“%”表示对整个文件进行操作，“s”表示替换，“/”用于分隔替换前、替换后的内容，“g”表示全局替换。</li>
-<li>删除文件中的指定行 在Vim中，可以使用“:g/pattern/d”命令来删除文件中包含指定字符串的行，其中“g”表示全局匹配，“pattern”表示要匹配的字符串，“d”表示删除操作。</li>
-<li>在文件中插入指定字符串 在Vim中，可以使用“:1,$s/^/string/”命令在文件的每一行前插入指定字符串，其中“1,$”表示对整个文件进行操作，“^”表示行首，“string”表示要插入的字符串。</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/source/index.md/page/2/">2</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/source/index.md/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
 
 </div>
   </main>

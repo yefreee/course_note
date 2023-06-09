@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="编写shell脚本时，经常需要在多个地方使用了同一段代码。如果只是一小段代码，一般也无关紧要。但要在shell脚本中多次重写大块代码段就太累人了。bash shell提供的用户自定义函数功能可以解决这个问题。可以将shell脚本代码放进函数中封装起来，这样就能在脚本中的任何地方多次使用。 函数是一个脚本代码块，你可以为其命名并在代码中任何位置重用。要在脚本中使用该代码块时，只要使用所起的函数名就行">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Shell函数">
+<meta property="og:url" content="http://example.com/2023/04/18/linux_shell/7.Shell%E5%87%BD%E6%95%B0/index.html">
+<meta property="og:site_name">
+<meta property="og:description" content="编写shell脚本时，经常需要在多个地方使用了同一段代码。如果只是一小段代码，一般也无关紧要。但要在shell脚本中多次重写大块代码段就太累人了。bash shell提供的用户自定义函数功能可以解决这个问题。可以将shell脚本代码放进函数中封装起来，这样就能在脚本中的任何地方多次使用。 函数是一个脚本代码块，你可以为其命名并在代码中任何位置重用。要在脚本中使用该代码块时，只要使用所起的函数名就行">
+<meta property="og:locale">
+<meta property="article:published_time" content="2023-04-18T03:31:23.000Z">
+<meta property="article:modified_time" content="2023-04-25T15:02:24.582Z">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2023/04/18/linux_shell/7.Shell%E5%87%BD%E6%95%B0/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-Hans","comments":true,"permalink":"http://example.com/2023/04/18/linux_shell/7.Shell%E5%87%BD%E6%95%B0/","path":"2023/04/18/linux_shell/7.Shell函数/","title":"Shell函数"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Shell函数 | </title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title"></p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E8%84%9A%E6%9C%AC%E5%87%BD%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">基本脚本函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%87%BD%E6%95%B0%E3%80%81%E8%B0%83%E7%94%A8%E5%87%BD%E6%95%B0"><span class="nav-number">1.1.</span> <span class="nav-text">创建函数、调用函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="nav-number">2.</span> <span class="nav-text">返回值</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%BB%98%E8%AE%A4%E9%80%80%E5%87%BA%E7%8A%B6%E6%80%81%E7%A0%81"><span class="nav-number">2.1.</span> <span class="nav-text">默认退出状态码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8return%E5%91%BD%E4%BB%A4"><span class="nav-number">2.2.</span> <span class="nav-text">使用return命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%87%BD%E6%95%B0%E8%BE%93%E5%87%BA"><span class="nav-number">2.3.</span> <span class="nav-text">使用函数输出</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%8F%98%E9%87%8F"><span class="nav-number">3.</span> <span class="nav-text">函数中使用变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%91%E5%87%BD%E6%95%B0%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0"><span class="nav-number">3.1.</span> <span class="nav-text">向函数传递参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8%E5%87%BD%E6%95%B0%E4%B8%AD%E5%A4%84%E7%90%86%E5%8F%98%E9%87%8F"><span class="nav-number">3.2.</span> <span class="nav-text">在函数中处理变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F"><span class="nav-number">3.3.</span> <span class="nav-text">全局变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F"><span class="nav-number">3.4.</span> <span class="nav-text">局部变量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E5%91%BD%E4%BB%A4%E8%A1%8C%E4%B8%8A%E4%BD%BF%E7%94%A8%E5%87%BD%E6%95%B0"><span class="nav-number">4.</span> <span class="nav-text">在命令行上使用函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8%E5%91%BD%E4%BB%A4%E8%A1%8C%E4%B8%8A%E5%88%9B%E5%BB%BA%E5%87%BD%E6%95%B0"><span class="nav-number">4.1.</span> <span class="nav-text">在命令行上创建函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8-bashrc%E6%96%87%E4%BB%B6%E4%B8%AD%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0"><span class="nav-number">4.2.</span> <span class="nav-text">在.bashrc文件中定义函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%BA%93"><span class="nav-number">5.</span> <span class="nav-text">创建库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E5%87%BD%E6%95%B0%E4%BD%93%E5%AE%9E%E7%8E%B0%E5%8A%A0%E5%87%8F%E8%BF%90%E7%AE%97"><span class="nav-number">6.</span> <span class="nav-text">通过函数体实现加减运算</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name"></p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/18/linux_shell/7.Shell%E5%87%BD%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Shell函数 | ">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Shell函数
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-04-18 11:31:23" itemprop="dateCreated datePublished" datetime="2023-04-18T11:31:23+08:00">2023-04-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-04-25 23:02:24" itemprop="dateModified" datetime="2023-04-25T23:02:24+08:00">2023-04-25</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>编写shell脚本时，经常需要在多个地方使用了同一段代码。如果只是一小段代码，一般也无关紧要。但要在shell脚本中多次重写大块代码段就太累人了。bash shell提供的用户自定义函数功能可以解决这个问题。可以将shell脚本代码放进函数中封装起来，这样就能在脚本中的任何地方多次使用。</p>
+<p>函数是一个脚本代码块，你可以为其命名并在代码中任何位置重用。要在脚本中使用该代码块时，只要使用所起的函数名就行了（这个过程称为调用函数）。</p>
+<h2 id="基本脚本函数"><a href="#基本脚本函数" class="headerlink" title="基本脚本函数"></a>基本脚本函数</h2><h3 id="创建函数、调用函数"><a href="#创建函数、调用函数" class="headerlink" title="创建函数、调用函数"></a>创建函数、调用函数</h3><ol>
+<li>第一种方式采用function关键字，后面跟函数名以及代码块 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function 函数名 &#123;</span><br><span class="line">    函数体</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+ name属性定义了赋予函数的唯一名称。脚本中定义的每个函数都必须有一个唯一的名称。commands是构成函数的一条或多条bash shell命令。在调用该函数时，bash shell会按命令在函数中出现的顺序依次执行，就像在普通脚本中一样。</li>
+<li>第二种方式更接近其他编程语言的定义方式 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">函数名() &#123;</span><br><span class="line">    函数体</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">greet</span><br><span class="line"><span class="keyword">function</span> greet &#123;</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;Hello, World!&quot;</span></span><br><span class="line">&#125;</span><br><span class="line">greet</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>当函数在被定义之前使用的话会产生错误信息</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># using a function located in the middle of a script</span></span><br><span class="line">count=1</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;This line comes before the function definition&quot;</span></span><br><span class="line"><span class="keyword">function</span> func1 &#123;</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;This is an exam,rple of a function&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">while</span> [ <span class="variable">$count</span> -le 5 ]</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">func1</span><br><span class="line">count=$[ <span class="variable">$count</span> + 1 ]</span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;This is the end of the loop&quot;</span></span><br><span class="line">func2</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Now this is the end of the script&quot;</span></span><br><span class="line"><span class="keyword">function</span> func2 &#123;</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;This is an example of a function&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="返回值"><a href="#返回值" class="headerlink" title="返回值"></a>返回值</h2><p><code>bash shell</code>会把函数当作一个小型脚本，运行结束时会返回一个退出状态码。有3种不同的方法来为函数生成<code>退出状态码</code>。</p>
+<h3 id="默认退出状态码"><a href="#默认退出状态码" class="headerlink" title="默认退出状态码"></a>默认退出状态码</h3><p>默认情况下，函数的退出状态码是函数中最后一条命令返回的退出状态码。在函数执行结束后，可以用标准变量<code>$?</code>来确定函数的退出状态码。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> greet &#123;</span><br><span class="line">		<span class="comment"># ls -l badfile</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;Hello, World!&quot;</span></span><br><span class="line">		<span class="built_in">ls</span> -l badfile</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">greet</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;the exit status is: $?&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果注释掉第一个<code>ls</code>命令，由于函数的最后一条语句<code>echo</code>运行成功，该函数的退出状态是<code>0</code>，尽管前一个命令没有运行成功。</p>
+<h3 id="使用return命令"><a href="#使用return命令" class="headerlink" title="使用return命令"></a>使用return命令</h3><p><code>bash shell</code>使用<code>return</code>命令来退出函数并返回特定的退出状态码。<code>return</code>命令允许指定一个整数值来定义函数的<code>退出状态码</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># using the return command in a function</span></span><br><span class="line"><span class="keyword">function</span> dbl &#123;</span><br><span class="line"><span class="built_in">read</span> -p <span class="string">&quot;Enter a value: &quot;</span> value</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;doubling the value&quot;</span></span><br><span class="line"><span class="built_in">return</span> $[ <span class="variable">$value</span> * 2 ]</span><br><span class="line">&#125;</span><br><span class="line">dbl</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;The new value is $?&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>dbl</code>函数会将<code>$value</code>变量中用户输入的值翻倍，然后用<code>return</code>命令返回结果。脚本用<code>$?</code>变量显示了该值。当使用该方法从函数中获取返回值时有两个要点：</p>
+<ol>
+<li>函数一结束就取返回值</li>
+<li>退出状态码必须是0~255</li>
+</ol>
+<p>如果在用<code>$?</code>变量提取函数返回值之前执行了其他命令，函数的返回值就会丢失。记住，<code>$?</code>变量会返回执行的最后一条命令的退出状态码。<br>第二个问题界定了返回值的取值范围。由于退出状态码必须<code>小于256</code>，函数的结果必须生成一个小于256的整数值。任何大于256的值都会产生一个错误值。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@sh:~$ bash test.sh</span><br><span class="line">Enter a value: 200</span><br><span class="line">doubling the value</span><br><span class="line">The new value is 144</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用函数输出"><a href="#使用函数输出" class="headerlink" title="使用函数输出"></a>使用函数输出</h3><p>正如可以将命令的输出保存到shell变量中一样，也可以对函数的输出采用同样的处理办法。可以用这种技术来获得任何类型的函数输出，并将其保存到变量中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">result=`dbl`</span><br></pre></td></tr></table></figure>
+
+<p>这个命令会将<code>dbl</code>函数的输出赋给<code>$result</code>变量。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># using the echo to return a value</span></span><br><span class="line"><span class="keyword">function</span> dbl &#123;</span><br><span class="line"><span class="built_in">read</span> -p <span class="string">&quot;Enter a value: &quot;</span> value</span><br><span class="line"><span class="built_in">echo</span> $[ <span class="variable">$value</span> * 2 ]</span><br><span class="line">&#125;</span><br><span class="line">result=`dbl`</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;The new value is <span class="variable">$result</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@sh:~$ bash test.sh</span><br><span class="line">Enter a value: 200</span><br><span class="line">value = 400</span><br><span class="line">ubuntu@sh:~$</span><br></pre></td></tr></table></figure>
+
+<h2 id="函数中使用变量"><a href="#函数中使用变量" class="headerlink" title="函数中使用变量"></a>函数中使用变量</h2><h3 id="向函数传递参数"><a href="#向函数传递参数" class="headerlink" title="向函数传递参数"></a>向函数传递参数</h3><p>bash shell会将函数当作小型脚本来对待。这意味着可以像普通脚本那样向函数传递参数。</p>
+<p>函数可以使用标准的参数环境变量来表示命令行上传给函数的参数。例如，函数名会在<code>$0</code>变量中定义，函数命令行上的任何参数都会通过<code>$1</code>、<code>$2</code>等定义。也可以用特殊变量<code>$#</code>来判断传给函数的参数数目。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义一个函数，接收两个参数并输出它们</span></span><br><span class="line"><span class="keyword">function</span> print_two_args &#123;</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;第一个参数是：<span class="variable">$1</span>&quot;</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;第二个参数是：<span class="variable">$2</span>&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 调用函数，并传递两个参数</span></span><br><span class="line">print_two_args <span class="string">&quot;hello&quot;</span> <span class="string">&quot;world&quot;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">第一个参数是：hello</span><br><span class="line">第二个参数是：world</span><br></pre></td></tr></table></figure>
+
+<h3 id="在函数中处理变量"><a href="#在函数中处理变量" class="headerlink" title="在函数中处理变量"></a>在函数中处理变量</h3><p>作用域是变量可见的区域。函数中定义的变量与普通变量的作用域不同。也就是说，对脚本的其他部分而言，它们是隐藏的。</p>
+<h3 id="全局变量"><a href="#全局变量" class="headerlink" title="全局变量"></a>全局变量</h3><p>对于全局变量，可以直接在函数中使用或修改。例如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义全局变量</span></span><br><span class="line">name=<span class="string">&quot;Tom&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义函数</span></span><br><span class="line"><span class="function"><span class="title">my_func</span></span>() &#123;</span><br><span class="line">  <span class="built_in">echo</span> <span class="string">&quot;Hello, <span class="variable">$name</span>&quot;</span></span><br><span class="line">  name=<span class="string">&quot;Jerry&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 调用函数</span></span><br><span class="line">my_func</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Name is <span class="variable">$name</span>&quot;</span> <span class="comment"># 输出 &quot;Name is Jerry&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="局部变量"><a href="#局部变量" class="headerlink" title="局部变量"></a>局部变量</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义函数</span></span><br><span class="line"><span class="function"><span class="title">my_func</span></span>() &#123;</span><br><span class="line">  <span class="comment"># 定义局部变量</span></span><br><span class="line">  <span class="built_in">local</span> count=0</span><br><span class="line"></span><br><span class="line">  <span class="comment"># 修改局部变量</span></span><br><span class="line">  count=$[ <span class="variable">$count</span> + 1 ]</span><br><span class="line"></span><br><span class="line">  <span class="comment"># 输出局部变量</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">&quot;Count is <span class="variable">$count</span>&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 调用函数</span></span><br><span class="line">my_func <span class="comment"># 输出 &quot;Count is 1&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是，在函数中使用局部变量时，变量名前必须加上 **<code>local</code>**关键字，否则会被认为是全局变量。如果函数中定义了一个与全局变量同名的局部变量，则在函数中访问该变量时，会优先使用局部变量。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># 在函数中使用局部变量不会影响到脚本主体中的全局变量的值</span></span><br><span class="line"><span class="keyword">function</span> func1 &#123;</span><br><span class="line"><span class="built_in">local</span> temp=$[ <span class="variable">$value</span> + 5 ]</span><br><span class="line">result=$[ <span class="variable">$temp</span> * 2 ]</span><br><span class="line">&#125;</span><br><span class="line">temp=4</span><br><span class="line">value=6</span><br><span class="line">func1</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;The result is <span class="variable">$result</span>&quot;</span></span><br><span class="line"><span class="keyword">if</span> [ <span class="variable">$temp</span> -gt <span class="variable">$value</span> ]</span><br><span class="line"><span class="keyword">then</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;temp is larger&quot;</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;temp is smaller&quot;</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="在命令行上使用函数"><a href="#在命令行上使用函数" class="headerlink" title="在命令行上使用函数"></a>在命令行上使用函数</h2><p>可以用脚本函数来执行一些十分复杂的操作。有时也很有必要在命令行界面的提示符下直接使用这些函数。一旦在shell中定义了函数，你就可以在整个系统中使用它了，无需担心脚本是不是在<code>PATH</code>环境变量里。重点在于让shell能够识别这些函数。</p>
+<h3 id="在命令行上创建函数"><a href="#在命令行上创建函数" class="headerlink" title="在命令行上创建函数"></a>在命令行上创建函数</h3><ul>
+<li>单行方式定义函数</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@sh:~$ <span class="keyword">function</span> addem &#123; <span class="built_in">echo</span> $[ <span class="variable">$1</span> + <span class="variable">$2</span> ]; &#125;</span><br><span class="line">ubuntu@sh:~$ addem 1 2</span><br><span class="line">3</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>多行方式定义函数</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@sh:~$ <span class="keyword">function</span> multem &#123;</span><br><span class="line">&gt; <span class="built_in">echo</span> $[ <span class="variable">$1</span> * <span class="variable">$2</span> ]</span><br><span class="line">&gt; &#125;</span><br><span class="line">ubuntu@sh:~$ multem 2 4</span><br><span class="line">8</span><br><span class="line">ubuntu@sh:~$</span><br></pre></td></tr></table></figure>
+
+<p>在函数的尾部使用花括号，shell就会知道你已经完成了函数的定义。</p>
+<h3 id="在-bashrc文件中定义函数"><a href="#在-bashrc文件中定义函数" class="headerlink" title="在.bashrc文件中定义函数"></a>在.bashrc文件中定义函数</h3><p>在命令行上直接定义<code>shell</code>函数的明显缺点是退出<code>shell</code>时，函数就消失了，这对于一些复杂函数并不适用。此时可以将函数写入一个特定位置并且在<code>shell</code>启动时由<code>shell</code>重新载入。<code>.bashrc</code>文件会在每次<code>shell</code>启动时在主目录下被查找并调用，因此可以在主目录下的.<code>bashrc</code>文件中定义函数。</p>
+<p>将以下内容写入到<code>.bashrc</code>文件的末尾：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function addem &#123;</span><br><span class="line">echo $[ $1 + $2 ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="创建库"><a href="#创建库" class="headerlink" title="创建库"></a>创建库</h2><p>通过创建函数库文件可以方便在多个脚本中使用同一段代码。以下代码保存在myfuncs文件中：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> addem &#123;</span><br><span class="line"><span class="built_in">echo</span> $[ <span class="variable">$1</span> + <span class="variable">$2</span> ]</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> multem &#123;</span><br><span class="line"><span class="built_in">echo</span> $[ <span class="variable">$1</span> * <span class="variable">$2</span> ]</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> divem &#123;</span><br><span class="line"><span class="keyword">if</span> [ <span class="variable">$2</span> -ne 0 ]</span><br><span class="line"><span class="keyword">then</span></span><br><span class="line"><span class="built_in">echo</span> $[ <span class="variable">$1</span> / <span class="variable">$2</span> ]</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line"><span class="built_in">echo</span> -1</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在另一个脚本中执行<code>myfuncs</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># using a library file the wrong way</span></span><br><span class="line">./myfuncs</span><br><span class="line">result=$(adem 10 15)</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;The result is <span class="variable">$result</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>输出信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">addem: command not found</span><br><span class="line">The result is</span><br></pre></td></tr></table></figure>
+
+<p>使用函数库的关键在于source命令。source命令会在当前shell上下文中执行命令，而不是创建一个新shell。可以用source命令来在shell脚本中运行库文件脚本。这样脚本就可以使用库中的函数了。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># using functions defined in a library file</span></span><br><span class="line">. ./myfuncs</span><br><span class="line">value1=10</span><br><span class="line">value2=5</span><br><span class="line">result1=$(addem <span class="variable">$value1</span> <span class="variable">$value2</span>)</span><br><span class="line">result2=$(multem <span class="variable">$value1</span> <span class="variable">$value2</span>)</span><br><span class="line">result3=$(divem <span class="variable">$value1</span> <span class="variable">$value2</span>)</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;The result of adding them is: <span class="variable">$result1</span>&quot;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;The result of multiplying them is: <span class="variable">$result2</span>&quot;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;The result of dividing them is: <span class="variable">$result3</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="通过函数体实现加减运算"><a href="#通过函数体实现加减运算" class="headerlink" title="通过函数体实现加减运算"></a>通过函数体实现加减运算</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> calculate &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">case</span> <span class="variable">$op</span> <span class="keyword">in</span></span><br><span class="line">        <span class="string">&quot;+&quot;</span>)</span><br><span class="line">            result=</span><br><span class="line">            ;;</span><br><span class="line">        <span class="string">&quot;-&quot;</span>)</span><br><span class="line">            result=</span><br><span class="line">            ;;</span><br><span class="line">        *)</span><br><span class="line">            <span class="built_in">echo</span> <span class="string">&quot;Error: unsupported operator.&quot;</span></span><br><span class="line">            <span class="built_in">return</span> 1</span><br><span class="line">            ;;</span><br><span class="line">    <span class="keyword">esac</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;Result: <span class="variable">$result</span>&quot;</span></span><br><span class="line">    <span class="built_in">return</span> 0</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/04/18/linux_shell/8.%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="prev" title="正则表达式">
+                  <i class="fa fa-chevron-left"></i> 正则表达式
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/04/18/linux_shell/6.%E4%BD%BF%E7%94%A8%E9%87%8D%E5%AE%9A%E5%90%91%E5%91%88%E7%8E%B0%E6%95%B0%E6%8D%AE/" rel="next" title="使用重定向呈现数据">
+                  使用重定向呈现数据 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder"></span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
