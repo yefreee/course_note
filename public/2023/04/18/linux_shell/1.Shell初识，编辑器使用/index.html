@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.2">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0-rc1">
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
@@ -19,19 +19,19 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="123虚拟机：ubuntu14045登录账号：llx密码：ubuntu   什么是Shell 现在人们使用的操作系统（Windows、Android、iOS等）都带有图形界面，简单直观，容易上手。然而早期的计算机并没有图形界面，人们只能使用烦琐的命令来控制计算机。其实，真正能够控制计算机硬件（CPU、内存、显示器）的只有操作系统内核（Kernel），图形界面和命令行都是架设在用户和内核之间的桥梁，">
+    <meta name="description" content="123虚拟机：ubuntu14045登录账号：llx密码：ubuntu   什么是Shell  现在人们使用的操作系统（Windows、Android、iOS等）都带有图形界面，简单直观，容易上手。然而早期的计算机并没有图形界面，人们只能使用烦琐的命令来控制计算机。其实，真正能够控制计算机硬件（CPU、内存、显示器）的只有操作系统内核（Kernel），图形界面和命令行都是架设在用户和内核之间的桥梁">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Shell初始,编辑器使用">
 <meta property="og:url" content="http://example.com/2023/04/18/linux_shell/1.Shell%E5%88%9D%E8%AF%86%EF%BC%8C%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8/index.html">
 <meta property="og:site_name">
-<meta property="og:description" content="123虚拟机：ubuntu14045登录账号：llx密码：ubuntu   什么是Shell 现在人们使用的操作系统（Windows、Android、iOS等）都带有图形界面，简单直观，容易上手。然而早期的计算机并没有图形界面，人们只能使用烦琐的命令来控制计算机。其实，真正能够控制计算机硬件（CPU、内存、显示器）的只有操作系统内核（Kernel），图形界面和命令行都是架设在用户和内核之间的桥梁，">
+<meta property="og:description" content="123虚拟机：ubuntu14045登录账号：llx密码：ubuntu   什么是Shell  现在人们使用的操作系统（Windows、Android、iOS等）都带有图形界面，简单直观，容易上手。然而早期的计算机并没有图形界面，人们只能使用烦琐的命令来控制计算机。其实，真正能够控制计算机硬件（CPU、内存、显示器）的只有操作系统内核（Kernel），图形界面和命令行都是架设在用户和内核之间的桥梁">
 <meta property="og:locale">
 <meta property="og:image" content="https://raw.githubusercontent.com/yefreee/picture/main/note1.Shell%E5%88%9D%E8%AF%86%EF%BC%8C%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8-2023-04-19-18-53-43.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/yefreee/picture/main/note1.Shell%E5%88%9D%E8%AF%86%EF%BC%8C%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8-2023-04-19-19-21-30.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/yefreee/picture/main/note1.Shell%E5%88%9D%E8%AF%86%EF%BC%8C%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8-2023-04-19-23-41-03.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/yefreee/picture/main/note1.Shell%E5%88%9D%E8%AF%86%EF%BC%8C%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8-2023-04-19-23-41-33.png">
 <meta property="article:published_time" content="2023-04-18T03:31:25.000Z">
-<meta property="article:modified_time" content="2023-06-08T16:25:07.887Z">
+<meta property="article:modified_time" content="2023-06-10T08:09:30.859Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/yefreee/picture/main/note1.Shell%E5%88%9D%E8%AF%86%EF%BC%8C%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8-2023-04-19-18-53-43.png">
 
@@ -127,7 +127,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-count">12</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -191,7 +191,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-06-09 00:25:07" itemprop="dateModified" datetime="2023-06-09T00:25:07+08:00">2023-06-09</time>
+      <time title="Modified: 2023-06-10 16:09:30" itemprop="dateModified" datetime="2023-06-10T16:09:30+08:00">2023-06-10</time>
     </span>
 
   
@@ -207,8 +207,12 @@
         <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">虚拟机：ubuntu14045</span><br><span class="line">登录账号：llx</span><br><span class="line">密码：ubuntu</span><br></pre></td></tr></table></figure>
 
 <ol>
-<li>什么是Shell 现在人们使用的操作系统（Windows、Android、iOS等）都带有图形界面，简单直观，容易上手。然而早期的计算机并没有图形界面，人们只能使用烦琐的命令来控制计算机。其实，真正能够控制计算机硬件（CPU、内存、显示器）的只有操作系统内核（Kernel），图形界面和命令行都是架设在用户和内核之间的桥梁，是为了方便用户控制计算机而存在的。由于安全等原因，用户不能直接接触内核，因此需要在用户和内核之间增加“命令解释器”，既能简化用户的操作，又能保障内核的安全。在Linux下的命令解释器叫作“Shell”，它能让用户更加高效、安全、低成本地使用Linux内核。 <img src="https://raw.githubusercontent.com/yefreee/picture/main/note1.Shell%E5%88%9D%E8%AF%86%EF%BC%8C%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8-2023-04-19-18-53-43.png" alt="1.Shell初识，编辑器使用-2023-04-19-18-53-43"></li>
-<li>Shell的各种版本：<ol>
+<li><p>什么是Shell</p>
+<p> 现在人们使用的操作系统（Windows、Android、iOS等）都带有图形界面，简单直观，容易上手。然而早期的计算机并没有图形界面，人们只能使用烦琐的命令来控制计算机。其实，真正能够控制计算机硬件（CPU、内存、显示器）的只有操作系统内核（Kernel），图形界面和命令行都是架设在用户和内核之间的桥梁，是为了方便用户控制计算机而存在的。由于安全等原因，用户不能直接接触内核，因此需要在用户和内核之间增加“命令解释器”，既能简化用户的操作，又能保障内核的安全。在Linux下的命令解释器叫作“Shell”，它能让用户更加高效、安全、低成本地使用Linux内核。</p>
+<p> <img src="https://raw.githubusercontent.com/yefreee/picture/main/note1.Shell%E5%88%9D%E8%AF%86%EF%BC%8C%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8-2023-04-19-18-53-43.png" alt="1.Shell初识，编辑器使用-2023-04-19-18-53-43"></p>
+</li>
+<li><p>Shell的各种版本：</p>
+<ol>
 <li>Bourne shell（sh）是Unix系统中最古老的shell，也是现在大多数shell的基础。它的命令行语法较为简单，缺乏一些高级特性，但是在大多数Unix系统中都内置了这个shell，因此可以保证可移植性。尽管Bourne shell已经被多种先进的shell所取代，但它作为shell编程的鼻祖，仍然具有重要的历史和学习价值。</li>
 <li>Bourne Again Shell （bash）是Linux操作系统所使用的Shell，它是Bourne Shell的扩展，简称bash。bash与Bourne Shell完全向下兼容，也就是说bash可以兼容相同版本的Bourne Shell。bash在Bourne Shell的基础上增加、增强了很多特性，所以它比Bourne Shell能力更强。</li>
 <li>zsh（Z shell）是Bourne shell（sh）的一个增强版本。与bash相比，zsh具有更好的命令补全功能、更好的主题和插件支持、更好的脚本语言、更好的历史命令管理和更好的可定制性。它还有许多其他功能，如自动提示，文件名扩展，别名扩展等。zsh是一种功能强大、易于使用和高度可定制的Shell，适用于任何需要使用命令行的用户。</li>
@@ -216,37 +220,72 @@
 </ol>
  <figure class="highlight bash"><figcaption><span>##查看当前Shell版本</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="variable">$SHELL</span></span><br><span class="line"></span><br><span class="line"><span class="comment">##查看系统当前可用Shell</span></span><br><span class="line"><span class="built_in">cat</span> /etc/shells</span><br><span class="line"></span><br><span class="line"><span class="comment">##更换默认Shell</span></span><br><span class="line">chsh -s /bin/zsh</span><br><span class="line"></span><br><span class="line"><span class="comment">##退出当前登录状态重新登录</span></span><br></pre></td></tr></table></figure>
 </li>
-<li>Shell的启动方式和提示符<ol>
-<li>终端上启动 Shell会以交互模式启动，提示符会显示在屏幕上，等待用户输入命令。 用户输入命令后，Shell会解释和执行这些命令，并将执行结果输出到终端上。 在终端启动模式下，Shell会自动设置一些环境变量，如PATH等，以便用户可以方便地执行命令。</li>
-<li>脚本启动 脚本启动是将Shell命令写入一个脚本文件中，然后通过执行这个脚本文件来启动Shell。它的基本过程如下： （1）创建一个包含Shell命令的脚本文件（通常以.sh作为扩展名）。 （2）将脚本文件保存到磁盘上，并赋予执行权限。 （3）在终端中输入脚本文件的路径，并按下回车键。 （4）Shell会读取脚本文件中的命令，并依次执行这些命令。 脚本启动模式适用于需要重复执行的一系列命令，可以将这些命令写入脚本文件中，并通过脚本文件来执行这些命令。此外，脚本启动模式还支持各种Shell的内置命令和选项。</li>
-<li>练习修改系统提示符: <code>vim ~/.bashrc</code> 中的PS1变量 <img src="https://raw.githubusercontent.com/yefreee/picture/main/note1.Shell%E5%88%9D%E8%AF%86%EF%BC%8C%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8-2023-04-19-19-21-30.png" alt="1.Shell初识，编辑器使用-2023-04-19-19-21-30"></li>
+<li><p>Shell的启动方式和提示符</p>
+<ol>
+<li><p>终端上启动</p>
+<p> Shell会以交互模式启动，提示符会显示在屏幕上，等待用户输入命令。</p>
+<p> 用户输入命令后，Shell会解释和执行这些命令，并将执行结果输出到终端上。</p>
+<p> 在终端启动模式下，Shell会自动设置一些环境变量，如PATH等，以便用户可以方便地执行命令。</p>
+</li>
+<li><p>脚本启动</p>
+<p> 脚本启动是将Shell命令写入一个脚本文件中，然后通过执行这个脚本文件来启动Shell。它的基本过程如下：</p>
+<p> （1）创建一个包含Shell命令的脚本文件（通常以.sh作为扩展名）。</p>
+<p> （2）将脚本文件保存到磁盘上，并赋予执行权限。</p>
+<p> （3）在终端中输入脚本文件的路径，并按下回车键。</p>
+<p> （4）Shell会读取脚本文件中的命令，并依次执行这些命令。</p>
+<p> 脚本启动模式适用于需要重复执行的一系列命令，可以将这些命令写入脚本文件中，并通过脚本文件来执行这些命令。此外，脚本启动模式还支持各种Shell的内置命令和选项。</p>
+</li>
+<li><p>练习修改系统提示符: <code>vim ~/.bashrc</code> 中的PS1变量</p>
+<p> <img src="https://raw.githubusercontent.com/yefreee/picture/main/note1.Shell%E5%88%9D%E8%AF%86%EF%BC%8C%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8-2023-04-19-19-21-30.png" alt="1.Shell初识，编辑器使用-2023-04-19-19-21-30"></p>
+</li>
 </ol>
 </li>
-<li>Linux的文件系统结构<ul>
+<li><p>Linux的文件系统结构</p>
+<ul>
 <li>Linux和Windows文件目录的比较</li>
 <li>Linux各目录的作用</li>
 <li>遍历目录</li>
 </ul>
 </li>
-<li>文件目录相关命令<ol>
-<li>文件权限 <img src="https://raw.githubusercontent.com/yefreee/picture/main/note1.Shell%E5%88%9D%E8%AF%86%EF%BC%8C%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8-2023-04-19-23-41-03.png" alt="1.Shell初识，编辑器使用-2023-04-19-23-41-03"></li>
-<li><strong>Linux基本文件和目录命令使用综合练习题</strong><ol>
-<li>新建一个名为<code>test</code>的目录，进入该目录并新建一个名为<code>file.txt</code>的文件。</li>
-<li>将<code>file.txt</code>复制到<code>test</code>目录下，并将其重命名为<code>file2.txt</code>。</li>
-<li>在当前目录下，新建一个名为<code>newdir</code>的目录。</li>
-<li>将<code>file2.txt</code>移动到<code>newdir</code>目录下。</li>
-<li>在当前目录下，使用<code>touch</code>命令创建一个名为<code>empty.txt</code>的空文件。</li>
-<li>在<code>newdir</code>目录下，使用<code>find</code>命令查找以<code>.txt</code>结尾的文件，并将结果输出到名为<code>result.txt</code>的文件中。</li>
-<li>在<code>newdir</code>目录下，使用<code>chmod</code>命令将<code>file2.txt</code>的权限设置为只读。</li>
-<li>在当前目录下，使用<code>mkdir</code>命令递归创建一个名为<code>parent/child/grandchild</code>的目录树。 答案： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#1</span></span><br><span class="line"><span class="built_in">mkdir</span> <span class="built_in">test</span></span><br><span class="line"><span class="built_in">cd</span> <span class="built_in">test</span></span><br><span class="line"><span class="built_in">touch</span> file.txt</span><br><span class="line"></span><br><span class="line"><span class="comment">#2</span></span><br><span class="line"><span class="built_in">cp</span> file.txt file2.txt</span><br><span class="line"></span><br><span class="line"><span class="comment">#3</span></span><br><span class="line"><span class="built_in">mkdir</span> newdir</span><br><span class="line"></span><br><span class="line"><span class="comment">#4</span></span><br><span class="line"><span class="built_in">mv</span> file2.txt newdir/</span><br><span class="line"></span><br><span class="line"><span class="comment">#5</span></span><br><span class="line"><span class="built_in">touch</span> empty.txt</span><br><span class="line"></span><br><span class="line"><span class="comment">#6</span></span><br><span class="line"><span class="built_in">cd</span> newdir</span><br><span class="line">find . -name <span class="string">&quot;*.txt&quot;</span> -<span class="built_in">type</span> f &gt; result.txt</span><br><span class="line"></span><br><span class="line"><span class="comment">#7</span></span><br><span class="line"><span class="built_in">chmod</span> 444 file2.txt</span><br><span class="line"></span><br><span class="line"><span class="comment">#8</span></span><br><span class="line"><span class="built_in">mkdir</span> -p parent/child/grandchild</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<li><p>文件目录相关命令</p>
+<ol>
+<li><p>文件权限</p>
+<p> <img src="https://raw.githubusercontent.com/yefreee/picture/main/note1.Shell%E5%88%9D%E8%AF%86%EF%BC%8C%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8-2023-04-19-23-41-03.png" alt="1.Shell初识，编辑器使用-2023-04-19-23-41-03"></p>
 </li>
+<li><p><strong>Linux基本文件和目录命令使用综合练习题</strong></p>
+<ol>
+<li><p>新建一个名为<code>test</code>的目录，进入该目录并新建一个名为<code>file.txt</code>的文件。</p>
+</li>
+<li><p>将<code>file.txt</code>复制到<code>test</code>目录下，并将其重命名为<code>file2.txt</code>。</p>
+</li>
+<li><p>在当前目录下，新建一个名为<code>newdir</code>的目录。</p>
+</li>
+<li><p>将<code>file2.txt</code>移动到<code>newdir</code>目录下。</p>
+</li>
+<li><p>在当前目录下，使用<code>touch</code>命令创建一个名为<code>empty.txt</code>的空文件。</p>
+</li>
+<li><p>在<code>newdir</code>目录下，使用<code>find</code>命令查找以<code>.txt</code>结尾的文件，并将结果输出到名为<code>result.txt</code>的文件中。</p>
+</li>
+<li><p>在<code>newdir</code>目录下，使用<code>chmod</code>命令将<code>file2.txt</code>的权限设置为只读。</p>
+</li>
+<li><p>在当前目录下，使用<code>mkdir</code>命令递归创建一个名为<code>parent/child/grandchild</code>的目录树。</p>
+<p> 答案：</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#1</span></span><br><span class="line"><span class="built_in">mkdir</span> <span class="built_in">test</span></span><br><span class="line"><span class="built_in">cd</span> <span class="built_in">test</span></span><br><span class="line"><span class="built_in">touch</span> file.txt</span><br><span class="line"></span><br><span class="line"><span class="comment">#2</span></span><br><span class="line"><span class="built_in">cp</span> file.txt file2.txt</span><br><span class="line"></span><br><span class="line"><span class="comment">#3</span></span><br><span class="line"><span class="built_in">mkdir</span> newdir</span><br><span class="line"></span><br><span class="line"><span class="comment">#4</span></span><br><span class="line"><span class="built_in">mv</span> file2.txt newdir/</span><br><span class="line"></span><br><span class="line"><span class="comment">#5</span></span><br><span class="line"><span class="built_in">touch</span> empty.txt</span><br><span class="line"></span><br><span class="line"><span class="comment">#6</span></span><br><span class="line"><span class="built_in">cd</span> newdir</span><br><span class="line">find . -name <span class="string">&quot;*.txt&quot;</span> -<span class="built_in">type</span> f &gt; result.txt</span><br><span class="line"></span><br><span class="line"><span class="comment">#7</span></span><br><span class="line"><span class="built_in">chmod</span> 444 file2.txt</span><br><span class="line"></span><br><span class="line"><span class="comment">#8</span></span><br><span class="line"><span class="built_in">mkdir</span> -p parent/child/grandchild</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
 </ol>
 </li>
 </ol>
 </li>
-<li>VIM使用<ol>
-<li>学习平台： <a target="_blank" rel="noopener" href="https://yianwillis.github.io/vimcdoc/doc/intro.html#intro.txt">VIM官方文档</a> <a target="_blank" rel="noopener" href="https://command-lab.com/cat-vim-ch-s/">VIM基础练习平台</a> <a target="_blank" rel="noopener" href="https://github.com/MeiTianT/vim-galore-zh_cn#%E6%8C%89%E9%94%AE%E6%98%A0%E5%B0%84">VIM进阶</a> <a target="_blank" rel="noopener" href="https://www.vimgolf.com/">vimgolf：国外VIM进阶练习</a></li>
-<li>vim常用命令 <img src="https://raw.githubusercontent.com/yefreee/picture/main/note1.Shell%E5%88%9D%E8%AF%86%EF%BC%8C%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8-2023-04-19-23-41-33.png" alt="1.Shell初识，编辑器使用-2023-04-19-23-41-33"></li>
+<li><p>VIM使用</p>
+<ol>
+<li><p>学习平台：</p>
+<p> <a target="_blank" rel="noopener" href="https://yianwillis.github.io/vimcdoc/doc/intro.html#intro.txt">VIM官方文档</a></p>
+<p> <a target="_blank" rel="noopener" href="https://command-lab.com/cat-vim-ch-s/">VIM基础练习平台</a></p>
+<p> <a target="_blank" rel="noopener" href="https://github.com/MeiTianT/vim-galore-zh_cn#%E6%8C%89%E9%94%AE%E6%98%A0%E5%B0%84">VIM进阶</a></p>
+<p> <a target="_blank" rel="noopener" href="https://www.vimgolf.com/">vimgolf：国外VIM进阶练习</a></p>
+</li>
+<li><p>vim常用命令</p>
+<p> <img src="https://raw.githubusercontent.com/yefreee/picture/main/note1.Shell%E5%88%9D%E8%AF%86%EF%BC%8C%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8-2023-04-19-23-41-33.png" alt="1.Shell初识，编辑器使用-2023-04-19-23-41-33"></p>
+</li>
 </ol>
 </li>
 </ol>
@@ -268,8 +307,8 @@
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2023/04/23/linux_shell/10.text-processing-tools-awk/" rel="next" title="文本处理工具awk">
-                  文本处理工具awk <i class="fa fa-chevron-right"></i>
+                <a href="/2023/04/18/1.Shell%E5%88%9D%E8%AF%86%EF%BC%8C%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8/" rel="next" title="Shell初始,编辑器使用">
+                  Shell初始,编辑器使用 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>

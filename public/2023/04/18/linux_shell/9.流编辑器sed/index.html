@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.2">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0-rc1">
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
@@ -27,7 +27,7 @@
 <meta property="og:description" content="sed编辑器定义用于处理文本文件中的数据流。它是一种非交互式的编辑器，可以从标准输入（stdin）或文件中读取输入，然后将文本进行转换、替换、删除、添加等操作，最后将处理后的文本输出到标准输出（stdout）或文件中。它的名字来源于“流编辑器（stream editor）”。 sed编辑器特点与传统的文本编辑器（如vi和emacs）不同，sed对文件进行的修改是非常快速和高效的，因为它不需要打开文">
 <meta property="og:locale">
 <meta property="article:published_time" content="2023-04-18T03:31:23.000Z">
-<meta property="article:modified_time" content="2023-04-25T15:02:24.582Z">
+<meta property="article:modified_time" content="2023-06-10T08:09:30.859Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -123,7 +123,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-count">12</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -187,7 +187,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-04-25 23:02:24" itemprop="dateModified" datetime="2023-04-25T23:02:24+08:00">2023-04-25</time>
+      <time title="Modified: 2023-06-10 16:09:30" itemprop="dateModified" datetime="2023-06-10T16:09:30+08:00">2023-06-10</time>
     </span>
 
   
@@ -219,51 +219,79 @@
 
 <p>除了**<code>s</code><strong>命令，sed还有其他命令，如</strong><code>p</code><strong>命令（打印指定的行）、</strong><code>d</code><strong>命令（删除指定的行）、</strong><code>a</code>**命令（在指定行后添加一行文本）等。这些命令可以组合使用，构成一个完整的sed脚本，用于对文本进行复杂的处理。</p>
 <ul>
-<li>双引号和单引号的区别  在使用 <strong><code>sed</code></strong> 命令时，单引号和双引号的使用是有区别的。在单引号中，所有的特殊字符都会被视为普通字符，而在双引号中，除了 <strong><code>$</code></strong> 和**```**之外，其他的特殊字符都会被视为普通字符。  具体来说，在单引号中，变量和命令替换不会被执行，而在双引号中，会先进行变量和命令替换，然后再执行 <strong><code>sed</code></strong> 命令。  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ name=<span class="string">&quot;universe&quot;</span></span><br><span class="line">$ sed <span class="string">&quot;s/world/<span class="variable">$name</span>/&quot;</span> test.txt</span><br></pre></td></tr></table></figure>
+<li><p>双引号和单引号的区别</p>
+<p>  在使用 <strong><code>sed</code></strong> 命令时，单引号和双引号的使用是有区别的。在单引号中，所有的特殊字符都会被视为普通字符，而在双引号中，除了 <strong><code>$</code></strong> 和**&#96;&#96;&#96;**之外，其他的特殊字符都会被视为普通字符。</p>
+<p>  具体来说，在单引号中，变量和命令替换不会被执行，而在双引号中，会先进行变量和命令替换，然后再执行 <strong><code>sed</code></strong> 命令。</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ name=<span class="string">&quot;universe&quot;</span></span><br><span class="line">$ sed <span class="string">&quot;s/world/<span class="variable">$name</span>/&quot;</span> test.txt</span><br></pre></td></tr></table></figure>
 </li>
-<li>常见选项<ul>
-<li>**<code>n</code>**：取消默认输出，使用print命令完成输出。</li>
-<li>**<code>e</code>**：允许多个 sed 命令被执行。  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed -e <span class="string">&#x27;s/apple/orange/g&#x27;</span> -e <span class="string">&#x27;s/\s*$//&#x27;</span> file.txt</span><br></pre></td></tr></table></figure>
+<li><p>常见选项</p>
+<ul>
+<li><p>**<code>n</code>**：取消默认输出，使用print命令完成输出。</p>
 </li>
-<li>**<code>f</code>**：指定 sed 命令文件。  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed -f commands.sed file.txt</span><br></pre></td></tr></table></figure>
-  commands.sed文件内容：  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">s/Hello/Hi/</span><br><span class="line">s/World/There/</span><br></pre></td></tr></table></figure>
+<li><p>**<code>e</code>**：允许多个 sed 命令被执行。</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed -e <span class="string">&#x27;s/apple/orange/g&#x27;</span> -e <span class="string">&#x27;s/\s*$//&#x27;</span> file.txt</span><br></pre></td></tr></table></figure>
 </li>
-<li>**<code>i</code>**：直接修改文件，而不是输出到终端。</li>
-<li><strong><code>r</code></strong> 或 **<code>E</code>**：使用扩展正则表达式。</li>
+<li><p>**<code>f</code>**：指定 sed 命令文件。</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed -f commands.sed file.txt</span><br></pre></td></tr></table></figure>
+<p>  commands.sed文件内容：</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">s/Hello/Hi/</span><br><span class="line">s/World/There/</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>**<code>i</code>**：直接修改文件，而不是输出到终端。</p>
+</li>
+<li><p><strong><code>r</code></strong> 或 **<code>E</code>**：使用扩展正则表达式。</p>
+</li>
 </ul>
 </li>
-<li>常见命令<ul>
-<li><code>**s**</code>：替换字符  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将文件中的 apple 替换为 banana</span></span><br><span class="line">sed <span class="string">&#x27;s/apple/banana/g&#x27;</span> file.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将每行的第一个 apple 替换为 banana</span></span><br><span class="line">sed <span class="string">&#x27;s/apple/banana/&#x27;</span> file.txt</span><br></pre></td></tr></table></figure>
+<li><p>常见命令</p>
+<ul>
+<li><p><code>**s**</code>：替换字符</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将文件中的 apple 替换为 banana</span></span><br><span class="line">sed <span class="string">&#x27;s/apple/banana/g&#x27;</span> file.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将每行的第一个 apple 替换为 banana</span></span><br><span class="line">sed <span class="string">&#x27;s/apple/banana/&#x27;</span> file.txt</span><br></pre></td></tr></table></figure>
 </li>
-<li><code>**d**</code>：删除命令，用于删除文件中的指定行或指定模式。  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 删除匹配模式的行</span></span><br><span class="line">sed <span class="string">&#x27;/pattern/d&#x27;</span> file.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除 :10 到 20 行</span></span><br><span class="line">sed <span class="string">&#x27;10,20d&#x27;</span> file.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除空行</span></span><br><span class="line">sed <span class="string">&#x27;/^$/d&#x27;</span> file.txt</span><br></pre></td></tr></table></figure>
+<li><p><code>**d**</code>：删除命令，用于删除文件中的指定行或指定模式。</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 删除匹配模式的行</span></span><br><span class="line">sed <span class="string">&#x27;/pattern/d&#x27;</span> file.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除 :10 到 20 行</span></span><br><span class="line">sed <span class="string">&#x27;10,20d&#x27;</span> file.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除空行</span></span><br><span class="line">sed <span class="string">&#x27;/^$/d&#x27;</span> file.txt</span><br></pre></td></tr></table></figure>
 </li>
-<li><code>**a**</code>：添加命令，用于在文件中的指定行后面添加新的内容。  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在匹配模式所在行的下一行添加新的内容</span></span><br><span class="line">sed <span class="string">&#x27;/pattern/a new line&#x27;</span> file.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在指定行号的下一行添加新的内容</span></span><br><span class="line">sed <span class="string">&#x27;3a new line&#x27;</span> file.txt</span><br></pre></td></tr></table></figure>
+<li><p><code>**a**</code>：添加命令，用于在文件中的指定行后面添加新的内容。</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在匹配模式所在行的下一行添加新的内容</span></span><br><span class="line">sed <span class="string">&#x27;/pattern/a new line&#x27;</span> file.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在指定行号的下一行添加新的内容</span></span><br><span class="line">sed <span class="string">&#x27;3a new line&#x27;</span> file.txt</span><br></pre></td></tr></table></figure>
 </li>
-<li><code>**i**</code>：插入命令，用于在文件中的指定行前面插入新的内容。  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在匹配模式所在行的上一行插入新的内容</span></span><br><span class="line">sed <span class="string">&#x27;/pattern/i new line&#x27;</span> file.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在指定行号的上一行插入新的内容</span></span><br><span class="line">sed <span class="string">&#x27;3i new line&#x27;</span> file.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在文件中插入新的文本行：</span></span><br><span class="line">sed <span class="string">&#x27;1i\New Text&#x27;</span> filename</span><br></pre></td></tr></table></figure>
+<li><p><code>**i**</code>：插入命令，用于在文件中的指定行前面插入新的内容。</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在匹配模式所在行的上一行插入新的内容</span></span><br><span class="line">sed <span class="string">&#x27;/pattern/i new line&#x27;</span> file.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在指定行号的上一行插入新的内容</span></span><br><span class="line">sed <span class="string">&#x27;3i new line&#x27;</span> file.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在文件中插入新的文本行：</span></span><br><span class="line">sed <span class="string">&#x27;1i\New Text&#x27;</span> filename</span><br></pre></td></tr></table></figure>
 </li>
-<li><code>**c**</code>：替换命令，用于将指定行替换为新的内容。  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将匹配模式所在行替换为新的内容</span></span><br><span class="line">sed <span class="string">&#x27;/pattern/c new line&#x27;</span> file.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将指定行号替换为新的内容</span></span><br><span class="line">sed <span class="string">&#x27;3c new line&#x27;</span> file.txt</span><br></pre></td></tr></table></figure>
-</li>
+<li><p><code>**c**</code>：替换命令，用于将指定行替换为新的内容。</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将匹配模式所在行替换为新的内容</span></span><br><span class="line">sed <span class="string">&#x27;/pattern/c new line&#x27;</span> file.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将指定行号替换为新的内容</span></span><br><span class="line">sed <span class="string">&#x27;3c new line&#x27;</span> file.txt</span><br></pre></td></tr></table></figure></li>
 </ul>
 </li>
 </ul>
 <h2 id="sed正则表达式用法"><a href="#sed正则表达式用法" class="headerlink" title="sed正则表达式用法"></a>sed正则表达式用法</h2><ol>
-<li>删除文件中的空行： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed <span class="string">&#x27;/^$/d&#x27;</span> filename</span><br></pre></td></tr></table></figure>
- 使用正则表达式匹配空行（以行首和行尾之间没有任何字符的行），然后使用 <strong><code>d</code></strong> 命令删除这些行。</li>
-<li>删除文件中的注释行： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed <span class="string">&#x27;/^#/d&#x27;</span> filename</span><br></pre></td></tr></table></figure>
- 使用正则表达式匹配以 **<code>#</code>**开头的行，然后使用 **<code>d</code>**命令删除这些行。</li>
-<li>按照指定格式输出文件内容： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed <span class="string">&#x27;s/\(.*\)/&lt;p&gt;\1&lt;\/p&gt;/&#x27;</span> filename</span><br></pre></td></tr></table></figure>
+<li><p>删除文件中的空行：</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed <span class="string">&#x27;/^$/d&#x27;</span> filename</span><br></pre></td></tr></table></figure>
+<p> 使用正则表达式匹配空行（以行首和行尾之间没有任何字符的行），然后使用 <strong><code>d</code></strong> 命令删除这些行。</p>
 </li>
-<li>指定行前添加#号： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed -r <span class="string">&#x27;1,5s/(.*)/#\1/&#x27;</span> filename</span><br></pre></td></tr></table></figure>
+<li><p>删除文件中的注释行：</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed <span class="string">&#x27;/^#/d&#x27;</span> filename</span><br></pre></td></tr></table></figure>
+<p> 使用正则表达式匹配以 **<code>#</code>**开头的行，然后使用 **<code>d</code>**命令删除这些行。</p>
 </li>
-<li>将文本文件中的每一行都替换为该行的第一个单词： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed <span class="string">&#x27;s/\([a-zA-Z]*\).*/\1/&#x27;</span> test.txt</span><br></pre></td></tr></table></figure>
+<li><p>按照指定格式输出文件内容：</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed <span class="string">&#x27;s/\(.*\)/&lt;p&gt;\1&lt;\/p&gt;/&#x27;</span> filename</span><br></pre></td></tr></table></figure>
 </li>
-<li>提取文本文件中的URL： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed -nE <span class="string">&#x27;s#.*(https?://[^ ]*).*#\1#p&#x27;</span> test.txt</span><br></pre></td></tr></table></figure>
+<li><p>指定行前添加#号：</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed -r <span class="string">&#x27;1,5s/(.*)/#\1/&#x27;</span> filename</span><br></pre></td></tr></table></figure>
 </li>
+<li><p>将文本文件中的每一行都替换为该行的第一个单词：</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed <span class="string">&#x27;s/\([a-zA-Z]*\).*/\1/&#x27;</span> test.txt</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>提取文本文件中的URL：</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed -nE <span class="string">&#x27;s#.*(https?://[^ ]*).*#\1#p&#x27;</span> test.txt</span><br></pre></td></tr></table></figure></li>
 </ol>
 <h2 id="vim中的sed用法"><a href="#vim中的sed用法" class="headerlink" title="vim中的sed用法"></a>vim中的sed用法</h2><ol>
-<li>替换文件中的指定字符串 在Vim中，可以使用“:%s/old/new/g”命令来替换文件中的指定字符串，其中“%”表示对整个文件进行操作，“s”表示替换，“/”用于分隔替换前、替换后的内容，“g”表示全局替换。</li>
-<li>删除文件中的指定行 在Vim中，可以使用“:g/pattern/d”命令来删除文件中包含指定字符串的行，其中“g”表示全局匹配，“pattern”表示要匹配的字符串，“d”表示删除操作。</li>
-<li>在文件中插入指定字符串 在Vim中，可以使用“:1,$s/^/string/”命令在文件的每一行前插入指定字符串，其中“1,$”表示对整个文件进行操作，“^”表示行首，“string”表示要插入的字符串。</li>
+<li><p>替换文件中的指定字符串</p>
+<p> 在Vim中，可以使用“:%s&#x2F;old&#x2F;new&#x2F;g”命令来替换文件中的指定字符串，其中“%”表示对整个文件进行操作，“s”表示替换，“&#x2F;”用于分隔替换前、替换后的内容，“g”表示全局替换。</p>
+</li>
+<li><p>删除文件中的指定行</p>
+<p> 在Vim中，可以使用“:g&#x2F;pattern&#x2F;d”命令来删除文件中包含指定字符串的行，其中“g”表示全局匹配，“pattern”表示要匹配的字符串，“d”表示删除操作。</p>
+</li>
+<li><p>在文件中插入指定字符串</p>
+<p> 在Vim中，可以使用“:1,$s&#x2F;^&#x2F;string&#x2F;”命令在文件的每一行前插入指定字符串，其中“1,$”表示对整个文件进行操作，“^”表示行首，“string”表示要插入的字符串。</p>
+</li>
 </ol>
 
     </div>
