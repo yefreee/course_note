@@ -1351,6 +1351,169 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/18/linux_shell/4.Shell%E5%BE%AA%E7%8E%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/04/18/linux_shell/4.Shell%E5%BE%AA%E7%8E%AF/" class="post-title-link" itemprop="url">Shell循环</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-04-18 11:31:23" itemprop="dateCreated datePublished" datetime="2023-04-18T11:31:23+08:00">2023-04-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-06-10 16:09:30" itemprop="dateModified" datetime="2023-06-10T16:09:30+08:00">2023-06-10</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>上一章学习的结构化命令中的 <code>if-then</code> 和 <code>case</code> 语句，其中 <code>if-then</code> 语句是通过检查命令的执行结果或者表达式（文件比较、字符串比较、数值比较）的结果来控制脚本的执行流程。</p>
+<h3 id="Shell编程中的循环语句"><a href="#Shell编程中的循环语句" class="headerlink" title="Shell编程中的循环语句"></a>Shell编程中的循环语句</h3><p>在Shell脚本中，循环语句是一种重要的控制结构，用于多次执行同一段代码。Shell脚本中提供了多种循环语句，包括<code>for</code>、<code>while</code>、<code>until</code>三种。</p>
+<h3 id="for-循环"><a href="#for-循环" class="headerlink" title="for 循环"></a>for 循环</h3><p><code>for</code> 循环是一种针对列表中每个元素执行相同操作的循环结构。该语句会将列表中的每个元素依次赋值给变量，并执行循环体中的语句。其基本语法格式如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">for 变量名 in 列表</span><br><span class="line">do</span><br><span class="line">    循环体</span><br><span class="line">done</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>其中，<code>变量名</code>是一个新的变量，用于存储列表中的每个元素；<code>列表</code>是一个由空格分隔的参数列表。</p>
+<p>例如，下面的代码中，<code>for</code> 循环遍历了一个包含 5 个元素的列表，依次输出了每个元素：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> 1 2 3 4 5</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;列表中的元素：<span class="variable">$i</span>&quot;</span></span><br><span class="line"><span class="keyword">done</span>,rk</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;i = <span class="variable">$i</span>&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>以上代码会输出以下结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">列表中的元素：1</span><br><span class="line">列表中的元素：2</span><br><span class="line">列表中的元素：3</span><br><span class="line">列表中的元素：4</span><br><span class="line">列表中的元素：5</span><br><span class="line">i = 5</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>读取列表中的复杂值</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> I don<span class="string">&#x27;t know if this&#x27;</span>ll work</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;word:<span class="variable">$i</span>&quot;</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+<p>  以上代码输出以下结果：</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">word:I</span><br><span class="line">word:dont know if thisll</span><br><span class="line">word:work</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>两种方法解决列表中单引号引用的问题</p>
+<p>  使用转义字符（反斜杠）将单引号转义</p>
+<p>  使用双引号定义用到单引号的值</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> I don\<span class="string">&#x27;t know if this\&#x27;</span>ll work</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;word:<span class="variable">$i</span>&quot;</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> I <span class="string">&quot;don&#x27;t&quot;</span> know <span class="keyword">if</span> <span class="string">&quot;this&#x27;ll&quot;</span> work</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;word:<span class="variable">$i</span>&quot;</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用双引号引用输出多个单词</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="string">&quot;1 2&quot;</span> <span class="string">&quot;3 4&quot;</span> 5</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;列表中的元素：<span class="variable">$i</span>&quot;</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;i = <span class="variable">$i</span>&quot;</span></span><br></pre></td></tr></table></figure>
+<p>  以上代码输出以下结果：</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">列表中的元素：1 2</span><br><span class="line">列表中的元素：3 4</span><br><span class="line">列表中的元素：5</span><br><span class="line">i = 5</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>从变量读取列表</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">list=<span class="string">&quot;1 2 3 4 5&quot;</span></span><br><span class="line">list=<span class="variable">$list</span><span class="string">&quot; 6&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="variable">$list</span></span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;列表中的元素：<span class="variable">$i</span>&quot;</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+<p>  以上代码输出以下结果：</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">列表中的元素：1</span><br><span class="line">列表中的元素：2</span><br><span class="line">列表中的元素：3</span><br><span class="line">列表中的元素：4</span><br><span class="line">列表中的元素：5</span><br><span class="line">列表中的元素：6</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通过命令读取</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">IFS=$<span class="string">&#x27;\n&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cat</span> &gt; test.sh &lt;&lt;<span class="string">EOF</span></span><br><span class="line"><span class="string">1 2 3</span></span><br><span class="line"><span class="string">2</span></span><br><span class="line"><span class="string">3</span></span><br><span class="line"><span class="string">4</span></span><br><span class="line"><span class="string">5</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> `<span class="built_in">cat</span> test.sh`</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;列表中的元素：<span class="variable">$i</span>&quot;</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>用通配符读取目录</p>
+<p>  在 Shell 编程中，通配符是一种用于匹配文件名或目录名的特殊字符。通配符可以帮助你快速地匹配一组文件或目录，从而方便地对它们进行操作。</p>
+<p>  常见的通配符包括：</p>
+<ul>
+<li><code>*</code>：匹配任意长度的任意字符，包括空字符串。</li>
+<li><code>?</code>：匹配任意一个字符。</li>
+<li><code>[...]</code>：匹配括号内列举的任意一个字符。</li>
+<li><code>[^...]</code>：匹配除了括号内列举的任意一个字符以外的所有字符。</li>
+</ul>
+<p>  以下是一些通配符匹配的示例：</p>
+<ul>
+<li><code>*.txt</code>：匹配所有以 <code>.txt</code> 结尾的文件，如 <code>file1.txt</code>、<code>file2.txt</code> 等。</li>
+<li><code>file?.txt</code>：匹配所有文件名为 <code>file</code> 开头，后面跟着任意一个字符，最后以 <code>.txt</code> 结尾的文件，如 <code>file1.txt</code>、<code>fileA.txt</code> 等。</li>
+<li><code>[abc].txt</code>：匹配所有文件名为 <code>a.txt</code>、<code>b.txt</code>、<code>c.txt</code> 的文件。</li>
+<li><code>[^abc].txt</code>：匹配除了文件名为 <code>a.txt</code>、<code>b.txt</code>、<code>c.txt</code> 以外的所有以 <code>.txt</code> 结尾的文件。</li>
+</ul>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">touch</span> ~/file&#123;1..2&#125;</span><br><span class="line"><span class="built_in">mkdir</span> ~/dir&#123;1..3&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> ~/*</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    <span class="keyword">if</span> [ -d <span class="string">&quot;<span class="variable">$file</span>&quot;</span> ]</span><br><span class="line">    <span class="keyword">then</span></span><br><span class="line">			  <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$file</span> is a directory&quot;</span></span><br><span class="line">    <span class="keyword">elif</span> [ -f <span class="string">&quot;<span class="variable">$file</span>&quot;</span> ]</span><br><span class="line">    <span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$file</span> is a file&quot;</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+<p>  练习：</p>
+<p>  通过shell脚本实现批量主机检测</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">&gt;ip.txt</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> &#123;2..254&#125;</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    &#123;</span><br><span class="line">    ip=192.168.13.<span class="variable">$i</span></span><br><span class="line">    ping -c1 -W1 <span class="variable">$ip</span> &amp;&gt;/dev/null</span><br><span class="line">    <span class="keyword">if</span> [ $? -eq 0 ]</span><br><span class="line">    <span class="keyword">then</span></span><br><span class="line">				<span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$ip</span>&quot;</span> |<span class="built_in">tee</span> -a ip.txt</span><br><span class="line">		<span class="keyword">fi</span></span><br><span class="line">		&#125;&amp;</span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"><span class="built_in">wait</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;finish...&quot;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="while-循环"><a href="#while-循环" class="headerlink" title="while 循环"></a>while 循环</h3><p><code>while</code> 循环是一种基于条件判断的循环结构，当条件满足时就会一直执行循环体中的语句。其基本语法格式如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">while [ 条件 ]</span><br><span class="line">do</span><br><span class="line">    循环体</span><br><span class="line">done</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>其中，<code>条件</code>是一个可以执行的测试命令或表达式，如果返回值为0，则为真，循环继续执行；否则为假，循环结束。</p>
+<p>例如，下面的代码中，<code>while</code> 循环会一直执行，直到变量 <code>i</code> 的值达到 5：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line">i=1</span><br><span class="line"><span class="keyword">while</span> [ <span class="variable">$i</span> -le 5 ]</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;当前变量的值是 <span class="variable">$i</span>&quot;</span></span><br><span class="line">    i=$(( <span class="variable">$i</span> + <span class="number">1</span> ))</span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>以上代码会输出以下结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">当前变量的值是 1</span><br><span class="line">当前变量的值是 2</span><br><span class="line">当前变量的值是 3</span><br><span class="line">当前变量的值是 4</span><br><span class="line">当前变量的值是 5</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="until-循环"><a href="#until-循环" class="headerlink" title="until 循环"></a>until 循环</h3><p><code>until</code> 循环与 <code>while</code> 循环类似，但是只有当条件为假时才会执行循环体中的语句。其基本语法格式如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">until [ 条件 ]</span><br><span class="line">do</span><br><span class="line">    循环体</span><br><span class="line">done</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>其中，<code>条件</code>是一个可以执行的测试命令或表达式，如果返回值为0，则为假，循环继续执行；否则为真，循环结束。</p>
+<p>例如，下面的代码中，<code>until</code> 循环会一直执行，直到变量 <code>i</code> 的值达到 5：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">i=1</span><br><span class="line"><span class="keyword">until</span> [ <span class="variable">$i</span> -gt 5 ]</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;当前变量的值是 <span class="variable">$i</span>&quot;</span></span><br><span class="line">    i=$(( <span class="variable">$i</span> + <span class="number">1</span> ))</span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>以上代码会输出以下结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">当前变量的值是 1</span><br><span class="line">当前变量的值是 2</span><br><span class="line">当前变量的值是 3</span><br><span class="line">当前变量的值是 4</span><br><span class="line">当前变量的值是 5</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="循环控制语句"><a href="#循环控制语句" class="headerlink" title="循环控制语句"></a>循环控制语句</h3><p>在循环中，有时需要跳过某些循环或终止循环的执行，Shell脚本提供了以下三种循环控制语句：</p>
+<ul>
+<li><code>break</code>语句：用于强制退出循环，跳出循环体，执行循环后面的语句。</li>
+<li><code>continue</code>语句：用于跳过循环体中的一个迭代，直接进入下一个迭代。</li>
+<li><code>return</code>语句：用于退出函数，返回到函数调用处。</li>
+</ul>
+<p>例如，下面的代码演示了如何在循环中使用 <code>break</code> 和 <code>continue</code> 语句：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">i=1</span><br><span class="line"><span class="keyword">while</span> [ <span class="variable">$i</span> -le 100 ]</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    <span class="keyword">if</span> [ <span class="variable">$i</span> -eq 3 ]</span><br><span class="line">    <span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;跳过第 <span class="variable">$i</span> 次迭代&quot;</span></span><br><span class="line">        i=$(( <span class="variable">$i</span> + <span class="number">1</span> ))</span><br><span class="line">        <span class="built_in">continue</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line">    <span class="keyword">if</span> [ <span class="variable">$i</span> -eq 5 ]</span><br><span class="line">    <span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;退出循环&quot;</span></span><br><span class="line">        <span class="built_in">break</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;第 <span class="variable">$i</span> 次迭代&quot;</span></span><br><span class="line">    i=$(( <span class="variable">$i</span> + <span class="number">1</span> ))</span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>以上代码会输出以下结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">第 1 次迭代</span><br><span class="line">第 2 次迭代</span><br><span class="line">跳过第 3 次迭代</span><br><span class="line">第 4 次迭代</span><br><span class="line">退出循环</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/18/linux_shell/5.%E5%A4%84%E7%90%86%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1633,169 +1796,6 @@
 
 <h2 id="组织命令输出"><a href="#组织命令输出" class="headerlink" title="组织命令输出"></a>组织命令输出</h2><p>有时候，可能不想显示脚本的输出。这在将脚本作为后台进程运行时很常见。可以将STDERR重定向到一个叫作null文件的特殊&#x2F;文件。shell输出到null文件的任何数据都不会保存，全部都被丢掉了。在Linux系统上null文件的标准位置是&#x2F;dev&#x2F;null。你重定向到该位置的任何数据都会被丢掉，不会显示。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@sh:~$ <span class="built_in">ls</span> -al &gt; /dev/null</span><br><span class="line">ubuntu@sh:~$</span><br><span class="line">ubuntu@sh:~$ <span class="built_in">ls</span> -al badfile 2&gt; /dev/null</span><br><span class="line">ubuntu@sh:~$</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/18/linux_shell/4.Shell%E5%BE%AA%E7%8E%AF/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | ">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/04/18/linux_shell/4.Shell%E5%BE%AA%E7%8E%AF/" class="post-title-link" itemprop="url">Shell循环</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2023-04-18 11:31:23" itemprop="dateCreated datePublished" datetime="2023-04-18T11:31:23+08:00">2023-04-18</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-06-10 16:09:30" itemprop="dateModified" datetime="2023-06-10T16:09:30+08:00">2023-06-10</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>上一章学习的结构化命令中的 <code>if-then</code> 和 <code>case</code> 语句，其中 <code>if-then</code> 语句是通过检查命令的执行结果或者表达式（文件比较、字符串比较、数值比较）的结果来控制脚本的执行流程。</p>
-<h3 id="Shell编程中的循环语句"><a href="#Shell编程中的循环语句" class="headerlink" title="Shell编程中的循环语句"></a>Shell编程中的循环语句</h3><p>在Shell脚本中，循环语句是一种重要的控制结构，用于多次执行同一段代码。Shell脚本中提供了多种循环语句，包括<code>for</code>、<code>while</code>、<code>until</code>三种。</p>
-<h3 id="for-循环"><a href="#for-循环" class="headerlink" title="for 循环"></a>for 循环</h3><p><code>for</code> 循环是一种针对列表中每个元素执行相同操作的循环结构。该语句会将列表中的每个元素依次赋值给变量，并执行循环体中的语句。其基本语法格式如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">for 变量名 in 列表</span><br><span class="line">do</span><br><span class="line">    循环体</span><br><span class="line">done</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>其中，<code>变量名</code>是一个新的变量，用于存储列表中的每个元素；<code>列表</code>是一个由空格分隔的参数列表。</p>
-<p>例如，下面的代码中，<code>for</code> 循环遍历了一个包含 5 个元素的列表，依次输出了每个元素：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> 1 2 3 4 5</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;列表中的元素：<span class="variable">$i</span>&quot;</span></span><br><span class="line"><span class="keyword">done</span>,rk</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;i = <span class="variable">$i</span>&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>以上代码会输出以下结果：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">列表中的元素：1</span><br><span class="line">列表中的元素：2</span><br><span class="line">列表中的元素：3</span><br><span class="line">列表中的元素：4</span><br><span class="line">列表中的元素：5</span><br><span class="line">i = 5</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>读取列表中的复杂值</p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> I don<span class="string">&#x27;t know if this&#x27;</span>ll work</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;word:<span class="variable">$i</span>&quot;</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
-<p>  以上代码输出以下结果：</p>
-  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">word:I</span><br><span class="line">word:dont know if thisll</span><br><span class="line">word:work</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>两种方法解决列表中单引号引用的问题</p>
-<p>  使用转义字符（反斜杠）将单引号转义</p>
-<p>  使用双引号定义用到单引号的值</p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> I don\<span class="string">&#x27;t know if this\&#x27;</span>ll work</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;word:<span class="variable">$i</span>&quot;</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> I <span class="string">&quot;don&#x27;t&quot;</span> know <span class="keyword">if</span> <span class="string">&quot;this&#x27;ll&quot;</span> work</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;word:<span class="variable">$i</span>&quot;</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用双引号引用输出多个单词</p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="string">&quot;1 2&quot;</span> <span class="string">&quot;3 4&quot;</span> 5</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;列表中的元素：<span class="variable">$i</span>&quot;</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;i = <span class="variable">$i</span>&quot;</span></span><br></pre></td></tr></table></figure>
-<p>  以上代码输出以下结果：</p>
-  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">列表中的元素：1 2</span><br><span class="line">列表中的元素：3 4</span><br><span class="line">列表中的元素：5</span><br><span class="line">i = 5</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-<li><p>从变量读取列表</p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">list=<span class="string">&quot;1 2 3 4 5&quot;</span></span><br><span class="line">list=<span class="variable">$list</span><span class="string">&quot; 6&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="variable">$list</span></span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;列表中的元素：<span class="variable">$i</span>&quot;</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
-<p>  以上代码输出以下结果：</p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">列表中的元素：1</span><br><span class="line">列表中的元素：2</span><br><span class="line">列表中的元素：3</span><br><span class="line">列表中的元素：4</span><br><span class="line">列表中的元素：5</span><br><span class="line">列表中的元素：6</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>通过命令读取</p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">IFS=$<span class="string">&#x27;\n&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cat</span> &gt; test.sh &lt;&lt;<span class="string">EOF</span></span><br><span class="line"><span class="string">1 2 3</span></span><br><span class="line"><span class="string">2</span></span><br><span class="line"><span class="string">3</span></span><br><span class="line"><span class="string">4</span></span><br><span class="line"><span class="string">5</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> `<span class="built_in">cat</span> test.sh`</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;列表中的元素：<span class="variable">$i</span>&quot;</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>用通配符读取目录</p>
-<p>  在 Shell 编程中，通配符是一种用于匹配文件名或目录名的特殊字符。通配符可以帮助你快速地匹配一组文件或目录，从而方便地对它们进行操作。</p>
-<p>  常见的通配符包括：</p>
-<ul>
-<li><code>*</code>：匹配任意长度的任意字符，包括空字符串。</li>
-<li><code>?</code>：匹配任意一个字符。</li>
-<li><code>[...]</code>：匹配括号内列举的任意一个字符。</li>
-<li><code>[^...]</code>：匹配除了括号内列举的任意一个字符以外的所有字符。</li>
-</ul>
-<p>  以下是一些通配符匹配的示例：</p>
-<ul>
-<li><code>*.txt</code>：匹配所有以 <code>.txt</code> 结尾的文件，如 <code>file1.txt</code>、<code>file2.txt</code> 等。</li>
-<li><code>file?.txt</code>：匹配所有文件名为 <code>file</code> 开头，后面跟着任意一个字符，最后以 <code>.txt</code> 结尾的文件，如 <code>file1.txt</code>、<code>fileA.txt</code> 等。</li>
-<li><code>[abc].txt</code>：匹配所有文件名为 <code>a.txt</code>、<code>b.txt</code>、<code>c.txt</code> 的文件。</li>
-<li><code>[^abc].txt</code>：匹配除了文件名为 <code>a.txt</code>、<code>b.txt</code>、<code>c.txt</code> 以外的所有以 <code>.txt</code> 结尾的文件。</li>
-</ul>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">touch</span> ~/file&#123;1..2&#125;</span><br><span class="line"><span class="built_in">mkdir</span> ~/dir&#123;1..3&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> ~/*</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    <span class="keyword">if</span> [ -d <span class="string">&quot;<span class="variable">$file</span>&quot;</span> ]</span><br><span class="line">    <span class="keyword">then</span></span><br><span class="line">			  <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$file</span> is a directory&quot;</span></span><br><span class="line">    <span class="keyword">elif</span> [ -f <span class="string">&quot;<span class="variable">$file</span>&quot;</span> ]</span><br><span class="line">    <span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$file</span> is a file&quot;</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
-<p>  练习：</p>
-<p>  通过shell脚本实现批量主机检测</p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">&gt;ip.txt</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> &#123;2..254&#125;</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    &#123;</span><br><span class="line">    ip=192.168.13.<span class="variable">$i</span></span><br><span class="line">    ping -c1 -W1 <span class="variable">$ip</span> &amp;&gt;/dev/null</span><br><span class="line">    <span class="keyword">if</span> [ $? -eq 0 ]</span><br><span class="line">    <span class="keyword">then</span></span><br><span class="line">				<span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$ip</span>&quot;</span> |<span class="built_in">tee</span> -a ip.txt</span><br><span class="line">		<span class="keyword">fi</span></span><br><span class="line">		&#125;&amp;</span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"><span class="built_in">wait</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;finish...&quot;</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="while-循环"><a href="#while-循环" class="headerlink" title="while 循环"></a>while 循环</h3><p><code>while</code> 循环是一种基于条件判断的循环结构，当条件满足时就会一直执行循环体中的语句。其基本语法格式如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">while [ 条件 ]</span><br><span class="line">do</span><br><span class="line">    循环体</span><br><span class="line">done</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>其中，<code>条件</code>是一个可以执行的测试命令或表达式，如果返回值为0，则为真，循环继续执行；否则为假，循环结束。</p>
-<p>例如，下面的代码中，<code>while</code> 循环会一直执行，直到变量 <code>i</code> 的值达到 5：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line">i=1</span><br><span class="line"><span class="keyword">while</span> [ <span class="variable">$i</span> -le 5 ]</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;当前变量的值是 <span class="variable">$i</span>&quot;</span></span><br><span class="line">    i=$(( <span class="variable">$i</span> + <span class="number">1</span> ))</span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>以上代码会输出以下结果：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">当前变量的值是 1</span><br><span class="line">当前变量的值是 2</span><br><span class="line">当前变量的值是 3</span><br><span class="line">当前变量的值是 4</span><br><span class="line">当前变量的值是 5</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="until-循环"><a href="#until-循环" class="headerlink" title="until 循环"></a>until 循环</h3><p><code>until</code> 循环与 <code>while</code> 循环类似，但是只有当条件为假时才会执行循环体中的语句。其基本语法格式如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">until [ 条件 ]</span><br><span class="line">do</span><br><span class="line">    循环体</span><br><span class="line">done</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>其中，<code>条件</code>是一个可以执行的测试命令或表达式，如果返回值为0，则为假，循环继续执行；否则为真，循环结束。</p>
-<p>例如，下面的代码中，<code>until</code> 循环会一直执行，直到变量 <code>i</code> 的值达到 5：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">i=1</span><br><span class="line"><span class="keyword">until</span> [ <span class="variable">$i</span> -gt 5 ]</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;当前变量的值是 <span class="variable">$i</span>&quot;</span></span><br><span class="line">    i=$(( <span class="variable">$i</span> + <span class="number">1</span> ))</span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>以上代码会输出以下结果：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">当前变量的值是 1</span><br><span class="line">当前变量的值是 2</span><br><span class="line">当前变量的值是 3</span><br><span class="line">当前变量的值是 4</span><br><span class="line">当前变量的值是 5</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="循环控制语句"><a href="#循环控制语句" class="headerlink" title="循环控制语句"></a>循环控制语句</h3><p>在循环中，有时需要跳过某些循环或终止循环的执行，Shell脚本提供了以下三种循环控制语句：</p>
-<ul>
-<li><code>break</code>语句：用于强制退出循环，跳出循环体，执行循环后面的语句。</li>
-<li><code>continue</code>语句：用于跳过循环体中的一个迭代，直接进入下一个迭代。</li>
-<li><code>return</code>语句：用于退出函数，返回到函数调用处。</li>
-</ul>
-<p>例如，下面的代码演示了如何在循环中使用 <code>break</code> 和 <code>continue</code> 语句：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">i=1</span><br><span class="line"><span class="keyword">while</span> [ <span class="variable">$i</span> -le 100 ]</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    <span class="keyword">if</span> [ <span class="variable">$i</span> -eq 3 ]</span><br><span class="line">    <span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;跳过第 <span class="variable">$i</span> 次迭代&quot;</span></span><br><span class="line">        i=$(( <span class="variable">$i</span> + <span class="number">1</span> ))</span><br><span class="line">        <span class="built_in">continue</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line">    <span class="keyword">if</span> [ <span class="variable">$i</span> -eq 5 ]</span><br><span class="line">    <span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;退出循环&quot;</span></span><br><span class="line">        <span class="built_in">break</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;第 <span class="variable">$i</span> 次迭代&quot;</span></span><br><span class="line">    i=$(( <span class="variable">$i</span> + <span class="number">1</span> ))</span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>以上代码会输出以下结果：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">第 1 次迭代</span><br><span class="line">第 2 次迭代</span><br><span class="line">跳过第 3 次迭代</span><br><span class="line">第 4 次迭代</span><br><span class="line">退出循环</span><br><span class="line"></span><br></pre></td></tr></table></figure>
       
     </div>
 
