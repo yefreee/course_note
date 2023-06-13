@@ -26,13 +26,8 @@
 <meta property="og:site_name">
 <meta property="og:description" content="~&#x2F;.vimrc 内添加以下内容，实现在Vim内显示行号并且按 F5 一键运行Shell脚本   12345678910set nunnoremap &lt;F5&gt; :call CompileRunGcc()&lt;cr&gt;func! CompileRunGcc()          exec &quot;w&quot;          if &amp;filetype &#x3D;&#x3D; &amp;#x">
 <meta property="og:locale">
-<meta property="og:image" content="http://example.com/Untitled%204.png">
-<meta property="og:image" content="http://example.com/Untitled%205.png">
-<meta property="og:image" content="http://example.com/Untitled%206.png">
-<meta property="og:image" content="http://example.com/Untitled%207.png">
 <meta property="og:image" content="http://example.com/Untitled%208.png">
 <meta property="og:image" content="http://example.com/Untitled%209.png">
-<meta property="og:image" content="http://example.com/Untitled%2010.png">
 <meta property="og:image" content="http://example.com/Untitled%2011.png">
 <meta property="og:image" content="http://example.com/Untitled%2012.png">
 <meta property="og:image" content="http://example.com/Untitled%2013.png">
@@ -49,9 +44,9 @@
 <meta property="og:image" content="http://example.com/Untitled%2024.png">
 <meta property="og:image" content="http://example.com/Untitled%2025.png">
 <meta property="article:published_time" content="2023-04-18T03:31:23.000Z">
-<meta property="article:modified_time" content="2023-06-10T08:09:30.859Z">
+<meta property="article:modified_time" content="2023-06-13T15:08:09.617Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/Untitled%204.png">
+<meta name="twitter:image" content="http://example.com/Untitled%208.png">
 
 
 <link rel="canonical" href="http://example.com/2023/04/18/linux_shell/2.%E6%9E%84%E5%BB%BA%E5%9F%BA%E6%9C%AC%E8%84%9A%E6%9C%AC/">
@@ -146,7 +141,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">11</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -210,7 +205,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-06-10 16:09:30" itemprop="dateModified" datetime="2023-06-10T16:09:30+08:00">2023-06-10</time>
+      <time title="Modified: 2023-06-13 23:08:09" itemprop="dateModified" datetime="2023-06-13T23:08:09+08:00">2023-06-13</time>
     </span>
 
   
@@ -225,29 +220,30 @@
     <div class="post-body" itemprop="articleBody">
         <ul>
 <li><p><code>~/.vimrc</code> 内添加以下内容，实现在Vim内显示行号并且按 <code>F5</code> 一键运行Shell脚本</p>
-  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">set nu</span><br><span class="line"></span><br><span class="line">nnoremap &lt;F5&gt; :call CompileRunGcc()&lt;cr&gt;</span><br><span class="line"></span><br><span class="line">func! CompileRunGcc()</span><br><span class="line">          exec &quot;w&quot;</span><br><span class="line">          if &amp;filetype == &#x27;sh&#x27;</span><br><span class="line">                  exec &quot;!clear;bash %&quot;</span><br><span class="line">          endif</span><br><span class="line">endfunc</span><br></pre></td></tr></table></figure></li>
+  <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">set nu</span><br><span class="line"></span><br><span class="line">nnoremap &lt;F5&gt; :call CompileRunGcc()&lt;cr&gt;</span><br><span class="line"></span><br><span class="line">func! CompileRunGcc()</span><br><span class="line">          exec &quot;w&quot;</span><br><span class="line">          if &amp;filetype == &#x27;sh&#x27;</span><br><span class="line">                  exec &quot;!clear;bash %&quot;</span><br><span class="line">          endif</span><br><span class="line">endfunc</span><br></pre></td></tr></table></figure></li>
 </ul>
 <h2 id="构建基本脚本"><a href="#构建基本脚本" class="headerlink" title="构建基本脚本"></a>构建基本脚本</h2><ul>
-<li><p><strong>使用分号组织命令</strong></p>
-<p>  shell脚本的关键在于输入多个命令并处理每个命令的结果，甚至需要将一个命令的结果传给另一个命令。shell可以让你将多个命令串起来，一次执行完成。如果要两个命令一起运行，可以把它们放在同一行中，彼此间用分号隔开。</p>
-<p>  <img src="/Untitled%204.png" alt="Untitled"></p>
+<li><p>在命令行中使用分号组织命令<br>  Shell脚本的关键在于输入多个命令并处理每个命令的结果，甚至需要将一个命令的结果传给另一个命令。Shell可以让你将多个命令串起来，一次执行完成。如果要两个命令一起运行，可以把它们放在同一行中，彼此间用分号隔开。</p>
+  <figure class="highlight shell"><figcaption><span>使用分号一次执行两个命令</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[centos@host1 /]$ date;date</span><br><span class="line">Tue Jun 13 14:16:40 UTC 2023</span><br><span class="line">Tue Jun 13 14:16:40 UTC 2023</span><br><span class="line">[centos@host1 /]$ date;whoami</span><br><span class="line">Tue Jun 13 14:16:44 UTC 2023</span><br><span class="line">centos</span><br></pre></td></tr></table></figure>
 </li>
-<li><p><strong>创建Shell脚本文件</strong></p>
-<p>  在通常的shell脚本中，井号（#）用作注释行。shell并不会处理shell脚本中的注释行。然而，shell脚本文件的第一行是个例外，#后面的惊叹号会告诉shell用哪个shell来运行脚本。</p>
-<p>  使用分号将两个命令放在一行上，但在shell脚本中，你可以在独立的行中书写命令。shell会按根据命令在文件中出现的顺序进行处理。还有，要注意另有一行也以#开头，并添加了一个注释。shell不会解释以#开头的行（除了以#!开头的第一行）。</p>
-<p>  <img src="/Untitled%205.png" alt="Untitled"></p>
-</li>
+<li><p>创建Shell脚本文件  </p>
+<ol>
+<li>在Shell脚本中，井号<code>#</code>用作注释行，Shell并不会处理Shell脚本中的注释行。但是Shell脚本文件的第一行是个例外，<code>#!</code>符号是一个特殊的标记，它会告诉系统用哪个Shell来运行脚本。  </li>
+<li>在Shell脚本中，你可以在独立的行中书写命令，Shell会按根据命令在文件中出现的顺序进行处理。</li>
+</ol>
+  <figure class="highlight bash"><figcaption><span>第一个Shell脚本</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 这是一行注释，下面两行代码通过echo命令向标准输出发送指定字符</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Hello World!&quot;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Hello World!&quot;</span></span><br></pre></td></tr></table></figure></li>
 </ul>
 <h2 id="执行脚本文件的方式"><a href="#执行脚本文件的方式" class="headerlink" title="执行脚本文件的方式"></a>执行脚本文件的方式</h2><p>在执行脚本时先确认脚本是否有执行权限</p>
-<p><img src="/Untitled%206.png" alt="Untitled"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[centos@host1 ~]$ ls -l test.sh</span><br><span class="line">-rwxrwxr-x 1 centos centos 124 Jun 13 14:51 test.sh</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li><p>第一种方式：在提示符中使用绝对或者相对文件路径来引用脚本文件</p>
 </li>
 <li><p>第二种方式：将Shell脚本文件所处目录添加到PATH变量中</p>
-<p>  <img src="/Untitled%207.png" alt="Untitled"></p>
+  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[centos@host1 ~]$ echo $PATH</span><br><span class="line">/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>第三种方式：使用 <code>bash + 脚本名</code> 或者 <code>source + 脚本名</code> 进行调用</p>
-</li>
+  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[centos@host1 ~]$ bash test.sh</span><br><span class="line">Hello World!</span><br><span class="line">Hello World!</span><br><span class="line">[centos@host1 ~]$ source test.sh</span><br><span class="line">Hello World!</span><br><span class="line">Hello World!</span><br></pre></td></tr></table></figure></li>
 </ul>
 <h2 id="Shell变量概念"><a href="#Shell变量概念" class="headerlink" title="Shell变量概念"></a>Shell变量概念</h2><ul>
 <li><p>变量定义</p>
@@ -262,7 +258,7 @@
 </ul>
 <h2 id="Shell环境变量"><a href="#Shell环境变量" class="headerlink" title="Shell环境变量"></a>Shell环境变量</h2><ul>
 <li><p>环境变量定义</p>
-<p>  bash shell用环境变量（environment variable）来存储有关shell会话和工作环<br>  境的信息（这也是它们被称作环境变量的原因）。这项特性允许你在内存中存储数据，以便程序或shell中运行的脚本能够轻松访问到它们。这也是存储持久数据的一种简便方法。</p>
+<p>  bash Shell用环境变量（environment variable）来存储有关Shell会话和工作环<br>  境的信息（这也是它们被称作环境变量的原因）。这项特性允许你在内存中存储数据，以便程序或Shell中运行的脚本能够轻松访问到它们。这也是存储持久数据的一种简便方法。</p>
 </li>
 <li><p>环境变量分类</p>
 <ul>
@@ -271,19 +267,21 @@
 </ul>
 </li>
 <li><p>全局环境变量</p>
-<p>  全局环境变量对于shell会话和所有生成的子shell都是可见的。局部变量则只对创建它们的shell可见。这让全局环境变量对那些所创建的子shell需要获取父shell信息的程序来说非常有用。</p>
+<p>  全局环境变量对于Shell会话和所有生成的子Shell都是可见的。局部变量则只对创建它们的Shell可见。这让全局环境变量对那些所创建的子Shell需要获取父Shell信息的程序来说非常有用。</p>
 <p>  Linux系统在你开始bash会话时就设置了一些全局环境变量。系统环境变量基本上都是使用全大写字母，以区别于普通用户的环境变量。</p>
 </li>
 <li><p>查看全局环境变量</p>
 <ul>
-<li><code>printenv</code> 、 <code>env</code></li>
-<li><code>printenv HOME</code></li>
-<li><code>echo $HOME</code></li>
-</ul>
-<p>  <img src="/Untitled%209.png" alt="Untitled"></p>
-<ul>
-<li><p>全局环境变量可以用于所有子shell</p>
-<p>  <img src="/Untitled%2010.png" alt="Untitled"></p>
+<li><p><code>printenv</code> 、 <code>env</code></p>
+</li>
+<li><p><code>printenv HOME</code></p>
+</li>
+<li><p><code>echo $HOME</code></p>
+<p><img src="/Untitled%209.png" alt="Untitled"></p>
+</li>
+<li><p>全局环境变量可以用于所有子Shell</p>
+<pre><code>![Untitled](Untitled%2010.png)
+</code></pre>
 </li>
 </ul>
 </li>
@@ -292,7 +290,7 @@
 </li>
 <li><p>局部用户定义变量，区别于系统环境变量使用小写字符</p>
 <p>  <img src="/Untitled%2011.png" alt="Untitled"></p>
-<p>  局部变量在子shell中不可用，同样子shell中定义的局部变量在父shell中不可用</p>
+<p>  局部变量在子Shell中不可用，同样子Shell中定义的局部变量在父Shell中不可用</p>
 <p>  <img src="/Untitled%2012.png" alt="Untitled"></p>
 </li>
 <li><p>设置全局环境变量</p>
@@ -304,7 +302,7 @@
 <li>HOME：当前用户的家目录</li>
 <li>PATH：系统执行命令的路径</li>
 <li>USER：当前登录的用户名</li>
-<li>SHELL：当前用户使用的默认shell程序</li>
+<li>Shell：当前用户使用的默认Shell程序</li>
 <li>PWD：当前工作目录</li>
 <li>LANG：当前语言环境</li>
 <li>TERM：当前终端的类型</li>
@@ -317,25 +315,28 @@
 <p>  <img src="/Untitled%2014.png" alt="Untitled"></p>
 </li>
 </ul>
-<h2 id="变量赋值"><a href="#变量赋值" class="headerlink" title="变量赋值"></a>变量赋值</h2><p>shell脚本会自动决定变量值的数据类型。在脚本的整个生命周期里，shell脚本中定义的变量会一直保持着它们的值，但在shell脚本结束时会被删除掉。</p>
+<h2 id="变量赋值"><a href="#变量赋值" class="headerlink" title="变量赋值"></a>变量赋值</h2><p>Shell脚本会自动决定变量值的数据类型。在脚本的整个生命周期里，Shell脚本中定义的变量会一直保持着它们的值，但在Shell脚本结束时会被删除掉。</p>
 <ul>
 <li><p>引用用户变量和环境变量</p>
 <ul>
-<li>使用等号将值赋给用户变量。在变量、等号和值之间不能出现空格。</li>
-<li>在脚本的整个生命周期里，shell脚本中定义的变量会一直保持着它们的值，但在shell脚本结束时会被删除掉。</li>
-<li>变量每次被引用时，都会输出当前赋给它的值。重要的是要记住，引用一个变量值时需要使用美元符，而引用变量来对其进行赋值时则不要使用美元符。没有美元符，shell会将变量名解释成普通的文本字符串</li>
+<li><p>使用等号将值赋给用户变量。在变量、等号和值之间不能出现空格。</p>
+</li>
+<li><p>在脚本的整个生命周期里，Shell脚本中定义的变量会一直保持着它们的值，但在Shell脚本结束时会被删除掉。</p>
+</li>
+<li><p>变量每次被引用时，都会输出当前赋给它的值。重要的是要记住，引用一个变量值时需要使用美元符，而引用变量来对其进行赋值时则不要使用美元符。没有美元符，Shell会将变量名解释成普通的文本字符串</p>
+<p><img src="/Untitled%2015.png" alt="Untitled"></p>
+</li>
 </ul>
-<p>  <img src="/Untitled%2015.png" alt="Untitled">
-  </p>
 </li>
 <li><p>命令替换</p>
-<p>  shell脚本中最有用的特性之一就是可以从命令输出中提取信息，并将其赋给变量。把输出赋给变量之后，就可以随意在脚本中使用了。这个特性在处理脚本数据时尤为方便。有两种方法可以将命令输出赋给变量：</p>
+<p>  Shell脚本中最有用的特性之一就是可以从命令输出中提取信息，并将其赋给变量。把输出赋给变量之后，就可以随意在脚本中使用了。这个特性在处理脚本数据时尤为方便。有两种方法可以将命令输出赋给变量：</p>
 <ul>
-<li>反引号字符（&#96;）(与~同键位)</li>
-<li>$()格式</li>
+<li><p>反引号字符（&#96;）(与~同键位)</p>
+</li>
+<li><p>$()格式</p>
+<p><img src="/Untitled%2016.png" alt="Untitled"></p>
+</li>
 </ul>
-<p>  <img src="/Untitled%2016.png" alt="Untitled">
-  </p>
 </li>
 <li><p>从键盘读入赋值</p>
 <p>  在Shell脚本中，Shell变量可以通过从键盘读入输入的内容并来赋值。命令格式为：read –p [提示信息]：[变量名]</p>

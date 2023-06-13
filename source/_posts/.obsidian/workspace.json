@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "4407fad43f3c20c2",
+        "id": "b3d2d98b56634c2f",
         "type": "tabs",
         "children": [
           {
-            "id": "3be34a7cebe1cddf",
+            "id": "14e049e252f23a8b",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "10.text-processing-tools-awk.md",
+                "file": "linux_shell/2.构建基本脚本.md",
                 "mode": "preview",
                 "source": false
               }
@@ -64,6 +64,14 @@
               "type": "starred",
               "state": {}
             }
+          },
+          {
+            "id": "77b5a76b49a50367",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
           }
         ]
       }
@@ -85,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "10.text-processing-tools-awk.md",
+                "file": "linux_shell/2.构建基本脚本.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +110,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "10.text-processing-tools-awk.md",
+                "file": "linux_shell/2.构建基本脚本.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -153,8 +161,10 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "3be34a7cebe1cddf",
+  "active": "14e049e252f23a8b",
   "lastOpenFiles": [
+    "linux_shell/1.Shell初识，编辑器使用.md",
+    "linux_shell/2.构建基本脚本.md",
     "6.使用重定向呈现数据.md",
     "10.text-processing-tools-awk.md",
     "9.流编辑器sed.md",
@@ -182,8 +192,6 @@
     "Learnning/OS/BootLoader/UEFI.md",
     "Learnning/GM/Network_Protocol_.md",
     "Read_Note/System/Clipper/程序的本质之二ELF文件的文件头、section header和program header.md",
-    "Learnning/GM/Regular Expression.md",
-    "Learnning/GM/Notion.md",
     "_resources/WebClipper.png",
     "_resources/SubNotebooks.png"
   ]
