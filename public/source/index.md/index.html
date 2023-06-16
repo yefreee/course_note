@@ -118,7 +118,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">15</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -136,6 +136,250 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/06/16/c_program/3.%E7%AC%AC%E4%B8%89%E5%91%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/06/16/c_program/3.%E7%AC%AC%E4%B8%89%E5%91%A8/" class="post-title-link" itemprop="url">第三周</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-06-16 22:22:10" itemprop="dateCreated datePublished" datetime="2023-06-16T22:22:10+08:00">2023-06-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-06-17 00:45:03" itemprop="dateModified" datetime="2023-06-17T00:45:03+08:00">2023-06-17</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="C语言中的输入输出函数"><a href="#C语言中的输入输出函数" class="headerlink" title="C语言中的输入输出函数"></a>C语言中的输入输出函数</h2><p>C语言有很多函数能够实现各种信息的输入和输出，信息的输入主要来源是标准输入（键盘），信息的输出主要目标是标准输出（屏幕），下面介绍几种常见的输入输出函数。</p>
+<h3 id="printf和scanf"><a href="#printf和scanf" class="headerlink" title="printf和scanf"></a>printf和scanf</h3><ol>
+<li><p>printf用于将数据格式化输出到标准输出（通常是屏幕）</p>
+<p> printf函数原型如下：</p>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">printf</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *format, ...)</span>;</span><br></pre></td></tr></table></figure>
+
+<p> printf() 函数接受一个格式化字符串<code>format</code>和可变数量的参数，根据格式化字符串中的占位符将参数格式化为字符串并输出到标准输出（通常是控制台）。返回值为输出的字符数。</p>
+<p> 常见的格式化占位符以及含义：</p>
+ <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">%d：输出有符号十进制整数。</span><br><span class="line">%u：输出无符号十进制整数。</span><br><span class="line">%f：输出浮点数。</span><br><span class="line">%c：输出字符。</span><br><span class="line">%s：输出字符串。</span><br><span class="line">%x：输出无符号十六进制整数。</span><br><span class="line">%o：输出无符号八进制整数。</span><br><span class="line">%e：以指数形式输出浮点数。</span><br><span class="line">%p：输出指针的地址。</span><br><span class="line">%%：输出一个百分号。</span><br></pre></td></tr></table></figure>
+
+<p> 创建test.c文件并编辑以下代码，注释部分为运行结果：</p>
+ <figure class="highlight c"><figcaption><span>print用法示例</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line"><span class="type">int</span> num = <span class="number">10</span>;</span><br><span class="line"><span class="type">float</span> pi = <span class="number">3.14159</span>;</span><br><span class="line"><span class="type">char</span> ch = <span class="string">&#x27;A&#x27;</span>;</span><br><span class="line"><span class="type">char</span> str[] = <span class="string">&quot;Hello, World!&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;Integer: %d\n&quot;</span>, num);   <span class="comment">//Integer: 10</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;Float: %.2f\n&quot;</span>, pi);    <span class="comment">//Float: 3.14</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;Integer: %d\nFloat: %.2f\n&quot;</span>, num, pi);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;Character: %c\n&quot;</span>, ch);  <span class="comment">//Character: A</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;String: %s\n&quot;</span>, str);    <span class="comment">//String: Hello, World!</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>scanf用于从标准输入（通常是键盘）读取格式化的数据</p>
+<p> scanf原型如下：</p>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">scanf</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *format, ...)</span>;</span><br></pre></td></tr></table></figure>
+
+<p> scanf() 函数接受一个格式化字符串<code>format</code>和对应的参数列表，根据格式化字符串中的占位符从输入流中读取数据，并将读取到的数据存储到对应的变量中。返回值为成功读取的变量的数量。</p>
+<p> 创建test.c文件并编辑以下代码：</p>
+ <figure class="highlight c"><figcaption><span>scanf用法示例</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">int</span> num;</span><br><span class="line">    <span class="type">float</span> pi;</span><br><span class="line">    <span class="type">char</span> ch;</span><br><span class="line">    <span class="type">char</span> str[<span class="number">100</span>];</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Enter an integer: &quot;</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;num);</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Enter a float: &quot;</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%f&quot;</span>, &amp;pi);</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Enter a character: &quot;</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot; %c&quot;</span>, &amp;ch);</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Enter a string: &quot;</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>, str);</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Integer: %d\n&quot;</span>, num);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Float: %.2f\n&quot;</span>, pi);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Character: %c\n&quot;</span>, ch);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;String: %s\n&quot;</span>, str);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p> 使用<code>gcc -o test test.c</code>命令编译后使用<code>./test</code>运行代码，按提示信息输入相应类型的数据：</p>
+ <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Enter an integer: 10</span><br><span class="line">Enter a float: 10.1</span><br><span class="line">Enter a character: d</span><br><span class="line">Enter a string: string</span><br><span class="line">Integer: 10</span><br><span class="line">Float: 10.10</span><br><span class="line">Character: d</span><br><span class="line">String: string</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="getchar和putchar"><a href="#getchar和putchar" class="headerlink" title="getchar和putchar"></a>getchar和putchar</h3><ol>
+<li><p>getchar用于从输入流中读取单个字符</p>
+<p> getchar函数原型如下：</p>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">getchar</span><span class="params">(<span class="type">void</span>)</span>;</span><br></pre></td></tr></table></figure>
+
+<p> getchar() 函数没有参数，它从标准输入（通常是键盘）读取一个字符，并返回读取到的字符的ASCII码值（作为整数）。</p>
+<p> 创建test.c文件并编辑以下代码：</p>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">char</span> ch;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Enter a character: &quot;</span>);</span><br><span class="line">    ch = getchar();</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;You entered: %c\n&quot;</span>, ch);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p> 使用<code>gcc -o test test.c</code>命令编译后使用<code>./test</code>运行代码，按提示信息输入相应类型的数据：</p>
+ <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Enter a character: d</span><br><span class="line">You entered: d</span><br><span class="line"></span><br><span class="line">Enter a character: dd</span><br><span class="line">You entered: d</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>putchar用于将一个字符输出到标准输出（通常是屏幕）</p>
+<p> putchar函数原型如下：</p>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">putchar</span><span class="params">(<span class="type">int</span> c)</span>;</span><br></pre></td></tr></table></figure>
+
+<p> putchar()函数接受一个整数参数<code>c</code>，它表示要输出的字符的ASCII码值。函数将该字符输出到标准输出，并返回输出的字符。</p>
+<p> 创建test.c文件并编辑以下代码：</p>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">char</span> ch = <span class="string">&#x27;A&#x27;</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Character: &quot;</span>);</span><br><span class="line">    <span class="built_in">putchar</span>(ch);</span><br><span class="line">    <span class="built_in">putchar</span>(<span class="string">&#x27;\n&#x27;</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br></pre></td></tr></table></figure>
+
+<p> 使用<code>gcc -o test test.c</code>命令编译后使用<code>./test</code>运行代码，按提示信息输入相应类型的数据：</p>
+ <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Character: A</span><br><span class="line"> </span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="其他输入输出函数"><a href="#其他输入输出函数" class="headerlink" title="其他输入输出函数"></a>其他输入输出函数</h3><ul>
+<li><p>标准输入输出（stdio.h库）：</p>
+<ul>
+<li>printf()：用于将数据格式化输出到标准输出（通常是控制台）。</li>
+<li>scanf()：用于从标准输入（键盘）读取格式化的数据。</li>
+<li>getchar()：用于从标准输入（键盘）读取单个字符。</li>
+<li>puts()：用于将字符串输出到标准输出（控制台）并自动换行。</li>
+<li>gets()：用于从标准输入（键盘）读取字符串（已被弃用，请使用 fgets()）。</li>
+</ul>
+</li>
+<li><p>文件输入输出（stdio.h库）：</p>
+<ul>
+<li>fopen()：打开文件并返回文件指针。</li>
+<li>fclose()：关闭文件。</li>
+<li>fprintf()：将数据格式化输出到文件。</li>
+<li>fscanf()：从文件读取格式化的数据。</li>
+<li>fgets()：从文件读取一行字符串。</li>
+</ul>
+</li>
+<li><p>字符输入输出（ctype.h库）：</p>
+<ul>
+<li>putc()：将一个字符写入指定的文件。</li>
+<li>getc()：从指定的文件读取一个字符。</li>
+</ul>
+</li>
+<li><p>格式化输出（stdarg.h库）：</p>
+<ul>
+<li>sprintf()：将数据格式化输出到字符串。</li>
+<li>printf()：将数据格式化输出到字符串或标准输出。</li>
+</ul>
+</li>
+</ul>
+<h2 id="控制语句：分支和跳转"><a href="#控制语句：分支和跳转" class="headerlink" title="控制语句：分支和跳转"></a>控制语句：分支和跳转</h2><h3 id="if语句"><a href="#if语句" class="headerlink" title="if语句"></a>if语句</h3><p>if语句的语法格式：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(boolean_expression)</span><br><span class="line">&#123;</span><br><span class="line">   <span class="comment">/* 如果布尔表达式为真将执行的语句 */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果布尔表达式为 true，则 if 语句内的代码块将被执行。如果布尔表达式为 false，则 if 语句结束后的第一组代码（闭括号后）将被执行。<br>C 语言把任何非零和非空的值假定为 true，把零或 null 假定为 false。</p>
+<p>创建test.c文件，编辑以下代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">int</span> num;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Enter a number: &quot;</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;num);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (num &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;The number is positive.\n&quot;</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (num &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;The number is negative.\n&quot;</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;The number is zero.\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>可以使用各种类型的运算符来构建表达式：</p>
+<ol>
+<li><p>关系运算符：</p>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a = <span class="number">5</span>, b = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">if</span> (a == b) &#123;</span><br><span class="line"><span class="comment">// 执行代码块</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>逻辑运算符：</p>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">    <span class="type">int</span> x = <span class="number">5</span>, y = <span class="number">10</span>;</span><br><span class="line">    <span class="keyword">if</span> (x &gt; <span class="number">0</span> &amp;&amp; y &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">// 执行代码块</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>位运算符：</p>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">unsigned</span> <span class="type">int</span> flags = <span class="number">0b1011</span>;</span><br><span class="line"><span class="keyword">if</span> (flags &amp; <span class="number">0b1000</span>) &#123;</span><br><span class="line">    <span class="comment">// 执行代码块</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="switch语句"><a href="#switch语句" class="headerlink" title="switch语句"></a>switch语句</h3><p><code>switch</code>语句是C语言中用于多路分支的控制语句，它根据表达式的值，选择性地执行与每个选项相关联的代码块。以下是<code>switch</code>语句的基本用法：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span> (expression) &#123;</span><br><span class="line">    <span class="keyword">case</span> constant1:</span><br><span class="line">        <span class="comment">// 与 constant1 相关的代码块</span></span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> constant2:</span><br><span class="line">        <span class="comment">// 与 constant2 相关的代码块</span></span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="comment">// 更多的 case 分支...</span></span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        <span class="comment">// 默认情况的代码块</span></span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><code>switch</code>语句包含以下几个部分：</p>
+<ol>
+<li><p><code>expression</code>：一个表达式，其结果将与每个case分支的常量值进行比较。</p>
+</li>
+<li><p><code>case</code>分支：每个case后面跟着一个常量表达式，用于与expression进行比较。如果expression的值与某个case的常量值匹配，将执行与该case相关联的代码块。</p>
+</li>
+<li><p><code>break</code>语句：在每个case分支的代码块结束时使用break语句，以终止switch语句的执行。如果忽略了break语句，将会发生”穿透”现象，即会继续执行下一个case分支中的代码块，直到遇到break或switch语句结束。</p>
+</li>
+<li><p><code>default</code>分支：在所有的case分支都不匹配时，将执行default分支中的代码块。default是可选的，可以省略。</p>
+</li>
+</ol>
+<p>创建test.c文件，编辑以下代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">int</span> choice;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Enter a number between 1 and 3: &quot;</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;choice);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">switch</span> (choice) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;You selected option 1.\n&quot;</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;You selected option 2.\n&quot;</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;You selected option 3.\n&quot;</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;Invalid option.\n&quot;</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>使用<code>gcc -o test test.c</code>命令编译后使用<code>./test</code>运行代码，按提示信息输入相应类型的数据：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Enter a number between 1 and 3: 2</span><br><span class="line">You selected option 2.</span><br><span class="line"></span><br><span class="line">Enter a number between 1 and 3: 5</span><br><span class="line">Invalid option.</span><br><span class="line"></span><br><span class="line">Enter a number between 1 and 3: 2.1</span><br><span class="line">You selected option 2.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="控制语句：循环"><a href="#控制语句：循环" class="headerlink" title="控制语句：循环"></a>控制语句：循环</h2><h3 id="for循环"><a href="#for循环" class="headerlink" title="for循环"></a>for循环</h3><p>for循环是C语言中常用的一种迭代控制结构，它可以用于重复执行一段代码块，且提供了更灵活的循环控制。以下是for循环的语法：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (initialization; condition; increment/decrement) &#123;</span><br><span class="line">    <span class="comment">// 循环体代码块</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>for循环包含以下四个部分：</p>
+<ol>
+<li><p>initialization：在循环开始前执行的初始化表达式，用于初始化循环计数器或其他变量。</p>
+</li>
+<li><p>condition：在每次循环迭代前进行判断的条件表达式。只有当条件为真时，循环体中的代码块才会执行。如果条件为假，循环将结束，程序将继续执行循环后的代码。</p>
+</li>
+<li><p>increment&#x2F;decrement：在每次循环迭代后执行的增量或减量操作。它用于更新循环计数器或其他变量的值，以控制循环的进程。</p>
+</li>
+<li><p>循环体代码块：在 for 循环的花括号内部，是需要重复执行的代码块。这些代码将按照循环条件和增量&#x2F;减量操作的规则反复执行。</p>
+</li>
+</ol>
+<p>创建test.c文件，编辑以下代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">int</span> i;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">1</span>; i &lt;= <span class="number">5</span>; i++) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Count: %d\n&quot;</span>, i);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用<code>gcc -o test test.c</code>命令编译后使用<code>./test</code>运行代码，按提示信息输入相应类型的数据：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Count: 1</span><br><span class="line">Count: 2</span><br><span class="line">Count: 3</span><br><span class="line">Count: 4</span><br><span class="line">Count: 5</span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是，for循环的各个部分都是可选的。如果省略了某个部分，相应的功能将被忽略，但循环仍然可以正常工作。例如，可以省略初始化表达式或增量操作，只保留条件表达式，以及在循环体内手动控制循环变量的更新。这样的灵活性使得for循环非常适用于各种迭代场景。</p>
+<h3 id="while循环和do-while循环"><a href="#while循环和do-while循环" class="headerlink" title="while循环和do-while循环"></a>while循环和do-while循环</h3><p><code>while</code>循环是C语言中的一种迭代控制结构，它用于重复执行一段代码块，只要给定的条件为真。以下是<code>while</code>循环的语法</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (condition) &#123;</span><br><span class="line">    <span class="comment">// 循环体代码块</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>while 循环包含以下两个部分：</p>
+<ol>
+<li><p>condition：一个条件表达式，用于判断循环是否继续执行。如果条件为真，循环将继续执行循环体中的代码块；如果条件为假，循环将结束，程序将继续执行循环后的代码。</p>
+</li>
+<li><p>循环体代码块：在 while 循环的花括号内部，是需要重复执行的代码块。这些代码将反复执行，直到条件为假。</p>
+</li>
+</ol>
+<p>创建test.c文件，编辑以下代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">int</span> count = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (count &lt; <span class="number">5</span>) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Count: %d\n&quot;</span>, count);</span><br><span class="line">        count++;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上述示例中，<code>while</code>循环的条件是<code>count&lt;5</code>，只要<code>count</code>的值小于5，循环体中的代码块将被重复执行。每次循环，<code>count</code>的值会递增，并打印出当前的值。当<code>count</code>的值达到或超过5时，条件为假，循环结束。</p>
+<p>需要注意的是，如果条件一开始就为假，循环体中的代码块将不会执行，循环将被跳过。因此，在使用<code>while</code>循环时，请确保循环条件能够在某个时刻变为假，以避免陷入无限循环。通常，在循环体中需要修改条件表达式或使用控制语句（如<code>break</code>）来终止循环。</p>
+<h3 id="continue语句和break语句"><a href="#continue语句和break语句" class="headerlink" title="continue语句和break语句"></a>continue语句和break语句</h3><p>continue语句用于跳过当前循环迭代中剩余的代码，直接进行下一次迭代。它的作用是终止当前迭代的剩余代码，然后重新开始下一次循环迭代。continue语句通常与条件语句结合使用，用于在满足特定条件时跳过当前迭代。</p>
+<p>创建test.c文件，编辑以下代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">int</span> i;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">1</span>; i &lt;= <span class="number">5</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (i == <span class="number">3</span>) &#123;</span><br><span class="line">            <span class="keyword">continue</span>; <span class="comment">// 当 i 等于 3 时跳过当前迭代</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Count: %d\n&quot;</span>, i);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用<code>gcc -o test test.c</code>命令编译后使用<code>./test</code>运行代码，按提示信息输入相应类型的数据：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Count: 1</span><br><span class="line">Count: 2</span><br><span class="line">Count: 4</span><br><span class="line">Count: 5</span><br></pre></td></tr></table></figure>
+
+<p>在上述示例中，当<code>i</code>等于<code>3</code>时，<code>continue</code>语句将跳过<code>printf</code>语句，直接进入下一次循环迭代。因此，输出结果中不会包含数字<code>3</code>。</p>
+<p><code>break</code>语句用于完全终止当前的循环，不再执行循环中的任何代码，并跳出循环体继续执行循环后的代码。它通常与条件语句结合使用，用于在满足特定条件时提前结束循环。</p>
+<p>创建test.c文件，编辑以下代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">int</span> i;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">1</span>; i &lt;= <span class="number">5</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (i == <span class="number">3</span>) &#123;</span><br><span class="line">            <span class="keyword">break</span>; <span class="comment">// 当 i 等于 3 时终止循环</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Count: %d\n&quot;</span>, i);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用<code>gcc -o test test.c</code>命令编译后使用<code>./test</code>运行代码，按提示信息输入相应类型的数据：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Count: 1</span><br><span class="line">Count: 2</span><br></pre></td></tr></table></figure>
+
+<p>在上述示例中，当<code>i</code>等于<code>3</code>时，<code>break</code>语句将完全终止循环，不再执行任何循环代码。因此，输出结果中只包含数字<code>1</code>和<code>2</code>，循环在此处结束。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -645,6 +889,202 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/06/16/c_program/2.%E7%AC%AC%E4%BA%8C%E5%91%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/06/16/c_program/2.%E7%AC%AC%E4%BA%8C%E5%91%A8/" class="post-title-link" itemprop="url">第二周</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2023-06-16 21:30:30 / Modified: 22:29:39" itemprop="dateCreated datePublished" datetime="2023-06-16T21:30:30+08:00">2023-06-16</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="C语言的运算符"><a href="#C语言的运算符" class="headerlink" title="C语言的运算符"></a>C语言的运算符</h2><p>C语言中有多种类型的运算符，用于执行各种算术、逻辑和位操作。以下是C语言中常见的运算符类型：</p>
+<ol>
+<li><p>算术运算符：用于执行基本的算术操作，如加法、减法、乘法、除法、取模等。</p>
+<ul>
+<li><code>+</code>：加法运算</li>
+<li><code>-</code>：减法运算</li>
+<li><code>*</code>：乘法运算</li>
+<li><code>/</code>：除法运算</li>
+<li><code>%</code>：取模（取余）运算</li>
+</ul>
+</li>
+<li><p>关系运算符：用于比较两个值之间的关系，返回一个布尔值（1表示真，0表示假）。</p>
+<ul>
+<li><code>==</code>：等于</li>
+<li><code>!=</code>：不等于</li>
+<li><code>&lt;</code>：小于</li>
+<li><code>&gt;</code>：大于</li>
+<li><code>&lt;=</code>：小于等于</li>
+<li><code>&gt;=</code>：大于等于</li>
+</ul>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span> &#123;</span><br><span class="line">    <span class="type">int</span> num = <span class="number">65</span>;</span><br><span class="line">    <span class="type">char</span> ch = <span class="string">&#x27;A&#x27;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;num == ch: %d\n&quot;</span>, num == ch);       <span class="comment">// 65 == &#x27;B&#x27; -&gt; 1 (true)</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;num != ch: %d\n&quot;</span>, num != ch);       <span class="comment">// 65 != &#x27;B&#x27; -&gt; 0 (false)</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;num &gt; ch: %d\n&quot;</span>, num &gt; ch);         <span class="comment">// 65 &gt; &#x27;B&#x27; -&gt; 0 (false)</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;num &lt; ch: %d\n&quot;</span>, num &lt; ch);         <span class="comment">// 65 &lt; &#x27;B&#x27; -&gt; 0 (false)</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;num &gt;= ch: %d\n&quot;</span>, num &gt;= ch);       <span class="comment">// 65 &gt;= &#x27;B&#x27; -&gt; 1 (true)</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;num &lt;= ch: %d\n&quot;</span>, num &lt;= ch);       <span class="comment">// 65 &lt;= &#x27;B&#x27; -&gt; 1 (true)</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>逻辑运算符：用于执行逻辑操作，对布尔值进行组合和求反。</p>
+<ul>
+<li><code>&amp;&amp;</code>：逻辑与（与）</li>
+<li><code>||</code>：逻辑或（或）</li>
+<li><code>!</code>：逻辑非（非）</li>
+</ul>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> a = <span class="number">1</span>, b = <span class="number">2</span>, c = <span class="number">3</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 逻辑与运算符（&amp;&amp;）</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, (a &lt; b) &amp;&amp; (b &lt; c)); <span class="comment">// 1 (true) &amp;&amp; 1 (true) -&gt; 1 (true)</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, (a &lt; b) &amp;&amp; (b &gt; c)); <span class="comment">// 1 (true) &amp;&amp; 0 (false) -&gt; 0 (false)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 逻辑或运算符（||）</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, (a &lt; b) || (b &lt; c)); <span class="comment">// 1 (true) || 1 (true) -&gt; 1 (true)</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, (a &lt; b) || (b &gt; c)); <span class="comment">// 1 (true) || 0 (false) -&gt; 1 (false)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 逻辑非运算符（!）</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, !(a &lt; b)); <span class="comment">// !(1 (true)) -&gt; 0 (false)</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, !(a &gt; b)); <span class="comment">// !(0 (false)) -&gt; 1 (true)</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>位运算符：用于对二进制数据的位进行操作。</p>
+<ul>
+<li><code>&amp;</code>：按位与</li>
+<li><code>|</code>：按位或</li>
+<li><code>^</code>：按位异或</li>
+<li><code>~</code>：按位取反</li>
+<li><code>&lt;&lt;</code>：左移</li>
+<li><code>&gt;&gt;</code>：右移</li>
+</ul>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span> &#123;</span><br><span class="line">  <span class="comment">//unsigned int类型通常32位，以下所有位运算省略高24位的计算，只计算后8位</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">int</span> a = <span class="number">5</span>;   <span class="comment">// 二进制表示为 00000101</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">int</span> b = <span class="number">3</span>;   <span class="comment">// 二进制表示为 00000011</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 按位与运算符（&amp;）</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">int</span> result1 = a &amp; b;    <span class="comment">// 00000101 &amp; 00000011 = 00000001</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Result 1: %u\n&quot;</span>, result1); <span class="comment">// 输出：1</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 按位或运算符（|）</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">int</span> result2 = a | b;    <span class="comment">// 00000101 | 00000011 = 00000111</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Result 2: %u\n&quot;</span>, result2); <span class="comment">// 输出：7</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 按位异或运算符（^）</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">int</span> result3 = a ^ b;    <span class="comment">// 00000101 ^ 00000011 = 00000110</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Result 3: %u\n&quot;</span>, result3); <span class="comment">// 输出：6</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 按位取反运算符（~）</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">int</span> result4 = ~a;       <span class="comment">// ~00000101 = 11111010</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Result 4: %u\n&quot;</span>, result4); <span class="comment">// 输出：4294967290</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 左移运算符（&lt;&lt;）</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">int</span> result5 = a &lt;&lt; <span class="number">2</span>;   <span class="comment">// 00000101 &lt;&lt; 2 = 00010100</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Result 5: %u\n&quot;</span>, result5); <span class="comment">// 输出：20</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 右移运算符（&gt;&gt;）</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">int</span> result6 = a &gt;&gt; <span class="number">1</span>;   <span class="comment">// 00000101 &gt;&gt; 1 = 00000010</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Result 6: %u\n&quot;</span>, result6); <span class="comment">// 输出：2</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>赋值运算符：用于给变量赋值。</p>
+<ul>
+<li><code>=</code>：简单赋值</li>
+<li><code>+=</code>：加法赋值</li>
+<li><code>-=</code>：减法赋值</li>
+<li><code>*=</code>：乘法赋值</li>
+<li><code>/=</code>：除法赋值</li>
+<li><code>%=</code>：取模赋值</li>
+<li><code>&lt;&lt;=</code>：左移赋值</li>
+<li><code>&gt;&gt;=</code>：右移赋值</li>
+<li><code>&amp;=</code>：按位与赋值</li>
+<li><code>|=</code>：按位或赋值</li>
+<li><code>^=</code>：按位异或赋值</li>
+</ul>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> a = <span class="number">5</span>;</span><br><span class="line">    <span class="type">int</span> b = <span class="number">3</span>;</span><br><span class="line">    <span class="type">int</span> c = <span class="number">7</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 取模赋值运算符（%=）</span></span><br><span class="line">    b %= a;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;b: %d\n&quot;</span>, b); <span class="comment">// 输出：3</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 左移赋值运算符（&lt;&lt;=）</span></span><br><span class="line">    a &lt;&lt;= <span class="number">2</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;a: %d\n&quot;</span>, a); <span class="comment">// 输出：20</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 右移赋值运算符（&gt;&gt;=）</span></span><br><span class="line">    c &gt;&gt;= <span class="number">1</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;c: %d\n&quot;</span>, c); <span class="comment">// 输出：3</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 按位与赋值运算符（&amp;=）</span></span><br><span class="line">    a &amp;= b;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;a: %d\n&quot;</span>, a); <span class="comment">// 输出：0</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 按位或赋值运算符（|=）</span></span><br><span class="line">    c |= b;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;c: %d\n&quot;</span>, c); <span class="comment">// 输出：3</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 按位异或赋值运算符（^=）</span></span><br><span class="line">    a ^= b;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;a: %d\n&quot;</span>, a); <span class="comment">// 输出：3</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>自增和自减运算符：用于对变量进行递增或递减操作。</p>
+<ul>
+<li><code>++</code>：自增</li>
+<li><code>--</code>：自减</li>
+</ul>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> a = <span class="number">5</span>;</span><br><span class="line">    <span class="type">int</span> b = <span class="number">10</span>;</span><br><span class="line">    <span class="type">int</span> c;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 自增运算符（++）</span></span><br><span class="line">    c = a++;           <span class="comment">// 先赋值后加1</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, c); <span class="comment">// 输出：5</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 前置自增运算符（++）</span></span><br><span class="line">    c = ++a;           <span class="comment">// 先加1后赋值</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, c); <span class="comment">// 输出：7</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 自减运算符（--）</span></span><br><span class="line">    c = b--;           <span class="comment">// 先赋值后减1</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, c); <span class="comment">// 输出：10</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 前置自减运算符（--）</span></span><br><span class="line">    c = --b;           <span class="comment">// 先减1后赋值</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, c); <span class="comment">// 输出：8</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>条件运算符：用于根据条件选择不同的值。</p>
+<ul>
+<li><p><code>? :</code>：条件表达式，也称为三元运算符。</p>
+</li>
+<li><p>语法格式</p>
+  <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">条件表达式 ? 表达式1 : 表达式2</span><br></pre></td></tr></table></figure>
+
+<p>  如果条件表达式的结果为真（非零），则整个表达式的值为表达式1的值；如果条件表达式的结果为假（零），则整个表达式的值为表达式2的值。</p>
+</li>
+</ul>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span> &#123;</span><br><span class="line">    <span class="type">int</span> a = <span class="number">5</span>;</span><br><span class="line">    <span class="type">int</span> b = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用条件运算符选择较大的数赋给变量c</span></span><br><span class="line">    <span class="type">int</span> c = (a &gt; b) ? a : b;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;c: %d\n&quot;</span>, c);   <span class="comment">// 输出：10</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用条件运算符选择绝对值较大的数赋给变量d</span></span><br><span class="line">    <span class="type">int</span> d = (a &gt; <span class="number">0</span>) ? a : -a;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;d: %d\n&quot;</span>, d);   <span class="comment">// 输出：5</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>逗号运算符</p>
+<p> 逗号运算符是C语言中的一个运算符，它用逗号 <code>,</code> 分隔多个表达式，形成一个逗号表达式。逗号表达式的求值规则是从左到右依次对每个表达式进行求值，并返回最右边表达式的值作为整个逗号表达式的结果。</p>
+<ol>
+<li><p>表达式顺序执行：逗号运算符可以用于在同一个语句中按顺序执行多个表达式，每个表达式都会被求值，但只有最后一个表达式的值会作为整个逗号表达式的结果。例如：</p>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a = <span class="number">1</span>, b = <span class="number">2</span>, c = <span class="number">3</span>;</span><br><span class="line"><span class="type">int</span> result = (a++, b++, c++, a + b + c);  <span class="comment">// 逐个增加 a、b、c 的值，然后计算 a + b + c 的结果，赋给 result</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>多个初始化语句：逗号运算符可以在变量初始化时一次性初始化多个变量。例如：</p>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> x = <span class="number">1</span>, y = <span class="number">2</span>, z = <span class="number">3</span>;</span><br><span class="line"><span class="type">int</span> x, y, z;</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+<li><p>其他运算符：还有一些其他类型的运算符，如指针运算符、sizeof运算符、类型转换运算符等。</p>
+</li>
+</ol>
+<h3 id="运算符优先级"><a href="#运算符优先级" class="headerlink" title="运算符优先级"></a>运算符优先级</h3><p><img src="https://raw.githubusercontent.com/yefreee/picture/main/note1.%E7%AC%AC%E4%B8%80%E5%91%A8-2023-06-09-11-36-00.png" alt="1.第一周-2023-06-09-11-36-00"></p>
+<p><img src="https://raw.githubusercontent.com/yefreee/picture/main/note1.%E7%AC%AC%E4%B8%80%E5%91%A8-2023-06-09-11-36-08.png" alt="1.第一周-2023-06-09-11-36-08"></p>
+<p><img src="https://raw.githubusercontent.com/yefreee/picture/main/note1.%E7%AC%AC%E4%B8%80%E5%91%A8-2023-06-09-11-36-21.png" alt="1.第一周-2023-06-09-11-36-21"></p>
+<h3 id="运算符优先级示例代码"><a href="#运算符优先级示例代码" class="headerlink" title="运算符优先级示例代码"></a>运算符优先级示例代码</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span> &#123;</span><br><span class="line">    <span class="type">int</span> a = <span class="number">5</span>, b = <span class="number">3</span>, c = <span class="number">7</span>;</span><br><span class="line">    <span class="type">int</span> result1 = a + b * c;        <span class="comment">// 5 + 3 * 7 = 26</span></span><br><span class="line">    <span class="type">int</span> result2 = (a + b) * c;      <span class="comment">// (5 + 3) * 7 = 56</span></span><br><span class="line">    <span class="type">int</span> result3 = a * b / c;        <span class="comment">// 5 * 3 / 7 = 2</span></span><br><span class="line">    <span class="type">int</span> result4 = a * (b / c);      <span class="comment">// 5 * (3 / 7) = 0</span></span><br><span class="line">    <span class="type">int</span> result5 = a % b + c;        <span class="comment">// 5 % 3 + 7 = 9</span></span><br><span class="line">    <span class="type">int</span> result6 = a &lt;&lt; b + c;       <span class="comment">// 5 &lt;&lt; (3 + 7) = 5120</span></span><br><span class="line">    <span class="type">int</span> result7 = (a &lt;&lt; b) + c;     <span class="comment">// (5 &lt;&lt; 3) + 7 = 47</span></span><br><span class="line">    <span class="type">int</span> result8 = a &lt; b &amp;&amp; b &lt; c;   <span class="comment">// 5 &lt; 3 &amp;&amp; 3 &lt; 7 = 0 (false)</span></span><br><span class="line">    <span class="type">int</span> result9 = a &lt; b || b &lt; c;   <span class="comment">// 5 &lt; 3 || 3 &lt; 7 = 1 (true)</span></span><br><span class="line">    <span class="type">int</span> result10 = a == b ? c : a;  <span class="comment">// 5 == 3 ? 7 : 5 = 5</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Result 1: %d\n&quot;</span>, result1);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Result 2: %d\n&quot;</span>, result2);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Result 3: %d\n&quot;</span>, result3);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Result 4: %d\n&quot;</span>, result4);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Result 5: %d\n&quot;</span>, result5);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Result 6: %d\n&quot;</span>, result6);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Result 7: %d\n&quot;</span>, result7);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Result 8: %d\n&quot;</span>, result8);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Result 9: %d\n&quot;</span>, result9);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Result 10: %d\n&quot;</span>, result10);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h2><p>类型转换（Type Conversion）是将一个数据类型的值转换为另一个数据类型的过程。在C语言中，类型转换可分为隐式类型转换（Implicit Conversion）和显式类型转换（Explicit Conversion）两种形式。</p>
+<ol>
+<li><p>隐式类型转换：隐式类型转换是指在表达式中自动进行的类型转换，不需要显式地指定转换操作符。常见的隐式类型转换有：</p>
+<ul>
+<li><p>涉及两种类型的运算，两个值会被分别转换成两种类型的更高级别。</p>
+<p>  类型的级别从高至低依次是long double、double、float、unsigned long long、long long、unsigned long、long、unsigned int、int。例外的情况是，当long 和 int 的大小相同时，unsigned int比long的级别高。之所以short和char类型没有列出，是因为它们已经被升级到int或unsigned int。</p>
+</li>
+<li><p>在赋值表达式语句中，计算的最终结果会被转换成被赋值变量的类型。这个过程可能导致类型升级或降级（demotion）。所谓降级，是指把一种类型转换成更低级别的类型。</p>
+</li>
+</ul>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> a = <span class="number">5</span>;</span><br><span class="line">    <span class="type">double</span> b = <span class="number">3.14</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 隐式类型转换</span></span><br><span class="line">    <span class="type">double</span> c = a; <span class="comment">// 将整型变量a隐式转换为double类型</span></span><br><span class="line">    <span class="type">int</span> d = b;    <span class="comment">// 将double类型变量b隐式转换为整型</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;c: %f\n&quot;</span>, c); <span class="comment">// 输出：5.000000</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;d: %d\n&quot;</span>, d); <span class="comment">// 输出：3</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%f&quot;</span>, a + b);  <span class="comment">// 输出：8.140000</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>显式类型转换：显式类型转换是通过显式地使用类型转换操作符来执行的。它允许我们将一个数据类型强制转换为另一个数据类型。显式类型转换的语法形式如下：</p>
+ <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(目标类型) 表达式</span><br></pre></td></tr></table></figure>
+
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span> &#123;</span><br><span class="line">    <span class="type">int</span> a = <span class="number">5</span>;</span><br><span class="line">    <span class="type">double</span> b = <span class="number">3.14</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 显式类型转换</span></span><br><span class="line">    <span class="type">int</span> e = (<span class="type">int</span>)b;        <span class="comment">// 将double类型变量b显式转换为整型</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;e: %d\n&quot;</span>, e);  <span class="comment">// 输出：3</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="表达式语句，空语句，复合语句"><a href="#表达式语句，空语句，复合语句" class="headerlink" title="表达式语句，空语句，复合语句"></a>表达式语句，空语句，复合语句</h2><p>在C语言中，有三种常见的语句类型：表达式语句（Expression Statement），空语句（Empty Statement）和复合语句（Compound Statement）。</p>
+<ol>
+<li><p>表达式语句（Expression Statement）：表达式语句由一个表达式和一个分号组成，用于执行一个表达式并丢弃其结果。表达式可以是函数调用、赋值表达式、递增递减表达式等。例如：</p>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x = <span class="number">5</span>;           <span class="comment">// 赋值表达式作为表达式语句</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;Hello&quot;</span>); <span class="comment">// 函数调用作为表达式语句</span></span><br><span class="line">x++;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>空语句（Empty Statement）：空语句只包含一个分号，用于表示一个空操作。空语句在某些情况下可以用作占位符，或者在循环中作为一个空的循环体。例如：</p>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">; <span class="comment">// 空语句</span></span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) </span><br><span class="line">    <span class="built_in">printf</span>(); <span class="comment">// 空循环体</span></span><br></pre></td></tr></table></figure>
+
+<p> 空语句不做任何操作，它在语法上是合法的语句，但不会有任何实际的影响。</p>
+</li>
+<li><p>复合语句（Compound Statement）：复合语句是由一对花括号 <code>&#123;&#125;</code> 包围的语句块，可以包含多条语句。复合语句常用于定义函数体或在控制流语句中使用。例如：</p>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> x = <span class="number">5</span>;          <span class="comment">// 定义变量</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Value: %d&quot;</span>, x);</span><br><span class="line">    x++;                <span class="comment">// 修改变量的值</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Updated Value: %d&quot;</span>, x);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> 这些语句类型在C语言中用于不同的场景和目的。表达式语句用于执行表达式并丢弃结果，空语句表示一个空操作，复合语句用于组织多个语句形成一个语句块。了解这些语句类型可以帮助我们编写清晰、有效的代码。</p>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://example.com/2023/06/09/c_program/1.%E7%AC%AC%E4%B8%80%E5%91%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -681,7 +1121,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-06-10 16:09:30" itemprop="dateModified" datetime="2023-06-10T16:09:30+08:00">2023-06-10</time>
+      <time title="Modified: 2023-06-16 22:28:04" itemprop="dateModified" datetime="2023-06-16T22:28:04+08:00">2023-06-16</time>
     </span>
 
   
@@ -708,10 +1148,10 @@
 </li>
 <li><p>C语言源代码到可执行文件的过程</p>
 <ol>
-<li>C源代码：<br> 程序员使用C语言编写源代码，源代码以**<code>.c</code>**为扩展名。源代码包含了程序的逻辑和功能的定义。</li>
+<li>C源代码：<br> 程序员使用C语言编写源代码，源代码以<code>.c</code>为扩展名。源代码包含了程序的逻辑和功能的定义。</li>
 <li>预处理：<br> 在编译之前，C预处理器会处理源代码。预处理器执行宏展开、条件编译等操作，生成经过预处理的源代码。</li>
-<li>编译：<br> 经过预处理的源代码会被编译器翻译成汇编代码。编译器将C源代码转换为汇编语言表示，生成汇编代码文件（**<code>.s</code>**文件）。</li>
-<li>汇编：<br> 汇编器将汇编代码转换为机器码指令。它将汇编代码文件翻译成机器可执行的指令，并生成目标文件（**<code>.o</code>**文件）。</li>
+<li>编译：<br> 经过预处理的源代码会被编译器翻译成汇编代码。编译器将C源代码转换为汇编语言表示，生成汇编代码文件（<code>.s</code>文件）。</li>
+<li>汇编：<br> 汇编器将汇编代码转换为机器码指令。它将汇编代码文件翻译成机器可执行的指令，并生成目标文件（<code>.o</code>文件）。</li>
 <li>链接：<br> 链接器将目标文件与其他必要的库文件进行链接，生成最终的可执行文件。链接器解析目标文件中的符号引用，并将其与库函数和其他目标文件中的符号定义进行关联。链接器生成一个包含所有必要信息的可执行文件。</li>
 <li>可执行文件：<br> 最终的可执行文件是操作系统可以直接执行的二进制文件。它包含了程序的机器码指令、数据和其他必要的信息。可执行文件可以通过命令行或操作系统的运行环境来执行。</li>
 </ol>
@@ -782,13 +1222,13 @@
 <p> C程序从<code>main()</code>函数开始执行。除了<code>main()</code>函数，你可以任意命名其他函数，而且main()函数必须是开始的函数。<code>int</code>是main()函数的返回类型。这表明main()函数返回的值是整数。返回到哪里？返回给操作系统通常，函数名后面的圆括号中包含一些传入函数的信息。该例中没有传递任何信息。因此，圆括号内是单词<code>void</code> 。</p>
  <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//错误的main函数定义1</span></span><br><span class="line">main()</span><br><span class="line"></span><br><span class="line"><span class="comment">//错误的main函数定义2</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//正确的main函数定义1</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//正确的main函数定义2</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span></span><br></pre></td></tr></table></figure>
 
-<p> <strong><code>int main(int argc, char *argv[])</code></strong> 是C语言中常见的**<code>main</code>**函数的定义方式，它用于接收命令行参数。</p>
+<p> <code>int main(int argc, char *argv[])</code> 是C语言中常见的<code>main</code>函数的定义方式，它用于接收命令行参数。</p>
 <p> 参数解释：</p>
 <ul>
-<li>**<code>int argc</code>**：表示命令行参数的数量（Argument Count）。</li>
-<li>**<code>char *argv[]</code>**：表示命令行参数的数组（Argument Vector），是一个指针数组，每个指针指向一个以null结尾的字符串，即命令行参数的值。</li>
+<li><code>int argc</code>：表示命令行参数的数量（Argument Count）。</li>
+<li><code>char *argv[]</code>：表示命令行参数的数组（Argument Vector），是一个指针数组，每个指针指向一个以null结尾的字符串，即命令行参数的值。</li>
 </ul>
-<p> 使用这种方式定义的**<code>main</code>**函数可以接收命令行传递的参数，如下所示：</p>
+<p> 使用这种方式定义的<code>main</code>函数可以接收命令行传递的参数，如下所示：</p>
  <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span> &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;argc: %d\n&quot;</span>, argc);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; argc; i++) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;argv[%d]: %s\n&quot;</span>, i, argv[i]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p> 运行该程序并传递参数，例如：</p>
@@ -839,31 +1279,31 @@
 <h2 id="C语言数据类型"><a href="#C语言数据类型" class="headerlink" title="C语言数据类型"></a>C语言数据类型</h2><ol>
 <li><p>整型（Integer）：</p>
 <ul>
-<li>**<code>int</code>**：表示整数类型。通常占用4个字节。</li>
-<li>**<code>short</code>**：表示短整数类型。通常占用2个字节。</li>
-<li>**<code>long</code>**：表示长整数类型。通常占用4个或8个字节，取决于编译器和操作系统。</li>
+<li><code>int</code>：表示整数类型。通常占用4个字节。</li>
+<li><code>short</code>：表示短整数类型。通常占用2个字节。</li>
+<li><code>long</code>：表示长整数类型。通常占用4个或8个字节，取决于编译器和操作系统。</li>
 </ul>
 <p> 示例代码：</p>
  <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> num1 = <span class="number">10</span>;</span><br><span class="line"><span class="type">short</span> num2 = <span class="number">20</span>;</span><br><span class="line"><span class="type">long</span> num3 = <span class="number">30L</span>;  <span class="comment">// 后缀L表示长整数类型</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>浮点型（Floating-point）：</p>
 <ul>
-<li>**<code>float</code>**：表示单精度浮点数类型。通常占用4个字节。</li>
-<li>**<code>double</code>**：表示双精度浮点数类型。通常占用8个字节。</li>
+<li><code>float</code>：表示单精度浮点数类型。通常占用4个字节。</li>
+<li><code>double</code>：表示双精度浮点数类型。通常占用8个字节。</li>
 </ul>
 <p> 示例代码：</p>
  <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">float</span> num1 = <span class="number">3.14f</span>;  <span class="comment">// 后缀f表示单精度浮点数类型</span></span><br><span class="line"><span class="type">double</span> num2 = <span class="number">2.71828</span>;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>字符型（Character）：</p>
 <ul>
-<li>**<code>char</code>**：表示字符类型。通常占用1个字节。</li>
+<li><code>char</code>：表示字符类型。通常占用1个字节。</li>
 </ul>
 <p> 示例代码：</p>
  <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> ch1 = <span class="string">&#x27;A&#x27;</span>;</span><br><span class="line"><span class="type">char</span> ch2 = <span class="string">&#x27;B&#x27;</span>;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>布尔型（Boolean）：</p>
 <ul>
-<li>**<code>bool</code><strong>：表示布尔类型，只能取</strong><code>true</code><strong>（非零值）或</strong><code>false</code>**（零值）。</li>
+<li><code>bool</code>：表示布尔类型，只能取<code>true</code>（非零值）或<code>false</code>（零值）。</li>
 </ul>
 <p> 示例代码：</p>
  <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdbool.h&gt;</span>  <span class="comment">// 需要包含stdbool.h头文件</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">bool</span> flag1 = <span class="literal">true</span>;</span><br><span class="line"><span class="type">bool</span> flag2 = <span class="literal">false</span>;</span><br></pre></td></tr></table></figure></li>
@@ -873,66 +1313,62 @@
 <h2 id="C语言的运算符"><a href="#C语言的运算符" class="headerlink" title="C语言的运算符"></a>C语言的运算符</h2><p>C语言中有多种类型的运算符，用于执行各种算术、逻辑和位操作。以下是C语言中常见的运算符类型：</p>
 <ol>
 <li>算术运算符：用于执行基本的算术操作，如加法、减法、乘法、除法、取模等。<ul>
-<li>**<code>+</code>**：加法运算</li>
+<li><code>+</code>：加法运算</li>
 <li><code>-</code>：减法运算</li>
 <li>*：乘法运算</li>
-<li>**<code>/</code>**：除法运算</li>
-<li>**<code>%</code>**：取模（取余）运算</li>
+<li><code>/</code>：除法运算</li>
+<li><code>%</code>：取模（取余）运算</li>
 </ul>
 </li>
 <li>关系运算符：用于比较两个值之间的关系，返回一个布尔值（1表示真，0表示假）。<ul>
-<li>**<code>==</code>**：等于</li>
-<li>**<code>!=</code>**：不等于</li>
-<li>**<code>&lt;</code>**：小于</li>
-<li>**<code>&gt;</code>**：大于</li>
-<li>**<code>&lt;=</code>**：小于等于</li>
-<li>**<code>&gt;=</code>**：大于等于</li>
+<li><code>==</code>：等于</li>
+<li><code>!=</code>：不等于</li>
+<li><code>&lt;</code>：小于</li>
+<li><code>&gt;</code>：大于</li>
+<li><code>&lt;=</code>：小于等于</li>
+<li><code>&gt;=</code>：大于等于</li>
 </ul>
 </li>
 <li>逻辑运算符：用于执行逻辑操作，对布尔值进行组合和求反。<ul>
-<li>**<code>&amp;&amp;</code>**：逻辑与（与）</li>
-<li>**<code>||</code>**：逻辑或（或）</li>
-<li>**<code>!</code>**：逻辑非（非）</li>
+<li><code>&amp;&amp;</code>：逻辑与（与）</li>
+<li><code>||</code>：逻辑或（或）</li>
+<li><code>!</code>：逻辑非（非）</li>
 </ul>
 </li>
 <li>位运算符：用于对二进制数据的位进行操作。<ul>
-<li>**<code>&amp;</code>**：按位与</li>
-<li>**<code>|</code>**：按位或</li>
-<li>**<code>^</code>**：按位异或</li>
-<li>**<code>~</code>**：按位取反</li>
-<li>**<code>&lt;&lt;</code>**：左移</li>
-<li>**<code>&gt;&gt;</code>**：右移</li>
+<li><code>&amp;</code>：按位与</li>
+<li><code>|</code>：按位或</li>
+<li><code>^</code>：按位异或</li>
+<li><code>~</code>：按位取反</li>
+<li><code>&lt;&lt;</code>：左移</li>
+<li><code>&gt;&gt;</code>：右移</li>
 </ul>
 </li>
 <li>赋值运算符：用于给变量赋值。<ul>
-<li>**<code>=</code>**：简单赋值</li>
-<li>**<code>+=</code>**：加法赋值</li>
-<li>**<code>=</code>**：减法赋值</li>
-<li>**<code>=</code>**：乘法赋值</li>
-<li>**<code>/=</code>**：除法赋值</li>
-<li>**<code>%=</code>**：取模赋值</li>
-<li>**<code>&lt;&lt;=</code>**：左移赋值</li>
-<li>**<code>&gt;&gt;=</code>**：右移赋值</li>
-<li>**<code>&amp;=</code>**：按位与赋值</li>
-<li>**<code>|=</code>**：按位或赋值</li>
-<li>**<code>^=</code>**：按位异或赋值</li>
+<li><code>=</code>：简单赋值</li>
+<li><code>+=</code>：加法赋值</li>
+<li><code>=</code>：减法赋值</li>
+<li><code>=</code>：乘法赋值</li>
+<li><code>/=</code>：除法赋值</li>
+<li><code>%=</code>：取模赋值</li>
+<li><code>&lt;&lt;=</code>：左移赋值</li>
+<li><code>&gt;&gt;=</code>：右移赋值</li>
+<li><code>&amp;=</code>：按位与赋值</li>
+<li><code>|=</code>：按位或赋值</li>
+<li><code>^=</code>：按位异或赋值</li>
 </ul>
 </li>
 <li>自增和自减运算符：用于对变量进行递增或递减操作。<ul>
-<li>**<code>++</code>**：自增</li>
-<li>**<code>-</code>**：自减</li>
+<li><code>++</code>：自增</li>
+<li><code>-</code>：自减</li>
 </ul>
 </li>
 <li>条件运算符：用于根据条件选择不同的值。<ul>
-<li>**<code>? :</code>**：条件表达式，也称为三元运算符。</li>
+<li><code>? :</code>：条件表达式，也称为三元运算符。</li>
 </ul>
 </li>
 <li>其他运算符：还有一些其他类型的运算符，如指针运算符、sizeof运算符、类型转换运算符等。</li>
 </ol>
-<h3 id="运算符优先级"><a href="#运算符优先级" class="headerlink" title="运算符优先级"></a>运算符优先级</h3><p><img src="https://raw.githubusercontent.com/yefreee/picture/main/note1.%E7%AC%AC%E4%B8%80%E5%91%A8-2023-06-09-11-36-00.png" alt="1.第一周-2023-06-09-11-36-00"></p>
-<p><img src="https://raw.githubusercontent.com/yefreee/picture/main/note1.%E7%AC%AC%E4%B8%80%E5%91%A8-2023-06-09-11-36-08.png" alt="1.第一周-2023-06-09-11-36-08"></p>
-<p><img src="https://raw.githubusercontent.com/yefreee/picture/main/note1.%E7%AC%AC%E4%B8%80%E5%91%A8-2023-06-09-11-36-21.png" alt="1.第一周-2023-06-09-11-36-21"></p>
-<h3 id="运算符优先级示例代码"><a href="#运算符优先级示例代码" class="headerlink" title="运算符优先级示例代码"></a>运算符优先级示例代码</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    int a = 5, b = 3, c = 7;</span><br><span class="line">    int result1 = a + b * c;        // 5 + 3 * 7 = 26</span><br><span class="line">    int result2 = (a + b) * c;      // (5 + 3) * 7 = 56</span><br><span class="line">    int result3 = a * b / c;        // 5 * 3 / 7 = 2</span><br><span class="line">    int result4 = a * (b / c);      // 5 * (3 / 7) = 0</span><br><span class="line">    int result5 = a % b + c;        // 5 % 3 + 7 = 9</span><br><span class="line">    int result6 = a &lt;&lt; b + c;       // 5 &lt;&lt; (3 + 7) = 512</span><br><span class="line">    int result7 = (a &lt;&lt; b) + c;     // (5 &lt;&lt; 3) + 7 = 47</span><br><span class="line">    int result8 = a &lt; b &amp;&amp; b &lt; c;   // 5 &lt; 3 &amp;&amp; 3 &lt; 7 = 0 (false)</span><br><span class="line">    int result9 = a &lt; b || b &lt; c;   // 5 &lt; 3 || 3 &lt; 7 = 1 (true)</span><br><span class="line">    int result10 = a == b ? c : a;  // 5 == 3 ? 7 : 5 = 5</span><br><span class="line"></span><br><span class="line">    printf(&quot;Result 1: %d\n&quot;, result1);</span><br><span class="line">    printf(&quot;Result 2: %d\n&quot;, result2);</span><br><span class="line">    printf(&quot;Result 3: %d\n&quot;, result3);</span><br><span class="line">    printf(&quot;Result 4: %d\n&quot;, result4);</span><br><span class="line">    printf(&quot;Result 5: %d\n&quot;, result5);</span><br><span class="line">    printf(&quot;Result 6: %d\n&quot;, result6);</span><br><span class="line">    printf(&quot;Result 7: %d\n&quot;, result7);</span><br><span class="line">    printf(&quot;Result 8: %d\n&quot;, result8);</span><br><span class="line">    printf(&quot;Result 9: %d\n&quot;, result9);</span><br><span class="line">    printf(&quot;Result 10: %d\n&quot;, result10);</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -1878,316 +2314,6 @@
 
 <p>以上代码会输出以下结果：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">第 1 次迭代</span><br><span class="line">第 2 次迭代</span><br><span class="line">跳过第 3 次迭代</span><br><span class="line">第 4 次迭代</span><br><span class="line">退出循环</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/18/linux_shell/5.%E5%A4%84%E7%90%86%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | ">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/04/18/linux_shell/5.%E5%A4%84%E7%90%86%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5/" class="post-title-link" itemprop="url">处理用户输入</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2023-04-18 11:31:23" itemprop="dateCreated datePublished" datetime="2023-04-18T11:31:23+08:00">2023-04-18</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-06-16 21:20:43" itemprop="dateModified" datetime="2023-06-16T21:20:43+08:00">2023-06-16</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <ul>
-<li>bash shell提供了一些不同的方法从用户处获得数据，包括命令行参数、命令行选项、直接从键盘读取。</li>
-</ul>
-<h2 id="命令行参数"><a href="#命令行参数" class="headerlink" title="命令行参数"></a>命令行参数</h2><h3 id="读取参数"><a href="#读取参数" class="headerlink" title="读取参数"></a>读取参数</h3><p>在Shell脚本中，命令行参数可以通过特殊变量 <strong><code>$1</code><strong>、</strong><code>$2</code><strong>、</strong><code>$3</code></strong> … **<code>$n</code>**来获取，其中 **<code>$1</code><strong>表示第一个参数，</strong><code>$2</code><strong>表示第二个参数，以此类推，</strong><code>$n</code>**表示第 n 个参数。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;第一个参数为：<span class="variable">$1</span>&quot;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;第二个参数为：<span class="variable">$2</span>&quot;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;第三个参数为：<span class="variable">$3</span>&quot;</span></span><br></pre></td></tr></table></figure>
-
-<ol>
-<li><p>利用<code>for</code>循环和命令行参数计算阶乘：</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">n=<span class="variable">$1</span></span><br><span class="line">fact=1</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>((i=<span class="number">1</span>; i&lt;=<span class="variable">$n</span>; i++))</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">   fact=$((fact * i))  </span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Factorial of <span class="variable">$n</span> is <span class="variable">$fact</span>&quot;</span></span><br><span class="line"><span class="built_in">exit</span> 0</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>将带有空格的文本字符串传递给脚本时需要注意用引号，引号在进行传递时只表明数据的起止位置，不作为数据的一部分：</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> Hello <span class="variable">$1</span>, glad to meet you.</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>当参数超过9个时需要修改变量名，变量名两侧加上花括号。</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># handling lots of parameters</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line">total=$[ <span class="variable">$&#123;10&#125;</span> * <span class="variable">$&#123;11&#125;</span> ]</span><br><span class="line"><span class="built_in">echo</span> The tenth parameter is <span class="variable">$&#123;10&#125;</span></span><br><span class="line"><span class="built_in">echo</span> The eleventh parameter is <span class="variable">$&#123;11&#125;</span></span><br><span class="line"><span class="built_in">echo</span> The total is <span class="variable">$total</span></span><br></pre></td></tr></table></figure>
-
-<p> 运行脚本：</p>
- <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">The tenth parameter is 10</span><br><span class="line">The eleventh parameter is 11</span><br><span class="line">The total is 110</span><br></pre></td></tr></table></figure></li>
-</ol>
-<h3 id="读取脚本名"><a href="#读取脚本名" class="headerlink" title="读取脚本名"></a>读取脚本名</h3><p>可以用<code>$0</code>参数获取shell在命令行启动的脚本名：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># Testing the $0 parameter</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="built_in">echo</span> The zero parameter is <span class="built_in">set</span> to: <span class="variable">$0</span></span><br><span class="line"><span class="comment">#</span></span><br></pre></td></tr></table></figure>
-
-<p>当传给<code>$0</code>变量的实际字符串不仅仅是脚本名，而是完整的脚本路径时，变量<code>$0</code>就会使用整个路径：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@sh:~$ bash ~/temp.sh</span><br><span class="line">The zero parameter is set to: /home/ubuntu/temp.sh</span><br></pre></td></tr></table></figure>
-
-<p>basename命令会返回不包含路径的脚本名：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># Testing the $0 parameter</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line">name=$(<span class="built_in">basename</span> <span class="variable">$0</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> The zero parameter is <span class="built_in">set</span> to: <span class="variable">$name</span></span><br><span class="line"><span class="comment">#</span></span><br></pre></td></tr></table></figure>
-
-<p>基于脚本名实现不同功能的脚本：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># Testing a Multi-function script</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line">name=$(<span class="built_in">basename</span> <span class="variable">$0</span>)</span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="keyword">if</span> [ <span class="variable">$name</span> = <span class="string">&quot;addem&quot;</span> ]</span><br><span class="line"><span class="keyword">then</span></span><br><span class="line">total=$[ <span class="variable">$1</span> + <span class="variable">$2</span> ]</span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="keyword">elif</span> [ <span class="variable">$name</span> = <span class="string">&quot;multem&quot;</span> ]</span><br><span class="line"><span class="keyword">then</span></span><br><span class="line">total=$[ <span class="variable">$1</span> * <span class="variable">$2</span> ]</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="built_in">echo</span></span><br><span class="line"><span class="built_in">echo</span> The calculated value is <span class="variable">$total</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cp</span> temp.sh addem</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">ln</span> -s temp.sh multem</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">bash addem 2 5</span></span><br><span class="line">The calculated value is 7</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">bash multem 2 5</span></span><br><span class="line">The calculated value is 10</span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash"></span></span><br></pre></td></tr></table></figure>
-
-<h3 id="测试参数"><a href="#测试参数" class="headerlink" title="测试参数"></a>测试参数</h3><p>在脚本内使用参数时需要考虑到当用户输入错误参数时的情况：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">n=<span class="variable">$1</span></span><br><span class="line">fact=1</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ <span class="variable">$n</span> -eq 0 ]; <span class="keyword">then</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">&quot;Factorial of 0 is 1&quot;</span></span><br><span class="line">  <span class="built_in">exit</span> 0</span><br><span class="line"><span class="keyword">elif</span> [ <span class="variable">$n</span> -lt 0 ]; <span class="keyword">then</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">&quot;Invalid input. Number must be a positive integer&quot;</span></span><br><span class="line">  <span class="built_in">exit</span> 1</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> ((i=<span class="number">1</span>; i&lt;=<span class="variable">$n</span>; i++)); <span class="keyword">do</span></span><br><span class="line">  fact=$((fact * i))</span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Factorial of <span class="variable">$n</span> is <span class="variable">$fact</span>&quot;</span></span><br><span class="line"><span class="built_in">exit</span> 0</span><br></pre></td></tr></table></figure>
-
-<h2 id="特殊参数变量"><a href="#特殊参数变量" class="headerlink" title="特殊参数变量"></a>特殊参数变量</h2><h3 id="参数统计"><a href="#参数统计" class="headerlink" title="参数统计"></a>参数统计</h3><p>使用特殊变量可以帮助我们更方便的检查用户传递给脚本的参数。特殊变量<code>$#</code>含有脚本运行时携带的命令行参数的个数。可以在脚本中任何地方使用这个特殊变量，就跟普通变量一样。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># getting the number of parameters</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="built_in">echo</span> There were <span class="variable">$#</span> parameters supplied.</span><br></pre></td></tr></table></figure>
-
-<p>执行结果：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@sh:~$ bash temp.sh</span><br><span class="line">There were 0 parameters supplied.</span><br><span class="line"></span><br><span class="line">ubuntu@sh:~$ bash temp.sh 1 2 3 4 5</span><br><span class="line">There were 5 parameters supplied.</span><br><span class="line"></span><br><span class="line">ubuntu@sh:~$ bash temp.sh &quot;Hello world&quot;</span><br><span class="line">There were 1 parameters supplied.</span><br></pre></td></tr></table></figure>
-
-<p>在使用参数前测试参数总数：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ <span class="variable">$#</span> -ne 1 ]; <span class="keyword">then</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">&quot;Usage: <span class="variable">$0</span> number&quot;</span></span><br><span class="line">  <span class="built_in">exit</span> 1</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line">n=<span class="variable">$1</span></span><br><span class="line">fact=1</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ <span class="variable">$n</span> -eq 0 ]; <span class="keyword">then</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">&quot;Factorial of 0 is 1&quot;</span></span><br><span class="line">  <span class="built_in">exit</span> 0</span><br><span class="line"><span class="keyword">elif</span> [ <span class="variable">$n</span> -lt 0 ]; <span class="keyword">then</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">&quot;Invalid input. Number must be a positive integer&quot;</span></span><br><span class="line">  <span class="built_in">exit</span> 1</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> ((i=<span class="number">1</span>; i&lt;=<span class="variable">$n</span>; i++)); <span class="keyword">do</span></span><br><span class="line">  fact=$((fact * i))</span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Factorial of <span class="variable">$n</span> is <span class="variable">$fact</span>&quot;</span></span><br><span class="line"><span class="built_in">exit</span> 0</span><br></pre></td></tr></table></figure>
-
-<h3 id="抓取所有的数据"><a href="#抓取所有的数据" class="headerlink" title="抓取所有的数据"></a>抓取所有的数据</h3><p><code>$*</code>变量会将命令行上提供的所有参数当作一个单词保存。这个单词包含了命令行中出现的每<br>一个参数值。基本上<code>$*</code>变量会将这些参数视为一个整体，而不是多个个体。<br>另一方面，<code>$@</code>变量会将命令行上提供的所有参数当作同一字符串中的多个独立的单词。这样<br>你就能够遍历所有的参数值，得到每个参数。这通常通过<code>for</code>命令完成。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># testing $* and $@</span></span><br><span class="line"><span class="comment">#j,r:</span></span><br><span class="line"><span class="built_in">echo</span></span><br><span class="line">count=1</span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="keyword">for</span> param <span class="keyword">in</span> <span class="string">&quot;$*&quot;</span></span><br><span class="line"><span class="keyword">do</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;\$* Parameter #<span class="variable">$count</span> = <span class="variable">$param</span>&quot;</span></span><br><span class="line">count=$[ <span class="variable">$count</span> + 1 ]</span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="built_in">echo</span></span><br><span class="line">count=1</span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="keyword">for</span> param <span class="keyword">in</span> <span class="string">&quot;<span class="variable">$@</span>&quot;</span></span><br><span class="line"><span class="keyword">do</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;\$@ Parameter #<span class="variable">$count</span> = <span class="variable">$param</span>&quot;</span></span><br><span class="line">count=$[ <span class="variable">$count</span> + 1 ]</span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="移动变量"><a href="#移动变量" class="headerlink" title="移动变量"></a>移动变量</h2><p>bash shell的<code>shift</code>命令能够用来操作命令行参数。在使用<code>shift</code>命令时，默认情况下它会将每个参数变量向左移动一个位置。所以，变量<code>$3</code>的值会移到$2中，变量<code>$2</code>的值会移到<code>$1</code>中，而变量<code>$1</code>的值则会被删除（注意，变量<code>$0</code>的值，也就是程序名，不会改变）。</p>
-<p>这是遍历命令行参数的另一个好方法，尤其是在你不知道到底有多少参数时。你可以只操作第一个参数，移动参数，然后继续操作第一个参数。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> [ -n <span class="string">&quot;<span class="variable">$1</span>&quot;</span> ]</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">                <span class="built_in">sum</span>=$((<span class="variable">$sum</span>+<span class="variable">$1</span>))</span><br><span class="line">                <span class="built_in">shift</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="built_in">sum</span>=<span class="variable">$sum</span></span><br><span class="line"><span class="built_in">exit</span> 0</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@sh:~$ bash temp.sh 1 2 3</span><br><span class="line">sum=6</span><br><span class="line"></span><br><span class="line">ubuntu@sh:~$ bash temp.sh 1 2 3 4 5 6</span><br><span class="line">sum=21</span><br></pre></td></tr></table></figure>
-
-<h2 id="处理选项"><a href="#处理选项" class="headerlink" title="处理选项"></a>处理选项</h2><p>选项是跟在单破折线后面的单个字母，它能改变命令的行为。</p>
-<h3 id="处理简单选项"><a href="#处理简单选项" class="headerlink" title="处理简单选项"></a>处理简单选项</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span></span><br><span class="line"><span class="keyword">while</span> [ -n <span class="string">&quot;<span class="variable">$1</span>&quot;</span> ]</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">         <span class="keyword">case</span> <span class="string">&quot;<span class="variable">$1</span>&quot;</span> <span class="keyword">in</span></span><br><span class="line">                                -a) <span class="built_in">echo</span> <span class="string">&quot;Found the -a option&quot;</span> ;;</span><br><span class="line">                                -b) <span class="built_in">echo</span> <span class="string">&quot;Found the -b option&quot;</span> ;;</span><br><span class="line">                                -c) <span class="built_in">echo</span> <span class="string">&quot;Found the -c option&quot;</span> ;;</span><br><span class="line">                                *) <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$1</span> is not an option&quot;</span> ;;</span><br><span class="line">         <span class="keyword">esac</span></span><br><span class="line">         <span class="built_in">shift</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="分离参数和选项、处理带值选项"><a href="#分离参数和选项、处理带值选项" class="headerlink" title="分离参数和选项、处理带值选项"></a>分离参数和选项、处理带值选项</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># extracting options and parameters</span></span><br><span class="line"><span class="built_in">echo</span></span><br><span class="line"><span class="keyword">while</span> [ -n <span class="string">&quot;<span class="variable">$1</span>&quot;</span> ]</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">                <span class="keyword">case</span> <span class="string">&quot;<span class="variable">$1</span>&quot;</span> <span class="keyword">in</span></span><br><span class="line">                                -a) <span class="built_in">echo</span> <span class="string">&quot;Found the -a option&quot;</span> ;;</span><br><span class="line">                                -b) <span class="built_in">echo</span> <span class="string">&quot;Found the -b option&quot;</span>;;</span><br><span class="line">                                -c) <span class="built_in">echo</span> <span class="string">&quot;Found the -c option&quot;</span> </span><br><span class="line">                   coption=$(<span class="variable">$2</span> * <span class="variable">$3</span>)</span><br><span class="line">                   <span class="built_in">echo</span> <span class="variable">$coption</span></span><br><span class="line">                   <span class="built_in">shift</span></span><br><span class="line">                   <span class="built_in">shift</span></span><br><span class="line">                   ;;</span><br><span class="line">                                --) <span class="built_in">shift</span></span><br><span class="line">                                                <span class="built_in">break</span> ;;</span><br><span class="line">                                *) <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$1</span> is not an option&quot;</span>;;</span><br><span class="line">                <span class="keyword">esac</span></span><br><span class="line">                <span class="built_in">shift</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line">count=1</span><br><span class="line"><span class="keyword">for</span> param <span class="keyword">in</span> <span class="variable">$@</span></span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">                <span class="built_in">echo</span> <span class="string">&quot;Parameter #<span class="variable">$count</span>: <span class="variable">$param</span>&quot;</span></span><br><span class="line">                count=$(( <span class="variable">$count</span> + <span class="number">1</span> ))</span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="利用选项和参数实现阶乘和求和的计算工具"><a href="#利用选项和参数实现阶乘和求和的计算工具" class="headerlink" title="利用选项和参数实现阶乘和求和的计算工具"></a>利用选项和参数实现阶乘和求和的计算工具</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ <span class="variable">$#</span> -eq 0 ] || [ <span class="variable">$#</span> -eq 1 ]</span><br><span class="line"><span class="keyword">then</span></span><br><span class="line">                <span class="built_in">echo</span></span><br><span class="line">                <span class="built_in">echo</span> <span class="string">&quot;sum and factorial tool&quot;</span></span><br><span class="line">                <span class="built_in">echo</span> <span class="string">&quot;Usage:&quot;</span></span><br><span class="line">                <span class="built_in">echo</span> <span class="string">&quot;          -a number ...&quot;</span></span><br><span class="line">                <span class="built_in">echo</span> <span class="string">&quot;          -f number&quot;</span></span><br><span class="line">                <span class="built_in">exit</span> 1</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">case</span> <span class="string">&quot;<span class="variable">$1</span>&quot;</span> <span class="keyword">in</span></span><br><span class="line">                -a)</span><br><span class="line">                                <span class="keyword">while</span> [ -n <span class="string">&quot;<span class="variable">$2</span>&quot;</span> ]</span><br><span class="line">                                <span class="keyword">do</span></span><br><span class="line">                                                <span class="built_in">sum</span>=$[<span class="variable">$sum</span> + <span class="variable">$2</span>]</span><br><span class="line">                                                <span class="built_in">shift</span></span><br><span class="line">                                <span class="keyword">done</span></span><br><span class="line">                                <span class="built_in">echo</span> <span class="string">&quot;sum=<span class="variable">$sum</span>&quot;</span></span><br><span class="line">                                <span class="built_in">exit</span> 0</span><br><span class="line"><span class="comment"># shift</span></span><br><span class="line"><span class="comment"># for i in $@</span></span><br><span class="line"><span class="comment"># do</span></span><br><span class="line"> <span class="comment"># sum=$((sum + i))</span></span><br><span class="line"><span class="comment"># done</span></span><br><span class="line"><span class="comment"># exit 0</span></span><br><span class="line">                                ;;</span><br><span class="line">                -f)</span><br><span class="line">                                <span class="keyword">if</span> [ <span class="variable">$2</span> -eq 0 ]</span><br><span class="line">                                <span class="keyword">then</span></span><br><span class="line">                                                <span class="built_in">echo</span> <span class="string">&quot;fact=1&quot;</span></span><br><span class="line">                                                <span class="built_in">exit</span> 0</span><br><span class="line">                                <span class="keyword">fi</span></span><br><span class="line">                                fact=1</span><br><span class="line">                                <span class="keyword">for</span>((i=<span class="number">1</span>; i&lt;=<span class="variable">$2</span>; i++))</span><br><span class="line">                                <span class="keyword">do</span></span><br><span class="line">                                                fact=$[<span class="variable">$fact</span> * <span class="variable">$i</span>]</span><br><span class="line">                                <span class="keyword">done</span></span><br><span class="line">                                <span class="built_in">echo</span> fact=<span class="variable">$fact</span></span><br><span class="line">                                <span class="built_in">exit</span> 0</span><br><span class="line">                                ;;</span><br><span class="line">                -h)</span><br><span class="line">                                ;;</span><br><span class="line">                *)</span><br><span class="line">                                <span class="built_in">echo</span></span><br><span class="line">                                <span class="built_in">echo</span> <span class="string">&quot;sum and factorial tool&quot;</span></span><br><span class="line">                                <span class="built_in">echo</span> <span class="string">&quot;Usage:&quot;</span></span><br><span class="line">                                <span class="built_in">echo</span> <span class="string">&quot;          -a number ...&quot;</span></span><br><span class="line">                                <span class="built_in">echo</span> <span class="string">&quot;          -f number&quot;</span></span><br><span class="line">                                ;;</span><br><span class="line"><span class="keyword">esac</span></span><br><span class="line"><span class="built_in">exit</span> 0</span><br></pre></td></tr></table></figure>
-
-<h2 id="标准化选项"><a href="#标准化选项" class="headerlink" title="标准化选项"></a>标准化选项</h2><p><img src="https://raw.githubusercontent.com/yefreee/picture/main/note5.%E5%A4%84%E7%90%86%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5-2023-06-16-21-20-42.png" alt="5.处理用户输入-2023-06-16-21-20-42"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/18/linux_shell/6.%E4%BD%BF%E7%94%A8%E9%87%8D%E5%AE%9A%E5%90%91%E5%91%88%E7%8E%B0%E6%95%B0%E6%8D%AE/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | ">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/04/18/linux_shell/6.%E4%BD%BF%E7%94%A8%E9%87%8D%E5%AE%9A%E5%90%91%E5%91%88%E7%8E%B0%E6%95%B0%E6%8D%AE/" class="post-title-link" itemprop="url">使用重定向呈现数据</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2023-04-18 11:31:23" itemprop="dateCreated datePublished" datetime="2023-04-18T11:31:23+08:00">2023-04-18</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-06-16 21:21:38" itemprop="dateModified" datetime="2023-06-16T21:21:38+08:00">2023-06-16</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>有些时候想要保存某个命令的输出而不仅仅只是让它显示在显示器上。 <code>bash shell</code>提供了几个操作符，可以将命令的输出重定向到另一个位置（比如文件）。重定向可以用于输入，也可以用于输出，可以将文件重定向到命令输入。</p>
-<h2 id="输出重定向"><a href="#输出重定向" class="headerlink" title="输出重定向"></a>输出重定向</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@sh:~$ date &gt; test6</span><br><span class="line">ubuntu@sh:~$ ls -l test6</span><br><span class="line">-rw-rw-r-- 1 ubuntu ubuntu 29 Mar 26 19:23 test6</span><br><span class="line">ubuntu@sh:~$ cat test6</span><br><span class="line">Sun Mar 26 19:23:54 PDT 2023</span><br><span class="line">ubuntu@sh:~$</span><br></pre></td></tr></table></figure>
-
-<p>重定向操作符创建了一个文件 <code>test6</code>（通过默认的 <code>umask</code>设置），并将 <code>date</code>命令的输出重定向到该文件中。如果输出文件已经存在了，重定向操作符会用新的文件数据覆盖已有文件。</p>
-<p>有时，可能并不想覆盖文件原有内容，而是想要将命令的输出追加到已有文件中，比如正在创建一个记录系统上某个操作的日志文件。在这种情况下，可以用双大于号 <code>（&gt;&gt;）</code>来追加数据。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@sh:~$ who &gt;&gt; test6</span><br><span class="line">ubuntu@sh:~$ cat test6</span><br><span class="line">Sun Mar 26 19:23:54 PDT 2023</span><br><span class="line">ubuntu   tty1         2023-03-26 19:01</span><br><span class="line">ubuntu   pts/0        2023-03-26 19:01 (192.168.13.1)</span><br><span class="line">ubuntu@sh:~$</span><br></pre></td></tr></table></figure>
-
-<p><code>test6</code>文件在原来<code>who</code>命令输出的基础上又加上了<code>date</code>命令的输出</p>
-<h2 id="输入重定向"><a href="#输入重定向" class="headerlink" title="输入重定向"></a>输入重定向</h2><p>输入重定向和输出重定向正好相反。输入重定向将文件的内容重定向到命令，而非将命令的输出重定向到文件。输入重定向符号是小于号<code>（&lt;）</code></p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@sh:~<span class="variable">$</span> <span class="built_in">cat</span> test6</span><br><span class="line">Sun Mar <span class="number">26</span> <span class="number">19</span>:<span class="number">23</span>:<span class="number">54</span> PDT <span class="number">2023</span></span><br><span class="line">ubuntu   tty1         <span class="number">2023</span><span class="literal">-03-26</span> <span class="number">19</span>:<span class="number">01</span></span><br><span class="line">ubuntu   pts/<span class="number">0</span>        <span class="number">2023</span><span class="literal">-03-26</span> <span class="number">19</span>:<span class="number">01</span> (<span class="number">192.168</span>.<span class="number">13.1</span>)</span><br><span class="line">ubuntu@sh:~<span class="variable">$</span> wc &lt; test6</span><br><span class="line">  <span class="number">3</span>  <span class="number">15</span> <span class="number">122</span></span><br><span class="line">ubuntu@sh:~<span class="variable">$</span></span><br></pre></td></tr></table></figure>
-
-<p><code>wc</code>命令可以对对数据中的文本进行计数。默认情况下，它会输出3个值：文本的行数，文本的词数，文本的字节数。</p>
-<h2 id="呈现数据"><a href="#呈现数据" class="headerlink" title="呈现数据"></a>呈现数据</h2><h3 id="标准文件描述符"><a href="#标准文件描述符" class="headerlink" title="标准文件描述符"></a>标准文件描述符</h3><p>Linux的标准文件描述符：</p>
-<table>
-<thead>
-<tr>
-<th>文件描述符</th>
-<th>缩写</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>0</td>
-<td>STDIN</td>
-<td>标准输入</td>
-</tr>
-<tr>
-<td>1</td>
-<td>STDOUT</td>
-<td>标准输出</td>
-</tr>
-<tr>
-<td>2</td>
-<td>STDERR</td>
-<td>标准错误</td>
-</tr>
-</tbody></table>
-<ul>
-<li>这三个特殊文件描述符会处理脚本的输入和输出。shell用它们将shell默认的输入和输出导向到相应的位置。</li>
-</ul>
-<ol>
-<li><p>STDIN(标准输入)</p>
-<p> STDIN文件描述符代表<code>shell</code>的标准输入。对终端界面来说，标准输入是键盘。shell从STDIN文件描述符对应的键盘获得输入，在用户输入时处理每个字符。</p>
-<p> 在使用输入重定向符号<code>（&lt;）</code>时，Linux会用重定向指定的文件来替换标准输入文件描述符。它会读取文件并提取数据，就如同它是键盘上键入的。</p>
-<p> 当在命令行上只输入<code>cat</code>命令时，它会从<code>STDIN</code>接受输入。输入一行，<code>cat</code>命令就会显示出一行。<br> 但你也可以通过<code>STDIN</code>重定向符号强制<code>cat</code>命令接受来自另一个<code>非STDIN</code>文件的输入。</p>
- <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@sh:~$ cat &lt; test6</span><br><span class="line">Sun Mar 26 19:23:54 PDT 2023</span><br><span class="line">ubuntu   tty1         2023-03-26 19:01</span><br><span class="line">ubuntu   pts/0        2023-03-26 19:01 (192.168.13.1)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>STDOUT(标准输出)</p>
-<p> <code>STDOUT</code>文件描述符代表<code>shell</code>的标准输出。在终端界面上，标准输出就是终端显示器。<code>shell</code>的所有输出（包括<code>shell</code>中运行的程序和脚本）会被定向到标准输出中，也就是显示器。</p>
-<p> 默认情况下，大多数bash命令会将输出导向STDOUT文件描述符。我们也可以使用<code>&gt;</code>将输出重定向到文件。</p>
-<p> 当命令生成错误消息时，shell并未将错误消息重定向到输出重定向文件。shell创建了输出重定向文件，但错误消息却显示在了显示器屏幕上。注意，在显示test3文件的内容时并没有任何错误。test3文件创建成功了，只是里面是空的。shell对于错误消息的处理是跟普通输出分开的。如果创建了在后台模式下运行的shell脚本，通常必须依赖发送到日志文件的输出消息。用这种方法的话，如果出现了错误信息，这些信息是不会出现在日志文件中的。需要换种方法来处理。</p>
- <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@sh:~$ ls -al badfile &gt; test3</span><br><span class="line">ls: cannot access &#x27;badfile&#x27;: No such file or directory</span><br><span class="line">ubuntu@sh:~$ cat test3</span><br><span class="line">ubuntu@sh:~$</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>STDERR(标准错误)</p>
-<p> shell通过特殊的STDERR文件描述符来处理错误消息。STDERR文件描述符代表shell的标准错误输出。shell或shell中运行的程序和脚本出错时生成的错误消息都会发送到这个位置。默认情况下，STDERR文件描述符会和STDOUT文件描述符指向同样的地方（尽管分配给它们的文件描述符值不同）。也就是说，默认情况下，错误消息也会输出到显示器输出中。但从上面的例子可以看出，STDERR并不会随着STDOUT的重定向而发生改变。使用脚本时，常常会想改变这种行为，尤其是当希望将错误消息保存到日志文件中的时候。</p>
-</li>
-</ol>
-<h3 id="重定向错误"><a href="#重定向错误" class="headerlink" title="重定向错误"></a>重定向错误</h3><ul>
-<li><p>只重定向错误</p>
-<p>  STDERR文件描述符被设成2。可以选择只重定向错误消息，将该文件描述符值放在重定向符号前。</p>
-  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@sh:~$ ls -al badfile 2&gt; test3</span><br><span class="line">ubuntu@sh:~$ cat test3</span><br><span class="line">ls: cannot access &#x27;badfile&#x27;: No such file or directory</span><br><span class="line">ubuntu@sh:~$</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>重定向错误和数据</p>
-<p>  如果想重定向错误和正常输出，必须用两个重定向符号。需要在符号前面放上待重定向数据所对应的文件描述符，然后指向用于保存数据的输出文件。</p>
-  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@sh:~$ ls -al test3 test6 badtest 2&gt;test7 1&gt;test8</span><br><span class="line">ubuntu@sh:~$ cat test7</span><br><span class="line">ls: cannot access &#x27;badtest&#x27;: No such file or directory</span><br><span class="line">ubuntu@sh:~$ cat test8</span><br><span class="line">-rw-rw-r-- 1 ubuntu ubuntu  55 Mar 26 20:24 test3</span><br><span class="line">-rw-rw-r-- 1 ubuntu ubuntu 122 Mar 26 19:27 test6</span><br><span class="line">ubuntu@sh:~$</span><br></pre></td></tr></table></figure>
-
-<p>  shell利用<code>1&gt;</code>符号将ls命令的正常输出重定向到了test8文件，而这些输出本该是进入<code>STDOUT</code>的。所有本该输出到<code>STDERR</code>的错误消息通过<code>2&gt;</code>符号被重定向到了test7文件。</p>
-<p>  可以用这种方法将脚本的正常输出和脚本生成的错误消息分离开来。这样就可以轻松地识别出错误信息。另外也可以将<code>STDERR</code>和<code>STDOUT</code>的输出重定向到同一个输出文件。为此<code>bash shell</code>提供了特殊的重定向符号<code>&amp;&gt;</code>。</p>
-  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@sh:~$ ls -al badtest test3 test6 badtest &amp;&gt; test7</span><br><span class="line">ubuntu@sh:~$ cat test7</span><br><span class="line">ls: cannot access &#x27;badtest&#x27;: No such file or directory</span><br><span class="line">ls: cannot access &#x27;badtest&#x27;: No such file or directory</span><br><span class="line">-rw-rw-r-- 1 ubuntu ubuntu  55 Mar 26 20:24 test3</span><br><span class="line">-rw-rw-r-- 1 ubuntu ubuntu 122 Mar 26 19:27 test6</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="在脚本中重定向输出"><a href="#在脚本中重定向输出" class="headerlink" title="在脚本中重定向输出"></a>在脚本中重定向输出</h2><p>可以在脚本中用STDOUT和STDERR文件描述符以在多个位置生成输出，只要简单地重定向相应的文件描述符就行了。有两种方法来在脚本中重定向输出：</p>
-<ol>
-<li>临时重定向行输出</li>
-<li>永久重定向脚本中的所有命令</li>
-</ol>
-<h3 id="临时重定向"><a href="#临时重定向" class="headerlink" title="临时重定向"></a>临时重定向</h3><p>如果有意在脚本中生成错误消息，可以将单独的一行输出重定向到STDERR。所需要做的是使用输出重定向符来将输出信息重定向到STDERR文件描述符。在重定向到文件描述符时，必须在文件描述符数字之前加一个&amp;：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@sh:~$ cat test.sh</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line">echo &quot;This is an error&quot; &gt;&amp;2</span><br><span class="line">echo &quot;This is normal output&quot;</span><br><span class="line"></span><br><span class="line">ubuntu@sh:~$ bash test.sh 2&gt; test9</span><br><span class="line">This is normal output</span><br><span class="line">ubuntu@sh:~$ cat test9</span><br><span class="line">This is an error</span><br></pre></td></tr></table></figure>
-
-<h3 id="永久重定向"><a href="#永久重定向" class="headerlink" title="永久重定向"></a>永久重定向</h3><p>如果脚本中有大量数据需要重定向，那重定向每个echo语句就会很烦琐，用exec命令告诉shell在脚本执行期间重定向某个特定文件描述符，exec命令会启动一个新shell并将STDOUT文件描述符重定向到文件。脚本中发给STDOUT的所有输出会被重定向到文件。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># redirecting all output to a file</span></span><br><span class="line"><span class="built_in">exec</span> 1&gt;testout</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;This is a test of redirecting all output&quot;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;from a script to another file.&quot;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;without having to redirect every individual line&quot;</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@sh:~$ bash test.sh</span><br><span class="line">ubuntu@sh:~$ cat testout</span><br><span class="line">This is a test of redirecting all output</span><br><span class="line">from a script to another file.</span><br><span class="line">without having to redirect every individual line</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>脚本执行过程中重定向</p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># redirecting output to different locations</span></span><br><span class="line"><span class="built_in">exec</span> 2&gt;testerror</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;This is the start of the script&quot;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;now redirecting all output to another location&quot;</span></span><br><span class="line"><span class="built_in">exec</span> 1&gt;testout</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;This output should go to the testout file&quot;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;but this should go to the testerror file&quot;</span> &gt;&amp;2</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="在脚本中重定向输入"><a href="#在脚本中重定向输入" class="headerlink" title="在脚本中重定向输入"></a>在脚本中重定向输入</h2><p>可以使用与脚本中重定向STDOUT和STDERR相同的方法来将STDIN从键盘重定向到其他位置。exec命令允许将STDIN重定向到Linux系统上的文件中。这个重定向只要在脚本需要输入时就会作用</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># redirecting file input</span></span><br><span class="line"><span class="built_in">exec</span> 0&lt; testfile</span><br><span class="line">count=1</span><br><span class="line"><span class="keyword">while</span> <span class="built_in">read</span> line</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Line #<span class="variable">$count</span>: <span class="variable">$line</span>&quot;</span></span><br><span class="line">count=$[ <span class="variable">$count</span> + 1 ]</span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="创建自己的重定向"><a href="#创建自己的重定向" class="headerlink" title="创建自己的重定向"></a>创建自己的重定向</h2><h3 id="创建输出文件描述符"><a href="#创建输出文件描述符" class="headerlink" title="创建输出文件描述符"></a>创建输出文件描述符</h3><p>在脚本中重定向输入和输出时，并不局限于这3个默认的文件描述符。在shell中最多可以有9个打开的文件描述符。其他6个从3~8的文件描述符均可用作输入或输出重定向。可以将这些文件描述符中的任意一个分配给文件，然后在脚本中使用它们。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># using an alternative file descriptor</span></span><br><span class="line"><span class="built_in">exec</span> 3&gt;test3out</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;This should display on the monitor&quot;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;and this should be stored in the file&quot;</span> &gt;&amp;3</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Then this should be back on the monitor&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="创建输入文件描述符"><a href="#创建输入文件描述符" class="headerlink" title="创建输入文件描述符"></a>创建输入文件描述符</h3><p>可以用和重定向输出文件描述符同样的办法重定向输入文件描述符。在重定向到文件之前，先将STDIN文件描述符保存到另外一个文件描述符，然后在读取完文件之后再将STDIN恢复到它原来的位置。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># redirecting input file descriptors</span></span><br><span class="line"><span class="built_in">exec</span> 6&lt;&amp;0</span><br><span class="line"><span class="built_in">exec</span> 0&lt; testfile</span><br><span class="line">count=1</span><br><span class="line"><span class="keyword">while</span> <span class="built_in">read</span> line</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Line #<span class="variable">$count</span>: <span class="variable">$line</span>&quot;</span></span><br><span class="line">count=$[ <span class="variable">$count</span> + 1 ]</span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"><span class="built_in">exec</span> 0&lt;&amp;6</span><br><span class="line"><span class="built_in">read</span> -p <span class="string">&quot;Are you done now? &quot;</span> answer</span><br><span class="line"><span class="keyword">case</span> <span class="variable">$answer</span> <span class="keyword">in</span></span><br><span class="line">Y|y) <span class="built_in">echo</span> <span class="string">&quot;Goodbye&quot;</span>;;</span><br><span class="line">N|n) <span class="built_in">echo</span> <span class="string">&quot;Sorry, this is the end.&quot;</span>;;</span><br><span class="line"><span class="keyword">esac</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="组织命令输出"><a href="#组织命令输出" class="headerlink" title="组织命令输出"></a>组织命令输出</h2><p>有时候，可能不想显示脚本的输出。这在将脚本作为后台进程运行时很常见。可以将STDERR重定向到一个叫作null文件的特殊&#x2F;文件。shell输出到null文件的任何数据都不会保存，全部都被丢掉了。在Linux系统上null文件的标准位置是&#x2F;dev&#x2F;null。你重定向到该位置的任何数据都会被丢掉，不会显示。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@sh:~$ <span class="built_in">ls</span> -al &gt; /dev/null</span><br><span class="line">ubuntu@sh:~$</span><br><span class="line">ubuntu@sh:~$ <span class="built_in">ls</span> -al badfile 2&gt; /dev/null</span><br><span class="line">ubuntu@sh:~$</span><br></pre></td></tr></table></figure>
 
       
     </div>

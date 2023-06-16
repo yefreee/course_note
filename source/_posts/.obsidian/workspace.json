@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "linux_shell/8.正则表达式.md",
+                "file": "c_program/2.第二周.md",
                 "mode": "preview",
                 "source": false
               }
@@ -93,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "linux_shell/8.正则表达式.md",
+                "file": "c_program/2.第二周.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,7 +110,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "linux_shell/8.正则表达式.md",
+                "file": "c_program/2.第二周.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -163,15 +163,19 @@
   },
   "active": "14e049e252f23a8b",
   "lastOpenFiles": [
+    "c_program/3.第三周.md",
+    "linux_shell/6.使用重定向呈现数据.md",
+    "linux_shell/7.Shell函数.md",
+    "linux_shell/10.文本处理工具awk.md",
+    "linux_shell/9.流编辑器sed.md",
+    "linux_shell/8.正则表达式.md",
+    "c_program/2.第二周.md",
     "linux_shell/12.项目实战集.md",
     "123.md",
     "linux_shell/11.系统资源性能监控脚本构建.md",
     "linux_shell/11.文本处理工具awk.md",
     "123123.md",
-    "linux_shell/10.文本处理工具awk.md",
     "linux_shell/10.text-processing-tools-awk.md",
-    "linux_shell/9.流编辑器sed.md",
-    "linux_shell/8.正则表达式.md",
     "linux_shell/5.处理用户输入.md",
     "linux_shell/3.Shell条件测试.md",
     "linux_shell/2.构建基本脚本.md",
@@ -186,10 +190,6 @@
     "3.Shell条件测试.md",
     "5.处理用户输入.md",
     "Read_Note/System/深入理解Linux内核.md",
-    "Read_Note/System/深入理解计算机系统.md",
-    "Read_Note/PL/Python编程：从入门到实践.md",
-    "Learnning/GM/Shell/Common_Tools.md",
-    "Pasted image 20230419183426.png.md",
     "Pasted image 20230419183426.png",
     "新建文本文档.txt",
     "_resources/WebClipper.png",
