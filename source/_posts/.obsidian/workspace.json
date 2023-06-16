@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "linux_shell/2.构建基本脚本.md",
+                "file": "linux_shell/8.正则表达式.md",
                 "mode": "preview",
                 "source": false
               }
@@ -93,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "linux_shell/2.构建基本脚本.md",
+                "file": "linux_shell/8.正则表达式.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,7 +110,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "linux_shell/2.构建基本脚本.md",
+                "file": "linux_shell/8.正则表达式.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -163,8 +163,19 @@
   },
   "active": "14e049e252f23a8b",
   "lastOpenFiles": [
-    "linux_shell/1.Shell初识，编辑器使用.md",
+    "linux_shell/12.项目实战集.md",
+    "123.md",
+    "linux_shell/11.系统资源性能监控脚本构建.md",
+    "linux_shell/11.文本处理工具awk.md",
+    "123123.md",
+    "linux_shell/10.文本处理工具awk.md",
+    "linux_shell/10.text-processing-tools-awk.md",
+    "linux_shell/9.流编辑器sed.md",
+    "linux_shell/8.正则表达式.md",
+    "linux_shell/5.处理用户输入.md",
+    "linux_shell/3.Shell条件测试.md",
     "linux_shell/2.构建基本脚本.md",
+    "linux_shell/1.Shell初识，编辑器使用.md",
     "6.使用重定向呈现数据.md",
     "10.text-processing-tools-awk.md",
     "9.流编辑器sed.md",
@@ -180,18 +191,7 @@
     "Learnning/GM/Shell/Common_Tools.md",
     "Pasted image 20230419183426.png.md",
     "Pasted image 20230419183426.png",
-    "Learnning/L_Todo.md",
-    "Learnning/GM/Others.md",
-    "Learnning/GM/WSL2/WSL2开发环境.md",
-    "Learnning/GM/Shell/Vim.md",
-    "Learnning/PL/Markdown.md",
-    "Learnning/GM/Git.md",
-    "Learnning/GM/docker_.md",
-    "Learnning/GM/Shell/Shell_Script基本语法.md",
     "新建文本文档.txt",
-    "Learnning/OS/BootLoader/UEFI.md",
-    "Learnning/GM/Network_Protocol_.md",
-    "Read_Note/System/Clipper/程序的本质之二ELF文件的文件头、section header和program header.md",
     "_resources/WebClipper.png",
     "_resources/SubNotebooks.png"
   ]

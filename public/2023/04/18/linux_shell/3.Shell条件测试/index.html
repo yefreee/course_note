@@ -19,31 +19,20 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="结构化命令   Shell按照命令在脚本中出现的顺序依次进行处理。对顺序操作来说，这已经足够了，因为在这种操作环境下，你想要的就是所有的命令按照正确的顺序执行。   许多程序要求对shell脚本中的命令施加一些逻辑流程控制。有一类命令会根据条件使脚本跳过某些命令。这样的命令通常称为结构化命令（structured command）   常见的条件测试命令： if-then语句 、 case语句">
+    <meta name="description" content="结构化命令概念Shell按照命令在脚本中出现的顺序依次进行处理。对顺序操作来说，这已经足够了，因为在这种操作环境下，你想要的就是所有的命令按照正确的顺序执行。   许多程序要求对shell脚本中的命令施加一些逻辑流程控制。有一类命令会根据条件使脚本跳过某些命令。这样的命令通常称为结构化命令（structured command）   常见的条件测试命令： if-then语句 、 case语句 、">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Shell条件测试">
 <meta property="og:url" content="http://example.com/2023/04/18/linux_shell/3.Shell%E6%9D%A1%E4%BB%B6%E6%B5%8B%E8%AF%95/index.html">
 <meta property="og:site_name">
-<meta property="og:description" content="结构化命令   Shell按照命令在脚本中出现的顺序依次进行处理。对顺序操作来说，这已经足够了，因为在这种操作环境下，你想要的就是所有的命令按照正确的顺序执行。   许多程序要求对shell脚本中的命令施加一些逻辑流程控制。有一类命令会根据条件使脚本跳过某些命令。这样的命令通常称为结构化命令（structured command）   常见的条件测试命令： if-then语句 、 case语句">
+<meta property="og:description" content="结构化命令概念Shell按照命令在脚本中出现的顺序依次进行处理。对顺序操作来说，这已经足够了，因为在这种操作环境下，你想要的就是所有的命令按照正确的顺序执行。   许多程序要求对shell脚本中的命令施加一些逻辑流程控制。有一类命令会根据条件使脚本跳过某些命令。这样的命令通常称为结构化命令（structured command）   常见的条件测试命令： if-then语句 、 case语句 、">
 <meta property="og:locale">
-<meta property="og:image" content="http://example.com/Untitled%2026.png">
-<meta property="og:image" content="http://example.com/Untitled%2027.png">
-<meta property="og:image" content="http://example.com/Untitled%2028.png">
-<meta property="og:image" content="http://example.com/Untitled%2029.png">
-<meta property="og:image" content="http://example.com/Untitled%2030.png">
-<meta property="og:image" content="http://example.com/Untitled%2031.png">
-<meta property="og:image" content="http://example.com/Untitled%2032.png">
-<meta property="og:image" content="http://example.com/Untitled%2033.png">
-<meta property="og:image" content="http://example.com/Untitled%2034.png">
-<meta property="og:image" content="http://example.com/Untitled%2035.png">
-<meta property="og:image" content="http://example.com/Untitled%2036.png">
-<meta property="og:image" content="http://example.com/Untitled%2037.png">
-<meta property="og:image" content="http://example.com/Untitled%2038.png">
-<meta property="og:image" content="http://example.com/Untitled%2039.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/yefreee/picture/main/note3.Shell%E6%9D%A1%E4%BB%B6%E6%B5%8B%E8%AF%95-2023-06-16-20-43-25.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/yefreee/picture/main/note3.Shell%E6%9D%A1%E4%BB%B6%E6%B5%8B%E8%AF%95-2023-06-16-20-46-41.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/yefreee/picture/main/note3.Shell%E6%9D%A1%E4%BB%B6%E6%B5%8B%E8%AF%95-2023-06-16-21-06-44.png">
 <meta property="article:published_time" content="2023-04-18T03:31:23.000Z">
-<meta property="article:modified_time" content="2023-06-10T08:09:30.859Z">
+<meta property="article:modified_time" content="2023-06-16T13:12:59.047Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/Untitled%2026.png">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/yefreee/picture/main/note3.Shell%E6%9D%A1%E4%BB%B6%E6%B5%8B%E8%AF%95-2023-06-16-20-43-25.png">
 
 
 <link rel="canonical" href="http://example.com/2023/04/18/linux_shell/3.Shell%E6%9D%A1%E4%BB%B6%E6%B5%8B%E8%AF%95/">
@@ -125,7 +114,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%8D%E5%90%88%E6%9D%A1%E4%BB%B6%E6%B5%8B%E8%AF%95"><span class="nav-number">1.</span> <span class="nav-text">复合条件测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#case%E5%91%BD%E4%BB%A4"><span class="nav-number">2.</span> <span class="nav-text">case命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%83%E4%B9%A0%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">练习题</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E5%8C%96%E5%91%BD%E4%BB%A4%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">结构化命令概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#if%E6%9D%A1%E4%BB%B6%E8%AF%AD%E5%8F%A5"><span class="nav-number">2.</span> <span class="nav-text">if条件语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%8D%E5%90%88%E6%9D%A1%E4%BB%B6%E6%B5%8B%E8%AF%95"><span class="nav-number">3.</span> <span class="nav-text">复合条件测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#case%E5%91%BD%E4%BB%A4"><span class="nav-number">4.</span> <span class="nav-text">case命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%83%E4%B9%A0%E9%A2%98"><span class="nav-number">5.</span> <span class="nav-text">练习题</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -138,7 +127,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -202,7 +191,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-06-10 16:09:30" itemprop="dateModified" datetime="2023-06-10T16:09:30+08:00">2023-06-10</time>
+      <time title="Modified: 2023-06-16 21:12:59" itemprop="dateModified" datetime="2023-06-16T21:12:59+08:00">2023-06-16</time>
     </span>
 
   
@@ -215,85 +204,103 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <ul>
-<li><p>结构化命令</p>
-<p>  Shell按照命令在脚本中出现的顺序依次进行处理。对顺序操作来说，这已经足够了，因为在这种操作环境下，你想要的就是所有的命令按照正确的顺序执行。</p>
-<p>  许多程序要求对shell脚本中的命令施加一些逻辑流程控制。有一类命令会根据条件使脚本跳过某些命令。这样的命令通常称为结构化命令（structured command）</p>
-<p>  常见的条件测试命令： <code>if-then语句</code> 、 <code>case语句</code> 、 <code>for语句</code> 、 <code>while语句</code> </p>
-</li>
-<li><p>if条件语句</p>
-<ul>
-<li>if条件语句通常由以下三个关键字组成：<ul>
-<li>if：用于指定要测试的条件。</li>
-<li>then：用于指定如果条件为true时要执行的指令。</li>
-<li>else：用于指定如果条件为false时要执行的指令。</li>
+        <h2 id="结构化命令概念"><a href="#结构化命令概念" class="headerlink" title="结构化命令概念"></a>结构化命令概念</h2><p>Shell按照命令在脚本中出现的顺序依次进行处理。对顺序操作来说，这已经足够了，因为在这种操作环境下，你想要的就是所有的命令按照正确的顺序执行。  </p>
+<p>许多程序要求对shell脚本中的命令施加一些逻辑流程控制。有一类命令会根据条件使脚本跳过某些命令。这样的命令通常称为结构化命令（structured command）  </p>
+<p>常见的条件测试命令： <code>if-then语句</code> 、 <code>case语句</code> 、 <code>for语句</code> 、 <code>while语句</code></p>
+<h2 id="if条件语句"><a href="#if条件语句" class="headerlink" title="if条件语句"></a>if条件语句</h2><ul>
+<li><p>if条件语句通常由以下三个关键字组成：</p>
+<ol>
+<li>if：用于指定要测试的条件</li>
+<li>then：用于指定如果条件为true时要执行的指令</li>
+<li>else：用于指定如果条件为false时要执行的指令</li>
+</ol>
+  <figure class="highlight bash"><figcaption><span>if条件语句格式</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> condition</span><br><span class="line"><span class="keyword">then</span></span><br><span class="line">    command1 </span><br><span class="line">    command2</span><br><span class="line">    ...</span><br><span class="line">    commandN </span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure></li>
 </ul>
-</li>
-<li>语法格式如下：</li>
-</ul>
-<p>  <img src="/Untitled%2026.png" alt="Untitled"></p>
+<p>在其他编程语言中，if语句之后的对象是一个等式，这个等式的求值结果为TRUE或FALSE。但bash shell的if语句并不是这么做的。bash shell的if语句会运行if后面的那个命令。如果该命令的退出状态码是0（该命令成功运行），位于then部分的命令就会被执行。如果该命令的退出状态码是其他值，then部分的命令就不会被执行，bash shell会继续执行脚本中的下一个命令。fi语句用来表示if-then语句到此结束。</p>
+<p>创建脚本test.sh、编辑以下内容：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 测试的条件为`pwd`命令，根据命令的返回值进行跳转</span></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">pwd</span></span><br><span class="line"><span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;it worked&quot;</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+
+<p>运行脚本：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[centos@host1 ~]$ bash test.sh</span><br><span class="line">/home/centos</span><br><span class="line">it worked</span><br></pre></td></tr></table></figure>
+
 <ul>
-<li><p>在其他编程语言中，if语句之后的对象是一个等式，这个等式的求值结果为TRUE或FALSE。但bash shell的if语句并不是这么做的。bash shell的if语句会运行if后面的那个命令。如果该命令的退出状态码是0（该命令成功运行），位于then部分的命令就会被执行。如果该命令的退出状态码是其他值，then部分的命令就不会被执行，bash shell会继续执行脚本中的下一个命令。fi语句用来表示if-then语句到此结束。</p>
-<p>  <img src="/Untitled%2027.png" alt="Untitled"></p>
-</li>
 <li><p><code>if-then</code> 语句的另一种形式</p>
   <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="built_in">command</span>; <span class="keyword">then</span></span><br><span class="line">commands</span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
 </li>
-<li><p>练习</p>
-<p>  <img src="/Untitled%2028.png" alt="Untitled"></p>
+<li><p><strong>练习</strong></p>
+<p>  创建脚本test.sh、编辑以下内容：</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 待测试的用户名为centos</span></span><br><span class="line">testuser=centos</span><br><span class="line"></span><br><span class="line"><span class="comment"># 根据grep语句的运行结果进行跳转，即文件/etc/passwd内是否有centos这个字符</span></span><br><span class="line"><span class="keyword">if</span> grep <span class="variable">$testuser</span> /etc/passwd</span><br><span class="line"><span class="keyword">then</span></span><br><span class="line">        <span class="comment"># 如果找到centos字符，打印以下信息</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;it worked&quot;</span></span><br><span class="line">        <span class="comment"># 同时显示centos家目录下以.b开头的隐藏文件</span></span><br><span class="line">        <span class="built_in">ls</span> -a /home/<span class="variable">$testuser</span>/.b*</span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+
+<p>  运行脚本：</p>
+  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[centos@host1 ~]$ bash test.sh</span><br><span class="line">centos:x:1000:1000::/home/centos:/bin/bash</span><br><span class="line">it worked</span><br><span class="line">/home/centos/.bash_history  /home/centos/.bash_profile</span><br><span class="line">/home/centos/.bash_logout   /home/centos/.bashrc</span><br></pre></td></tr></table></figure>
 </li>
 <li><p><code>if-then-else</code> 双分支语句</p>
 <p>  当if语句中的命令返回退出状态码0时，then部分中的命令会被执行，这跟普通的if-then<br>  语句一样。当if语句中的命令返回非零退出状态码时，bash shell会执行else部分中的命令。</p>
-<p>  <img src="/Untitled%2029.png" alt="Untitled"></p>
+<p>  在test.sh文件的基础上添加else语句</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 待测试的用户名为ubuntu</span></span><br><span class="line">testuser=ubuntu</span><br><span class="line"></span><br><span class="line"><span class="comment"># 此时grep命令没有找到ubuntu字符，if语句跳转到else分支</span></span><br><span class="line"><span class="keyword">if</span> grep <span class="variable">$testuser</span> /etc/passwd</span><br><span class="line"><span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;it worked&quot;</span></span><br><span class="line">        <span class="comment"># 同时显示家目录下以.b开头的隐藏文件</span></span><br><span class="line">        <span class="built_in">ls</span> -a /home/<span class="variable">$testuser</span>/.b*</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;user <span class="variable">$testuser</span> does not exist.&quot;</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+
+<p>  运行脚本：</p>
+  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[centos@host1 ~]$ bash test.sh</span><br><span class="line">user ubuntu does not exist.</span><br></pre></td></tr></table></figure>
 </li>
 <li><p><code>if-then-elif-else</code> 多分支语句</p>
-<p>  <img src="/Untitled%2030.png" alt="Untitled"></p>
-</li>
-</ul>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">testuser=ubuntu</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> grep <span class="variable">$testuser</span> /etc/passwd</span><br><span class="line"><span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;user: exist&quot;</span></span><br><span class="line">        <span class="built_in">ls</span> -a /home/<span class="variable">$testuser</span>/.b*</span><br><span class="line"><span class="keyword">else</span> <span class="built_in">ls</span> -d /home/<span class="variable">$testuser</span> 2&gt;/dev/null</span><br><span class="line"><span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;user <span class="variable">$testuser</span> does not exist, but has a directory&quot;</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;user <span class="variable">$testuser</span> does not exist&quot;</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;user <span class="variable">$testuser</span> does not have a directory&quot;</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p><code>test</code> 命令</p>
 <p>  如果test命令中列出的条件成立，test命令就会退出并返回退出状态码0。这样if-then语句就与其他编程语言中的if-then语句以类似的方式工作了。如果条件不成立，test命令就会退出并返回非零的退出状态码，这使得if-then语句不会再被执行。</p>
 <ul>
 <li><p>test命令格式</p>
-<p>  <code>test condition</code> </p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="built_in">test</span> condition</span><br><span class="line"><span class="keyword">then</span></span><br><span class="line">	commands</span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
-<p>  <img src="/Untitled%2031.png" alt="Untitled"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="built_in">test</span> condition</span><br><span class="line"><span class="keyword">then</span></span><br><span class="line"> commands</span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>bash shell提供了另一种条件测试方法，无需在if-then语句中声明test命令。</p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> [ condition ]</span><br><span class="line"><span class="keyword">then</span></span><br><span class="line">	commands</span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
-<p>  方括号定义了测试条件。注意，第一个方括号之后和第二个方括号之前必须加上一个空格，否则就会报错。</p>
-<p>  test命令可以判断三类条件：</p>
-<ul>
-<li>文件比较</li>
-<li>字符串比较</li>
-<li>数值比较</li>
-</ul>
-</li>
-</ul>
-</li>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> [ condition ]</span><br><span class="line"><span class="keyword">then</span></span><br><span class="line"> commands</span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+
+<p>创建脚本test.sh、编辑以下内容：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">testuser=ubuntu</span><br><span class="line"></span><br><span class="line"><span class="comment"># 当变量testuser不为空时执行then语句的内容</span></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">test</span> <span class="variable">$testuser</span></span><br><span class="line"><span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;the variable exists&quot;</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+
+<p>运行脚本：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[centos@host1 ~]$ bash test.sh</span><br><span class="line">the variable exists</span><br></pre></td></tr></table></figure>
+
+<p>方括号定义了测试条件。注意，第一个方括号之后和第二个方括号之前必须加上一个空格，否则就会报错。<br>test命令可以判断三类条件：</p>
+<ol>
 <li><p>文件比较</p>
-<p>  这些测试条件使你能够在shell脚本中检查文件系统中的文件。它们经常出现在需要进行文件访问的脚本中，文件比较的操作符如下：</p>
-<p>  <img src="/Untitled%2032.png" alt="Untitled"></p>
-<p>  <img src="/Untitled%2033.png" alt="Untitled"></p>
-<p>  <img src="/Untitled%2034.png" alt="Untitled"></p>
+<p> 这些测试条件使你能够在shell脚本中检查文件系统中的文件。它们经常出现在需要进行文件访问的脚本中，文件比较的操作符如下：</p>
+<p> <img src="https://raw.githubusercontent.com/yefreee/picture/main/note3.Shell%E6%9D%A1%E4%BB%B6%E6%B5%8B%E8%AF%95-2023-06-16-20-43-25.png" alt="3.Shell条件测试-2023-06-16-20-43-25"></p>
+<p> 创建脚本test.sh、编辑以下内容：</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">dir</span>=/home/centos</span><br><span class="line"></span><br><span class="line"><span class="comment"># 根据-d判断dir是否存在并且是一个目录文件</span></span><br><span class="line"><span class="keyword">if</span> [ -d <span class="variable">$dir</span> ]</span><br><span class="line"><span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;directory <span class="variable">$dir</span> exists&quot;</span></span><br><span class="line">        <span class="built_in">cd</span> <span class="variable">$dir</span></span><br><span class="line">        <span class="built_in">ls</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+
+<p> 运行脚本：</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[centos@host1 ~]$ bash test.sh</span><br><span class="line">directory /home/centos exists</span><br><span class="line">log.230616  test.sh</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>字符串比较</p>
-<p>  <img src="/Untitled%2035.png" alt="Untitled"></p>
-<p>  <img src="/Untitled%2036.png" alt="Untitled"></p>
+<p> <img src="https://raw.githubusercontent.com/yefreee/picture/main/note3.Shell%E6%9D%A1%E4%BB%B6%E6%B5%8B%E8%AF%95-2023-06-16-20-46-41.png" alt="3.Shell条件测试-2023-06-16-20-46-41"></p>
+<p> 创建脚本test.sh、编辑以下内容：</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">testuser=centos</span><br><span class="line"></span><br><span class="line"><span class="comment"># 通过比较运算符等号=比较两个字符串，等式成立则表达式结果为真</span></span><br><span class="line"><span class="keyword">if</span> [ <span class="variable">$USER</span> = <span class="variable">$testuser</span> ]</span><br><span class="line"><span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;welcome <span class="variable">$testuser</span>&quot;</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+
+<p> 运行脚本：</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[centos@host1 ~]$ bash test.sh</span><br><span class="line">welcome centos</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li>大于号和小于号必须转义，否则shell会把它们当作重定向符号，把字符串值当作文件名</li>
 </ul>
-<p>  <img src="/Untitled%2037.png" alt="Untitled">
-  </p>
+<p> 创建脚本test.sh、编辑以下内容：</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">var1=temp</span><br><span class="line">var2=tmp</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在条件比较时直接使用大于号&gt;不能表示大于的含义，需要使用\&gt;在表示大于</span></span><br><span class="line"><span class="keyword">if</span> [ <span class="variable">$var1</span> &gt; <span class="variable">$var2</span> ]</span><br><span class="line"><span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$var1</span> greater than <span class="variable">$var2</span>&quot;</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+
+<p> 运行脚本：</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[centos@host1 ~]$ bash test.sh</span><br><span class="line">temp greater than tmp</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>数值比较</p>
-<p>  数值条件测试可以用在数字和变量上。</p>
-<p>  <img src="/Untitled%2038.png" alt="Untitled"></p>
+<p> 数值条件测试可以用在数字和变量上。</p>
+<p><img src="https://raw.githubusercontent.com/yefreee/picture/main/note3.Shell%E6%9D%A1%E4%BB%B6%E6%B5%8B%E8%AF%95-2023-06-16-21-06-44.png" alt="3.Shell条件测试-2023-06-16-21-06-44"></p>
+</li>
+</ol>
+</li>
+</ul>
 </li>
 </ul>
 <h2 id="复合条件测试"><a href="#复合条件测试" class="headerlink" title="复合条件测试"></a>复合条件测试</h2><ul>
 <li><p><code>&amp;&amp;和||</code> 用法</p>
   <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[ condition1 ] &amp;&amp; [ condition2 ]</span><br><span class="line">[ condition1 ] || [ condition2 ]</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li>第一种布尔运算使用AND布尔运算符来组合两个条件。要让then部分的命令执行，两个条件都必须满足。</li>
 <li>第二种布尔运算使用OR布尔运算符来组合两个条件。如果任意条件为TRUE，then部分的命令就会执行。</li>
@@ -305,12 +312,17 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> expression <span class="keyword">in</span></span><br><span class="line">  pattern1)</span><br><span class="line">    command1</span><br><span class="line">    ;;</span><br><span class="line">  pattern2)</span><br><span class="line">    command2</span><br><span class="line">    ;;</span><br><span class="line">  pattern3)</span><br><span class="line">    command3</span><br><span class="line">    ;;</span><br><span class="line">  *)</span><br><span class="line">    default_command</span><br><span class="line">    ;;</span><br><span class="line"><span class="keyword">esac</span></span><br></pre></td></tr></table></figure>
 
 <p>其中，expression是要测试的变量或表达式，pattern1、pattern2、pattern3等是匹配模式，command1、command2、command3等是匹配模式成立时要执行的命令，**<code>;;</code><strong>表示命令结束，</strong><code>*)</code>**表示如果所有模式都不匹配时要执行的默认命令。</p>
-<p><img src="/Untitled%2039.png" alt="Untitled"></p>
-<h2 id="练习题"><a href="#练习题" class="headerlink" title="练习题"></a>练习题</h2><ul>
+<p>创建脚本test.sh、编辑以下内容：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">fruit=<span class="string">&quot;apple&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">case</span> <span class="variable">$fruit</span> <span class="keyword">in</span></span><br><span class="line">        apple)</span><br><span class="line">                <span class="built_in">echo</span> <span class="string">&quot;It&#x27;s an apple.&quot;</span></span><br><span class="line">                ;;</span><br><span class="line">        banana)</span><br><span class="line">                <span class="built_in">echo</span> <span class="string">&quot;It&#x27;s a banana.&quot;</span></span><br><span class="line">                ;;</span><br><span class="line">        <span class="comment"># *用来匹配之前所有匹配模式都匹配不到的情况</span></span><br><span class="line">        *)</span><br><span class="line">                <span class="built_in">echo</span> <span class="string">&quot;It&#x27;s not an apple or a banana.&quot;</span></span><br><span class="line">                ;;</span><br><span class="line"><span class="keyword">esac</span></span><br></pre></td></tr></table></figure>
+
+<p>运行脚本：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[centos@host1 ~]$ bash test.sh</span><br><span class="line">It&#x27;s an apple.</span><br></pre></td></tr></table></figure>
+
+<h2 id="练习题"><a href="#练习题" class="headerlink" title="练习题"></a>练习题</h2><ol>
 <li>使用 <code>read</code>要求用户输入一个数字。</li>
 <li>使用 <code>if</code>判断该数字是否在<code>0-9</code>之间，如果不满足则停止脚本。</li>
 <li>然后使用 <strong><code>case</code></strong> 语句输出对应数字<code>0-3</code>的英文，对于其他数字输出一个提示“该数字在4-9之间”。</li>
-</ul>
+</ol>
 
     </div>
 

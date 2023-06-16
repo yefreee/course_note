@@ -27,7 +27,7 @@
 <meta property="og:description" content="有些时候想要保存某个命令的输出而不仅仅只是让它显示在显示器上。 bash shell提供了几个操作符，可以将命令的输出重定向到另一个位置（比如文件）。重定向可以用于输入，也可以用于输出，可以将文件重定向到命令输入。 输出重定向123456ubuntu@sh:~$ date &gt; test6ubuntu@sh:~$ ls -l test6-rw-rw-r-- 1 ubuntu ubuntu 29">
 <meta property="og:locale">
 <meta property="article:published_time" content="2023-04-18T03:31:23.000Z">
-<meta property="article:modified_time" content="2023-06-10T08:09:30.859Z">
+<meta property="article:modified_time" content="2023-06-16T13:21:38.608Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -123,7 +123,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -187,7 +187,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-06-10 16:09:30" itemprop="dateModified" datetime="2023-06-10T16:09:30+08:00">2023-06-10</time>
+      <time title="Modified: 2023-06-16 21:21:38" itemprop="dateModified" datetime="2023-06-16T21:21:38+08:00">2023-06-16</time>
     </span>
 
   
@@ -201,11 +201,11 @@
     
     <div class="post-body" itemprop="articleBody">
         <p>有些时候想要保存某个命令的输出而不仅仅只是让它显示在显示器上。 <code>bash shell</code>提供了几个操作符，可以将命令的输出重定向到另一个位置（比如文件）。重定向可以用于输入，也可以用于输出，可以将文件重定向到命令输入。</p>
-<h2 id="输出重定向"><a href="#输出重定向" class="headerlink" title="输出重定向"></a>输出重定向</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@sh:~$ date &gt; test6</span><br><span class="line">ubuntu@sh:~$ ls -l test6</span><br><span class="line">-rw-rw-r-- 1 ubuntu ubuntu 29 Mar 26 19:23 test6</span><br><span class="line">ubuntu@sh:~$ cat test6</span><br><span class="line">Sun Mar 26 19:23:54 PDT 2023</span><br><span class="line">ubuntu@sh:~$</span><br></pre></td></tr></table></figure>
+<h2 id="输出重定向"><a href="#输出重定向" class="headerlink" title="输出重定向"></a>输出重定向</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@sh:~$ date &gt; test6</span><br><span class="line">ubuntu@sh:~$ ls -l test6</span><br><span class="line">-rw-rw-r-- 1 ubuntu ubuntu 29 Mar 26 19:23 test6</span><br><span class="line">ubuntu@sh:~$ cat test6</span><br><span class="line">Sun Mar 26 19:23:54 PDT 2023</span><br><span class="line">ubuntu@sh:~$</span><br></pre></td></tr></table></figure>
 
 <p>重定向操作符创建了一个文件 <code>test6</code>（通过默认的 <code>umask</code>设置），并将 <code>date</code>命令的输出重定向到该文件中。如果输出文件已经存在了，重定向操作符会用新的文件数据覆盖已有文件。</p>
 <p>有时，可能并不想覆盖文件原有内容，而是想要将命令的输出追加到已有文件中，比如正在创建一个记录系统上某个操作的日志文件。在这种情况下，可以用双大于号 <code>（&gt;&gt;）</code>来追加数据。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@sh:~$ who &gt;&gt; test6</span><br><span class="line">ubuntu@sh:~$ cat test6</span><br><span class="line">Sun Mar 26 19:23:54 PDT 2023</span><br><span class="line">ubuntu   tty1         2023-03-26 19:01</span><br><span class="line">ubuntu   pts/0        2023-03-26 19:01 (192.168.13.1)</span><br><span class="line">ubuntu@sh:~$</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@sh:~$ who &gt;&gt; test6</span><br><span class="line">ubuntu@sh:~$ cat test6</span><br><span class="line">Sun Mar 26 19:23:54 PDT 2023</span><br><span class="line">ubuntu   tty1         2023-03-26 19:01</span><br><span class="line">ubuntu   pts/0        2023-03-26 19:01 (192.168.13.1)</span><br><span class="line">ubuntu@sh:~$</span><br></pre></td></tr></table></figure>
 
 <p><code>test6</code>文件在原来<code>who</code>命令输出的基础上又加上了<code>date</code>命令的输出</p>
 <h2 id="输入重定向"><a href="#输入重定向" class="headerlink" title="输入重定向"></a>输入重定向</h2><p>输入重定向和输出重定向正好相反。输入重定向将文件的内容重定向到命令，而非将命令的输出重定向到文件。输入重定向符号是小于号<code>（&lt;）</code></p>
@@ -245,13 +245,13 @@
 <p> STDIN文件描述符代表<code>shell</code>的标准输入。对终端界面来说，标准输入是键盘。shell从STDIN文件描述符对应的键盘获得输入，在用户输入时处理每个字符。</p>
 <p> 在使用输入重定向符号<code>（&lt;）</code>时，Linux会用重定向指定的文件来替换标准输入文件描述符。它会读取文件并提取数据，就如同它是键盘上键入的。</p>
 <p> 当在命令行上只输入<code>cat</code>命令时，它会从<code>STDIN</code>接受输入。输入一行，<code>cat</code>命令就会显示出一行。<br> 但你也可以通过<code>STDIN</code>重定向符号强制<code>cat</code>命令接受来自另一个<code>非STDIN</code>文件的输入。</p>
- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@sh:~$ cat &lt; test6</span><br><span class="line">Sun Mar 26 19:23:54 PDT 2023</span><br><span class="line">ubuntu   tty1         2023-03-26 19:01</span><br><span class="line">ubuntu   pts/0        2023-03-26 19:01 (192.168.13.1)</span><br></pre></td></tr></table></figure>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@sh:~$ cat &lt; test6</span><br><span class="line">Sun Mar 26 19:23:54 PDT 2023</span><br><span class="line">ubuntu   tty1         2023-03-26 19:01</span><br><span class="line">ubuntu   pts/0        2023-03-26 19:01 (192.168.13.1)</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>STDOUT(标准输出)</p>
 <p> <code>STDOUT</code>文件描述符代表<code>shell</code>的标准输出。在终端界面上，标准输出就是终端显示器。<code>shell</code>的所有输出（包括<code>shell</code>中运行的程序和脚本）会被定向到标准输出中，也就是显示器。</p>
 <p> 默认情况下，大多数bash命令会将输出导向STDOUT文件描述符。我们也可以使用<code>&gt;</code>将输出重定向到文件。</p>
 <p> 当命令生成错误消息时，shell并未将错误消息重定向到输出重定向文件。shell创建了输出重定向文件，但错误消息却显示在了显示器屏幕上。注意，在显示test3文件的内容时并没有任何错误。test3文件创建成功了，只是里面是空的。shell对于错误消息的处理是跟普通输出分开的。如果创建了在后台模式下运行的shell脚本，通常必须依赖发送到日志文件的输出消息。用这种方法的话，如果出现了错误信息，这些信息是不会出现在日志文件中的。需要换种方法来处理。</p>
- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@sh:~$ ls -al badfile &gt; test3</span><br><span class="line">ls: cannot access &#x27;badfile&#x27;: No such file or directory</span><br><span class="line">ubuntu@sh:~$ cat test3</span><br><span class="line">ubuntu@sh:~$</span><br></pre></td></tr></table></figure>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@sh:~$ ls -al badfile &gt; test3</span><br><span class="line">ls: cannot access &#x27;badfile&#x27;: No such file or directory</span><br><span class="line">ubuntu@sh:~$ cat test3</span><br><span class="line">ubuntu@sh:~$</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>STDERR(标准错误)</p>
 <p> shell通过特殊的STDERR文件描述符来处理错误消息。STDERR文件描述符代表shell的标准错误输出。shell或shell中运行的程序和脚本出错时生成的错误消息都会发送到这个位置。默认情况下，STDERR文件描述符会和STDOUT文件描述符指向同样的地方（尽管分配给它们的文件描述符值不同）。也就是说，默认情况下，错误消息也会输出到显示器输出中。但从上面的例子可以看出，STDERR并不会随着STDOUT的重定向而发生改变。使用脚本时，常常会想改变这种行为，尤其是当希望将错误消息保存到日志文件中的时候。</p>
@@ -260,14 +260,15 @@
 <h3 id="重定向错误"><a href="#重定向错误" class="headerlink" title="重定向错误"></a>重定向错误</h3><ul>
 <li><p>只重定向错误</p>
 <p>  STDERR文件描述符被设成2。可以选择只重定向错误消息，将该文件描述符值放在重定向符号前。</p>
-  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@sh:~$ ls -al badfile 2&gt; test3</span><br><span class="line">ubuntu@sh:~$ cat test3</span><br><span class="line">ls: cannot access &#x27;badfile&#x27;: No such file or directory</span><br><span class="line">ubuntu@sh:~$</span><br></pre></td></tr></table></figure>
+  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@sh:~$ ls -al badfile 2&gt; test3</span><br><span class="line">ubuntu@sh:~$ cat test3</span><br><span class="line">ls: cannot access &#x27;badfile&#x27;: No such file or directory</span><br><span class="line">ubuntu@sh:~$</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>重定向错误和数据</p>
 <p>  如果想重定向错误和正常输出，必须用两个重定向符号。需要在符号前面放上待重定向数据所对应的文件描述符，然后指向用于保存数据的输出文件。</p>
-  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@sh:~$ ls -al test3 test6 badtest 2&gt;test7 1&gt;test8</span><br><span class="line">ubuntu@sh:~$ cat test7</span><br><span class="line">ls: cannot access &#x27;badtest&#x27;: No such file or directory</span><br><span class="line">ubuntu@sh:~$ cat test8</span><br><span class="line">-rw-rw-r-- 1 ubuntu ubuntu  55 Mar 26 20:24 test3</span><br><span class="line">-rw-rw-r-- 1 ubuntu ubuntu 122 Mar 26 19:27 test6</span><br><span class="line">ubuntu@sh:~$</span><br></pre></td></tr></table></figure>
+  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@sh:~$ ls -al test3 test6 badtest 2&gt;test7 1&gt;test8</span><br><span class="line">ubuntu@sh:~$ cat test7</span><br><span class="line">ls: cannot access &#x27;badtest&#x27;: No such file or directory</span><br><span class="line">ubuntu@sh:~$ cat test8</span><br><span class="line">-rw-rw-r-- 1 ubuntu ubuntu  55 Mar 26 20:24 test3</span><br><span class="line">-rw-rw-r-- 1 ubuntu ubuntu 122 Mar 26 19:27 test6</span><br><span class="line">ubuntu@sh:~$</span><br></pre></td></tr></table></figure>
+
 <p>  shell利用<code>1&gt;</code>符号将ls命令的正常输出重定向到了test8文件，而这些输出本该是进入<code>STDOUT</code>的。所有本该输出到<code>STDERR</code>的错误消息通过<code>2&gt;</code>符号被重定向到了test7文件。</p>
 <p>  可以用这种方法将脚本的正常输出和脚本生成的错误消息分离开来。这样就可以轻松地识别出错误信息。另外也可以将<code>STDERR</code>和<code>STDOUT</code>的输出重定向到同一个输出文件。为此<code>bash shell</code>提供了特殊的重定向符号<code>&amp;&gt;</code>。</p>
-  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@sh:~$ ls -al badtest test3 test6 badtest &amp;&gt; test7</span><br><span class="line">ubuntu@sh:~$ cat test7</span><br><span class="line">ls: cannot access &#x27;badtest&#x27;: No such file or directory</span><br><span class="line">ls: cannot access &#x27;badtest&#x27;: No such file or directory</span><br><span class="line">-rw-rw-r-- 1 ubuntu ubuntu  55 Mar 26 20:24 test3</span><br><span class="line">-rw-rw-r-- 1 ubuntu ubuntu 122 Mar 26 19:27 test6</span><br></pre></td></tr></table></figure></li>
+  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@sh:~$ ls -al badtest test3 test6 badtest &amp;&gt; test7</span><br><span class="line">ubuntu@sh:~$ cat test7</span><br><span class="line">ls: cannot access &#x27;badtest&#x27;: No such file or directory</span><br><span class="line">ls: cannot access &#x27;badtest&#x27;: No such file or directory</span><br><span class="line">-rw-rw-r-- 1 ubuntu ubuntu  55 Mar 26 20:24 test3</span><br><span class="line">-rw-rw-r-- 1 ubuntu ubuntu 122 Mar 26 19:27 test6</span><br></pre></td></tr></table></figure></li>
 </ul>
 <h2 id="在脚本中重定向输出"><a href="#在脚本中重定向输出" class="headerlink" title="在脚本中重定向输出"></a>在脚本中重定向输出</h2><p>可以在脚本中用STDOUT和STDERR文件描述符以在多个位置生成输出，只要简单地重定向相应的文件描述符就行了。有两种方法来在脚本中重定向输出：</p>
 <ol>
@@ -275,12 +276,12 @@
 <li>永久重定向脚本中的所有命令</li>
 </ol>
 <h3 id="临时重定向"><a href="#临时重定向" class="headerlink" title="临时重定向"></a>临时重定向</h3><p>如果有意在脚本中生成错误消息，可以将单独的一行输出重定向到STDERR。所需要做的是使用输出重定向符来将输出信息重定向到STDERR文件描述符。在重定向到文件描述符时，必须在文件描述符数字之前加一个&amp;：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@sh:~$ cat test.sh</span><br><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">echo &quot;This is an error&quot; &gt;&amp;2</span><br><span class="line">echo &quot;This is normal output&quot;</span><br><span class="line"></span><br><span class="line">ubuntu@sh:~$ bash test.sh 2&gt; test9</span><br><span class="line">This is normal output</span><br><span class="line">ubuntu@sh:~$ cat test9</span><br><span class="line">This is an error</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@sh:~$ cat test.sh</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line">echo &quot;This is an error&quot; &gt;&amp;2</span><br><span class="line">echo &quot;This is normal output&quot;</span><br><span class="line"></span><br><span class="line">ubuntu@sh:~$ bash test.sh 2&gt; test9</span><br><span class="line">This is normal output</span><br><span class="line">ubuntu@sh:~$ cat test9</span><br><span class="line">This is an error</span><br></pre></td></tr></table></figure>
 
 <h3 id="永久重定向"><a href="#永久重定向" class="headerlink" title="永久重定向"></a>永久重定向</h3><p>如果脚本中有大量数据需要重定向，那重定向每个echo语句就会很烦琐，用exec命令告诉shell在脚本执行期间重定向某个特定文件描述符，exec命令会启动一个新shell并将STDOUT文件描述符重定向到文件。脚本中发给STDOUT的所有输出会被重定向到文件。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># redirecting all output to a file</span></span><br><span class="line"><span class="built_in">exec</span> 1&gt;testout</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;This is a test of redirecting all output&quot;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;from a script to another file.&quot;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;without having to redirect every individual line&quot;</span></span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@sh:~$ bash test.sh</span><br><span class="line">ubuntu@sh:~$ cat testout</span><br><span class="line">This is a test of redirecting all output</span><br><span class="line">from a script to another file.</span><br><span class="line">without having to redirect every individual line</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@sh:~$ bash test.sh</span><br><span class="line">ubuntu@sh:~$ cat testout</span><br><span class="line">This is a test of redirecting all output</span><br><span class="line">from a script to another file.</span><br><span class="line">without having to redirect every individual line</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li><p>脚本执行过程中重定向</p>
@@ -297,6 +298,7 @@
 
 <h2 id="组织命令输出"><a href="#组织命令输出" class="headerlink" title="组织命令输出"></a>组织命令输出</h2><p>有时候，可能不想显示脚本的输出。这在将脚本作为后台进程运行时很常见。可以将STDERR重定向到一个叫作null文件的特殊&#x2F;文件。shell输出到null文件的任何数据都不会保存，全部都被丢掉了。在Linux系统上null文件的标准位置是&#x2F;dev&#x2F;null。你重定向到该位置的任何数据都会被丢掉，不会显示。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@sh:~$ <span class="built_in">ls</span> -al &gt; /dev/null</span><br><span class="line">ubuntu@sh:~$</span><br><span class="line">ubuntu@sh:~$ <span class="built_in">ls</span> -al badfile 2&gt; /dev/null</span><br><span class="line">ubuntu@sh:~$</span><br></pre></td></tr></table></figure>
+
     </div>
 
     
