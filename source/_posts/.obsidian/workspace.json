@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "b3d2d98b56634c2f",
+        "id": "b633396ee37c29e9",
         "type": "tabs",
         "children": [
           {
-            "id": "14e049e252f23a8b",
+            "id": "841c53e40a525b69",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "c_program/2.第二周.md",
+                "file": "c_program/4.第四周.md",
                 "mode": "preview",
                 "source": false
               }
@@ -93,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "c_program/2.第二周.md",
+                "file": "c_program/4.第四周.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,7 +110,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "c_program/2.第二周.md",
+                "file": "c_program/4.第四周.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -161,25 +161,28 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "14e049e252f23a8b",
+  "active": "841c53e40a525b69",
   "lastOpenFiles": [
-    "c_program/3.第三周.md",
-    "linux_shell/6.使用重定向呈现数据.md",
-    "linux_shell/7.Shell函数.md",
-    "linux_shell/10.文本处理工具awk.md",
-    "linux_shell/9.流编辑器sed.md",
-    "linux_shell/8.正则表达式.md",
+    "c_program/1.第一周.md",
     "c_program/2.第二周.md",
+    "c_program/3.第三周.md",
+    "c_program/4.第四周.md",
     "linux_shell/12.项目实战集.md",
-    "123.md",
     "linux_shell/11.系统资源性能监控脚本构建.md",
-    "linux_shell/11.文本处理工具awk.md",
-    "123123.md",
-    "linux_shell/10.text-processing-tools-awk.md",
+    "linux_shell/9.流编辑器sed.md",
+    "linux_shell/10.文本处理工具awk.md",
+    "linux_shell/7.Shell函数.md",
+    "linux_shell/6.使用重定向呈现数据.md",
     "linux_shell/5.处理用户输入.md",
+    "linux_shell/4.Shell循环.md",
     "linux_shell/3.Shell条件测试.md",
     "linux_shell/2.构建基本脚本.md",
     "linux_shell/1.Shell初识，编辑器使用.md",
+    "linux_shell/8.正则表达式.md",
+    "123.md",
+    "linux_shell/11.文本处理工具awk.md",
+    "123123.md",
+    "linux_shell/10.text-processing-tools-awk.md",
     "6.使用重定向呈现数据.md",
     "10.text-processing-tools-awk.md",
     "9.流编辑器sed.md",
@@ -187,9 +190,6 @@
     "10-text-processing-tools-awk.md",
     "1.Shell初识，编辑器使用.md",
     "2.构建基本脚本.md",
-    "3.Shell条件测试.md",
-    "5.处理用户输入.md",
-    "Read_Note/System/深入理解Linux内核.md",
     "Pasted image 20230419183426.png",
     "新建文本文档.txt",
     "_resources/WebClipper.png",

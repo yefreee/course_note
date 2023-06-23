@@ -11,8 +11,12 @@
             "id": "6a28f2437918eb8e",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "source/_posts/c_program/1.第一周.md",
+                "mode": "preview",
+                "source": false
+              }
             }
           }
         ]
@@ -60,12 +64,21 @@
               "type": "starred",
               "state": {}
             }
+          },
+          {
+            "id": "9862aae08af759be",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
           }
         ]
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "12b9c57240295158",
@@ -81,6 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "source/_posts/c_program/1.第一周.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -97,6 +111,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "source/_posts/c_program/1.第一周.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -118,7 +133,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "source/_posts/c_program/1.第一周.md"
+              }
             }
           }
         ]
@@ -138,8 +155,10 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "90365a03c9302833",
+  "active": "6a28f2437918eb8e",
   "lastOpenFiles": [
+    "source/_posts/c_program/3.第三周.md",
+    "source/_posts/c_program/1.第一周.md",
     "source/_posts/1.Shell初识，编辑器使用.md"
   ]
 }
