@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "c_program/4.第四周.md",
+                "file": "c_program/1.第一周.md",
                 "mode": "preview",
                 "source": false
               }
@@ -73,11 +73,13 @@
               "state": {}
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
-    "width": 281.5
+    "width": 281.5,
+    "collapsed": true
   },
   "right": {
     "id": "1581c968d899d0b6",
@@ -93,7 +95,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "c_program/4.第四周.md",
+                "file": "c_program/1.第一周.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,7 +112,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "c_program/4.第四周.md",
+                "file": "c_program/1.第一周.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -161,12 +163,12 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "841c53e40a525b69",
+  "active": "bbc8bff9525c9e98",
   "lastOpenFiles": [
+    "c_program/4.第四周.md",
     "c_program/1.第一周.md",
     "c_program/2.第二周.md",
     "c_program/3.第三周.md",
-    "c_program/4.第四周.md",
     "linux_shell/12.项目实战集.md",
     "linux_shell/11.系统资源性能监控脚本构建.md",
     "linux_shell/9.流编辑器sed.md",
