@@ -1,0 +1,78 @@
+{
+  "_from": "hexo-theme-next",
+  "_id": "hexo-theme-next@8.17.0",
+  "_inBundle": false,
+  "_integrity": "sha512-J51XPF6wlxxgJ6MW7MXi7LweIhR7i/57CwFk7GHIncju4GHYcD78D678p2UAc9MQc8MFQuyz2pgGopnUEXZ9BQ==",
+  "_location": "/hexo-theme-next",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "hexo-theme-next",
+    "name": "hexo-theme-next",
+    "escapedName": "hexo-theme-next",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/hexo-theme-next/-/hexo-theme-next-8.17.0.tgz",
+  "_shasum": "c679dcf9cf59a754f1b00f7b0df8d8a92a4ce52b",
+  "_spec": "hexo-theme-next",
+  "_where": "/app",
+  "author": {
+    "name": "NexT",
+    "url": "https://theme-next.js.org"
+  },
+  "bugs": {
+    "url": "https://github.com/next-theme/hexo-theme-next/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "Elegant and powerful theme for Hexo.",
+  "devDependencies": {
+    "@next-theme/eslint-config": "0.0.3",
+    "c8": "7.14.0",
+    "chai": "4.3.7",
+    "eslint": "8.42.0",
+    "hexo": "6.3.0",
+    "hexo-renderer-marked": "6.0.0",
+    "js-yaml": "4.1.0",
+    "mocha": "10.2.0",
+    "stylelint": "14.16.1",
+    "stylelint-stylus": "0.18.0"
+  },
+  "files": [
+    "docs",
+    "languages",
+    "layout",
+    "scripts",
+    "source",
+    "_config.yml",
+    "_vendors.yml"
+  ],
+  "homepage": "https://theme-next.js.org",
+  "keywords": [
+    "hexo",
+    "theme",
+    "next"
+  ],
+  "license": "AGPL-3.0-only",
+  "main": "package.json",
+  "name": "hexo-theme-next",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/next-theme/hexo-theme-next.git"
+  },
+  "scripts": {
+    "eslint": "eslint scripts/ source/js test/",
+    "prepare": "node .githooks/install.js",
+    "stylint": "stylelint source/css/ --ip source/css/_common/scaffolding/highlight/index.styl",
+    "test": "mocha test/index.js",
+    "test-cov": "c8 npm test"
+  },
+  "version": "8.17.0"
+}
