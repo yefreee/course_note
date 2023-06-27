@@ -10,7 +10,7 @@
     "Netlify": "npm run clean && npm run build"
   },
   "hexo": {
-    "version": "7.0.0-rc1"
+    "version": "6.3.0"
   },
   "dependencies": {
     "css": "^3.0.0",
@@ -21,11 +21,11 @@
     "hexo-generator-index": "^3.0.0",
     "hexo-generator-tag": "^2.0.0",
     "hexo-renderer-ejs": "^2.0.0",
-    "hexo-renderer-marked": "^6.0.0",
+    "hexo-renderer-marked": "^6.1.0",
     "hexo-renderer-stylus": "^3.0.0",
     "hexo-server": "^3.0.0",
     "hexo-theme-landscape": "^1.0.0",
-    "node": "^20.2.0",
+    "hexo-theme-next": "^8.17.0",
     "util": "^0.12.5"
   }
 }
