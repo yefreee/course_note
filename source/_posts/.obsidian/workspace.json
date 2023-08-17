@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "private_clouds/1.md",
+                "file": "linux_shell/3.Shell条件测试.md",
                 "mode": "source",
                 "source": false
               }
@@ -93,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "private_clouds/1.md",
+                "file": "linux_shell/3.Shell条件测试.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,26 +110,10 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "private_clouds/1.md",
+                "file": "linux_shell/3.Shell条件测试.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
-            }
-          },
-          {
-            "id": "29254888b4361c04",
-            "type": "leaf",
-            "state": {
-              "type": "advanced-tables-toolbar",
-              "state": {}
-            }
-          },
-          {
-            "id": "942f7856bb7b7eb9",
-            "type": "leaf",
-            "state": {
-              "type": "quiet-outline",
-              "state": {}
             }
           },
           {
@@ -141,6 +125,14 @@
                 "sortOrder": "frequency",
                 "useHierarchy": true
               }
+            }
+          },
+          {
+            "id": "b3bc95df7d96e0c9",
+            "type": "leaf",
+            "state": {
+              "type": "quiet-outline",
+              "state": {}
             }
           }
         ],
@@ -161,10 +153,10 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "f1150c2b8a78881a",
+  "active": "b3bc95df7d96e0c9",
   "lastOpenFiles": [
-    "linux_shell/12.项目实战集.md",
     "private_clouds/1.md",
+    "linux_shell/12.项目实战集.md",
     "linux_shell/11.系统资源性能监控脚本构建.md",
     "private_clouds.md",
     "1.md",
