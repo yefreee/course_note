@@ -365,8 +365,8 @@ codeblock:
     light: default
     dark: stackoverflow-dark
   prism:
-    light: prism-lucario
-    dark: prism-lucario
+    light: prism
+    dark: prism
   # Add copy button on codeblock
   copy_button:
     enable: true
