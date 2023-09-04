@@ -5,6 +5,6 @@ db.json
 node_modules/
 .deploy*/
 _multiconfig.yml
-source/_posts/.obsidian
+source/_posts/.obsidian/
 .obsidian
 .ssh
