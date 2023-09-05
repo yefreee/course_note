@@ -181,7 +181,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-09-04 10:58:27" itemprop="dateModified" datetime="2023-09-04T10:58:27+08:00">2023-09-04</time>
+      <time title="修改时间：2023-09-05 09:47:28" itemprop="dateModified" datetime="2023-09-05T09:47:28+08:00">2023-09-05</time>
     </span>
 
   
@@ -391,7 +391,8 @@
 <span class="token assign-left variable">IPADDR</span><span class="token operator">=</span><span class="token number">192.168</span>.20.10    <span class="token comment"># 3. 配置ip地址</span>
 <span class="token assign-left variable">NETMASK</span><span class="token operator">=</span><span class="token number">255.255</span>.255.0   <span class="token comment"># 4. 配置子网掩码</span>
 <span class="token assign-left variable">GATEWAY</span><span class="token operator">=</span><span class="token number">192.168</span>.20.2    <span class="token comment"># 5. 配置网关</span>
-<span class="token assign-left variable">DNS1</span><span class="token operator">=</span><span class="token number">114.114</span>.114.114    <span class="token comment"># 6. 配置dns</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token assign-left variable">DNS1</span><span class="token operator">=</span><span class="token number">114.114</span>.114.114    <span class="token comment"># 6. 配置dns</span>
+<span class="token assign-left variable">DNS2</span><span class="token operator">=</span><span class="token number">8.8</span>.8.8<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
 <li><p>使用命令<code>ifup + 网卡名</code>激活上一步修改的两个网卡配置</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># ifup ens33</span>
@@ -476,7 +477,8 @@ PING www.a.shifen.com <span class="token punctuation">(</span><span class="token
 <span class="token assign-left variable">IPADDR</span><span class="token operator">=</span><span class="token number">192.168</span>.20.20    <span class="token comment"># 3. 配置ip地址</span>
 <span class="token assign-left variable">NETMASK</span><span class="token operator">=</span><span class="token number">255.255</span>.255.0   <span class="token comment"># 4. 配置子网掩码</span>
 <span class="token assign-left variable">GATEWAY</span><span class="token operator">=</span><span class="token number">192.168</span>.20.2    <span class="token comment"># 5. 配置网关</span>
-<span class="token assign-left variable">DNS1</span><span class="token operator">=</span><span class="token number">114.114</span>.114.114    <span class="token comment"># 6. 配置dns</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token assign-left variable">DNS1</span><span class="token operator">=</span><span class="token number">114.114</span>.114.114    <span class="token comment"># 6. 配置dns</span>
+<span class="token assign-left variable">DNS2</span><span class="token operator">=</span><span class="token number">8.8</span>.8.8<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <ul>
 <li><p>使用命令<code>ifup + 网卡名</code>激活上一步修改的两个网卡配置  </p>
@@ -518,7 +520,7 @@ mount: /dev/sr0 is write-protected, mounting read-only<span aria-hidden="true" c
 <li><p>删除现有的配置文件</p>
  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># rm -rf /etc/yum.repos.d/*.repo</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 </li>
-<li><p>在<code>/etc/yum.repos.d</code>目录下创建配置文件<code>local.repo</code>，并添加以下配置：</p>
+<li><p>使用<code>vi /etc/yum.repos.d/local.repo</code>创建并编辑文件<code>local.repo</code>，并添加以下配置：</p>
  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>base<span class="token punctuation">]</span>
 <span class="token assign-left variable">name</span><span class="token operator">=</span>base
 <span class="token assign-left variable">baseurl</span><span class="token operator">=</span>file:///opt/openstack/base/
@@ -625,7 +627,7 @@ Created symlink from /etc/systemd/system/multi-user.target.wants/vsftpd.service 
 <li><p>编辑文件 <code>/etc/sysconfig/iptables-config</code> ，设置第6行<code>IPTABLES_MODULES=</code>值为<code>ip_conntrack_ftp</code></p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token assign-left variable">IPTABLES_MODULES</span><span class="token operator">=</span><span class="token string">"ip_conntrack_ftp"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 </li>
-<li><p>编辑文件<code>/etc/sysconfig/iptables</code>添加两行规则</p>
+<li><p>使用<code>iptables</code>命令添加两行防火墙规则</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># iptables -A INPUT -p tcp -m tcp --dport 21 -j ACCEPT</span>
 <span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># iptables -A INPUT -p tcp -m tcp --dport 20 -j ACCEPT</span>
 <span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># iptables -L</span>
