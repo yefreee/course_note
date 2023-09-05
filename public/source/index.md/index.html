@@ -181,7 +181,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-09-05 09:47:28" itemprop="dateModified" datetime="2023-09-05T09:47:28+08:00">2023-09-05</time>
+      <time title="修改时间：2023-09-05 22:01:40" itemprop="dateModified" datetime="2023-09-05T22:01:40+08:00">2023-09-05</time>
     </span>
 
   
@@ -487,7 +487,7 @@ PING www.a.shifen.com <span class="token punctuation">(</span><span class="token
 <span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># ifup ens33</span>
 <span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># ifup ens34</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
-<li><p>重复<code>步骤4</code>验证<code>计算节点</code>的网络配置</p>
+<li><p>重复上一步使用<code>ping</code>命令验证<code>计算节点</code>的网络配置</p>
 </li>
 </ul>
 </li>
@@ -608,32 +608,15 @@ Removed symlink /etc/systemd/system/dbus-org.fedoraproject.FirewallD1.service.
 <span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># systemctl stop firewalld       # 3. 立即关闭防火墙</span>
 <span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># yum remove -y NetworkManager   # 4. 卸载网络管理器</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
-<li><p>安装配置deltarpm来兼容packstack</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># yum -y install deltarpm</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p> 在<code>/etc/yum.conf</code>文件中加一行禁用deltarpm</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># echo "deltarpm=0" >>/etc/yum.conf</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
 <li><p>安装配置FTP服务端</p>
  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># yum -y install vsftpd       # 1. 安装ftp服务端</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p> 在<code>/etc/vsftpd/vsftpd.conf</code>文件中加入一行<code>anon_root=/opt</code>，设置匿名用户访问的根目录为YUM源所挂载的目录</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># echo "anon_root=/opt" >> /etc/vsftpd/vsftpd.conf</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># systemctl start vsftpd      # 1. 立刻启动FTP服务端</span>
 <span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># systemctl enable vsftpd     # 2. 设置开机启动</span>
-Created symlink from /etc/systemd/system/multi-user.target.wants/vsftpd.service to /usr/lib/systemd/system/vsftpd.service.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>配置<code>iptables</code>允许ftp服务的20&#x2F;21端口</p>
-<ol>
-<li><p>编辑文件 <code>/etc/sysconfig/iptables-config</code> ，设置第6行<code>IPTABLES_MODULES=</code>值为<code>ip_conntrack_ftp</code></p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token assign-left variable">IPTABLES_MODULES</span><span class="token operator">=</span><span class="token string">"ip_conntrack_ftp"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li><p>使用<code>iptables</code>命令添加两行防火墙规则</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># iptables -A INPUT -p tcp -m tcp --dport 21 -j ACCEPT</span>
-<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># iptables -A INPUT -p tcp -m tcp --dport 20 -j ACCEPT</span>
-<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># iptables -L</span>
-<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># iptables-save > /etc/sysconfig/iptables</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></li>
-</ol>
-</li>
+Created symlink from /etc/systemd/system/multi-user.target.wants/vsftpd.service to /usr/lib/systemd/system/vsftpd.service.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li>
 </ul>
 </li>
 </ul>
@@ -740,16 +723,36 @@ repolist: <span class="token number">17,906</span><span aria-hidden="true" class
 <blockquote>
 <p>作业2-完成上述<code>yum repolist</code>命令后截图上传。</p>
 </blockquote>
+</li>
+</ol>
+<h3 id="安装OpenStack平台"><a href="#安装OpenStack平台" class="headerlink" title="安装OpenStack平台"></a>安装OpenStack平台</h3><blockquote>
+<p><code>控制节点</code>和<code>计算节点</code>都使用快照<code>5.3.6</code></p>
+</blockquote>
 <ul>
-<li><p>安装配置deltarpm来兼容packstack</p>
+<li><p><code>控制节点</code>安装配置deltarpm来兼容packstack</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># yum -y install deltarpm</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p> 在<code>/etc/yum.conf</code>文件中加一行禁用deltarpm</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># echo "deltarpm=0" >>/etc/yum.conf</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p><code>计算节点</code>安装配置deltarpm来兼容packstack</p>
  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@compute ~<span class="token punctuation">]</span><span class="token comment"># yum -y install deltarpm</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p> 在<code>/etc/yum.conf</code>文件中加一行禁用deltarpm</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@compute ~<span class="token punctuation">]</span><span class="token comment"># echo "deltarpm=0" >>/etc/yum.conf</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-</ul>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@compute ~<span class="token punctuation">]</span><span class="token comment"># echo "deltarpm=0" >>/etc/yum.conf</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 </li>
+<li><p>配置<code>iptables</code>允许ftp服务的20&#x2F;21端口</p>
+<ol>
+<li><p>编辑文件 <code>/etc/sysconfig/iptables-config</code> ，设置第6行<code>IPTABLES_MODULES=</code>值为<code>ip_conntrack_ftp</code></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token assign-left variable">IPTABLES_MODULES</span><span class="token operator">=</span><span class="token string">"ip_conntrack_ftp"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>使用<code>iptables</code>命令添加两行防火墙规则</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># iptables -A INPUT -p tcp -m tcp --dport 21 -j ACCEPT</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># iptables -A INPUT -p tcp -m tcp --dport 20 -j ACCEPT</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># iptables -L</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># iptables-save > /etc/sysconfig/iptables</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></li>
 </ol>
-<h3 id="安装OpenStack平台"><a href="#安装OpenStack平台" class="headerlink" title="安装OpenStack平台"></a>安装OpenStack平台</h3><ul>
+</li>
 <li><p>在控制节点安装packstack</p>
  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># yum install -y openstack-packstack</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 </li>
