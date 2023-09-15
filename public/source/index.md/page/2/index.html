@@ -118,7 +118,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-count">19</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -136,6 +136,171 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/18/linux_shell/1.Shell%E5%88%9D%E8%AF%86%EF%BC%8C%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/04/18/linux_shell/1.Shell%E5%88%9D%E8%AF%86%EF%BC%8C%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8/" class="post-title-link" itemprop="url">Shell初始,编辑器使用</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-04-18 11:31:25" itemprop="dateCreated datePublished" datetime="2023-04-18T11:31:25+08:00">2023-04-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-09-03 13:17:06" itemprop="dateModified" datetime="2023-09-03T13:17:06+08:00">2023-09-03</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="什么是Shell"><a href="#什么是Shell" class="headerlink" title="什么是Shell"></a>什么是Shell</h2><p>现在人们使用的操作系统（Windows、Android、iOS等）都带有图形界面，简单直观，容易上手。然而早期的计算机并没有图形界面，人们只能使用烦琐的命令来控制计算机。其实，真正能够控制计算机硬件（CPU、内存、显示器）的只有操作系统内核（Kernel），图形界面和命令行都是架设在用户和内核之间的桥梁，是为了方便用户控制计算机而存在的。由于安全等原因，用户不能直接接触内核，因此需要在用户和内核之间增加“命令解释器”，既能简化用户的操作，又能保障内核的安全。在Linux下的命令解释器叫作“Shell”，它能让用户更加高效、安全、低成本地使用Linux内核。  </p>
+<p><img src="https://vault.taojie.fun:28089/i/2023/09/02/note1.Shell%E5%88%9D%E8%AF%86%EF%BC%8C%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8-2023-04-19-18-53-43.png" alt="1.Shell初识，编辑器使用-2023-04-19-18-53-43"></p>
+<h2 id="Shell的各种版本"><a href="#Shell的各种版本" class="headerlink" title="Shell的各种版本"></a>Shell的各种版本</h2><ol>
+<li>Bourne shell（sh）是Unix系统中最古老的shell，也是现在大多数shell的基础。它的命令行语法较为简单，缺乏一些高级特性，但是在大多数Unix系统中都内置了这个shell，因此可以保证可移植性。尽管Bourne shell已经被多种先进的shell所取代，但它作为shell编程的鼻祖，仍然具有重要的历史和学习价值。</li>
+<li>Bourne Again Shell （bash）是Linux操作系统所使用的Shell，它是Bourne Shell的扩展，简称bash。bash与Bourne Shell完全向下兼容，也就是说bash可以兼容相同版本的Bourne Shell。bash在Bourne Shell的基础上增加、增强了很多特性，所以它比Bourne Shell能力更强。</li>
+<li>zsh（Z shell）是Bourne shell（sh）的一个增强版本。与bash相比，zsh具有更好的命令补全功能、更好的主题和插件支持、更好的脚本语言、更好的历史命令管理和更好的可定制性。它还有许多其他功能，如自动提示，文件名扩展，别名扩展等。zsh是一种功能强大、易于使用和高度可定制的Shell，适用于任何需要使用命令行的用户。</li>
+</ol>
+<p><strong>练习</strong>：</p>
+<pre class="line-numbers language-bash" data-language="bash"><div class="caption"><span>查看Shell版本、更换默认Shell并生效设置</span></div><code class="language-bash"><span class="token comment">##查看当前Shell版本</span>
+<span class="token punctuation">[</span>centos@host1 ~<span class="token punctuation">]</span>$ <span class="token builtin class-name">echo</span> <span class="token environment constant">$SHELL</span>
+/bin/bash
+<span class="token comment">##查看系统当前可用Shell</span>
+<span class="token punctuation">[</span>centos@host1 ~<span class="token punctuation">]</span>$ <span class="token function">cat</span> /etc/shells
+/bin/sh
+/bin/bash
+/usr/bin/sh
+/usr/bin/bash
+<span class="token comment">##更换默认Shell</span>
+<span class="token punctuation">[</span>centos@host1 ~<span class="token punctuation">]</span>$ chsh <span class="token parameter variable">-s</span> /bin/sh
+Changing shell <span class="token keyword">for</span> root.
+Shell changed.
+<span class="token comment">##退出当前登录状态重新登录</span>
+<span class="token punctuation">[</span>centos@host1 ~<span class="token punctuation">]</span>$ <span class="token builtin class-name">logout</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="Shell的启动方式和提示符"><a href="#Shell的启动方式和提示符" class="headerlink" title="Shell的启动方式和提示符"></a>Shell的启动方式和提示符</h2><ol>
+<li><p>终端上启动<br> Shell会以交互模式启动，提示符会显示在屏幕上，等待用户输入命令。<br> 用户输入命令后，Shell会解释和执行这些命令，并将执行结果输出到终端上。<br> 在终端启动模式下，Shell会自动设置一些环境变量，如PATH等，以便用户可以方便地执行命令。</p>
+</li>
+<li><p>脚本启动<br> 脚本启动是将Shell命令写入一个脚本文件中，然后通过执行这个脚本文件来启动Shell。它的基本过程如下：<br> （1）创建一个包含Shell命令的脚本文件（通常以.sh作为扩展名）。<br> （2）将脚本文件保存到磁盘上，并赋予执行权限。<br> （3）在终端中输入脚本文件的路径，并按下回车键。<br> （4）Shell会读取脚本文件中的命令，并依次执行这些命令。<br> 脚本启动模式适用于需要重复执行的一系列命令，可以将这些命令写入脚本文件中，并通过脚本文件来执行这些命令。此外，脚本启动模式还支持各种Shell的内置命令和选项。</p>
+</li>
+<li><p>练习修改系统提示符: <code>vim ~/.bashrc</code> 中的PS1变量</p>
+</li>
+</ol>
+<p><img src="https://vault.taojie.fun:28089/i/2023/09/02/note1.Shell%E5%88%9D%E8%AF%86%EF%BC%8C%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8-2023-04-19-19-21-30.png" alt="1.Shell初识，编辑器使用-2023-04-19-19-21-30"></p>
+<h2 id="Linux的文件系统和权限信息"><a href="#Linux的文件系统和权限信息" class="headerlink" title="Linux的文件系统和权限信息"></a>Linux的文件系统和权限信息</h2><ul>
+<li>Linux和Windows文件目录的比较</li>
+<li>Linux根目录各子目录的作用</li>
+<li>遍历目录</li>
+</ul>
+<h3 id="文件权限"><a href="#文件权限" class="headerlink" title="文件权限"></a>文件权限</h3><p><img src="https://vault.taojie.fun:28089/i/2023/09/02/note1.Shell%E5%88%9D%E8%AF%86%EF%BC%8C%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8-2023-04-19-23-41-03.png" alt="1.Shell初识，编辑器使用-2023-04-19-23-41-03"></p>
+<ul>
+<li><p>Linux基本文件和目录命令使用综合练习</p>
+<ol>
+<li>新建一个名为<code>test</code>的目录，进入该目录并新建一个名为<code>file.txt</code>的文件。</li>
+<li>将<code>file.txt</code>复制到<code>test</code>目录下，并将其重命名为<code>file2.txt</code>。</li>
+<li>在当前目录下，新建一个名为<code>newdir</code>的目录。</li>
+<li>将<code>file2.txt</code>移动到<code>newdir</code>目录下。</li>
+<li>在当前目录下，使用<code>touch</code>命令创建一个名为<code>empty.txt</code>的空文件。</li>
+<li>在<code>newdir</code>目录下，使用<code>find</code>命令查找以<code>.txt</code>结尾的文件，并将结果输出到名为<code>result.txt</code>的文件中。</li>
+<li>在<code>newdir</code>目录下，使用<code>chmod</code>命令将<code>file2.txt</code>的所有用户的权限设置为可读可写可执行。</li>
+<li>在当前目录下，使用<code>mkdir</code>命令递归创建一个名为<code>parent/child/grandchild</code>的目录树。</li>
+</ol>
+<p>  答案：</p>
+  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#1</span>
+<span class="token function">mkdir</span> <span class="token builtin class-name">test</span>
+<span class="token builtin class-name">cd</span> <span class="token builtin class-name">test</span>
+<span class="token function">touch</span> file.txt
+
+<span class="token comment">#2</span>
+<span class="token function">cp</span> file.txt file2.txt
+
+<span class="token comment">#3</span>
+<span class="token function">mkdir</span> newdir
+
+<span class="token comment">#4</span>
+<span class="token function">mv</span> file2.txt newdir/
+
+<span class="token comment">#5</span>
+<span class="token function">touch</span> empty.txt
+
+<span class="token comment">#6</span>
+<span class="token builtin class-name">cd</span> newdir
+<span class="token function">find</span> <span class="token builtin class-name">.</span> <span class="token parameter variable">-name</span> <span class="token string">"*.txt"</span> <span class="token parameter variable">-type</span> f <span class="token operator">></span> result.txt
+
+<span class="token comment">#7</span>
+<span class="token function">chmod</span> <span class="token number">777</span> file2.txt
+
+<span class="token comment">#8</span>
+<span class="token function">mkdir</span> <span class="token parameter variable">-p</span> parent/child/grandchild
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+<h2 id="VIM使用"><a href="#VIM使用" class="headerlink" title="VIM使用"></a>VIM使用</h2><ol>
+<li><p>学习平台：</p>
+<p> <a target="_blank" rel="noopener" href="https://yianwillis.github.io/vimcdoc/doc/intro.html#intro.txt">VIM官方文档</a></p>
+<p> <a target="_blank" rel="noopener" href="https://command-lab.com/cat-vim-ch-s/">VIM基础练习平台</a></p>
+<p> <a target="_blank" rel="noopener" href="https://github.com/MeiTianT/vim-galore-zh_cn#%E6%8C%89%E9%94%AE%E6%98%A0%E5%B0%84">VIM进阶</a></p>
+</li>
+<li><p>vim常用命令</p>
+<p> <img src="https://vault.taojie.fun:28089/i/2023/09/02/note1.Shell%E5%88%9D%E8%AF%86%EF%BC%8C%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8-2023-04-19-23-41-33.png" alt="1.Shell初识，编辑器使用-2023-04-19-23-41-33"></p>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1620,271 +1785,6 @@ ubuntu@sh:~$ <span class="token function">bash</span> temp.sh <span class="token
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/18/linux_shell/6.%E4%BD%BF%E7%94%A8%E9%87%8D%E5%AE%9A%E5%90%91%E5%91%88%E7%8E%B0%E6%95%B0%E6%8D%AE/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | ">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/04/18/linux_shell/6.%E4%BD%BF%E7%94%A8%E9%87%8D%E5%AE%9A%E5%90%91%E5%91%88%E7%8E%B0%E6%95%B0%E6%8D%AE/" class="post-title-link" itemprop="url">使用重定向呈现数据</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-04-18 11:31:23" itemprop="dateCreated datePublished" datetime="2023-04-18T11:31:23+08:00">2023-04-18</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-09-03 13:17:06" itemprop="dateModified" datetime="2023-09-03T13:17:06+08:00">2023-09-03</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>有些时候想要保存某个命令的输出而不仅仅只是让它显示在显示器上。 <code>bash shell</code>提供了几个操作符，可以将命令的输出重定向到另一个位置（比如文件）。重定向可以用于输入，也可以用于输出，可以将文件重定向到命令输入。</p>
-<h2 id="输出重定向"><a href="#输出重定向" class="headerlink" title="输出重定向"></a>输出重定向</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@sh:~$ <span class="token function">date</span> <span class="token operator">></span> test6
-ubuntu@sh:~$ <span class="token function">ls</span> <span class="token parameter variable">-l</span> test6
--rw-rw-r-- <span class="token number">1</span> ubuntu ubuntu <span class="token number">29</span> Mar <span class="token number">26</span> <span class="token number">19</span>:23 test6
-ubuntu@sh:~$ <span class="token function">cat</span> test6
-Sun Mar <span class="token number">26</span> <span class="token number">19</span>:23:54 PDT <span class="token number">2023</span>
-ubuntu@sh:~$<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>重定向操作符创建了一个文件 <code>test6</code>（通过默认的 <code>umask</code>设置），并将 <code>date</code>命令的输出重定向到该文件中。如果输出文件已经存在了，重定向操作符会用新的文件数据覆盖已有文件。</p>
-<p>有时，可能并不想覆盖文件原有内容，而是想要将命令的输出追加到已有文件中，比如正在创建一个记录系统上某个操作的日志文件。在这种情况下，可以用双大于号 <code>（&gt;&gt;）</code>来追加数据。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@sh:~$ <span class="token function">who</span> <span class="token operator">>></span> test6
-ubuntu@sh:~$ <span class="token function">cat</span> test6
-Sun Mar <span class="token number">26</span> <span class="token number">19</span>:23:54 PDT <span class="token number">2023</span>
-ubuntu   tty1         <span class="token number">2023</span>-03-26 <span class="token number">19</span>:01
-ubuntu   pts/0        <span class="token number">2023</span>-03-26 <span class="token number">19</span>:01 <span class="token punctuation">(</span><span class="token number">192.168</span>.13.1<span class="token punctuation">)</span>
-ubuntu@sh:~$<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p><code>test6</code>文件在原来<code>who</code>命令输出的基础上又加上了<code>date</code>命令的输出</p>
-<h2 id="输入重定向"><a href="#输入重定向" class="headerlink" title="输入重定向"></a>输入重定向</h2><p>输入重定向和输出重定向正好相反。输入重定向将文件的内容重定向到命令，而非将命令的输出重定向到文件。输入重定向符号是小于号<code>（&lt;）</code></p>
-<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">ubuntu@sh:~$ <span class="token function">cat</span> test6
-Sun Mar 26 19:23:54 PDT 2023
-ubuntu   tty1         2023-03-26 19:01
-ubuntu   pts/0        2023-03-26 19:01 <span class="token punctuation">(</span>192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>13<span class="token punctuation">.</span>1<span class="token punctuation">)</span>
-ubuntu@sh:~$ wc &lt; test6
-  3  15 122
-ubuntu@sh:~$<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p><code>wc</code>命令可以对对数据中的文本进行计数。默认情况下，它会输出3个值：文本的行数，文本的词数，文本的字节数。</p>
-<h2 id="呈现数据"><a href="#呈现数据" class="headerlink" title="呈现数据"></a>呈现数据</h2><h3 id="标准文件描述符"><a href="#标准文件描述符" class="headerlink" title="标准文件描述符"></a>标准文件描述符</h3><p>Linux的标准文件描述符：</p>
-<table>
-<thead>
-<tr>
-<th>文件描述符</th>
-<th>缩写</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>0</td>
-<td>STDIN</td>
-<td>标准输入</td>
-</tr>
-<tr>
-<td>1</td>
-<td>STDOUT</td>
-<td>标准输出</td>
-</tr>
-<tr>
-<td>2</td>
-<td>STDERR</td>
-<td>标准错误</td>
-</tr>
-</tbody></table>
-<ul>
-<li>这三个特殊文件描述符会处理脚本的输入和输出。shell用它们将shell默认的输入和输出导向到相应的位置。</li>
-</ul>
-<ol>
-<li><p>STDIN(标准输入)</p>
-<p> STDIN文件描述符代表<code>shell</code>的标准输入。对终端界面来说，标准输入是键盘。shell从STDIN文件描述符对应的键盘获得输入，在用户输入时处理每个字符。</p>
-<p> 在使用输入重定向符号<code>（&lt;）</code>时，Linux会用重定向指定的文件来替换标准输入文件描述符。它会读取文件并提取数据，就如同它是键盘上键入的。</p>
-<p> 当在命令行上只输入<code>cat</code>命令时，它会从<code>STDIN</code>接受输入。输入一行，<code>cat</code>命令就会显示出一行。<br> 但你也可以通过<code>STDIN</code>重定向符号强制<code>cat</code>命令接受来自另一个<code>非STDIN</code>文件的输入。</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@sh:~$ <span class="token function">cat</span> <span class="token operator">&lt;</span> test6
-Sun Mar <span class="token number">26</span> <span class="token number">19</span>:23:54 PDT <span class="token number">2023</span>
-ubuntu   tty1         <span class="token number">2023</span>-03-26 <span class="token number">19</span>:01
-ubuntu   pts/0        <span class="token number">2023</span>-03-26 <span class="token number">19</span>:01 <span class="token punctuation">(</span><span class="token number">192.168</span>.13.1<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>STDOUT(标准输出)</p>
-<p> <code>STDOUT</code>文件描述符代表<code>shell</code>的标准输出。在终端界面上，标准输出就是终端显示器。<code>shell</code>的所有输出（包括<code>shell</code>中运行的程序和脚本）会被定向到标准输出中，也就是显示器。</p>
-<p> 默认情况下，大多数bash命令会将输出导向STDOUT文件描述符。我们也可以使用<code>&gt;</code>将输出重定向到文件。</p>
-<p> 当命令生成错误消息时，shell并未将错误消息重定向到输出重定向文件。shell创建了输出重定向文件，但错误消息却显示在了显示器屏幕上。注意，在显示test3文件的内容时并没有任何错误。test3文件创建成功了，只是里面是空的。shell对于错误消息的处理是跟普通输出分开的。如果创建了在后台模式下运行的shell脚本，通常必须依赖发送到日志文件的输出消息。用这种方法的话，如果出现了错误信息，这些信息是不会出现在日志文件中的。需要换种方法来处理。</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@sh:~$ <span class="token function">ls</span> <span class="token parameter variable">-al</span> badfile <span class="token operator">></span> test3
-ls: cannot access <span class="token string">'badfile'</span><span class="token builtin class-name">:</span> No such <span class="token function">file</span> or directory
-ubuntu@sh:~$ <span class="token function">cat</span> test3
-ubuntu@sh:~$<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>STDERR(标准错误)</p>
-<p> shell通过特殊的STDERR文件描述符来处理错误消息。STDERR文件描述符代表shell的标准错误输出。shell或shell中运行的程序和脚本出错时生成的错误消息都会发送到这个位置。默认情况下，STDERR文件描述符会和STDOUT文件描述符指向同样的地方（尽管分配给它们的文件描述符值不同）。也就是说，默认情况下，错误消息也会输出到显示器输出中。但从上面的例子可以看出，STDERR并不会随着STDOUT的重定向而发生改变。使用脚本时，常常会想改变这种行为，尤其是当希望将错误消息保存到日志文件中的时候。</p>
-</li>
-</ol>
-<h3 id="重定向错误"><a href="#重定向错误" class="headerlink" title="重定向错误"></a>重定向错误</h3><ul>
-<li><p>只重定向错误</p>
-<p>  STDERR文件描述符被设成2。可以选择只重定向错误消息，将该文件描述符值放在重定向符号前。</p>
-  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@sh:~$ <span class="token function">ls</span> <span class="token parameter variable">-al</span> badfile <span class="token operator"><span class="token file-descriptor important">2</span>></span> test3
-ubuntu@sh:~$ <span class="token function">cat</span> test3
-ls: cannot access <span class="token string">'badfile'</span><span class="token builtin class-name">:</span> No such <span class="token function">file</span> or directory
-ubuntu@sh:~$<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>重定向错误和数据</p>
-<p>  如果想重定向错误和正常输出，必须用两个重定向符号。需要在符号前面放上待重定向数据所对应的文件描述符，然后指向用于保存数据的输出文件。</p>
-  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@sh:~$ <span class="token function">ls</span> <span class="token parameter variable">-al</span> test3 test6 badtest <span class="token operator"><span class="token file-descriptor important">2</span>></span>test7 <span class="token operator"><span class="token file-descriptor important">1</span>></span>test8
-ubuntu@sh:~$ <span class="token function">cat</span> test7
-ls: cannot access <span class="token string">'badtest'</span><span class="token builtin class-name">:</span> No such <span class="token function">file</span> or directory
-ubuntu@sh:~$ <span class="token function">cat</span> test8
--rw-rw-r-- <span class="token number">1</span> ubuntu ubuntu  <span class="token number">55</span> Mar <span class="token number">26</span> <span class="token number">20</span>:24 test3
--rw-rw-r-- <span class="token number">1</span> ubuntu ubuntu <span class="token number">122</span> Mar <span class="token number">26</span> <span class="token number">19</span>:27 test6
-ubuntu@sh:~$<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>  shell利用<code>1&gt;</code>符号将ls命令的正常输出重定向到了test8文件，而这些输出本该是进入<code>STDOUT</code>的。所有本该输出到<code>STDERR</code>的错误消息通过<code>2&gt;</code>符号被重定向到了test7文件。</p>
-<p>  可以用这种方法将脚本的正常输出和脚本生成的错误消息分离开来。这样就可以轻松地识别出错误信息。另外也可以将<code>STDERR</code>和<code>STDOUT</code>的输出重定向到同一个输出文件。为此<code>bash shell</code>提供了特殊的重定向符号<code>&amp;&gt;</code>。</p>
-  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@sh:~$ <span class="token function">ls</span> <span class="token parameter variable">-al</span> badtest test3 test6 badtest <span class="token operator">&amp;></span> test7
-ubuntu@sh:~$ <span class="token function">cat</span> test7
-ls: cannot access <span class="token string">'badtest'</span><span class="token builtin class-name">:</span> No such <span class="token function">file</span> or directory
-ls: cannot access <span class="token string">'badtest'</span><span class="token builtin class-name">:</span> No such <span class="token function">file</span> or directory
--rw-rw-r-- <span class="token number">1</span> ubuntu ubuntu  <span class="token number">55</span> Mar <span class="token number">26</span> <span class="token number">20</span>:24 test3
--rw-rw-r-- <span class="token number">1</span> ubuntu ubuntu <span class="token number">122</span> Mar <span class="token number">26</span> <span class="token number">19</span>:27 test6<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
-</ul>
-<h2 id="在脚本中重定向输出"><a href="#在脚本中重定向输出" class="headerlink" title="在脚本中重定向输出"></a>在脚本中重定向输出</h2><p>可以在脚本中用STDOUT和STDERR文件描述符以在多个位置生成输出，只要简单地重定向相应的文件描述符就行了。有两种方法来在脚本中重定向输出：</p>
-<ol>
-<li>临时重定向行输出</li>
-<li>永久重定向脚本中的所有命令</li>
-</ol>
-<h3 id="临时重定向"><a href="#临时重定向" class="headerlink" title="临时重定向"></a>临时重定向</h3><p>如果有意在脚本中生成错误消息，可以将单独的一行输出重定向到STDERR。所需要做的是使用输出重定向符来将输出信息重定向到STDERR文件描述符。在重定向到文件描述符时，必须在文件描述符数字之前加一个&amp;：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@sh:~$ <span class="token function">cat</span> test.sh
-<span class="token comment">#!/bin/bash</span>
-
-<span class="token builtin class-name">echo</span> <span class="token string">"This is an error"</span> <span class="token operator">></span><span class="token file-descriptor important">&amp;2</span>
-<span class="token builtin class-name">echo</span> <span class="token string">"This is normal output"</span>
-
-ubuntu@sh:~$ <span class="token function">bash</span> test.sh <span class="token operator"><span class="token file-descriptor important">2</span>></span> test9
-This is normal output
-ubuntu@sh:~$ <span class="token function">cat</span> test9
-This is an error<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="永久重定向"><a href="#永久重定向" class="headerlink" title="永久重定向"></a>永久重定向</h3><p>如果脚本中有大量数据需要重定向，那重定向每个echo语句就会很烦琐，用exec命令告诉shell在脚本执行期间重定向某个特定文件描述符，exec命令会启动一个新shell并将STDOUT文件描述符重定向到文件。脚本中发给STDOUT的所有输出会被重定向到文件。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
-<span class="token comment"># redirecting all output to a file</span>
-<span class="token builtin class-name">exec</span> <span class="token operator"><span class="token file-descriptor important">1</span>></span>testout
-<span class="token builtin class-name">echo</span> <span class="token string">"This is a test of redirecting all output"</span>
-<span class="token builtin class-name">echo</span> <span class="token string">"from a script to another file."</span>
-<span class="token builtin class-name">echo</span> <span class="token string">"without having to redirect every individual line"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@sh:~$ <span class="token function">bash</span> test.sh
-ubuntu@sh:~$ <span class="token function">cat</span> testout
-This is a <span class="token builtin class-name">test</span> of redirecting all output
-from a script to another file.
-without having to redirect every individual line<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<ul>
-<li><p>脚本执行过程中重定向</p>
-  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
-<span class="token comment"># redirecting output to different locations</span>
-<span class="token builtin class-name">exec</span> <span class="token operator"><span class="token file-descriptor important">2</span>></span>testerror
-<span class="token builtin class-name">echo</span> <span class="token string">"This is the start of the script"</span>
-<span class="token builtin class-name">echo</span> <span class="token string">"now redirecting all output to another location"</span>
-<span class="token builtin class-name">exec</span> <span class="token operator"><span class="token file-descriptor important">1</span>></span>testout
-<span class="token builtin class-name">echo</span> <span class="token string">"This output should go to the testout file"</span>
-<span class="token builtin class-name">echo</span> <span class="token string">"but this should go to the testerror file"</span> <span class="token operator">></span><span class="token file-descriptor important">&amp;2</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
-</ul>
-<h2 id="在脚本中重定向输入"><a href="#在脚本中重定向输入" class="headerlink" title="在脚本中重定向输入"></a>在脚本中重定向输入</h2><p>可以使用与脚本中重定向STDOUT和STDERR相同的方法来将STDIN从键盘重定向到其他位置。exec命令允许将STDIN重定向到Linux系统上的文件中。这个重定向只要在脚本需要输入时就会作用</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
-<span class="token comment"># redirecting file input</span>
-<span class="token builtin class-name">exec</span> <span class="token operator"><span class="token file-descriptor important">0</span>&lt;</span> testfile
-<span class="token assign-left variable">count</span><span class="token operator">=</span><span class="token number">1</span>
-<span class="token keyword">while</span> <span class="token builtin class-name">read</span> line
-<span class="token keyword">do</span>
-<span class="token builtin class-name">echo</span> <span class="token string">"Line #<span class="token variable">$count</span>: <span class="token variable">$line</span>"</span>
-<span class="token assign-left variable">count</span><span class="token operator">=</span>$<span class="token punctuation">[</span> <span class="token variable">$count</span> + <span class="token number">1</span> <span class="token punctuation">]</span>
-<span class="token keyword">done</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="创建自己的重定向"><a href="#创建自己的重定向" class="headerlink" title="创建自己的重定向"></a>创建自己的重定向</h2><h3 id="创建输出文件描述符"><a href="#创建输出文件描述符" class="headerlink" title="创建输出文件描述符"></a>创建输出文件描述符</h3><p>在脚本中重定向输入和输出时，并不局限于这3个默认的文件描述符。在shell中最多可以有9个打开的文件描述符。其他6个从3~8的文件描述符均可用作输入或输出重定向。可以将这些文件描述符中的任意一个分配给文件，然后在脚本中使用它们。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
-<span class="token comment"># using an alternative file descriptor</span>
-<span class="token builtin class-name">exec</span> <span class="token operator"><span class="token file-descriptor important">3</span>></span>test3out
-<span class="token builtin class-name">echo</span> <span class="token string">"This should display on the monitor"</span>
-<span class="token builtin class-name">echo</span> <span class="token string">"and this should be stored in the file"</span> <span class="token operator">></span><span class="token file-descriptor important">&amp;3</span>
-<span class="token builtin class-name">echo</span> <span class="token string">"Then this should be back on the monitor"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="创建输入文件描述符"><a href="#创建输入文件描述符" class="headerlink" title="创建输入文件描述符"></a>创建输入文件描述符</h3><p>可以用和重定向输出文件描述符同样的办法重定向输入文件描述符。在重定向到文件之前，先将STDIN文件描述符保存到另外一个文件描述符，然后在读取完文件之后再将STDIN恢复到它原来的位置。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
-<span class="token comment"># redirecting input file descriptors</span>
-<span class="token builtin class-name">exec</span> <span class="token operator"><span class="token file-descriptor important">6</span>&lt;</span><span class="token file-descriptor important">&amp;0</span>
-<span class="token builtin class-name">exec</span> <span class="token operator"><span class="token file-descriptor important">0</span>&lt;</span> testfile
-<span class="token assign-left variable">count</span><span class="token operator">=</span><span class="token number">1</span>
-<span class="token keyword">while</span> <span class="token builtin class-name">read</span> line
-<span class="token keyword">do</span>
-<span class="token builtin class-name">echo</span> <span class="token string">"Line #<span class="token variable">$count</span>: <span class="token variable">$line</span>"</span>
-<span class="token assign-left variable">count</span><span class="token operator">=</span>$<span class="token punctuation">[</span> <span class="token variable">$count</span> + <span class="token number">1</span> <span class="token punctuation">]</span>
-<span class="token keyword">done</span>
-<span class="token builtin class-name">exec</span> <span class="token operator"><span class="token file-descriptor important">0</span>&lt;</span><span class="token file-descriptor important">&amp;6</span>
-<span class="token builtin class-name">read</span> <span class="token parameter variable">-p</span> <span class="token string">"Are you done now? "</span> answer
-<span class="token keyword">case</span> <span class="token variable">$answer</span> <span class="token keyword">in</span>
-Y<span class="token operator">|</span>y<span class="token punctuation">)</span> <span class="token builtin class-name">echo</span> <span class="token string">"Goodbye"</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
-N<span class="token operator">|</span>n<span class="token punctuation">)</span> <span class="token builtin class-name">echo</span> <span class="token string">"Sorry, this is the end."</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
-<span class="token keyword">esac</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="组织命令输出"><a href="#组织命令输出" class="headerlink" title="组织命令输出"></a>组织命令输出</h2><p>有时候，可能不想显示脚本的输出。这在将脚本作为后台进程运行时很常见。可以将STDERR重定向到一个叫作null文件的特殊&#x2F;文件。shell输出到null文件的任何数据都不会保存，全部都被丢掉了。在Linux系统上null文件的标准位置是&#x2F;dev&#x2F;null。你重定向到该位置的任何数据都会被丢掉，不会显示。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@sh:~$ <span class="token function">ls</span> <span class="token parameter variable">-al</span> <span class="token operator">></span> /dev/null
-ubuntu@sh:~$
-ubuntu@sh:~$ <span class="token function">ls</span> <span class="token parameter variable">-al</span> badfile <span class="token operator"><span class="token file-descriptor important">2</span>></span> /dev/null
-ubuntu@sh:~$<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/18/linux_shell/7.Shell%E5%87%BD%E6%95%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2681,6 +2581,271 @@ s/World/There/<span aria-hidden="true" class="line-numbers-rows"><span></span><s
 <p> 在Vim中，可以使用“:1,$s&#x2F;^&#x2F;string&#x2F;”命令在文件的每一行前插入指定字符串，其中“1,$”表示对整个文件进行操作，“^”表示行首，“string”表示要插入的字符串。</p>
 </li>
 </ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/18/linux_shell/6.%E4%BD%BF%E7%94%A8%E9%87%8D%E5%AE%9A%E5%90%91%E5%91%88%E7%8E%B0%E6%95%B0%E6%8D%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/04/18/linux_shell/6.%E4%BD%BF%E7%94%A8%E9%87%8D%E5%AE%9A%E5%90%91%E5%91%88%E7%8E%B0%E6%95%B0%E6%8D%AE/" class="post-title-link" itemprop="url">使用重定向呈现数据</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-04-18 11:31:23" itemprop="dateCreated datePublished" datetime="2023-04-18T11:31:23+08:00">2023-04-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-09-03 13:17:06" itemprop="dateModified" datetime="2023-09-03T13:17:06+08:00">2023-09-03</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>有些时候想要保存某个命令的输出而不仅仅只是让它显示在显示器上。 <code>bash shell</code>提供了几个操作符，可以将命令的输出重定向到另一个位置（比如文件）。重定向可以用于输入，也可以用于输出，可以将文件重定向到命令输入。</p>
+<h2 id="输出重定向"><a href="#输出重定向" class="headerlink" title="输出重定向"></a>输出重定向</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@sh:~$ <span class="token function">date</span> <span class="token operator">></span> test6
+ubuntu@sh:~$ <span class="token function">ls</span> <span class="token parameter variable">-l</span> test6
+-rw-rw-r-- <span class="token number">1</span> ubuntu ubuntu <span class="token number">29</span> Mar <span class="token number">26</span> <span class="token number">19</span>:23 test6
+ubuntu@sh:~$ <span class="token function">cat</span> test6
+Sun Mar <span class="token number">26</span> <span class="token number">19</span>:23:54 PDT <span class="token number">2023</span>
+ubuntu@sh:~$<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>重定向操作符创建了一个文件 <code>test6</code>（通过默认的 <code>umask</code>设置），并将 <code>date</code>命令的输出重定向到该文件中。如果输出文件已经存在了，重定向操作符会用新的文件数据覆盖已有文件。</p>
+<p>有时，可能并不想覆盖文件原有内容，而是想要将命令的输出追加到已有文件中，比如正在创建一个记录系统上某个操作的日志文件。在这种情况下，可以用双大于号 <code>（&gt;&gt;）</code>来追加数据。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@sh:~$ <span class="token function">who</span> <span class="token operator">>></span> test6
+ubuntu@sh:~$ <span class="token function">cat</span> test6
+Sun Mar <span class="token number">26</span> <span class="token number">19</span>:23:54 PDT <span class="token number">2023</span>
+ubuntu   tty1         <span class="token number">2023</span>-03-26 <span class="token number">19</span>:01
+ubuntu   pts/0        <span class="token number">2023</span>-03-26 <span class="token number">19</span>:01 <span class="token punctuation">(</span><span class="token number">192.168</span>.13.1<span class="token punctuation">)</span>
+ubuntu@sh:~$<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><code>test6</code>文件在原来<code>who</code>命令输出的基础上又加上了<code>date</code>命令的输出</p>
+<h2 id="输入重定向"><a href="#输入重定向" class="headerlink" title="输入重定向"></a>输入重定向</h2><p>输入重定向和输出重定向正好相反。输入重定向将文件的内容重定向到命令，而非将命令的输出重定向到文件。输入重定向符号是小于号<code>（&lt;）</code></p>
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">ubuntu@sh:~$ <span class="token function">cat</span> test6
+Sun Mar 26 19:23:54 PDT 2023
+ubuntu   tty1         2023-03-26 19:01
+ubuntu   pts/0        2023-03-26 19:01 <span class="token punctuation">(</span>192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>13<span class="token punctuation">.</span>1<span class="token punctuation">)</span>
+ubuntu@sh:~$ wc &lt; test6
+  3  15 122
+ubuntu@sh:~$<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><code>wc</code>命令可以对对数据中的文本进行计数。默认情况下，它会输出3个值：文本的行数，文本的词数，文本的字节数。</p>
+<h2 id="呈现数据"><a href="#呈现数据" class="headerlink" title="呈现数据"></a>呈现数据</h2><h3 id="标准文件描述符"><a href="#标准文件描述符" class="headerlink" title="标准文件描述符"></a>标准文件描述符</h3><p>Linux的标准文件描述符：</p>
+<table>
+<thead>
+<tr>
+<th>文件描述符</th>
+<th>缩写</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>STDIN</td>
+<td>标准输入</td>
+</tr>
+<tr>
+<td>1</td>
+<td>STDOUT</td>
+<td>标准输出</td>
+</tr>
+<tr>
+<td>2</td>
+<td>STDERR</td>
+<td>标准错误</td>
+</tr>
+</tbody></table>
+<ul>
+<li>这三个特殊文件描述符会处理脚本的输入和输出。shell用它们将shell默认的输入和输出导向到相应的位置。</li>
+</ul>
+<ol>
+<li><p>STDIN(标准输入)</p>
+<p> STDIN文件描述符代表<code>shell</code>的标准输入。对终端界面来说，标准输入是键盘。shell从STDIN文件描述符对应的键盘获得输入，在用户输入时处理每个字符。</p>
+<p> 在使用输入重定向符号<code>（&lt;）</code>时，Linux会用重定向指定的文件来替换标准输入文件描述符。它会读取文件并提取数据，就如同它是键盘上键入的。</p>
+<p> 当在命令行上只输入<code>cat</code>命令时，它会从<code>STDIN</code>接受输入。输入一行，<code>cat</code>命令就会显示出一行。<br> 但你也可以通过<code>STDIN</code>重定向符号强制<code>cat</code>命令接受来自另一个<code>非STDIN</code>文件的输入。</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@sh:~$ <span class="token function">cat</span> <span class="token operator">&lt;</span> test6
+Sun Mar <span class="token number">26</span> <span class="token number">19</span>:23:54 PDT <span class="token number">2023</span>
+ubuntu   tty1         <span class="token number">2023</span>-03-26 <span class="token number">19</span>:01
+ubuntu   pts/0        <span class="token number">2023</span>-03-26 <span class="token number">19</span>:01 <span class="token punctuation">(</span><span class="token number">192.168</span>.13.1<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>STDOUT(标准输出)</p>
+<p> <code>STDOUT</code>文件描述符代表<code>shell</code>的标准输出。在终端界面上，标准输出就是终端显示器。<code>shell</code>的所有输出（包括<code>shell</code>中运行的程序和脚本）会被定向到标准输出中，也就是显示器。</p>
+<p> 默认情况下，大多数bash命令会将输出导向STDOUT文件描述符。我们也可以使用<code>&gt;</code>将输出重定向到文件。</p>
+<p> 当命令生成错误消息时，shell并未将错误消息重定向到输出重定向文件。shell创建了输出重定向文件，但错误消息却显示在了显示器屏幕上。注意，在显示test3文件的内容时并没有任何错误。test3文件创建成功了，只是里面是空的。shell对于错误消息的处理是跟普通输出分开的。如果创建了在后台模式下运行的shell脚本，通常必须依赖发送到日志文件的输出消息。用这种方法的话，如果出现了错误信息，这些信息是不会出现在日志文件中的。需要换种方法来处理。</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@sh:~$ <span class="token function">ls</span> <span class="token parameter variable">-al</span> badfile <span class="token operator">></span> test3
+ls: cannot access <span class="token string">'badfile'</span><span class="token builtin class-name">:</span> No such <span class="token function">file</span> or directory
+ubuntu@sh:~$ <span class="token function">cat</span> test3
+ubuntu@sh:~$<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>STDERR(标准错误)</p>
+<p> shell通过特殊的STDERR文件描述符来处理错误消息。STDERR文件描述符代表shell的标准错误输出。shell或shell中运行的程序和脚本出错时生成的错误消息都会发送到这个位置。默认情况下，STDERR文件描述符会和STDOUT文件描述符指向同样的地方（尽管分配给它们的文件描述符值不同）。也就是说，默认情况下，错误消息也会输出到显示器输出中。但从上面的例子可以看出，STDERR并不会随着STDOUT的重定向而发生改变。使用脚本时，常常会想改变这种行为，尤其是当希望将错误消息保存到日志文件中的时候。</p>
+</li>
+</ol>
+<h3 id="重定向错误"><a href="#重定向错误" class="headerlink" title="重定向错误"></a>重定向错误</h3><ul>
+<li><p>只重定向错误</p>
+<p>  STDERR文件描述符被设成2。可以选择只重定向错误消息，将该文件描述符值放在重定向符号前。</p>
+  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@sh:~$ <span class="token function">ls</span> <span class="token parameter variable">-al</span> badfile <span class="token operator"><span class="token file-descriptor important">2</span>></span> test3
+ubuntu@sh:~$ <span class="token function">cat</span> test3
+ls: cannot access <span class="token string">'badfile'</span><span class="token builtin class-name">:</span> No such <span class="token function">file</span> or directory
+ubuntu@sh:~$<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>重定向错误和数据</p>
+<p>  如果想重定向错误和正常输出，必须用两个重定向符号。需要在符号前面放上待重定向数据所对应的文件描述符，然后指向用于保存数据的输出文件。</p>
+  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@sh:~$ <span class="token function">ls</span> <span class="token parameter variable">-al</span> test3 test6 badtest <span class="token operator"><span class="token file-descriptor important">2</span>></span>test7 <span class="token operator"><span class="token file-descriptor important">1</span>></span>test8
+ubuntu@sh:~$ <span class="token function">cat</span> test7
+ls: cannot access <span class="token string">'badtest'</span><span class="token builtin class-name">:</span> No such <span class="token function">file</span> or directory
+ubuntu@sh:~$ <span class="token function">cat</span> test8
+-rw-rw-r-- <span class="token number">1</span> ubuntu ubuntu  <span class="token number">55</span> Mar <span class="token number">26</span> <span class="token number">20</span>:24 test3
+-rw-rw-r-- <span class="token number">1</span> ubuntu ubuntu <span class="token number">122</span> Mar <span class="token number">26</span> <span class="token number">19</span>:27 test6
+ubuntu@sh:~$<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>  shell利用<code>1&gt;</code>符号将ls命令的正常输出重定向到了test8文件，而这些输出本该是进入<code>STDOUT</code>的。所有本该输出到<code>STDERR</code>的错误消息通过<code>2&gt;</code>符号被重定向到了test7文件。</p>
+<p>  可以用这种方法将脚本的正常输出和脚本生成的错误消息分离开来。这样就可以轻松地识别出错误信息。另外也可以将<code>STDERR</code>和<code>STDOUT</code>的输出重定向到同一个输出文件。为此<code>bash shell</code>提供了特殊的重定向符号<code>&amp;&gt;</code>。</p>
+  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@sh:~$ <span class="token function">ls</span> <span class="token parameter variable">-al</span> badtest test3 test6 badtest <span class="token operator">&amp;></span> test7
+ubuntu@sh:~$ <span class="token function">cat</span> test7
+ls: cannot access <span class="token string">'badtest'</span><span class="token builtin class-name">:</span> No such <span class="token function">file</span> or directory
+ls: cannot access <span class="token string">'badtest'</span><span class="token builtin class-name">:</span> No such <span class="token function">file</span> or directory
+-rw-rw-r-- <span class="token number">1</span> ubuntu ubuntu  <span class="token number">55</span> Mar <span class="token number">26</span> <span class="token number">20</span>:24 test3
+-rw-rw-r-- <span class="token number">1</span> ubuntu ubuntu <span class="token number">122</span> Mar <span class="token number">26</span> <span class="token number">19</span>:27 test6<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+<h2 id="在脚本中重定向输出"><a href="#在脚本中重定向输出" class="headerlink" title="在脚本中重定向输出"></a>在脚本中重定向输出</h2><p>可以在脚本中用STDOUT和STDERR文件描述符以在多个位置生成输出，只要简单地重定向相应的文件描述符就行了。有两种方法来在脚本中重定向输出：</p>
+<ol>
+<li>临时重定向行输出</li>
+<li>永久重定向脚本中的所有命令</li>
+</ol>
+<h3 id="临时重定向"><a href="#临时重定向" class="headerlink" title="临时重定向"></a>临时重定向</h3><p>如果有意在脚本中生成错误消息，可以将单独的一行输出重定向到STDERR。所需要做的是使用输出重定向符来将输出信息重定向到STDERR文件描述符。在重定向到文件描述符时，必须在文件描述符数字之前加一个&amp;：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@sh:~$ <span class="token function">cat</span> test.sh
+<span class="token comment">#!/bin/bash</span>
+
+<span class="token builtin class-name">echo</span> <span class="token string">"This is an error"</span> <span class="token operator">></span><span class="token file-descriptor important">&amp;2</span>
+<span class="token builtin class-name">echo</span> <span class="token string">"This is normal output"</span>
+
+ubuntu@sh:~$ <span class="token function">bash</span> test.sh <span class="token operator"><span class="token file-descriptor important">2</span>></span> test9
+This is normal output
+ubuntu@sh:~$ <span class="token function">cat</span> test9
+This is an error<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="永久重定向"><a href="#永久重定向" class="headerlink" title="永久重定向"></a>永久重定向</h3><p>如果脚本中有大量数据需要重定向，那重定向每个echo语句就会很烦琐，用exec命令告诉shell在脚本执行期间重定向某个特定文件描述符，exec命令会启动一个新shell并将STDOUT文件描述符重定向到文件。脚本中发给STDOUT的所有输出会被重定向到文件。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
+<span class="token comment"># redirecting all output to a file</span>
+<span class="token builtin class-name">exec</span> <span class="token operator"><span class="token file-descriptor important">1</span>></span>testout
+<span class="token builtin class-name">echo</span> <span class="token string">"This is a test of redirecting all output"</span>
+<span class="token builtin class-name">echo</span> <span class="token string">"from a script to another file."</span>
+<span class="token builtin class-name">echo</span> <span class="token string">"without having to redirect every individual line"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@sh:~$ <span class="token function">bash</span> test.sh
+ubuntu@sh:~$ <span class="token function">cat</span> testout
+This is a <span class="token builtin class-name">test</span> of redirecting all output
+from a script to another file.
+without having to redirect every individual line<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li><p>脚本执行过程中重定向</p>
+  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
+<span class="token comment"># redirecting output to different locations</span>
+<span class="token builtin class-name">exec</span> <span class="token operator"><span class="token file-descriptor important">2</span>></span>testerror
+<span class="token builtin class-name">echo</span> <span class="token string">"This is the start of the script"</span>
+<span class="token builtin class-name">echo</span> <span class="token string">"now redirecting all output to another location"</span>
+<span class="token builtin class-name">exec</span> <span class="token operator"><span class="token file-descriptor important">1</span>></span>testout
+<span class="token builtin class-name">echo</span> <span class="token string">"This output should go to the testout file"</span>
+<span class="token builtin class-name">echo</span> <span class="token string">"but this should go to the testerror file"</span> <span class="token operator">></span><span class="token file-descriptor important">&amp;2</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+<h2 id="在脚本中重定向输入"><a href="#在脚本中重定向输入" class="headerlink" title="在脚本中重定向输入"></a>在脚本中重定向输入</h2><p>可以使用与脚本中重定向STDOUT和STDERR相同的方法来将STDIN从键盘重定向到其他位置。exec命令允许将STDIN重定向到Linux系统上的文件中。这个重定向只要在脚本需要输入时就会作用</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
+<span class="token comment"># redirecting file input</span>
+<span class="token builtin class-name">exec</span> <span class="token operator"><span class="token file-descriptor important">0</span>&lt;</span> testfile
+<span class="token assign-left variable">count</span><span class="token operator">=</span><span class="token number">1</span>
+<span class="token keyword">while</span> <span class="token builtin class-name">read</span> line
+<span class="token keyword">do</span>
+<span class="token builtin class-name">echo</span> <span class="token string">"Line #<span class="token variable">$count</span>: <span class="token variable">$line</span>"</span>
+<span class="token assign-left variable">count</span><span class="token operator">=</span>$<span class="token punctuation">[</span> <span class="token variable">$count</span> + <span class="token number">1</span> <span class="token punctuation">]</span>
+<span class="token keyword">done</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="创建自己的重定向"><a href="#创建自己的重定向" class="headerlink" title="创建自己的重定向"></a>创建自己的重定向</h2><h3 id="创建输出文件描述符"><a href="#创建输出文件描述符" class="headerlink" title="创建输出文件描述符"></a>创建输出文件描述符</h3><p>在脚本中重定向输入和输出时，并不局限于这3个默认的文件描述符。在shell中最多可以有9个打开的文件描述符。其他6个从3~8的文件描述符均可用作输入或输出重定向。可以将这些文件描述符中的任意一个分配给文件，然后在脚本中使用它们。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
+<span class="token comment"># using an alternative file descriptor</span>
+<span class="token builtin class-name">exec</span> <span class="token operator"><span class="token file-descriptor important">3</span>></span>test3out
+<span class="token builtin class-name">echo</span> <span class="token string">"This should display on the monitor"</span>
+<span class="token builtin class-name">echo</span> <span class="token string">"and this should be stored in the file"</span> <span class="token operator">></span><span class="token file-descriptor important">&amp;3</span>
+<span class="token builtin class-name">echo</span> <span class="token string">"Then this should be back on the monitor"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="创建输入文件描述符"><a href="#创建输入文件描述符" class="headerlink" title="创建输入文件描述符"></a>创建输入文件描述符</h3><p>可以用和重定向输出文件描述符同样的办法重定向输入文件描述符。在重定向到文件之前，先将STDIN文件描述符保存到另外一个文件描述符，然后在读取完文件之后再将STDIN恢复到它原来的位置。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
+<span class="token comment"># redirecting input file descriptors</span>
+<span class="token builtin class-name">exec</span> <span class="token operator"><span class="token file-descriptor important">6</span>&lt;</span><span class="token file-descriptor important">&amp;0</span>
+<span class="token builtin class-name">exec</span> <span class="token operator"><span class="token file-descriptor important">0</span>&lt;</span> testfile
+<span class="token assign-left variable">count</span><span class="token operator">=</span><span class="token number">1</span>
+<span class="token keyword">while</span> <span class="token builtin class-name">read</span> line
+<span class="token keyword">do</span>
+<span class="token builtin class-name">echo</span> <span class="token string">"Line #<span class="token variable">$count</span>: <span class="token variable">$line</span>"</span>
+<span class="token assign-left variable">count</span><span class="token operator">=</span>$<span class="token punctuation">[</span> <span class="token variable">$count</span> + <span class="token number">1</span> <span class="token punctuation">]</span>
+<span class="token keyword">done</span>
+<span class="token builtin class-name">exec</span> <span class="token operator"><span class="token file-descriptor important">0</span>&lt;</span><span class="token file-descriptor important">&amp;6</span>
+<span class="token builtin class-name">read</span> <span class="token parameter variable">-p</span> <span class="token string">"Are you done now? "</span> answer
+<span class="token keyword">case</span> <span class="token variable">$answer</span> <span class="token keyword">in</span>
+Y<span class="token operator">|</span>y<span class="token punctuation">)</span> <span class="token builtin class-name">echo</span> <span class="token string">"Goodbye"</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+N<span class="token operator">|</span>n<span class="token punctuation">)</span> <span class="token builtin class-name">echo</span> <span class="token string">"Sorry, this is the end."</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+<span class="token keyword">esac</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="组织命令输出"><a href="#组织命令输出" class="headerlink" title="组织命令输出"></a>组织命令输出</h2><p>有时候，可能不想显示脚本的输出。这在将脚本作为后台进程运行时很常见。可以将STDERR重定向到一个叫作null文件的特殊&#x2F;文件。shell输出到null文件的任何数据都不会保存，全部都被丢掉了。在Linux系统上null文件的标准位置是&#x2F;dev&#x2F;null。你重定向到该位置的任何数据都会被丢掉，不会显示。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@sh:~$ <span class="token function">ls</span> <span class="token parameter variable">-al</span> <span class="token operator">></span> /dev/null
+ubuntu@sh:~$
+ubuntu@sh:~$ <span class="token function">ls</span> <span class="token parameter variable">-al</span> badfile <span class="token operator"><span class="token file-descriptor important">2</span>></span> /dev/null
+ubuntu@sh:~$<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
       
     </div>

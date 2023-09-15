@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.17.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="超星网址  理解Keystone身份服务Keystone简介Keystone 是OpenStack项目中的一个重要组件，是OpenStack Identity服务。主要提供身份认证（Authentication）、授权（Authorization）、用户管理。  身份认证（Authentication）： Keystone负责验证用户的身份。它支持多种认证方法，包括用户名&#x2F;密码、令牌（">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenStack身份管理">
+<meta property="og:url" content="http://example.com/2023/09/15/private_clouds/3.OpenStack%E8%BA%AB%E4%BB%BD%E7%AE%A1%E7%90%86/index.html">
+<meta property="og:site_name">
+<meta property="og:description" content="超星网址  理解Keystone身份服务Keystone简介Keystone 是OpenStack项目中的一个重要组件，是OpenStack Identity服务。主要提供身份认证（Authentication）、授权（Authorization）、用户管理。  身份认证（Authentication）： Keystone负责验证用户的身份。它支持多种认证方法，包括用户名&#x2F;密码、令牌（">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/09/15/2023-09-15-1694788656.png">
+<meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/09/15/2023-09-15-1694789109.png">
+<meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/09/16/2023-09-16-1694795373.png">
+<meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/09/16/2023-09-16-1694795401.png">
+<meta property="article:published_time" content="2023-09-15T03:52:33.000Z">
+<meta property="article:modified_time" content="2023-09-15T17:59:57.608Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://vault.taojie.fun:28089/i/2023/09/15/2023-09-15-1694788656.png">
+
+
+<link rel="canonical" href="http://example.com/2023/09/15/private_clouds/3.OpenStack%E8%BA%AB%E4%BB%BD%E7%AE%A1%E7%90%86/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/09/15/private_clouds/3.OpenStack%E8%BA%AB%E4%BB%BD%E7%AE%A1%E7%90%86/","path":"2023/09/15/private_clouds/3.OpenStack身份管理/","title":"OpenStack身份管理"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>OpenStack身份管理 | </title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title"></p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%90%86%E8%A7%A3Keystone%E8%BA%AB%E4%BB%BD%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.</span> <span class="nav-text">理解Keystone身份服务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Keystone%E7%AE%80%E4%BB%8B"><span class="nav-number">1.1.</span> <span class="nav-text">Keystone简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Keystone%E7%9B%B8%E5%85%B3%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A"><span class="nav-number">1.2.</span> <span class="nav-text">Keystone相关名词解释</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Keystone%E7%9A%84%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84"><span class="nav-number">1.3.</span> <span class="nav-text">Keystone的层次结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Keystone%E7%9A%84%E8%AE%A4%E8%AF%81%E6%B5%81%E7%A8%8B"><span class="nav-number">1.4.</span> <span class="nav-text">Keystone的认证流程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Keystone%E6%9C%8D%E5%8A%A1%E7%9A%84%E5%AE%89%E8%A3%85%E3%80%81%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">Keystone服务的安装、配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Keystone%E6%9C%8D%E5%8A%A1%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">3.</span> <span class="nav-text">Keystone服务的初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Keystone%E6%9C%8D%E5%8A%A1%E8%AE%A4%E8%AF%81%E3%80%81%E8%BA%AB%E4%BB%BD%E7%AE%A1%E7%90%86"><span class="nav-number">4.</span> <span class="nav-text">Keystone服务认证、身份管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87OpenStack-%E7%AE%A1%E7%90%86%E5%91%BD%E4%BB%A4%E8%BF%9B%E8%A1%8C%E8%BA%AB%E4%BB%BD%E7%AE%A1%E7%90%86"><span class="nav-number">4.1.</span> <span class="nav-text">通过OpenStack 管理命令进行身份管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87API%E8%BF%9B%E8%A1%8C%E8%BA%AB%E4%BB%BD%E7%AE%A1%E7%90%86"><span class="nav-number">4.2.</span> <span class="nav-text">通过API进行身份管理</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name"></p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/15/private_clouds/3.OpenStack%E8%BA%AB%E4%BB%BD%E7%AE%A1%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="OpenStack身份管理 | ">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          OpenStack身份管理
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-09-15 11:52:33" itemprop="dateCreated datePublished" datetime="2023-09-15T11:52:33+08:00">2023-09-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-09-16 01:59:57" itemprop="dateModified" datetime="2023-09-16T01:59:57+08:00">2023-09-16</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p><a target="_blank" rel="noopener" href="https://wxstc.fanya.chaoxing.com/portal">超星网址</a></p>
+</blockquote>
+<h2 id="理解Keystone身份服务"><a href="#理解Keystone身份服务" class="headerlink" title="理解Keystone身份服务"></a>理解Keystone身份服务</h2><h3 id="Keystone简介"><a href="#Keystone简介" class="headerlink" title="Keystone简介"></a>Keystone简介</h3><p>Keystone 是OpenStack项目中的一个重要组件，是OpenStack Identity服务。主要提供身份认证（Authentication）、授权（Authorization）、用户管理。</p>
+<ul>
+<li><p>身份认证（Authentication）： Keystone负责验证用户的身份。它支持多种认证方法，包括用户名&#x2F;密码、令牌（Token）、证书等。用户可以使用这些认证方法之一进行身份验证，以访问OpenStack中的资源。</p>
+</li>
+<li><p>授权（Authorization）： 一旦用户通过身份认证，Keystone会根据用户的身份和权限规则控制用户可以访问的资源和操作。这种授权是基于角色的，用户被分配到特定角色，而角色具有特定的权限。</p>
+</li>
+<li><p>用户和角色管理： Keystone允许管理员创建、管理用户、角色和项目（Project），并分配特定权限给用户或角色。</p>
+</li>
+</ul>
+<h3 id="Keystone相关名词解释"><a href="#Keystone相关名词解释" class="headerlink" title="Keystone相关名词解释"></a>Keystone相关名词解释</h3><ol>
+<li><p>User（用户）： 在 Keystone 中，用户是系统中的实体，代表可以访问 OpenStack 服务的个体。用户通过身份认证来验证其身份。</p>
+</li>
+<li><p>Role（角色）： 角色是一组权限的集合，可以分配给用户或项目。角色决定了用户或项目可以执行的操作。</p>
+</li>
+<li><p>Project（项目）： 项目是 OpenStack 中的逻辑隔离单元，用于组织资源和权限。可以将用户分配到项目中，并管理项目的资源。</p>
+</li>
+<li><p>Domain（域）： 域是一组相关的用户、角色和项目的集合。域可以用于组织和隔离 OpenStack 环境中的用户和项目。</p>
+</li>
+<li><p>Endpoint（终端）： 终端是服务的访问地址，包括 URL 和访问协议。每个服务可以有多个终端，用于访问不同的服务节点。</p>
+</li>
+<li><p>Service（服务）： 服务代表 OpenStack 中的一个功能单元，如计算服务（Nova）、网络服务（Neutron）、镜像服务（Glance）等。每个服务有一个唯一的标识符。</p>
+</li>
+<li><p>Token（令牌）： 令牌是用于身份认证和授权的临时凭证。用户经过身份认证后，会获得一个令牌，该令牌允许他们在一定时间内访问特定资源。</p>
+</li>
+</ol>
+<h3 id="Keystone的层次结构"><a href="#Keystone的层次结构" class="headerlink" title="Keystone的层次结构"></a>Keystone的层次结构</h3><img src="https://vault.taojie.fun:28089/i/2023/09/15/2023-09-15-1694788656.png" alt="4324542b834a4aecb25d739fac41150e (1).png" title="4324542b834a4aecb25d739fac41150e (1).png" />
+
+<h3 id="Keystone的认证流程"><a href="#Keystone的认证流程" class="headerlink" title="Keystone的认证流程"></a>Keystone的认证流程</h3><img src="https://vault.taojie.fun:28089/i/2023/09/15/2023-09-15-1694789109.png" alt="1694789108795.png" title="1694789108795.png" />
+
+<h2 id="Keystone服务的安装、配置"><a href="#Keystone服务的安装、配置" class="headerlink" title="Keystone服务的安装、配置"></a>Keystone服务的安装、配置</h2><ol>
+<li><p>Keystone是运行在Web服务器上的Web应用，需要安装以下软件包：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># yum -y install openstack-keystone httpd mod_wsgi</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<ul>
+<li><p>在安装Keystone的过程中系统会自动创建名为<code>keystone</code>的用户和用户组，通过以下命令查看：</p>
+   <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># cat /etc/passwd |grep keystone     # 查看用户名</span>
+keystone:x:163:163:OpenStack Keystone Daemons:/var/lib/keystone:/sbin/nologin
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># cat /etc/group |grep keystone      # 查看用户组</span>
+keystone:x:163:<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+</li>
+<li><p>OpenStack Keystone作为OpenStack项目的身份认证和授权服务，需要存储大量的用户、角色、项目、域等身份信息以及相应的权限信息，因此需要为Keystone创建数据库。</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># mysql -uroot -p000000      # 用root用户登录数据库</span>
+Welcome to the MariaDB monitor.  Commands end with <span class="token punctuation">;</span> or <span class="token punctuation">\</span>g.
+Your MariaDB connection <span class="token function">id</span> is <span class="token number">8</span>
+Server version: <span class="token number">10.3</span>.20-MariaDB MariaDB Server
+
+Copyright <span class="token punctuation">(</span>c<span class="token punctuation">)</span> <span class="token number">2000</span>, <span class="token number">2018</span>, Oracle, MariaDB Corporation Ab and others.
+
+Type <span class="token string">'help;'</span> or <span class="token string">'\h'</span> <span class="token keyword">for</span> help. Type <span class="token string">'\c'</span> to <span class="token function">clear</span> the current input statement.
+
+MariaDB <span class="token punctuation">[</span><span class="token punctuation">(</span>none<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token operator">></span> CREATE DATABASE keystone<span class="token punctuation">;</span>     <span class="token comment"># 创建名为keystone的数据库</span>
+Query OK, <span class="token number">1</span> row affected <span class="token punctuation">(</span><span class="token number">0.000</span> sec<span class="token punctuation">)</span>MariaDB <span class="token punctuation">[</span><span class="token punctuation">(</span>none<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+ <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment">// 把数据库的所有表的权限授予本地登录的keystone用户，密码为000000</span>
+MariaDB <span class="token punctuation">[</span><span class="token punctuation">(</span>none<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token operator">></span> <span class="token keyword">GRANT</span> <span class="token keyword">ALL</span> <span class="token keyword">PRIVILEGES</span> <span class="token keyword">ON</span> keystone<span class="token punctuation">.</span><span class="token operator">*</span> <span class="token keyword">TO</span> <span class="token string">'keystone'</span><span class="token variable">@'localhost'</span> IDENTIFIED <span class="token keyword">BY</span> <span class="token string">'000000'</span><span class="token punctuation">;</span>
+Query OK<span class="token punctuation">,</span> <span class="token number">0</span> <span class="token keyword">rows</span> affected <span class="token punctuation">(</span><span class="token number">0.001</span> sec<span class="token punctuation">)</span>
+
+<span class="token comment">// 把数据库的所有表的权限授予远程登录的keystone用户，密码为000000</span>
+MariaDB <span class="token punctuation">[</span><span class="token punctuation">(</span>none<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token operator">></span> <span class="token keyword">GRANT</span> <span class="token keyword">ALL</span> <span class="token keyword">PRIVILEGES</span> <span class="token keyword">ON</span> keystone<span class="token punctuation">.</span><span class="token operator">*</span> <span class="token keyword">TO</span> <span class="token string">'keystone'</span><span class="token variable">@'%'</span> IDENTIFIED <span class="token keyword">BY</span> <span class="token string">'000000'</span><span class="token punctuation">;</span>
+Query OK<span class="token punctuation">,</span> <span class="token number">0</span> <span class="token keyword">rows</span> affected <span class="token punctuation">(</span><span class="token number">0.000</span> sec<span class="token punctuation">)</span>
+
+<span class="token comment">// 退出数据库</span>
+MariaDB <span class="token punctuation">[</span><span class="token punctuation">(</span>none<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token operator">></span> quit<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>修改Keystone配置文件关联数据库</p>
+<p> 打开<code>/etc/keystone/keystone.conf</code>后查找<code>[database]</code>字段并修改连接主机<code>controller</code>的数据库<code>keystone</code>：</p>
+ <pre class="line-numbers language-text" data-language="text"><code class="language-text">connection = mysql+pymysql://keystone:000000@controller/keystone<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<ul>
+<li>配置令牌加密方式：查找[token]并删除<code>provider = fernet</code>前的<code>#</code>注释符</li>
+</ul>
+</li>
+<li><p>初始化Keystone数据库</p>
+<ul>
+<li><p>同步数据库</p>
+  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 通过keystone用户执行数据库初始化命令</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># su keystone -s /bin/sh -c "keystone-manage db_sync"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+</li>
+<li><p>查看数据库是否同步，打印出数据表</p>
+  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># mysql -uroot -p000000</span>
+Welcome to the MariaDB monitor.  Commands end with <span class="token punctuation">;</span> or <span class="token punctuation">\</span>g.
+Your MariaDB connection <span class="token function">id</span> is <span class="token number">10</span>
+Server version: <span class="token number">10.3</span>.20-MariaDB MariaDB Server
+
+Copyright <span class="token punctuation">(</span>c<span class="token punctuation">)</span> <span class="token number">2000</span>, <span class="token number">2018</span>, Oracle, MariaDB Corporation Ab and others.
+
+Type <span class="token string">'help;'</span> or <span class="token string">'\h'</span> <span class="token keyword">for</span> help. Type <span class="token string">'\c'</span> to <span class="token function">clear</span> the current input statement.
+
+MariaDB <span class="token punctuation">[</span><span class="token punctuation">(</span>none<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token operator">></span> use keystone<span class="token punctuation">;</span>
+Reading table information <span class="token keyword">for</span> completion of table and <span class="token function">column</span> names
+You can turn off this feature to get a quicker startup with <span class="token parameter variable">-A</span>
+
+Database changed
+MariaDB <span class="token punctuation">[</span>keystone<span class="token punctuation">]</span><span class="token operator">></span> show tables<span class="token punctuation">;</span>        <span class="token comment"># 打印出数据表</span>
++------------------------------------+
+<span class="token operator">|</span> Tables_in_keystone                 <span class="token operator">|</span>
++------------------------------------+
+<span class="token operator">|</span> access_rule                        <span class="token operator">|</span>
+<span class="token operator">|</span> access_token                       <span class="token operator">|</span>
+<span class="token operator">|</span> application_credential             <span class="token operator">|</span>
+<span class="token operator">|</span> application_credential_access_rule <span class="token operator">|</span>
+<span class="token operator">|</span> application_credential_role        <span class="token operator">|</span>
+<span class="token operator">|</span> assignment                         <span class="token operator">|</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>作业1：完成数据库同步后显示数据表并截图</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="Keystone服务的初始化"><a href="#Keystone服务的初始化" class="headerlink" title="Keystone服务的初始化"></a>Keystone服务的初始化</h2><ol>
+<li><p>初始化fernet密钥库</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 生成用来加密解密令牌的fernet密钥</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone</span>
+<span class="token comment"># 生成用来加密解密用户凭证的fernet密钥</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># keystone-manage credential_setup --keystone-user keystone --keystone-group keystone</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>初始化admin用户身份认证信息</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># keystone-manage bootstrap --bootstrap-password 000000 --bootstrap-admin-url http://controller:5000/v3 --bootstrap-internal-url http://contoller:5000/v3 --bootstrap-public-url http://controller:5000/v3 --bootstrap-region-id RegionOne</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<blockquote>
+<p>此时keystone数据库内已经存放了admin用户登录所需要验证的信息。</p>
+</blockquote>
+</li>
+<li><p>配置web服务</p>
+<ul>
+<li><p>在Apache服务器的配置目录中生成<code>WSGI</code>的配置文件用来支持<code>WSGI</code></p>
+  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># ln -s /usr/share/keystone/wsgi-keystone.conf /etc/httpd/conf.d/</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>修改<code>/etc/httpd/conf/httpd.conf</code>文件95行为<code>ServerName controller</code>设置Apache服务的地址为控制节点主机名，重启服务、设置开机自启</p>
+  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller b<span class="token punctuation">]</span><span class="token comment"># systemctl enable httpd</span>
+Created symlink from /etc/systemd/system/multi-user.target.wants/httpd.service to /usr/lib/systemd/system/httpd.service.
+<span class="token punctuation">[</span>root@controller b<span class="token punctuation">]</span><span class="token comment"># systemctl restart httpd</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+</li>
+</ol>
+<h2 id="Keystone服务认证、身份管理"><a href="#Keystone服务认证、身份管理" class="headerlink" title="Keystone服务认证、身份管理"></a>Keystone服务认证、身份管理</h2><h3 id="通过OpenStack-管理命令进行身份管理"><a href="#通过OpenStack-管理命令进行身份管理" class="headerlink" title="通过OpenStack 管理命令进行身份管理"></a>通过OpenStack 管理命令进行身份管理</h3><ol>
+<li><p><code>vi admin-login</code>创建文件添加以下身份凭证：</p>
+ <pre class="line-numbers language-text" data-language="text"><code class="language-text">export OS_USERNAME=admin
+export OS_PASSWORD=000000
+export OS_PROJECT_NAME=admin
+export OS_USER_DOMAIN_NAME=Default
+export OS_PROJECT_DOMAIN_NAME=Default
+export OS_AUTH_URL=http://controller:5000/v3
+export OS_IDENTITY_API_VERSION=3
+export OS_IMAGE_API_VERSION=2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li><p>导入环境变量</p>
+  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># source admin-login </span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+</ul>
+</li>
+<li><p>通过管理命令创建项目：</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack project create --domain default project</span>
++-------------+----------------------------------+
+<span class="token operator">|</span> Field       <span class="token operator">|</span> Value                            <span class="token operator">|</span>
++-------------+----------------------------------+
+<span class="token operator">|</span> description <span class="token operator">|</span>                                  <span class="token operator">|</span>
+<span class="token operator">|</span> domain_id   <span class="token operator">|</span> default                          <span class="token operator">|</span>
+<span class="token operator">|</span> enabled     <span class="token operator">|</span> True                             <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token function">id</span>          <span class="token operator">|</span> 1ddf073425f44982b81884a6cd897616 <span class="token operator">|</span>
+<span class="token operator">|</span> is_domain   <span class="token operator">|</span> False                            <span class="token operator">|</span>
+<span class="token operator">|</span> name        <span class="token operator">|</span> project                          <span class="token operator">|</span>
+<span class="token operator">|</span> options     <span class="token operator">|</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>                               <span class="token operator">|</span>
+<span class="token operator">|</span> parent_id   <span class="token operator">|</span> default                          <span class="token operator">|</span>
+<span class="token operator">|</span> tags        <span class="token operator">|</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>                               <span class="token operator">|</span>
++-------------+----------------------------------+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>作业2：项目创建完成后截图</p>
+</blockquote>
+</li>
+<li><p>常用管理命令：</p>
+ <img src="https://vault.taojie.fun:28089/i/2023/09/16/2023-09-16-1694795373.png" alt="1694795372656.png" title="1694795372656.png" />
+
+ <img src="https://vault.taojie.fun:28089/i/2023/09/16/2023-09-16-1694795401.png" alt="1694795400751.png" title="1694795400751.png" /></li>
+</ol>
+<h3 id="通过API进行身份管理"><a href="#通过API进行身份管理" class="headerlink" title="通过API进行身份管理"></a>通过API进行身份管理</h3><p>OpenStack所提供的API允许开发人员通过编程方式与OpenStack的各种服务进行通信，以实现自动化、集成和定制化的功能。</p>
+<blockquote>
+<p>监控和报警： OpenStack API允许开发人员编写监控应用程序，以监测OpenStack环境的状态并实时响应，包括生成警报和报告。<br>数据分析和报告： 通过API，开发人员可以获取OpenStack环境中的数据，并进行分析和报告，以支持决策制定和优化资源分配。</p>
+</blockquote>
+<ol>
+<li><p>使用curl向openstack请求一个令牌：</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">curl</span> <span class="token parameter variable">-X</span> POST <span class="token variable">$OS_AUTH_URL</span>/auth/tokens <span class="token punctuation">\</span>
+ <span class="token parameter variable">-H</span> <span class="token string">"Content-Type: application/json"</span> <span class="token punctuation">\</span>
+ <span class="token parameter variable">-d</span> <span class="token string">'&#123;
+     "auth": &#123;
+         "identity": &#123;
+             "methods": ["password"],
+             "password": &#123;
+                 "user": &#123;
+                     "domain": &#123;"name": "'</span>"<span class="token variable">$OS_USER_DOMAIN_NAME</span><span class="token string">"'"</span><span class="token punctuation">&#125;</span>,
+                     <span class="token string">"name"</span><span class="token builtin class-name">:</span> <span class="token string">"'"</span><span class="token variable">$OS_USERNAME</span><span class="token string">"'"</span>,
+                     <span class="token string">"password"</span><span class="token builtin class-name">:</span> <span class="token string">"'"</span><span class="token variable">$OS_PASSWORD</span><span class="token string">"'"</span>
+                 <span class="token punctuation">&#125;</span>
+             <span class="token punctuation">&#125;</span>
+         <span class="token punctuation">&#125;</span>,
+         <span class="token string">"scope"</span><span class="token builtin class-name">:</span> <span class="token punctuation">&#123;</span>
+             <span class="token string">"project"</span><span class="token builtin class-name">:</span> <span class="token punctuation">&#123;</span>
+                 <span class="token string">"domain"</span><span class="token builtin class-name">:</span> <span class="token punctuation">&#123;</span><span class="token string">"name"</span><span class="token builtin class-name">:</span> <span class="token string">"'"</span><span class="token variable">$OS_PROJECT_DOMAIN_NAME</span><span class="token string">"'"</span><span class="token punctuation">&#125;</span>,
+                 <span class="token string">"name"</span><span class="token builtin class-name">:</span> <span class="token string">"'"</span><span class="token variable">$OS_PROJECT_NAME</span><span class="token string">"'"</span>
+             <span class="token punctuation">&#125;</span>
+         <span class="token punctuation">&#125;</span>
+     <span class="token punctuation">&#125;</span>
+ <span class="token punctuation">&#125;</span>' <span class="token punctuation">\</span>
+ <span class="token operator">|</span>python <span class="token parameter variable">-m</span> json.tool<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li><p>从返回的响应中提取字段<code>X-Subject-Token</code>的值即获取到的token</p>
+  <pre class="line-numbers language-text" data-language="text"><code class="language-text">* About to connect() to controller port 5000 (#0)
+*   Trying 192.168.10.10...
+* Connected to controller (192.168.10.10) port 5000 (#0)
+> POST /v3/auth/tokens?nocatalog HTTP/1.1
+> User-Agent: curl/7.29.0
+> Host: controller:5000
+> Accept: */*
+> Content-Type: application/json
+> Content-Length: 472
+>
+&#125; [data not shown]
+* upload completely sent off: 472 out of 472 bytes
+&lt; HTTP/1.1 201 CREATED
+&lt; Date: Fri, 15 Sep 2023 17:29:38 GMT
+&lt; Server: Apache/2.4.6 (CentOS) mod_wsgi/3.4 Python/2.7.5
+&lt; X-Subject-Token: gAAAAABlBJSCUlkAxmXcgaMCjAQznrea88WgOxL5VP8PifbX-Q-boOzZUVDb3sc0cTOVUegjeNSRKdii1ZtYwBDbZ1WRTTki_2dRlrE1d_D5erFMml-3YAY5BL2vBWXSimVAXIG9jUycTLkqbcavEf79i3Z0xfPHUOaxzC9eA5dvDbS1eRA_Y2c
+&lt; Vary: X-Auth-Token
+&lt; x-openstack-request-id: req-ecb79fdc-f4e7-4ca8-8c02-f2d69a28f453
+&lt; Content-Length: 648
+&lt; Content-Type: application/json
+&lt;
+&#123; [data not shown]
+* Connection #0 to host controller left intact<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+</li>
+<li><p>导出环境变量<code>OS_TOKEN</code>、通过API读取用户列表：</p>
+<ul>
+<li><p>将上一步提取的token导出环境变量，<code>每个人的token不一样，自行替换</code></p>
+  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># export OS_TOKEN=gAAAAABlBJSCUlkAxmXcgaMCjAQznrea88WgOxL5VP8PifbX-Q-boOzZUVDb3sc0cTOVUegjeNSRKdii1ZtYwBDbZ1WRTTki_2dRlrE1d_D5erFMml-3YAY5BL2vBWXSimVAXIG9jUycTLkqbcavEf79i3Z0xfPHUOaxzC9eA5dvDbS1eRA_Y2c</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>使用相关的API获取用户列表</p>
+  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># curl -s -X GET $OS_AUTH_URL/users -H "X-Auth-Token:$OS_TOKEN" -H "Content-Type: application/json" |python -m json.tool</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token string">"links"</span><span class="token builtin class-name">:</span> <span class="token punctuation">&#123;</span>
+        <span class="token string">"next"</span><span class="token builtin class-name">:</span> null,
+        <span class="token string">"previous"</span><span class="token builtin class-name">:</span> null,
+        <span class="token string">"self"</span><span class="token builtin class-name">:</span> <span class="token string">"http://controller:5000/v3/users"</span>
+    <span class="token punctuation">&#125;</span>,
+    <span class="token string">"users"</span><span class="token builtin class-name">:</span> <span class="token punctuation">[</span>
+        <span class="token punctuation">&#123;</span>
+            <span class="token string">"domain_id"</span><span class="token builtin class-name">:</span> <span class="token string">"default"</span>,
+            <span class="token string">"enabled"</span><span class="token builtin class-name">:</span> true,
+            <span class="token string">"id"</span><span class="token builtin class-name">:</span> <span class="token string">"d21e719687444563a40a2528eb22996b"</span>,
+            <span class="token string">"links"</span><span class="token builtin class-name">:</span> <span class="token punctuation">&#123;</span>
+                <span class="token string">"self"</span><span class="token builtin class-name">:</span> <span class="token string">"http://controller:5000/v3/users/d21e719687444563a40a2528eb22996b"</span>
+            <span class="token punctuation">&#125;</span>,
+            <span class="token string">"name"</span><span class="token builtin class-name">:</span> <span class="token string">"admin"</span>,
+            <span class="token string">"options"</span><span class="token builtin class-name">:</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>,
+            <span class="token string">"password_expires_at"</span><span class="token builtin class-name">:</span> null
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+<blockquote>
+<p>作业3：通过api获取用户列表后截图</p>
+</blockquote>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/09/08/private_clouds/2.OpenStack%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/" rel="prev" title="OpenStack基础操作">
+                  <i class="fa fa-chevron-left"></i> OpenStack基础操作
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder"></span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
