@@ -9,3 +9,4 @@ tags:
 
 1. {% post_link private_clouds/1.初识云计算与OpenStack %} 
 1. {% post_link private_clouds/2.OpenStack基础操作 %} 
+1. {% post_link private_clouds/3.OpenStack身份管理 %} 
