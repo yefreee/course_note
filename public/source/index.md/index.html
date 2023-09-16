@@ -181,7 +181,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-09-16 07:57:18" itemprop="dateModified" datetime="2023-09-16T07:57:18+08:00">2023-09-16</time>
+      <time title="修改时间：2023-09-16 10:58:05" itemprop="dateModified" datetime="2023-09-16T10:58:05+08:00">2023-09-16</time>
     </span>
 
   
@@ -382,7 +382,7 @@ export OS_IMAGE_API_VERSION=2<span aria-hidden="true" class="line-numbers-rows">
 </blockquote>
 <ol>
 <li><p>使用curl向openstack请求一个令牌：</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">curl</span> <span class="token parameter variable">-X</span> POST <span class="token variable">$OS_AUTH_URL</span>/auth/tokens <span class="token punctuation">\</span>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">curl</span> <span class="token parameter variable">-v</span> <span class="token parameter variable">-X</span> POST <span class="token variable">$OS_AUTH_URL</span>/auth/tokens <span class="token punctuation">\</span>
  <span class="token parameter variable">-H</span> <span class="token string">"Content-Type: application/json"</span> <span class="token punctuation">\</span>
  <span class="token parameter variable">-d</span> <span class="token string">'&#123;
      "auth": &#123;
