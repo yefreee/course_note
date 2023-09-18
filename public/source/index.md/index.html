@@ -181,7 +181,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-09-16 10:58:05" itemprop="dateModified" datetime="2023-09-16T10:58:05+08:00">2023-09-16</time>
+      <time title="修改时间：2023-09-18 14:52:25" itemprop="dateModified" datetime="2023-09-18T14:52:25+08:00">2023-09-18</time>
     </span>
 
   
@@ -263,11 +263,11 @@ Query OK<span class="token punctuation">,</span> <span class="token number">0</s
 MariaDB <span class="token punctuation">[</span><span class="token punctuation">(</span>none<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token operator">></span> quit<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
 <li><p>修改Keystone配置文件关联数据库</p>
-<p> 打开<code>/etc/keystone/keystone.conf</code>后查找<code>[database]</code>字段并修改连接主机<code>controller</code>的数据库<code>keystone</code>：</p>
+<p> 打开<code>/etc/keystone/keystone.conf</code>后查找<code>[database]</code>字段 (600行)并修改连接主机<code>controller</code>的数据库<code>keystone</code>：</p>
  <pre class="line-numbers language-text" data-language="text"><code class="language-text">connection = mysql+pymysql://keystone:000000@controller/keystone<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <ul>
-<li>配置令牌加密方式：查找[token]并删除<code>provider = fernet</code>前的<code>#</code>注释符</li>
+<li>配置令牌加密方式：查找[token]（2475行）并删除<code>provider = fernet</code>前的<code>#</code>注释符</li>
 </ul>
 </li>
 <li><p>初始化Keystone数据库</p>
