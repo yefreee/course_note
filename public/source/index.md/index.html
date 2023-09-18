@@ -528,7 +528,7 @@ export OS_IMAGE_API_VERSION=2<span aria-hidden="true" class="line-numbers-rows">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-09-15 21:50:07" itemprop="dateModified" datetime="2023-09-15T21:50:07+08:00">2023-09-15</time>
+      <time title="修改时间：2023-09-18 13:10:18" itemprop="dateModified" datetime="2023-09-18T13:10:18+08:00">2023-09-18</time>
     </span>
 
   
@@ -541,7 +541,10 @@ export OS_IMAGE_API_VERSION=2<span aria-hidden="true" class="line-numbers-rows">
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="Horizon简介、名词解释"><a href="#Horizon简介、名词解释" class="headerlink" title="Horizon简介、名词解释"></a>Horizon简介、名词解释</h2><p>Horizon是一个开源的Web界面，用于管理和监控整个OpenStack云计算环境。它提供了直观的用户界面，允许用户通过Web浏览器执行各种云管理任务，包括创建和管理虚拟机实例、配置网络、存储、查看监控数据等。</p>
+          <blockquote>
+<p>控制节点快照<code>项目12</code><br>计算节点快照<code>项目12</code></p>
+</blockquote>
+<h2 id="Horizon简介、名词解释"><a href="#Horizon简介、名词解释" class="headerlink" title="Horizon简介、名词解释"></a>Horizon简介、名词解释</h2><p>Horizon是一个开源的Web界面，用于管理和监控整个OpenStack云计算环境。它提供了直观的用户界面，允许用户通过Web浏览器执行各种云管理任务，包括创建和管理虚拟机实例、配置网络、存储、查看监控数据等。</p>
 <ul>
 <li><p>项目（Project）：项目是云中的组织单位，也称为租户或帐户，它包含了一组资源（如虚拟机实例、网络、存储等）。每个用户都是一个或多个项目的成员。在项目中，用户创建和管理实例和镜像。</p>
 </li>
@@ -593,7 +596,7 @@ export OS_IMAGE_API_VERSION=2<span aria-hidden="true" class="line-numbers-rows">
 <li><p>创建镜像</p>
 <p> 先从网络中下载<a target="_blank" rel="noopener" href="https://download.fedoraproject.org/pub/fedora/linux/releases/38/Cloud/x86_64/images/Fedora-Cloud-Base-38-1.6.x86_64.qcow2">Fedora适用于Openstack的Cloud Base镜像</a>到本地  </p>
 <p> 进入管理员-&gt;计算-&gt;镜像-&gt;创建镜像，镜像源-&gt;浏览选择刚才下载好的镜像文件，镜像格式<code>qcow2</code>，</p>
-<img src="https://vault.taojie.fun:28089/i/2023/09/13/2023-09-13-1694591128.png" alt="1694591127610.png" title="1694591127610.png" />
+<img src="https://vault.taojie.fun:28089/i/2023/09/18/2023-09-18-1695013528.png" alt="1695013525543.png" title="1695013525543.png" />
 
 <blockquote>
 <p>作业1：镜像创建完成，截图镜像列列表上传。</p>
@@ -603,7 +606,7 @@ export OS_IMAGE_API_VERSION=2<span aria-hidden="true" class="line-numbers-rows">
 <p> 进入管理员-&gt;计算-&gt;实例类型，右上角创建实例类型，并且设置实例类型的使用权，选择项目<code>test_project</code>。</p>
  <img src="https://vault.taojie.fun:28089/i/2023/09/15/2023-09-15-1694785336.png" alt="1694785335731.png" title="1694785335731.png" />
 
- <img src="https://vault.taojie.fun:28089/i/2023/09/10/2023-09-10-1694331705.png" alt="1694331703092.png" title="1694331703092.png">
+ <img src="https://vault.taojie.fun:28089/i/2023/09/18/2023-09-18-1695013697.png" alt="1695013694529.png" title="1695013694529.png" />
 </li>
 <li><p>创建网络</p>
 <ul>
@@ -614,7 +617,7 @@ export OS_IMAGE_API_VERSION=2<span aria-hidden="true" class="line-numbers-rows">
   <img src="https://vault.taojie.fun:28089/i/2023/09/13/2023-09-13-1694604448.png" alt="1694604447868.png" title="1694604447868.png" /></li>
 </ul>
 </li>
-<li><p>侧边栏选择项目-&gt;计算-&gt;实例-&gt;创建实例，<code>详情</code>标签设置实例名称<code>test_instance</code></p>
+<li><p><code>退出当前的admin用户，使用刚才创建的test_user用户登录</code>，侧边栏选择项目-&gt;计算-&gt;实例-&gt;创建实例，<code>详情</code>标签设置实例名称<code>test_instance</code></p>
 <ul>
 <li><p><code>源</code>标签选择源<code>Image</code>、卷大小<code>1GB</code>、在列表中选择镜像<code>cirros</code></p>
   <img src="https://vault.taojie.fun:28089/i/2023/09/11/2023-09-11-1694392927.png" alt="1694392926393.png" title="1694392926393.png" />
