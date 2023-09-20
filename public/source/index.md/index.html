@@ -118,7 +118,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-count">20</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -136,6 +136,431 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/20/private_clouds/4.OpenStack%E9%95%9C%E5%83%8F%E7%AE%A1%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/09/20/private_clouds/4.OpenStack%E9%95%9C%E5%83%8F%E7%AE%A1%E7%90%86/" class="post-title-link" itemprop="url">OpenStack镜像管理与制作</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-09-20 20:00:51" itemprop="dateCreated datePublished" datetime="2023-09-20T20:00:51+08:00">2023-09-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-09-21 02:55:01" itemprop="dateModified" datetime="2023-09-21T02:55:01+08:00">2023-09-21</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Glance服务介绍"><a href="#Glance服务介绍" class="headerlink" title="Glance服务介绍"></a>Glance服务介绍</h2><p>Glance服务是OpenStack平台的镜像服务，它提供了管理虚拟机镜像的功能。</p>
+<p>在OpenStack Glance组件中，镜像（Image）是指虚拟机的模板，包含了预先配置的操作系统和应用程序。镜像是创建和部署虚拟机实例的基础。</p>
+<ul>
+<li><p>Glance主要特点和功能：</p>
+<ol>
+<li><p>镜像存储和管理：Glance提供了一个可靠的存储系统，用于持久化保存虚拟机镜像。它支持多种后端存储选项，如本地文件系统、分布式文件系统和对象存储。用户可以通过Glance API上传、删除、更新和查询镜像。</p>
+</li>
+<li><p>镜像加速和缓存：Glance支持镜像的加速和缓存，以提高虚拟机实例的启动速度和性能。通过将常用的镜像缓存在计算节点上，可以减少下载和传输时间。</p>
+</li>
+<li><p>镜像格式支持：Glance支持多种虚拟机镜像格式，包括常见的格式如QCOW2、VHD、VMDK和RAW等。这使得用户可以使用不同的镜像格式来满足其特定的需求。</p>
+</li>
+<li><p>元数据管理：Glance允许用户为每个镜像添加自定义元数据，包括镜像名称、描述、操作系统类型、版本等信息。这些元数据可以帮助用户更好地组织和搜索镜像库。</p>
+</li>
+<li><p>镜像共享：Glance支持镜像的共享功能，允许用户将自己的镜像分享给其他项目或用户。这样可以避免重复创建相同的镜像，提高资源的共享和重用。</p>
+</li>
+</ol>
+</li>
+</ul>
+<img src="https://vault.taojie.fun:28089/i/2023/09/20/2023-09-20-1695216464.png" alt="1695216462264.png" title="1695216462264.png" />
+
+<h3 id="Glance架构"><a href="#Glance架构" class="headerlink" title="Glance架构"></a>Glance架构</h3><img src="https://vault.taojie.fun:28089/i/2023/09/20/2023-09-20-1695214714.png" alt="1695214713001.png" title="1695214713001.png" />
+
+<ul>
+<li><p>Glance API：用户与 Glance 服务交互的接口，通过 RESTful API 提供了镜像管理的各种功能。用户可以通过 API 执行镜像的上传、下载、删除等操作。</p>
+</li>
+<li><p>Glance Registry：用于存储和管理镜像的元数据，如名称、格式、大小等。</p>
+</li>
+<li><p>Glance Store：Glance 的后端存储组件，负责实际的镜像文件的存储。它可以支持多种后端存储类型，如本地文件系统、Swift、Ceph、S3 等。根据配置，镜像可以存储在不同的后端存储中。</p>
+</li>
+</ul>
+<p>Database：数据库用于存储 Glance 服务的持久化数据，包括镜像的元数据、权限信息等。</p>
+<h2 id="Glance服务安装"><a href="#Glance服务安装" class="headerlink" title="Glance服务安装"></a>Glance服务安装</h2><h3 id="作业与实验环境"><a href="#作业与实验环境" class="headerlink" title="作业与实验环境"></a>作业与实验环境</h3><blockquote>
+<p><a target="_blank" rel="noopener" href="https://wxstc.fanya.chaoxing.com/portal">超星网址</a><br><code>快照管理</code>：控制节点选择<code>快照项目6</code>，计算节点不需要设置</p>
+</blockquote>
+<h3 id="安装与配置"><a href="#安装与配置" class="headerlink" title="安装与配置"></a>安装与配置</h3><ol>
+<li><p>执行命令安装Glance软件包：</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># yum -y install openstack-glance</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p> 安装结束后能够通过以下命令查看系统中的同名用户和用户组表示Glance组件安装完成：</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># cat /etc/passwd |grep glance       # 1. 查看glance用户</span>
+glance:x:161:161:OpenStack Glance Daemons:/var/lib/glance:/sbin/nologin
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># cat /etc/group |grep glance        # 2. 查看glance用户组</span>
+glance:x:161:<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>创建数据库并授权：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 1. 进入数据库</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># mysql -uroot -p000000</span>
+Welcome to the MariaDB monitor.  Commands end with <span class="token punctuation">;</span> or <span class="token punctuation">\</span>g.
+Your MariaDB connection <span class="token function">id</span> is <span class="token number">64</span>
+Server version: <span class="token number">10.3</span>.20-MariaDB MariaDB Server
+
+Copyright <span class="token punctuation">(</span>c<span class="token punctuation">)</span> <span class="token number">2000</span>, <span class="token number">2018</span>, Oracle, MariaDB Corporation Ab and others.
+
+Type <span class="token string">'help;'</span> or <span class="token string">'\h'</span> <span class="token keyword">for</span> help. Type <span class="token string">'\c'</span> to <span class="token function">clear</span> the current input statement.
+
+<span class="token comment"># 2. 创建glance数据库</span>
+MariaDB <span class="token punctuation">[</span><span class="token punctuation">(</span>none<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token operator">></span> CREATE DATABASE glance<span class="token punctuation">;</span>
+Query OK, <span class="token number">1</span> row affected <span class="token punctuation">(</span><span class="token number">0.000</span> sec<span class="token punctuation">)</span>
+
+<span class="token comment"># 3. 为glance数据库授予本地登录用户的权限</span>
+MariaDB <span class="token punctuation">[</span><span class="token punctuation">(</span>none<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token operator">></span> GRANT ALL PRIVILEGES ON glance.* TO <span class="token string">'glance'</span>@<span class="token string">'localhost'</span> IDENTIFIED BY <span class="token string">'000000'</span><span class="token punctuation">;</span>
+Query OK, <span class="token number">0</span> rows affected <span class="token punctuation">(</span><span class="token number">0.001</span> sec<span class="token punctuation">)</span>
+
+<span class="token comment"># 4. 为glance数据库授予远程登录用户的权限</span>
+MariaDB <span class="token punctuation">[</span><span class="token punctuation">(</span>none<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token operator">></span> GRANT ALL PRIVILEGES ON glance.* TO <span class="token string">'glance'</span>@<span class="token string">'%'</span> IDENTIFIED BY <span class="token string">'000000'</span><span class="token punctuation">;</span>
+Query OK, <span class="token number">0</span> rows affected <span class="token punctuation">(</span><span class="token number">0.000</span> sec<span class="token punctuation">)</span>
+<span class="token comment"># 5. 退出</span>
+MariaDB <span class="token punctuation">[</span><span class="token punctuation">(</span>none<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token operator">></span> quit<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>修改配置文件：</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 备份配置文件</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># cp /etc/glance/glance-api.conf /etc/glance/glance-api.bak</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 删除配置文件中的空行和注释行</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># grep -Ev '^$|#' /etc/glance/glance-api.bak > /etc/glance/glance-api.conf</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p> 打开配置文件依次编辑以下字段：</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 数据库地址</span>
+<span class="token punctuation">[</span>database<span class="token punctuation">]</span>
+connection <span class="token operator">=</span> mysql+pymysql://glance:000000@controller/glance<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 身份凭证配置</span>
+<span class="token punctuation">[</span>keystone_authtoken<span class="token punctuation">]</span>
+auth_url <span class="token operator">=</span> http://controller:5000
+memcached_servers <span class="token operator">=</span> controller:11211
+auth_type <span class="token operator">=</span> password
+username <span class="token operator">=</span> glance
+password <span class="token operator">=</span> 000000
+project_name <span class="token operator">=</span> project
+user_domain_name <span class="token operator">=</span> Default
+project_domain_name <span class="token operator">=</span> Default<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 身份凭证配置</span>
+<span class="token punctuation">[</span>paste_deploy<span class="token punctuation">]</span>
+flavor <span class="token operator">=</span> keystone<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 后端存储配置</span>
+<span class="token punctuation">[</span>glance_store<span class="token punctuation">]</span>
+stores <span class="token operator">=</span> <span class="token function">file</span>
+default_store <span class="token operator">=</span> <span class="token function">file</span>
+filesystem_store_datadir <span class="token operator">=</span> /var/lib/glance/images/<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>初始化Glance数据库</p>
+<ul>
+<li><p>数据库同步</p>
+  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># su glance -s /bin/sh -c "glance-manage db_sync"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>查看同步后的数据表</p>
+  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># mysql -uroot -p000000      # 1. 数据库登录</span>
+Welcome to the MariaDB monitor.  Commands end with <span class="token punctuation">;</span> or <span class="token punctuation">\</span>g.
+Your MariaDB connection <span class="token function">id</span> is <span class="token number">270</span>
+Server version: <span class="token number">10.3</span>.20-MariaDB MariaDB Server
+
+Copyright <span class="token punctuation">(</span>c<span class="token punctuation">)</span> <span class="token number">2000</span>, <span class="token number">2018</span>, Oracle, MariaDB Corporation Ab and others.
+
+Type <span class="token string">'help;'</span> or <span class="token string">'\h'</span> <span class="token keyword">for</span> help. Type <span class="token string">'\c'</span> to <span class="token function">clear</span> the current input statement.
+
+MariaDB <span class="token punctuation">[</span><span class="token punctuation">(</span>none<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token operator">></span> use glance<span class="token punctuation">;</span>                   <span class="token comment"># 2. 进入glance数据库</span>
+Reading table information <span class="token keyword">for</span> completion of table and <span class="token function">column</span> names
+You can turn off this feature to get a quicker startup with <span class="token parameter variable">-A</span>
+
+Database changed
+MariaDB <span class="token punctuation">[</span>glance<span class="token punctuation">]</span><span class="token operator">></span> show tables<span class="token punctuation">;</span>                  <span class="token comment"># 3. 显示数据表</span>
++----------------------------------+
+<span class="token operator">|</span> Tables_in_glance                 <span class="token operator">|</span>
++----------------------------------+
+<span class="token operator">|</span> alembic_version                  <span class="token operator">|</span>
+<span class="token operator">|</span> image_locations                  <span class="token operator">|</span>
+<span class="token operator">|</span> image_members                    <span class="token operator">|</span>
+<span class="token operator">|</span> image_properties                 <span class="token operator">|</span>
+<span class="token operator">|</span> image_tags                       <span class="token operator">|</span>
+<span class="token operator">|</span> images                           <span class="token operator">|</span>
+<span class="token operator">|</span> metadef_namespace_resource_types <span class="token operator">|</span>
+<span class="token operator">|</span> metadef_namespaces               <span class="token operator">|</span>
+<span class="token operator">|</span> metadef_objects                  <span class="token operator">|</span>
+<span class="token operator">|</span> metadef_properties               <span class="token operator">|</span>
+<span class="token operator">|</span> metadef_resource_types           <span class="token operator">|</span>
+<span class="token operator">|</span> metadef_tags                     <span class="token operator">|</span>
+<span class="token operator">|</span> migrate_version                  <span class="token operator">|</span>
+<span class="token operator">|</span> task_info                        <span class="token operator">|</span>
+<span class="token operator">|</span> tasks                            <span class="token operator">|</span>
++----------------------------------+
+<span class="token number">15</span> rows <span class="token keyword">in</span> <span class="token builtin class-name">set</span> <span class="token punctuation">(</span><span class="token number">0.000</span> sec<span class="token punctuation">)</span>
+MariaDB <span class="token punctuation">[</span>glance<span class="token punctuation">]</span><span class="token operator">></span> quit                          <span class="token comment"># 4. 退出</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+<blockquote>
+<p>作业1：显示数据表后后截图上传</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="Glance初始化"><a href="#Glance初始化" class="headerlink" title="Glance初始化"></a>Glance初始化</h3><ol>
+<li><p>创建Glance用户、分配角色</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 1. 利用环境变量登录</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># source admin-login</span>
+<span class="token comment"># 2. 创建用户</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack user create --domain default --password 000000 glance</span>
++---------------------+----------------------------------+
+<span class="token operator">|</span> Field               <span class="token operator">|</span> Value                            <span class="token operator">|</span>
++---------------------+----------------------------------+
+<span class="token operator">|</span> domain_id           <span class="token operator">|</span> default                          <span class="token operator">|</span>
+<span class="token operator">|</span> enabled             <span class="token operator">|</span> True                             <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token function">id</span>                  <span class="token operator">|</span> 504c914efe01478a9da5968a88dad987 <span class="token operator">|</span>
+
+<span class="token operator">|</span> options             <span class="token operator">|</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>                               <span class="token operator">|</span>
+<span class="token operator">|</span> password_expires_at <span class="token operator">|</span> None                             <span class="token operator">|</span>
++---------------------+----------------------------------+
+<span class="token comment"># 3. 添加角色</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack role add --project project --user glance admin</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>创建服务和端点</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 1. 创建服务</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack service create --name glance image</span>
++---------+----------------------------------+
+<span class="token operator">|</span> Field   <span class="token operator">|</span> Value                            <span class="token operator">|</span>
++---------+----------------------------------+
+<span class="token operator">|</span> enabled <span class="token operator">|</span> True                             <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token function">id</span>      <span class="token operator">|</span> da84735108944b6690cbcf9fab56f5fd <span class="token operator">|</span>
+<span class="token operator">|</span> name    <span class="token operator">|</span> glance                           <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token builtin class-name">type</span>    <span class="token operator">|</span> image                            <span class="token operator">|</span>
++---------+----------------------------------+
+<span class="token comment"># 2. 创建公共用户使用的端点</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack endpoint create --region RegionOne glance public http://controller:9292</span>
++--------------+----------------------------------+
+<span class="token operator">|</span> Field        <span class="token operator">|</span> Value                            <span class="token operator">|</span>
++--------------+----------------------------------+
+<span class="token operator">|</span> enabled      <span class="token operator">|</span> True                             <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token function">id</span>           <span class="token operator">|</span> a344eb651ebc41f7ae2b1b74b3e8fda3 <span class="token operator">|</span>
+<span class="token operator">|</span> interface    <span class="token operator">|</span> public                           <span class="token operator">|</span>
+<span class="token operator">|</span> region       <span class="token operator">|</span> RegionOne                        <span class="token operator">|</span>
+<span class="token operator">|</span> region_id    <span class="token operator">|</span> RegionOne                        <span class="token operator">|</span>
+<span class="token operator">|</span> service_id   <span class="token operator">|</span> da84735108944b6690cbcf9fab56f5fd <span class="token operator">|</span>
+<span class="token operator">|</span> service_name <span class="token operator">|</span> glance                           <span class="token operator">|</span>
+<span class="token operator">|</span> service_type <span class="token operator">|</span> image                            <span class="token operator">|</span>
+<span class="token operator">|</span> url          <span class="token operator">|</span> http://controller:9292           <span class="token operator">|</span>
++--------------+----------------------------------+
+<span class="token comment"># 3. 创建内部组件用户使用的端点</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack endpoint create --region RegionOne glance internal http://controller:9292</span>
++--------------+----------------------------------+
+<span class="token operator">|</span> Field        <span class="token operator">|</span> Value                            <span class="token operator">|</span>
++--------------+----------------------------------+
+<span class="token operator">|</span> enabled      <span class="token operator">|</span> True                             <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token function">id</span>           <span class="token operator">|</span> f1b7a33ab36047209e0130debf4dc500 <span class="token operator">|</span>
+<span class="token operator">|</span> interface    <span class="token operator">|</span> internal                         <span class="token operator">|</span>
+<span class="token operator">|</span> region       <span class="token operator">|</span> RegionOne                        <span class="token operator">|</span>
+<span class="token operator">|</span> region_id    <span class="token operator">|</span> RegionOne                        <span class="token operator">|</span>
+<span class="token operator">|</span> service_id   <span class="token operator">|</span> da84735108944b6690cbcf9fab56f5fd <span class="token operator">|</span>
+<span class="token operator">|</span> service_name <span class="token operator">|</span> glance                           <span class="token operator">|</span>
+<span class="token operator">|</span> service_type <span class="token operator">|</span> image                            <span class="token operator">|</span>
+<span class="token operator">|</span> url          <span class="token operator">|</span> http://controller:9292           <span class="token operator">|</span>
++--------------+----------------------------------+
+<span class="token comment"># 4. 创建admin用户使用的端点</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack endpoint create --region RegionOne glance admin http://controller:9292</span>
++--------------+----------------------------------+
+<span class="token operator">|</span> Field        <span class="token operator">|</span> Value                            <span class="token operator">|</span>
++--------------+----------------------------------+
+<span class="token operator">|</span> enabled      <span class="token operator">|</span> True                             <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token function">id</span>           <span class="token operator">|</span> c176c6ff1caa4eba9083105bd2b41261 <span class="token operator">|</span>
+<span class="token operator">|</span> interface    <span class="token operator">|</span> admin                            <span class="token operator">|</span>
+<span class="token operator">|</span> region       <span class="token operator">|</span> RegionOne                        <span class="token operator">|</span>
+<span class="token operator">|</span> region_id    <span class="token operator">|</span> RegionOne                        <span class="token operator">|</span>
+<span class="token operator">|</span> service_id   <span class="token operator">|</span> da84735108944b6690cbcf9fab56f5fd <span class="token operator">|</span>
+<span class="token operator">|</span> service_name <span class="token operator">|</span> glance                           <span class="token operator">|</span>
+<span class="token operator">|</span> service_type <span class="token operator">|</span> image                            <span class="token operator">|</span>
+<span class="token operator">|</span> url          <span class="token operator">|</span> http://controller:9292           <span class="token operator">|</span>
++--------------+----------------------------------+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>启动Glance服务并验证</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 1. 设置开机自启</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># systemctl enable openstack-glance-api</span>
+Created symlink from /etc/systemd/system/multi-user.target.wants/openstack-glance-api.service to /usr/lib/systemd/system/openstack-glance-api.service.
+<span class="token comment"># 2. 启动服务</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># systemctl start openstack-glance-api</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment">#</span>
+<span class="token comment"># 3. 查看服务状态</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># systemctl status openstack-glance-api</span>
+● openstack-glance-api.service - OpenStack Image Service <span class="token punctuation">(</span>code-named Glance<span class="token punctuation">)</span> API server
+Loaded: loaded <span class="token punctuation">(</span>/usr/lib/systemd/system/openstack-glance-api.service<span class="token punctuation">;</span> enabled<span class="token punctuation">;</span> vendor preset: disabled<span class="token punctuation">)</span>
+Active: active <span class="token punctuation">(</span>running<span class="token punctuation">)</span> since Wed <span class="token number">2023</span>-09-20 <span class="token number">11</span>:18:59 EDT<span class="token punctuation">;</span> 13s ago
+Main PID: <span class="token number">5068</span> <span class="token punctuation">(</span>glance-api<span class="token punctuation">)</span>
+CGroup: /system.slice/openstack-glance-api.service
+        ├─5068 /usr/bin/python2 /usr/bin/glance-api
+        ├─5080 /usr/bin/python2 /usr/bin/glance-api
+        └─5081 /usr/bin/python2 /usr/bin/glance-api
+
+Sep <span class="token number">20</span> <span class="token number">11</span>:18:59 controller systemd<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>: Started OpenStack Image Service <span class="token punctuation">(</span>code-named Glance<span class="token punctuation">)</span> API server.
+Sep <span class="token number">20</span> <span class="token number">11</span>:18:59 controller glance-api<span class="token punctuation">[</span><span class="token number">5068</span><span class="token punctuation">]</span>: /usr/lib/python2.7/site-packages/paste/deploy/loadwsgi.py:22: PkgRe<span class="token punctuation">..</span>.tely.
+Sep <span class="token number">20</span> <span class="token number">11</span>:18:59 controller glance-api<span class="token punctuation">[</span><span class="token number">5068</span><span class="token punctuation">]</span>: <span class="token builtin class-name">return</span> pkg_resources.EntryPoint.parse<span class="token punctuation">(</span><span class="token string">"x="</span> + s<span class="token punctuation">)</span>.load<span class="token punctuation">(</span>False<span class="token punctuation">)</span>
+Hint: Some lines were ellipsized, use <span class="token parameter variable">-l</span> to show <span class="token keyword">in</span> full.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>创建镜像</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 1. 获取镜像文件到本地</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># curl -O http://download.cirros-cloud.net/0.5.1/cirros-0.5.1-x86_64-disk.img</span>
+% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                Dload  Upload   Total   Spent    Left  Speed
+<span class="token number">100</span>   <span class="token number">273</span>  <span class="token number">100</span>   <span class="token number">273</span>    <span class="token number">0</span>     <span class="token number">0</span>     <span class="token number">40</span>      <span class="token number">0</span>  <span class="token number">0</span>:00:06  <span class="token number">0</span>:00:06 --:--:--    <span class="token number">65</span>
+<span class="token comment"># 2. 创建镜像</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack image create --file cirros-0.5.1-x86_64-disk.img --disk-format raw --container-format bare --public cirros</span>
+<span class="token comment"># 3. 查看镜像列表</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack image list</span>
++--------------------------------------+--------+--------+
+<span class="token operator">|</span> ID                                   <span class="token operator">|</span> Name   <span class="token operator">|</span> Status <span class="token operator">|</span>
++--------------------------------------+--------+--------+G
+<span class="token operator">|</span> cfd3a7d5-3339-4d11-8c18-18c6d703c03b <span class="token operator">|</span> cirros <span class="token operator">|</span> active <span class="token operator">|</span>
++--------------------------------------+--------+--------+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>作业2：显示镜像列表后截图上传</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="基于预制镜像定制OpenStack镜像"><a href="#基于预制镜像定制OpenStack镜像" class="headerlink" title="基于预制镜像定制OpenStack镜像"></a>基于预制镜像定制OpenStack镜像</h2><h3 id="实验环境"><a href="#实验环境" class="headerlink" title="实验环境"></a>实验环境</h3><blockquote>
+<p>控制节点和计算节点都是<code>快照项目12</code></p>
+</blockquote>
+<h3 id="Centos镜像创建"><a href="#Centos镜像创建" class="headerlink" title="Centos镜像创建"></a>Centos镜像创建</h3><ol>
+<li><p>设置虚拟机和宿主机共享</p>
+<ul>
+<li><p>控制节点关机状态右键-&gt;设置，选择选项-&gt;共享文件夹-&gt;总是启用并添加本地D盘内的镜像文件所在目录</p>
+  <img src="https://vault.taojie.fun:28089/i/2023/09/21/2023-09-21-1695229069.png" alt="1695229067851.png" title="1695229067851.png" />
+</li>
+<li><p>安装vm-tools并挂载设备</p>
+  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># yum -y install open-vm-tools</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># vmhgfs-fuse .host:/ /mnt/hgfs -o subtype=vmhgfs-fuse,allow_other</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># file /mnt/hgfs/镜像/CentOS-7-x86_64-GenericCloud-2003.qcow2</span>
+/mnt/hgfs/镜像/CentOS-7-x86_64-GenericCloud-2003.qcow2: QEMU QCOW Image <span class="token punctuation">(</span>v3<span class="token punctuation">)</span>, <span class="token number">8589934592</span> bytes<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+</li>
+<li><p>创建镜像</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack image create --disk-format qcow2 --container-format bare   --public --file /mnt/hgfs/镜像/CentOS-7-x86_64-GenericCloud-2003.qcow2 centos7</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+</ol>
+<h3 id="创建虚拟机实例"><a href="#创建虚拟机实例" class="headerlink" title="创建虚拟机实例"></a>创建虚拟机实例</h3><ol>
+<li><p>通过浏览器<code>192.168.10.20</code>访问Horizon服务的界面，设置域名<code>Default</code>、用户名<code>admin</code>、密码<code>000000</code>登录。</p>
+</li>
+<li><p>创建实例类型、网络。</p>
+<blockquote>
+<p>创建<code>实例类型</code>和<code>网络</code>时设置项目为admin，否则没有权限。可参考<a target="_blank" rel="noopener" href="https://abc.taojie.fun/2023/09/08/private_clouds/2.openstack%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/#%E5%88%9B%E5%BB%BA%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%9E%E4%BE%8B">创建虚拟机实例</a>创建网络。</p>
+</blockquote>
+ <img src="https://vault.taojie.fun:28089/i/2023/09/21/2023-09-21-1695230412.png" alt="1695230410573.png" title="1695230410573.png" />
+</li>
+<li><p>设置<code>配置</code>菜单后完成实例创建：</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
+<span class="token function">passwd</span> centos<span class="token operator">&lt;&lt;</span><span class="token string">EOF
+000000
+000000
+EOF</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>这里配置的脚本用来在实例启动时设置centos账户的密码，否则不能登录控制台</p>
+</blockquote>
+ <img src="https://vault.taojie.fun:28089/i/2023/09/21/2023-09-21-1695233149.png" alt="1695233147185.png" title="1695233147185.png" /></li>
+</ol>
+<h3 id="定制镜像"><a href="#定制镜像" class="headerlink" title="定制镜像"></a>定制镜像</h3><ol>
+<li><p>在实例控制台中完成配置：</p>
+<blockquote>
+<p>使用账号：centos；密码：000000登录控制台</p>
+</blockquote>
+<ol>
+<li><p><code>sudo su</code>命令切换root用户</p>
+</li>
+<li><p><code>passwd root</code>命令设置密码000000</p>
+</li>
+<li><p>编辑文件<code>/etc/cloud/cloud.cfg</code>修改第四行为<code>disable_root:0</code></p>
+</li>
+<li><p>重启实例使用root用户登录。</p>
+</li>
+</ol>
+</li>
+<li><p>创建快照后基于新的快照创建实例，验证root用户直接登录控制台</p>
+ <img src="https://vault.taojie.fun:28089/i/2023/09/21/2023-09-21-1695235685.png" alt="1695235684061.png" title="1695235684061.png" />
+
+ <img src="https://vault.taojie.fun:28089/i/2023/09/21/2023-09-21-1695235198.png" alt="1695235196457.png" title="1695235196457.png" />
+
+ <img src="https://vault.taojie.fun:28089/i/2023/09/21/2023-09-21-1695235388.png" alt="1695235386127.png" title="1695235386127.png" />
+
+<blockquote>
+<p>作业3：登录控制台后截图上传</p>
+</blockquote>
+</li>
+<li><p>实例快照转换成镜像</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 1. 查看镜像列表获取ID</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack image list</span>
++--------------------------------------+-------------+--------+
+<span class="token operator">|</span> ID                                   <span class="token operator">|</span> Name        <span class="token operator">|</span> Status <span class="token operator">|</span>
++--------------------------------------+-------------+--------+
+<span class="token operator">|</span> 87b290e8-57c9-4c27-bb77-9d312c6d96c2 <span class="token operator">|</span> centos7     <span class="token operator">|</span> active <span class="token operator">|</span>
+<span class="token operator">|</span> 26b59df3-4fbe-4368-abd9-a5e5b58efe50 <span class="token operator">|</span> centos_test <span class="token operator">|</span> active <span class="token operator">|</span>
+<span class="token operator">|</span> 3a211d53-30e2-4d42-a7cf-ee55786b176a <span class="token operator">|</span> cirros      <span class="token operator">|</span> active <span class="token operator">|</span>
++--------------------------------------+-------------+--------+
+<span class="token comment"># 2. 将本地快照文件转换成镜像</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack image create centos_test_image --file /var/lib/glance/images/26b59df3-4fbe-4368-abd9-a5e5b58efe50  -disk-format qcow2 --container-format bare</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -181,7 +606,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-09-18 14:52:25" itemprop="dateModified" datetime="2023-09-18T14:52:25+08:00">2023-09-18</time>
+      <time title="修改时间：2023-09-20 22:25:51" itemprop="dateModified" datetime="2023-09-20T22:25:51+08:00">2023-09-20</time>
     </span>
 
   
@@ -194,10 +619,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <blockquote>
-<p><a target="_blank" rel="noopener" href="https://wxstc.fanya.chaoxing.com/portal">超星网址</a><br>控制节点：快照5.3.13，计算节点：5.3.9</p>
-</blockquote>
-<h2 id="理解Keystone身份服务"><a href="#理解Keystone身份服务" class="headerlink" title="理解Keystone身份服务"></a>理解Keystone身份服务</h2><h3 id="Keystone简介"><a href="#Keystone简介" class="headerlink" title="Keystone简介"></a>Keystone简介</h3><p>Keystone 是OpenStack项目中的一个重要组件，是OpenStack Identity服务。主要提供身份认证（Authentication）、授权（Authorization）、用户管理。</p>
+          <h2 id="理解Keystone身份服务"><a href="#理解Keystone身份服务" class="headerlink" title="理解Keystone身份服务"></a>理解Keystone身份服务</h2><h3 id="Keystone简介"><a href="#Keystone简介" class="headerlink" title="Keystone简介"></a>Keystone简介</h3><p>Keystone 是OpenStack项目中的一个重要组件，是OpenStack Identity服务。主要提供身份认证（Authentication）、授权（Authorization）、用户管理。</p>
 <ul>
 <li><p>身份认证（Authentication）： Keystone负责验证用户的身份。它支持多种认证方法，包括用户名&#x2F;密码、令牌（Token）、证书等。用户可以使用这些认证方法之一进行身份验证，以访问OpenStack中的资源。</p>
 </li>
@@ -226,7 +648,10 @@
 
 <h3 id="Keystone的认证流程"><a href="#Keystone的认证流程" class="headerlink" title="Keystone的认证流程"></a>Keystone的认证流程</h3><img src="https://vault.taojie.fun:28089/i/2023/09/15/2023-09-15-1694789109.png" alt="1694789108795.png" title="1694789108795.png" />
 
-<h2 id="Keystone服务的安装、配置"><a href="#Keystone服务的安装、配置" class="headerlink" title="Keystone服务的安装、配置"></a>Keystone服务的安装、配置</h2><ol>
+<h2 id="Keystone服务安装"><a href="#Keystone服务安装" class="headerlink" title="Keystone服务安装"></a>Keystone服务安装</h2><h3 id="作业与实验环境"><a href="#作业与实验环境" class="headerlink" title="作业与实验环境"></a>作业与实验环境</h3><blockquote>
+<p><a target="_blank" rel="noopener" href="https://wxstc.fanya.chaoxing.com/portal">超星网址</a><br><code>快照管理</code>：控制节点选择<code>快照5.3.13</code>，计算节点选择<code>快照5.3.9</code></p>
+</blockquote>
+<h3 id="安装与配置"><a href="#安装与配置" class="headerlink" title="安装与配置"></a>安装与配置</h3><ol>
 <li><p>Keystone是运行在Web服务器上的Web应用，需要安装以下软件包：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># yum -y install openstack-keystone httpd mod_wsgi</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
@@ -309,7 +734,7 @@ MariaDB <span class="token punctuation">[</span>keystone<span class="token punct
 </ul>
 </li>
 </ol>
-<h2 id="Keystone服务的初始化"><a href="#Keystone服务的初始化" class="headerlink" title="Keystone服务的初始化"></a>Keystone服务的初始化</h2><ol>
+<h3 id="Keystone服务初始化"><a href="#Keystone服务初始化" class="headerlink" title="Keystone服务初始化"></a>Keystone服务初始化</h3><ol>
 <li><p>初始化fernet密钥库</p>
  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 生成用来加密解密令牌的fernet密钥</span>
 <span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone</span>
@@ -3828,306 +4253,6 @@ bool flag2 <span class="token operator">=</span> false<span class="token punctua
 </li>
 <li>其他运算符：还有一些其他类型的运算符，如指针运算符、sizeof运算符、类型转换运算符等。</li>
 </ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/23/linux_shell/10.%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7awk/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | ">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/04/23/linux_shell/10.%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7awk/" class="post-title-link" itemprop="url">文本处理工具awk</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-04-23 13:26:57" itemprop="dateCreated datePublished" datetime="2023-04-23T13:26:57+08:00">2023-04-23</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-09-03 13:17:06" itemprop="dateModified" datetime="2023-09-03T13:17:06+08:00">2023-09-03</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="awk简介"><a href="#awk简介" class="headerlink" title="awk简介"></a>awk简介</h2><p>awk是一种用于处理文本数据的工具，可以从文本文件或者标准输入、一个或多个文件中提取和处理数据。<br>awk以逐行扫描方式处理数据，从第一行到最后一行以查找匹配某个特定模式的文本行，并且对这些文本行执行指定动作。</p>
-<h2 id="awk版本"><a href="#awk版本" class="headerlink" title="awk版本"></a>awk版本</h2><p>awk有众多版本包括传统awk、新版awk、gawk等，其中gawk是GNU组织开发的版本，也是目前最流行和最广泛使用的awk版本。gawk在传统awk和nawk的基础上添加了许多新功能和改进，例如更丰富的正则表达式支持、高级的数学和字符串处理函数、用户自定义函数等。gawk通常作为<code>/bin/gawk</code>或<code>/usr/bin/gawk</code>提供，是GNU工具集中的一部分，可以在多个平台上使用。<br>不同的awk可能在语法、功能和性能方面略有不同，在使用awk时应注意选择合适的版本，根据具体需求和系统环境来决定使用哪个版本。</p>
-<h2 id="awk格式"><a href="#awk格式" class="headerlink" title="awk格式"></a>awk格式</h2><p>awk基本格式如下：</p>
-<pre class="line-numbers language-text" data-language="text"><code class="language-text">awk 'pattern &#123; action &#125;' file
-awk '&#123; action &#125;' file
-awk 'pattern' file<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<ul>
-<li><code>pattern</code>: 可以是一个正则表达式，也可以是一个字符串或数字，用于匹配文本中的某个字段或整行</li>
-<li><code>action</code>: 是在匹配到的文本上执行的操作，可以是一个或多个命令，多个命令之间用换行或分号 <code>;</code> 分隔</li>
-<li><code>file</code>: 是输入文件的名称，没有<code>file</code>参数时从标准输入读取数据</li>
-</ul>
-<p>在awk命令中，<code>pattern</code>和<code>action</code>之间通过大括号 <code>&#123;&#125;</code> 进行分隔，<code>pattern</code>用于匹配文本行，当匹配成功时，对应的<code>action</code>将被执行。</p>
-<p>awk还支持在处理数据前和处理数据后运行命令，完整格式如下：</p>
-<pre class="line-numbers language-text" data-language="text"><code class="language-text">awk 'BEGIN &#123;command&#125; pattern &#123; action &#125; END &#123;command&#125;' file<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">echo</span> <span class="token string">"10 20 30 40 50"</span> <span class="token operator">|</span> <span class="token function">awk</span> <span class="token string">'BEGIN &#123;sum = 0; print "sum:", sum&#125; &#123;sum += $1&#125; END &#123;print "Sum:", sum&#125;'</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p><img src="https://vault.taojie.fun:28089/i/2023/09/02/note10.text-processing-tools-awk-2023-04-24-09-42-32.png" alt="10.text-processing-tools-awk-2023-04-24-09-42-32"></p>
-<h2 id="从标准输入读取数据"><a href="#从标准输入读取数据" class="headerlink" title="从标准输入读取数据"></a>从标准输入读取数据</h2><h3 id="从命令行读取数据"><a href="#从命令行读取数据" class="headerlink" title="从命令行读取数据"></a>从命令行读取数据</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> <span class="token string">'&#123;print "Hello World"&#125;'</span>
-<span class="token builtin class-name">test</span>
-Hello World
-abc
-Hello World<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>以上awk命令没有指定<code>file</code>参数，awk不会直接给出运行结果，它会等待标准输入的数据，当用户输入字符后awk会执行相应的命令并产生输出。如果要终止awk程序需要使用<code>Ctrl+D</code>产生一个EOF字符，此时会返回到命令行下。</p>
-<h3 id="通过管道符号从命令读取数据"><a href="#通过管道符号从命令读取数据" class="headerlink" title="通过管道符号从命令读取数据"></a>通过管道符号从命令读取数据</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@6e455ed15da7:~$ <span class="token function">ps</span> -aux<span class="token operator">|</span><span class="token function">awk</span> <span class="token string">'/bash/'</span>
-root           <span class="token number">1</span>  <span class="token number">0.0</span>  <span class="token number">0.0</span>  <span class="token number">18228</span>  <span class="token number">3012</span> pts/0    Ss+  Apr22   <span class="token number">0</span>:00 /bin/bash
-root          <span class="token number">11</span>  <span class="token number">0.0</span>  <span class="token number">0.0</span>  <span class="token number">18232</span>  <span class="token number">3240</span> pts/1    Ss   <span class="token number">13</span>:36   <span class="token number">0</span>:00 /bin/bash
-ubuntu       <span class="token number">269</span>  <span class="token number">0.0</span>  <span class="token number">0.0</span>  <span class="token number">18228</span>  <span class="token number">3144</span> pts/1    S    <span class="token number">13</span>:39   <span class="token number">0</span>:00 <span class="token function">bash</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>以上awk命令通过管道符号<code>|</code>从前面一个命令的输出结果从读取数据进行处理。</p>
-<h2 id="从文件中读取数据和命令"><a href="#从文件中读取数据和命令" class="headerlink" title="从文件中读取数据和命令"></a>从文件中读取数据和命令</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> <span class="token string">'/Alice/'</span> example.txt
-Alice,25,Female,New York
-ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> <span class="token string">'/Male/'</span> example.txt
-Bob,30,Male,Los Angeles
-Charlie,22,Male,Chicago
-David,35,Male,Houston<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>以上awk命令指定了<code>file</code>参数，awk会从文件中以行为单位读取数据并且使用<code>pattern</code>所表示的匹配模式进行数据匹配，由于没有指定<code>action</code>参数，awk将匹配到的数据直接输出到标准输出。</p>
-<p>awk和sed一样可以从文件中读取命令：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">awk</span> <span class="token parameter variable">-f</span> script_file.awk example.txt<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h2 id="awk工作原理"><a href="#awk工作原理" class="headerlink" title="awk工作原理"></a>awk工作原理</h2><ol>
-<li>awk对文件或者标准输入的内容一次只处理一行，将获取到的这一行数据赋给变量$0</li>
-<li>这一行的内容按awk内部变量FS定义的分隔符（缺省为空格，包括制表符tab）分解成多个字段，每一个字段存储在从$1开始的变量中。</li>
-</ol>
-<p>以以下数据为例：</p>
-<pre class="line-numbers language-text" data-language="text"><code class="language-text">Name Age Gender City
-Alice 25 Female New York
-Bob 30 Male Los Angeles
-Charlie 22 Male Chicago
-David 35 Male Houston
-Eve 28 Female Miami<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>以下awk命令的运行结果：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> <span class="token string">'&#123;print $1,$3&#125;'</span> example.txt
-Name Gender
-Alice Female
-Bob Male
-Charlie Male
-David Male
-Eve Female<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<ol>
-<li>awk首先将第一行数据存放在变量$0中进行处理。</li>
-<li>将<code>$0</code>中的数据以空格为分隔符（内部变量<code>FS</code>所定义）进行分解，分别存放在从<code>$1</code>开始的内部变量中。</li>
-<li>在输出结果的每一行中第一个字段是存放在<code>$1</code>中的数据，第二个字段是存放在<code>$3</code>中的数据。</li>
-<li>awk命令中的逗号映射为一个内部变量-输出字段分隔符<code>OFS</code>（默认为空格）两个字段之间由空格间隔。</li>
-<li>处理完一行数据后读取下一行数据到<code>$0</code>中进行处理直到所以数据处理完毕。</li>
-</ol>
-<h2 id="格式化输出"><a href="#格式化输出" class="headerlink" title="格式化输出"></a>格式化输出</h2><h3 id="print函数"><a href="#print函数" class="headerlink" title="print函数"></a>print函数</h3><p>print函数用于打印不需要特别编排格式的简单输出。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> <span class="token string">'&#123;print "Name:" $1 "Age:" $2&#125;'</span> example.txt
-Name:NameAge:Age
-Name:AliceAge:25
-Name:BobAge:30
-Name:CharlieAge:22
-Name:DavidAge:35
-Name:EveAge:28
-ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> <span class="token string">'&#123;print "Name:" $1, "Age:" $2&#125;'</span> example.txt
-Name:Name Age:Age
-Name:Alice Age:25
-Name:Bob Age:30
-Name:Charlie Age:22
-Name:David Age:35
-Name:Eve Age:28<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>逗号<code>,</code>表示内部变量<code>OFS</code>（用来表示输出字段的分隔符，默认为空格）。<br>print还支持以下转义序列：</p>
-<pre class="line-numbers language-text" data-language="text"><code class="language-text">\b：退格符（ASCII 008）
-\t：制表符（ASCII 009）
-\n：换行符（ASCII 010）
-\f：换页符（ASCII 012）
-\r：回车符（ASCII 013）<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>print中使用转义序列进行数据输出：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> <span class="token string">'&#123;print "Name:" $1 "\tAge:" $2&#125;'</span> example.txt
-Name:Name       Age:Age
-Name:Alice      Age:25
-Name:Bob        Age:30
-Name:Charlie    Age:22
-Name:David      Age:35
-Name:Eve        Age:28<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="printf函数"><a href="#printf函数" class="headerlink" title="printf函数"></a>printf函数</h3><p><code>printf</code>函数能够进行更加精细的格式化输出，用法和C语言中<code>printf</code>函数的用法一样。语句中包含一个加引号的控制串，控制串中包含若干格式说明和修饰符。控制串后面跟一个逗号，之后是一列由逗号分隔的表达式。<code>printf</code>会根据控制串来编排表达式的格式。<br><code>printf</code>和<code>print</code>不同的是printf在行尾不会自动换行，如果要换行必须使用转义字符<code>\n</code></p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> <span class="token string">'&#123;printf "[Name:%-10s]\tAge:%s", $1, $2&#125;'</span> example.txt
-<span class="token punctuation">[</span>Name:Name      <span class="token punctuation">]</span>       Age:Age<span class="token punctuation">[</span>Name:Alice     <span class="token punctuation">]</span>        Age:25<span class="token punctuation">[</span>Name:Bob       <span class="token punctuation">]</span> Age:30<span class="token punctuation">[</span>Name:Charlie   <span class="token punctuation">]</span>      Age:22<span class="token punctuation">[</span>Name:David     <span class="token punctuation">]</span> Age:35<span class="token punctuation">[</span>Name:Eve       <span class="token punctuation">]</span> Age:28ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> <span class="token string">'&#123;printf "[Name:%-10s]\tAge:%s\n", $1, $2&#125;'</span> example.txt
-<span class="token punctuation">[</span>Name:Name      <span class="token punctuation">]</span>       Age:Age
-<span class="token punctuation">[</span>Name:Alice     <span class="token punctuation">]</span>       Age:25
-<span class="token punctuation">[</span>Name:Bob       <span class="token punctuation">]</span>       Age:30
-<span class="token punctuation">[</span>Name:Charlie   <span class="token punctuation">]</span>       Age:22
-<span class="token punctuation">[</span>Name:David     <span class="token punctuation">]</span>       Age:35
-<span class="token punctuation">[</span>Name:Eve       <span class="token punctuation">]</span>       Age:28<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="记录与字段"><a href="#记录与字段" class="headerlink" title="记录与字段"></a>记录与字段</h2><h3 id="记录"><a href="#记录" class="headerlink" title="记录"></a>记录</h3><p>在awk中每一行数据称为一条记录，以换行符结束。</p>
-<ul>
-<li>记录分隔符：默认情况下，输入和输出记录的分隔符都是回车符，分别保存在内部变量<code>ORS</code>和<code>RS</code>中。</li>
-<li>变量<code>$0</code>表示当前整条记录，变量NR表示当前记录的记录号，每处理一条记录，NR值加一。</li>
-</ul>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> <span class="token string">'&#123;print NR,$0&#125;'</span> example.txt
-<span class="token number">1</span> Name Age Gender City
-<span class="token number">2</span> Alice <span class="token number">25</span> Female New York
-<span class="token number">3</span> Bob <span class="token number">30</span> Male Los Angeles
-<span class="token number">4</span> Charlie <span class="token number">22</span> Male Chicago
-<span class="token number">5</span> David <span class="token number">35</span> Male Houston
-<span class="token number">6</span> Eve <span class="token number">28</span> Female Miami<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="字段"><a href="#字段" class="headerlink" title="字段"></a>字段</h3><p>每一条记录都是由称为字段的词组成，默认情况下字段之间用空白符（空格或者制表符）分隔。<code>NF</code>变量保存每个记录的字段数量。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> <span class="token string">'&#123;print NF,$0&#125;'</span> example.txt
-<span class="token number">4</span> Name Age Gender City
-<span class="token number">5</span> Alice <span class="token number">25</span> Female New York
-<span class="token number">5</span> Bob <span class="token number">30</span> Male Los Angeles
-<span class="token number">4</span> Charlie <span class="token number">22</span> Male Chicago
-<span class="token number">4</span> David <span class="token number">35</span> Male Houston
-<span class="token number">4</span> Eve <span class="token number">28</span> Female Miami<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="字段分隔符"><a href="#字段分隔符" class="headerlink" title="字段分隔符"></a>字段分隔符</h3><p>字段分隔符由内部变量<code>FS</code>保存，可以在命令中通过<code>-F</code>选项修改<code>FS</code>的值。<br>先使用<code>sed</code>命令将<code>example.txt</code>文件中的空格替换为逗号：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@6e455ed15da7:~$ <span class="token function">sed</span> <span class="token parameter variable">-i</span> <span class="token string">'s/ /,/g'</span> example.txt
-ubuntu@6e455ed15da7:~$ <span class="token function">cat</span> example.txt
-Name,Age,Gender,City
-Alice,25,Female,New,York
-Bob,30,Male,Los,Angeles
-Charlie,22,Male,Chicago
-David,35,Male,Houston
-Eve,28,Female,Miami<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>然后使用awk并通过<code>-F</code>选项替换分隔符进行输出：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> <span class="token string">'&#123;print "Name:" $1, "Age:" $2&#125;'</span> example.txt
-Name:Name,Age,Gender,City Age:
-Name:Alice,25,Female,New,York Age:
-Name:Bob,30,Male,Los,Angeles Age:
-Name:Charlie,22,Male,Chicago Age:
-Name:David,35,Male,Houston Age:
-Name:Eve,28,Female,Miami Age:
-ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> -F, <span class="token string">'&#123;print "Name:" $1, "Age:" $2&#125;'</span> example.txt
-Name:Name Age:Age
-Name:Alice Age:25
-Name:Bob Age:30
-Name:Charlie Age:22
-Name:David Age:35
-Name:Eve Age:28<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="匹配模式与正则表达式"><a href="#匹配模式与正则表达式" class="headerlink" title="匹配模式与正则表达式"></a>匹配模式与正则表达式</h2><h3 id="匹配模式"><a href="#匹配模式" class="headerlink" title="匹配模式"></a>匹配模式</h3><p>awk中的模式可以是一个正则表达式或者用来判定条件真伪的表达式。</p>
-<p>使用<code>Alice</code>进行数据匹配：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@6e455ed15da7:~$ <span class="token function">cat</span> example.txt
-Name Age Gender City
-Alice <span class="token number">25</span> Female New York
-Bob <span class="token number">30</span> Male Los Angeles
-Charlie <span class="token number">22</span> Male Chicago
-David <span class="token number">35</span> Male Houston
-Eve <span class="token number">28</span> Female Miami
-ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> <span class="token string">'/Alice/'</span> example.txt
-Alice <span class="token number">25</span> Female New York<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>使用条件表达式进行数据匹配：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@6e455ed15da7:~$ <span class="token function">cat</span> example.txt
-Name Age Gender City
-Alice <span class="token number">25</span> Female New York
-Bob <span class="token number">30</span> Male Los Angeles
-Charlie <span class="token number">22</span> Male Chicago
-David <span class="token number">35</span> Male Houston
-Eve <span class="token number">28</span> Female Miami
-ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> <span class="token string">'$2 &lt; 25'</span> example.txt
-Charlie <span class="token number">22</span> Male Chicago<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="正则表达式模式与操作"><a href="#正则表达式模式与操作" class="headerlink" title="正则表达式模式与操作"></a>正则表达式模式与操作</h3><p>使用正则表达式模式<code>Alice</code>进行数据匹配，然后通过<code>print</code>函数进行格式化输出：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> <span class="token string">'/Alice/&#123;print "Name:" $1&#125;'</span> example.txt
-Name:Alice
-ubuntu@6e455ed15da7:~$ <span class="token function">cat</span> example.txt
-Name Age Gender City
-Alice <span class="token number">25</span> Female New York
-Bob <span class="token number">30</span> Male Los Angeles
-Charlie <span class="token number">22</span> Male Chicago
-David <span class="token number">35</span> Male Houston
-Eve <span class="token number">28</span> Female Miami
-ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> <span class="token string">'/Alice/&#123;print "Name:" $1&#125;'</span> example.txt
-Name:Alice<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>格式化输出<code>example.txt</code>文件中所有以大写字母<code>A-C</code>开头的行：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@6e455ed15da7:~$ <span class="token function">cat</span> example.txt
-Name Age Gender City
-Alice <span class="token number">25</span> Female New York
-Bob <span class="token number">30</span> Male Los Angeles
-Charlie <span class="token number">22</span> Male Chicago
-David <span class="token number">35</span> Male Houston
-Eve <span class="token number">28</span> Female Miami
-ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> <span class="token string">'/^[A-C]+.*/&#123;print "Name:" $1&#125;'</span> example.txt
-Name:Alice
-Name:Bob
-Name:Charlie<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h2><h3 id="显示系统下各用户所使用的shell"><a href="#显示系统下各用户所使用的shell" class="headerlink" title="显示系统下各用户所使用的shell"></a>显示系统下各用户所使用的shell</h3><p>查看当前<code>/etc/passwd</code>格式：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@6e455ed15da7:~$ <span class="token function">cat</span> /etc/passwd<span class="token operator">|</span><span class="token function">head</span>
-root:x:0:0:root:/root:/bin/bash<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p>使用awk显示各用户使用的shell:</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">User:root Shell:/bin/bash
-User:daemon Shell:/usr/sbin/nologin
-User:bin Shell:/usr/sbin/nologin
-User:sys Shell:/usr/sbin/nologin
-User:sync Shell:/bin/sync
-User:games Shell:/usr/sbin/nologin
-User:man Shell:/usr/sbin/nologin
-User:lp Shell:/usr/sbin/nologin
-User:mail Shell:/usr/sbin/nologin
-User:news Shell:/usr/sbin/nologin<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
       
     </div>

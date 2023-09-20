@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.17.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Glance服务介绍Glance服务是OpenStack平台的镜像服务，它提供了管理虚拟机镜像的功能。 在OpenStack Glance组件中，镜像（Image）是指虚拟机的模板，包含了预先配置的操作系统和应用程序。镜像是创建和部署虚拟机实例的基础。  Glance主要特点和功能：  镜像存储和管理：Glance提供了一个可靠的存储系统，用于持久化保存虚拟机镜像。它支持多种后端存储选项，如本地文">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenStack镜像管理与制作">
+<meta property="og:url" content="http://example.com/2023/09/20/private_clouds/4.OpenStack%E9%95%9C%E5%83%8F%E7%AE%A1%E7%90%86/index.html">
+<meta property="og:site_name">
+<meta property="og:description" content="Glance服务介绍Glance服务是OpenStack平台的镜像服务，它提供了管理虚拟机镜像的功能。 在OpenStack Glance组件中，镜像（Image）是指虚拟机的模板，包含了预先配置的操作系统和应用程序。镜像是创建和部署虚拟机实例的基础。  Glance主要特点和功能：  镜像存储和管理：Glance提供了一个可靠的存储系统，用于持久化保存虚拟机镜像。它支持多种后端存储选项，如本地文">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/09/20/2023-09-20-1695216464.png">
+<meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/09/20/2023-09-20-1695214714.png">
+<meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/09/21/2023-09-21-1695229069.png">
+<meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/09/21/2023-09-21-1695230412.png">
+<meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/09/21/2023-09-21-1695233149.png">
+<meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/09/21/2023-09-21-1695235685.png">
+<meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/09/21/2023-09-21-1695235198.png">
+<meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/09/21/2023-09-21-1695235388.png">
+<meta property="article:published_time" content="2023-09-20T12:00:51.000Z">
+<meta property="article:modified_time" content="2023-09-20T18:55:01.149Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://vault.taojie.fun:28089/i/2023/09/20/2023-09-20-1695216464.png">
+
+
+<link rel="canonical" href="http://example.com/2023/09/20/private_clouds/4.OpenStack%E9%95%9C%E5%83%8F%E7%AE%A1%E7%90%86/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/09/20/private_clouds/4.OpenStack%E9%95%9C%E5%83%8F%E7%AE%A1%E7%90%86/","path":"2023/09/20/private_clouds/4.OpenStack镜像管理/","title":"OpenStack镜像管理与制作"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>OpenStack镜像管理与制作 | </title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title"></p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Glance%E6%9C%8D%E5%8A%A1%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">Glance服务介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Glance%E6%9E%B6%E6%9E%84"><span class="nav-number">1.1.</span> <span class="nav-text">Glance架构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Glance%E6%9C%8D%E5%8A%A1%E5%AE%89%E8%A3%85"><span class="nav-number">2.</span> <span class="nav-text">Glance服务安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%9C%E4%B8%9A%E4%B8%8E%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83"><span class="nav-number">2.1.</span> <span class="nav-text">作业与实验环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE"><span class="nav-number">2.2.</span> <span class="nav-text">安装与配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Glance%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">2.3.</span> <span class="nav-text">Glance初始化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E9%A2%84%E5%88%B6%E9%95%9C%E5%83%8F%E5%AE%9A%E5%88%B6OpenStack%E9%95%9C%E5%83%8F"><span class="nav-number">3.</span> <span class="nav-text">基于预制镜像定制OpenStack镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83"><span class="nav-number">3.1.</span> <span class="nav-text">实验环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Centos%E9%95%9C%E5%83%8F%E5%88%9B%E5%BB%BA"><span class="nav-number">3.2.</span> <span class="nav-text">Centos镜像创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%9E%E4%BE%8B"><span class="nav-number">3.3.</span> <span class="nav-text">创建虚拟机实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E5%88%B6%E9%95%9C%E5%83%8F"><span class="nav-number">3.4.</span> <span class="nav-text">定制镜像</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name"></p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/20/private_clouds/4.OpenStack%E9%95%9C%E5%83%8F%E7%AE%A1%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="OpenStack镜像管理与制作 | ">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          OpenStack镜像管理与制作
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-09-20 20:00:51" itemprop="dateCreated datePublished" datetime="2023-09-20T20:00:51+08:00">2023-09-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-09-21 02:55:01" itemprop="dateModified" datetime="2023-09-21T02:55:01+08:00">2023-09-21</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="Glance服务介绍"><a href="#Glance服务介绍" class="headerlink" title="Glance服务介绍"></a>Glance服务介绍</h2><p>Glance服务是OpenStack平台的镜像服务，它提供了管理虚拟机镜像的功能。</p>
+<p>在OpenStack Glance组件中，镜像（Image）是指虚拟机的模板，包含了预先配置的操作系统和应用程序。镜像是创建和部署虚拟机实例的基础。</p>
+<ul>
+<li><p>Glance主要特点和功能：</p>
+<ol>
+<li><p>镜像存储和管理：Glance提供了一个可靠的存储系统，用于持久化保存虚拟机镜像。它支持多种后端存储选项，如本地文件系统、分布式文件系统和对象存储。用户可以通过Glance API上传、删除、更新和查询镜像。</p>
+</li>
+<li><p>镜像加速和缓存：Glance支持镜像的加速和缓存，以提高虚拟机实例的启动速度和性能。通过将常用的镜像缓存在计算节点上，可以减少下载和传输时间。</p>
+</li>
+<li><p>镜像格式支持：Glance支持多种虚拟机镜像格式，包括常见的格式如QCOW2、VHD、VMDK和RAW等。这使得用户可以使用不同的镜像格式来满足其特定的需求。</p>
+</li>
+<li><p>元数据管理：Glance允许用户为每个镜像添加自定义元数据，包括镜像名称、描述、操作系统类型、版本等信息。这些元数据可以帮助用户更好地组织和搜索镜像库。</p>
+</li>
+<li><p>镜像共享：Glance支持镜像的共享功能，允许用户将自己的镜像分享给其他项目或用户。这样可以避免重复创建相同的镜像，提高资源的共享和重用。</p>
+</li>
+</ol>
+</li>
+</ul>
+<img src="https://vault.taojie.fun:28089/i/2023/09/20/2023-09-20-1695216464.png" alt="1695216462264.png" title="1695216462264.png" />
+
+<h3 id="Glance架构"><a href="#Glance架构" class="headerlink" title="Glance架构"></a>Glance架构</h3><img src="https://vault.taojie.fun:28089/i/2023/09/20/2023-09-20-1695214714.png" alt="1695214713001.png" title="1695214713001.png" />
+
+<ul>
+<li><p>Glance API：用户与 Glance 服务交互的接口，通过 RESTful API 提供了镜像管理的各种功能。用户可以通过 API 执行镜像的上传、下载、删除等操作。</p>
+</li>
+<li><p>Glance Registry：用于存储和管理镜像的元数据，如名称、格式、大小等。</p>
+</li>
+<li><p>Glance Store：Glance 的后端存储组件，负责实际的镜像文件的存储。它可以支持多种后端存储类型，如本地文件系统、Swift、Ceph、S3 等。根据配置，镜像可以存储在不同的后端存储中。</p>
+</li>
+</ul>
+<p>Database：数据库用于存储 Glance 服务的持久化数据，包括镜像的元数据、权限信息等。</p>
+<h2 id="Glance服务安装"><a href="#Glance服务安装" class="headerlink" title="Glance服务安装"></a>Glance服务安装</h2><h3 id="作业与实验环境"><a href="#作业与实验环境" class="headerlink" title="作业与实验环境"></a>作业与实验环境</h3><blockquote>
+<p><a target="_blank" rel="noopener" href="https://wxstc.fanya.chaoxing.com/portal">超星网址</a><br><code>快照管理</code>：控制节点选择<code>快照项目6</code>，计算节点不需要设置</p>
+</blockquote>
+<h3 id="安装与配置"><a href="#安装与配置" class="headerlink" title="安装与配置"></a>安装与配置</h3><ol>
+<li><p>执行命令安装Glance软件包：</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># yum -y install openstack-glance</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p> 安装结束后能够通过以下命令查看系统中的同名用户和用户组表示Glance组件安装完成：</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># cat /etc/passwd |grep glance       # 1. 查看glance用户</span>
+glance:x:161:161:OpenStack Glance Daemons:/var/lib/glance:/sbin/nologin
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># cat /etc/group |grep glance        # 2. 查看glance用户组</span>
+glance:x:161:<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>创建数据库并授权：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 1. 进入数据库</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># mysql -uroot -p000000</span>
+Welcome to the MariaDB monitor.  Commands end with <span class="token punctuation">;</span> or <span class="token punctuation">\</span>g.
+Your MariaDB connection <span class="token function">id</span> is <span class="token number">64</span>
+Server version: <span class="token number">10.3</span>.20-MariaDB MariaDB Server
+
+Copyright <span class="token punctuation">(</span>c<span class="token punctuation">)</span> <span class="token number">2000</span>, <span class="token number">2018</span>, Oracle, MariaDB Corporation Ab and others.
+
+Type <span class="token string">'help;'</span> or <span class="token string">'\h'</span> <span class="token keyword">for</span> help. Type <span class="token string">'\c'</span> to <span class="token function">clear</span> the current input statement.
+
+<span class="token comment"># 2. 创建glance数据库</span>
+MariaDB <span class="token punctuation">[</span><span class="token punctuation">(</span>none<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token operator">></span> CREATE DATABASE glance<span class="token punctuation">;</span>
+Query OK, <span class="token number">1</span> row affected <span class="token punctuation">(</span><span class="token number">0.000</span> sec<span class="token punctuation">)</span>
+
+<span class="token comment"># 3. 为glance数据库授予本地登录用户的权限</span>
+MariaDB <span class="token punctuation">[</span><span class="token punctuation">(</span>none<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token operator">></span> GRANT ALL PRIVILEGES ON glance.* TO <span class="token string">'glance'</span>@<span class="token string">'localhost'</span> IDENTIFIED BY <span class="token string">'000000'</span><span class="token punctuation">;</span>
+Query OK, <span class="token number">0</span> rows affected <span class="token punctuation">(</span><span class="token number">0.001</span> sec<span class="token punctuation">)</span>
+
+<span class="token comment"># 4. 为glance数据库授予远程登录用户的权限</span>
+MariaDB <span class="token punctuation">[</span><span class="token punctuation">(</span>none<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token operator">></span> GRANT ALL PRIVILEGES ON glance.* TO <span class="token string">'glance'</span>@<span class="token string">'%'</span> IDENTIFIED BY <span class="token string">'000000'</span><span class="token punctuation">;</span>
+Query OK, <span class="token number">0</span> rows affected <span class="token punctuation">(</span><span class="token number">0.000</span> sec<span class="token punctuation">)</span>
+<span class="token comment"># 5. 退出</span>
+MariaDB <span class="token punctuation">[</span><span class="token punctuation">(</span>none<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token operator">></span> quit<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>修改配置文件：</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 备份配置文件</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># cp /etc/glance/glance-api.conf /etc/glance/glance-api.bak</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 删除配置文件中的空行和注释行</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># grep -Ev '^$|#' /etc/glance/glance-api.bak > /etc/glance/glance-api.conf</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p> 打开配置文件依次编辑以下字段：</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 数据库地址</span>
+<span class="token punctuation">[</span>database<span class="token punctuation">]</span>
+connection <span class="token operator">=</span> mysql+pymysql://glance:000000@controller/glance<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 身份凭证配置</span>
+<span class="token punctuation">[</span>keystone_authtoken<span class="token punctuation">]</span>
+auth_url <span class="token operator">=</span> http://controller:5000
+memcached_servers <span class="token operator">=</span> controller:11211
+auth_type <span class="token operator">=</span> password
+username <span class="token operator">=</span> glance
+password <span class="token operator">=</span> 000000
+project_name <span class="token operator">=</span> project
+user_domain_name <span class="token operator">=</span> Default
+project_domain_name <span class="token operator">=</span> Default<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 身份凭证配置</span>
+<span class="token punctuation">[</span>paste_deploy<span class="token punctuation">]</span>
+flavor <span class="token operator">=</span> keystone<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 后端存储配置</span>
+<span class="token punctuation">[</span>glance_store<span class="token punctuation">]</span>
+stores <span class="token operator">=</span> <span class="token function">file</span>
+default_store <span class="token operator">=</span> <span class="token function">file</span>
+filesystem_store_datadir <span class="token operator">=</span> /var/lib/glance/images/<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>初始化Glance数据库</p>
+<ul>
+<li><p>数据库同步</p>
+  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># su glance -s /bin/sh -c "glance-manage db_sync"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>查看同步后的数据表</p>
+  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># mysql -uroot -p000000      # 1. 数据库登录</span>
+Welcome to the MariaDB monitor.  Commands end with <span class="token punctuation">;</span> or <span class="token punctuation">\</span>g.
+Your MariaDB connection <span class="token function">id</span> is <span class="token number">270</span>
+Server version: <span class="token number">10.3</span>.20-MariaDB MariaDB Server
+
+Copyright <span class="token punctuation">(</span>c<span class="token punctuation">)</span> <span class="token number">2000</span>, <span class="token number">2018</span>, Oracle, MariaDB Corporation Ab and others.
+
+Type <span class="token string">'help;'</span> or <span class="token string">'\h'</span> <span class="token keyword">for</span> help. Type <span class="token string">'\c'</span> to <span class="token function">clear</span> the current input statement.
+
+MariaDB <span class="token punctuation">[</span><span class="token punctuation">(</span>none<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token operator">></span> use glance<span class="token punctuation">;</span>                   <span class="token comment"># 2. 进入glance数据库</span>
+Reading table information <span class="token keyword">for</span> completion of table and <span class="token function">column</span> names
+You can turn off this feature to get a quicker startup with <span class="token parameter variable">-A</span>
+
+Database changed
+MariaDB <span class="token punctuation">[</span>glance<span class="token punctuation">]</span><span class="token operator">></span> show tables<span class="token punctuation">;</span>                  <span class="token comment"># 3. 显示数据表</span>
++----------------------------------+
+<span class="token operator">|</span> Tables_in_glance                 <span class="token operator">|</span>
++----------------------------------+
+<span class="token operator">|</span> alembic_version                  <span class="token operator">|</span>
+<span class="token operator">|</span> image_locations                  <span class="token operator">|</span>
+<span class="token operator">|</span> image_members                    <span class="token operator">|</span>
+<span class="token operator">|</span> image_properties                 <span class="token operator">|</span>
+<span class="token operator">|</span> image_tags                       <span class="token operator">|</span>
+<span class="token operator">|</span> images                           <span class="token operator">|</span>
+<span class="token operator">|</span> metadef_namespace_resource_types <span class="token operator">|</span>
+<span class="token operator">|</span> metadef_namespaces               <span class="token operator">|</span>
+<span class="token operator">|</span> metadef_objects                  <span class="token operator">|</span>
+<span class="token operator">|</span> metadef_properties               <span class="token operator">|</span>
+<span class="token operator">|</span> metadef_resource_types           <span class="token operator">|</span>
+<span class="token operator">|</span> metadef_tags                     <span class="token operator">|</span>
+<span class="token operator">|</span> migrate_version                  <span class="token operator">|</span>
+<span class="token operator">|</span> task_info                        <span class="token operator">|</span>
+<span class="token operator">|</span> tasks                            <span class="token operator">|</span>
++----------------------------------+
+<span class="token number">15</span> rows <span class="token keyword">in</span> <span class="token builtin class-name">set</span> <span class="token punctuation">(</span><span class="token number">0.000</span> sec<span class="token punctuation">)</span>
+MariaDB <span class="token punctuation">[</span>glance<span class="token punctuation">]</span><span class="token operator">></span> quit                          <span class="token comment"># 4. 退出</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+<blockquote>
+<p>作业1：显示数据表后后截图上传</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="Glance初始化"><a href="#Glance初始化" class="headerlink" title="Glance初始化"></a>Glance初始化</h3><ol>
+<li><p>创建Glance用户、分配角色</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 1. 利用环境变量登录</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># source admin-login</span>
+<span class="token comment"># 2. 创建用户</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack user create --domain default --password 000000 glance</span>
++---------------------+----------------------------------+
+<span class="token operator">|</span> Field               <span class="token operator">|</span> Value                            <span class="token operator">|</span>
++---------------------+----------------------------------+
+<span class="token operator">|</span> domain_id           <span class="token operator">|</span> default                          <span class="token operator">|</span>
+<span class="token operator">|</span> enabled             <span class="token operator">|</span> True                             <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token function">id</span>                  <span class="token operator">|</span> 504c914efe01478a9da5968a88dad987 <span class="token operator">|</span>
+
+<span class="token operator">|</span> options             <span class="token operator">|</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>                               <span class="token operator">|</span>
+<span class="token operator">|</span> password_expires_at <span class="token operator">|</span> None                             <span class="token operator">|</span>
++---------------------+----------------------------------+
+<span class="token comment"># 3. 添加角色</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack role add --project project --user glance admin</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>创建服务和端点</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 1. 创建服务</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack service create --name glance image</span>
++---------+----------------------------------+
+<span class="token operator">|</span> Field   <span class="token operator">|</span> Value                            <span class="token operator">|</span>
++---------+----------------------------------+
+<span class="token operator">|</span> enabled <span class="token operator">|</span> True                             <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token function">id</span>      <span class="token operator">|</span> da84735108944b6690cbcf9fab56f5fd <span class="token operator">|</span>
+<span class="token operator">|</span> name    <span class="token operator">|</span> glance                           <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token builtin class-name">type</span>    <span class="token operator">|</span> image                            <span class="token operator">|</span>
++---------+----------------------------------+
+<span class="token comment"># 2. 创建公共用户使用的端点</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack endpoint create --region RegionOne glance public http://controller:9292</span>
++--------------+----------------------------------+
+<span class="token operator">|</span> Field        <span class="token operator">|</span> Value                            <span class="token operator">|</span>
++--------------+----------------------------------+
+<span class="token operator">|</span> enabled      <span class="token operator">|</span> True                             <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token function">id</span>           <span class="token operator">|</span> a344eb651ebc41f7ae2b1b74b3e8fda3 <span class="token operator">|</span>
+<span class="token operator">|</span> interface    <span class="token operator">|</span> public                           <span class="token operator">|</span>
+<span class="token operator">|</span> region       <span class="token operator">|</span> RegionOne                        <span class="token operator">|</span>
+<span class="token operator">|</span> region_id    <span class="token operator">|</span> RegionOne                        <span class="token operator">|</span>
+<span class="token operator">|</span> service_id   <span class="token operator">|</span> da84735108944b6690cbcf9fab56f5fd <span class="token operator">|</span>
+<span class="token operator">|</span> service_name <span class="token operator">|</span> glance                           <span class="token operator">|</span>
+<span class="token operator">|</span> service_type <span class="token operator">|</span> image                            <span class="token operator">|</span>
+<span class="token operator">|</span> url          <span class="token operator">|</span> http://controller:9292           <span class="token operator">|</span>
++--------------+----------------------------------+
+<span class="token comment"># 3. 创建内部组件用户使用的端点</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack endpoint create --region RegionOne glance internal http://controller:9292</span>
++--------------+----------------------------------+
+<span class="token operator">|</span> Field        <span class="token operator">|</span> Value                            <span class="token operator">|</span>
++--------------+----------------------------------+
+<span class="token operator">|</span> enabled      <span class="token operator">|</span> True                             <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token function">id</span>           <span class="token operator">|</span> f1b7a33ab36047209e0130debf4dc500 <span class="token operator">|</span>
+<span class="token operator">|</span> interface    <span class="token operator">|</span> internal                         <span class="token operator">|</span>
+<span class="token operator">|</span> region       <span class="token operator">|</span> RegionOne                        <span class="token operator">|</span>
+<span class="token operator">|</span> region_id    <span class="token operator">|</span> RegionOne                        <span class="token operator">|</span>
+<span class="token operator">|</span> service_id   <span class="token operator">|</span> da84735108944b6690cbcf9fab56f5fd <span class="token operator">|</span>
+<span class="token operator">|</span> service_name <span class="token operator">|</span> glance                           <span class="token operator">|</span>
+<span class="token operator">|</span> service_type <span class="token operator">|</span> image                            <span class="token operator">|</span>
+<span class="token operator">|</span> url          <span class="token operator">|</span> http://controller:9292           <span class="token operator">|</span>
++--------------+----------------------------------+
+<span class="token comment"># 4. 创建admin用户使用的端点</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack endpoint create --region RegionOne glance admin http://controller:9292</span>
++--------------+----------------------------------+
+<span class="token operator">|</span> Field        <span class="token operator">|</span> Value                            <span class="token operator">|</span>
++--------------+----------------------------------+
+<span class="token operator">|</span> enabled      <span class="token operator">|</span> True                             <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token function">id</span>           <span class="token operator">|</span> c176c6ff1caa4eba9083105bd2b41261 <span class="token operator">|</span>
+<span class="token operator">|</span> interface    <span class="token operator">|</span> admin                            <span class="token operator">|</span>
+<span class="token operator">|</span> region       <span class="token operator">|</span> RegionOne                        <span class="token operator">|</span>
+<span class="token operator">|</span> region_id    <span class="token operator">|</span> RegionOne                        <span class="token operator">|</span>
+<span class="token operator">|</span> service_id   <span class="token operator">|</span> da84735108944b6690cbcf9fab56f5fd <span class="token operator">|</span>
+<span class="token operator">|</span> service_name <span class="token operator">|</span> glance                           <span class="token operator">|</span>
+<span class="token operator">|</span> service_type <span class="token operator">|</span> image                            <span class="token operator">|</span>
+<span class="token operator">|</span> url          <span class="token operator">|</span> http://controller:9292           <span class="token operator">|</span>
++--------------+----------------------------------+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>启动Glance服务并验证</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 1. 设置开机自启</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># systemctl enable openstack-glance-api</span>
+Created symlink from /etc/systemd/system/multi-user.target.wants/openstack-glance-api.service to /usr/lib/systemd/system/openstack-glance-api.service.
+<span class="token comment"># 2. 启动服务</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># systemctl start openstack-glance-api</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment">#</span>
+<span class="token comment"># 3. 查看服务状态</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># systemctl status openstack-glance-api</span>
+● openstack-glance-api.service - OpenStack Image Service <span class="token punctuation">(</span>code-named Glance<span class="token punctuation">)</span> API server
+Loaded: loaded <span class="token punctuation">(</span>/usr/lib/systemd/system/openstack-glance-api.service<span class="token punctuation">;</span> enabled<span class="token punctuation">;</span> vendor preset: disabled<span class="token punctuation">)</span>
+Active: active <span class="token punctuation">(</span>running<span class="token punctuation">)</span> since Wed <span class="token number">2023</span>-09-20 <span class="token number">11</span>:18:59 EDT<span class="token punctuation">;</span> 13s ago
+Main PID: <span class="token number">5068</span> <span class="token punctuation">(</span>glance-api<span class="token punctuation">)</span>
+CGroup: /system.slice/openstack-glance-api.service
+        ├─5068 /usr/bin/python2 /usr/bin/glance-api
+        ├─5080 /usr/bin/python2 /usr/bin/glance-api
+        └─5081 /usr/bin/python2 /usr/bin/glance-api
+
+Sep <span class="token number">20</span> <span class="token number">11</span>:18:59 controller systemd<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>: Started OpenStack Image Service <span class="token punctuation">(</span>code-named Glance<span class="token punctuation">)</span> API server.
+Sep <span class="token number">20</span> <span class="token number">11</span>:18:59 controller glance-api<span class="token punctuation">[</span><span class="token number">5068</span><span class="token punctuation">]</span>: /usr/lib/python2.7/site-packages/paste/deploy/loadwsgi.py:22: PkgRe<span class="token punctuation">..</span>.tely.
+Sep <span class="token number">20</span> <span class="token number">11</span>:18:59 controller glance-api<span class="token punctuation">[</span><span class="token number">5068</span><span class="token punctuation">]</span>: <span class="token builtin class-name">return</span> pkg_resources.EntryPoint.parse<span class="token punctuation">(</span><span class="token string">"x="</span> + s<span class="token punctuation">)</span>.load<span class="token punctuation">(</span>False<span class="token punctuation">)</span>
+Hint: Some lines were ellipsized, use <span class="token parameter variable">-l</span> to show <span class="token keyword">in</span> full.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>创建镜像</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 1. 获取镜像文件到本地</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># curl -O http://download.cirros-cloud.net/0.5.1/cirros-0.5.1-x86_64-disk.img</span>
+% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                Dload  Upload   Total   Spent    Left  Speed
+<span class="token number">100</span>   <span class="token number">273</span>  <span class="token number">100</span>   <span class="token number">273</span>    <span class="token number">0</span>     <span class="token number">0</span>     <span class="token number">40</span>      <span class="token number">0</span>  <span class="token number">0</span>:00:06  <span class="token number">0</span>:00:06 --:--:--    <span class="token number">65</span>
+<span class="token comment"># 2. 创建镜像</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack image create --file cirros-0.5.1-x86_64-disk.img --disk-format raw --container-format bare --public cirros</span>
+<span class="token comment"># 3. 查看镜像列表</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack image list</span>
++--------------------------------------+--------+--------+
+<span class="token operator">|</span> ID                                   <span class="token operator">|</span> Name   <span class="token operator">|</span> Status <span class="token operator">|</span>
++--------------------------------------+--------+--------+G
+<span class="token operator">|</span> cfd3a7d5-3339-4d11-8c18-18c6d703c03b <span class="token operator">|</span> cirros <span class="token operator">|</span> active <span class="token operator">|</span>
++--------------------------------------+--------+--------+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>作业2：显示镜像列表后截图上传</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="基于预制镜像定制OpenStack镜像"><a href="#基于预制镜像定制OpenStack镜像" class="headerlink" title="基于预制镜像定制OpenStack镜像"></a>基于预制镜像定制OpenStack镜像</h2><h3 id="实验环境"><a href="#实验环境" class="headerlink" title="实验环境"></a>实验环境</h3><blockquote>
+<p>控制节点和计算节点都是<code>快照项目12</code></p>
+</blockquote>
+<h3 id="Centos镜像创建"><a href="#Centos镜像创建" class="headerlink" title="Centos镜像创建"></a>Centos镜像创建</h3><ol>
+<li><p>设置虚拟机和宿主机共享</p>
+<ul>
+<li><p>控制节点关机状态右键-&gt;设置，选择选项-&gt;共享文件夹-&gt;总是启用并添加本地D盘内的镜像文件所在目录</p>
+  <img src="https://vault.taojie.fun:28089/i/2023/09/21/2023-09-21-1695229069.png" alt="1695229067851.png" title="1695229067851.png" />
+</li>
+<li><p>安装vm-tools并挂载设备</p>
+  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># yum -y install open-vm-tools</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># vmhgfs-fuse .host:/ /mnt/hgfs -o subtype=vmhgfs-fuse,allow_other</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># file /mnt/hgfs/镜像/CentOS-7-x86_64-GenericCloud-2003.qcow2</span>
+/mnt/hgfs/镜像/CentOS-7-x86_64-GenericCloud-2003.qcow2: QEMU QCOW Image <span class="token punctuation">(</span>v3<span class="token punctuation">)</span>, <span class="token number">8589934592</span> bytes<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+</li>
+<li><p>创建镜像</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack image create --disk-format qcow2 --container-format bare   --public --file /mnt/hgfs/镜像/CentOS-7-x86_64-GenericCloud-2003.qcow2 centos7</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+</ol>
+<h3 id="创建虚拟机实例"><a href="#创建虚拟机实例" class="headerlink" title="创建虚拟机实例"></a>创建虚拟机实例</h3><ol>
+<li><p>通过浏览器<code>192.168.10.20</code>访问Horizon服务的界面，设置域名<code>Default</code>、用户名<code>admin</code>、密码<code>000000</code>登录。</p>
+</li>
+<li><p>创建实例类型、网络。</p>
+<blockquote>
+<p>创建<code>实例类型</code>和<code>网络</code>时设置项目为admin，否则没有权限。可参考<a target="_blank" rel="noopener" href="https://abc.taojie.fun/2023/09/08/private_clouds/2.openstack%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/#%E5%88%9B%E5%BB%BA%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%9E%E4%BE%8B">创建虚拟机实例</a>创建网络。</p>
+</blockquote>
+ <img src="https://vault.taojie.fun:28089/i/2023/09/21/2023-09-21-1695230412.png" alt="1695230410573.png" title="1695230410573.png" />
+</li>
+<li><p>设置<code>配置</code>菜单后完成实例创建：</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
+<span class="token function">passwd</span> centos<span class="token operator">&lt;&lt;</span><span class="token string">EOF
+000000
+000000
+EOF</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>这里配置的脚本用来在实例启动时设置centos账户的密码，否则不能登录控制台</p>
+</blockquote>
+ <img src="https://vault.taojie.fun:28089/i/2023/09/21/2023-09-21-1695233149.png" alt="1695233147185.png" title="1695233147185.png" /></li>
+</ol>
+<h3 id="定制镜像"><a href="#定制镜像" class="headerlink" title="定制镜像"></a>定制镜像</h3><ol>
+<li><p>在实例控制台中完成配置：</p>
+<blockquote>
+<p>使用账号：centos；密码：000000登录控制台</p>
+</blockquote>
+<ol>
+<li><p><code>sudo su</code>命令切换root用户</p>
+</li>
+<li><p><code>passwd root</code>命令设置密码000000</p>
+</li>
+<li><p>编辑文件<code>/etc/cloud/cloud.cfg</code>修改第四行为<code>disable_root:0</code></p>
+</li>
+<li><p>重启实例使用root用户登录。</p>
+</li>
+</ol>
+</li>
+<li><p>创建快照后基于新的快照创建实例，验证root用户直接登录控制台</p>
+ <img src="https://vault.taojie.fun:28089/i/2023/09/21/2023-09-21-1695235685.png" alt="1695235684061.png" title="1695235684061.png" />
+
+ <img src="https://vault.taojie.fun:28089/i/2023/09/21/2023-09-21-1695235198.png" alt="1695235196457.png" title="1695235196457.png" />
+
+ <img src="https://vault.taojie.fun:28089/i/2023/09/21/2023-09-21-1695235388.png" alt="1695235386127.png" title="1695235386127.png" />
+
+<blockquote>
+<p>作业3：登录控制台后截图上传</p>
+</blockquote>
+</li>
+<li><p>实例快照转换成镜像</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 1. 查看镜像列表获取ID</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack image list</span>
++--------------------------------------+-------------+--------+
+<span class="token operator">|</span> ID                                   <span class="token operator">|</span> Name        <span class="token operator">|</span> Status <span class="token operator">|</span>
++--------------------------------------+-------------+--------+
+<span class="token operator">|</span> 87b290e8-57c9-4c27-bb77-9d312c6d96c2 <span class="token operator">|</span> centos7     <span class="token operator">|</span> active <span class="token operator">|</span>
+<span class="token operator">|</span> 26b59df3-4fbe-4368-abd9-a5e5b58efe50 <span class="token operator">|</span> centos_test <span class="token operator">|</span> active <span class="token operator">|</span>
+<span class="token operator">|</span> 3a211d53-30e2-4d42-a7cf-ee55786b176a <span class="token operator">|</span> cirros      <span class="token operator">|</span> active <span class="token operator">|</span>
++--------------------------------------+-------------+--------+
+<span class="token comment"># 2. 将本地快照文件转换成镜像</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack image create centos_test_image --file /var/lib/glance/images/26b59df3-4fbe-4368-abd9-a5e5b58efe50  -disk-format qcow2 --container-format bare</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/09/15/private_clouds/3.OpenStack%E8%BA%AB%E4%BB%BD%E7%AE%A1%E7%90%86/" rel="prev" title="OpenStack身份管理">
+                  <i class="fa fa-chevron-left"></i> OpenStack身份管理
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder"></span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

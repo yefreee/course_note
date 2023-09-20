@@ -19,19 +19,19 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.17.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="超星网址控制节点：快照5.3.13，计算节点：5.3.9  理解Keystone身份服务Keystone简介Keystone 是OpenStack项目中的一个重要组件，是OpenStack Identity服务。主要提供身份认证（Authentication）、授权（Authorization）、用户管理。  身份认证（Authentication）： Keystone负责验证用户的身份。它支持">
+    <meta name="description" content="理解Keystone身份服务Keystone简介Keystone 是OpenStack项目中的一个重要组件，是OpenStack Identity服务。主要提供身份认证（Authentication）、授权（Authorization）、用户管理。  身份认证（Authentication）： Keystone负责验证用户的身份。它支持多种认证方法，包括用户名&#x2F;密码、令牌（Token）、">
 <meta property="og:type" content="article">
 <meta property="og:title" content="OpenStack身份管理">
 <meta property="og:url" content="http://example.com/2023/09/15/private_clouds/3.OpenStack%E8%BA%AB%E4%BB%BD%E7%AE%A1%E7%90%86/index.html">
 <meta property="og:site_name">
-<meta property="og:description" content="超星网址控制节点：快照5.3.13，计算节点：5.3.9  理解Keystone身份服务Keystone简介Keystone 是OpenStack项目中的一个重要组件，是OpenStack Identity服务。主要提供身份认证（Authentication）、授权（Authorization）、用户管理。  身份认证（Authentication）： Keystone负责验证用户的身份。它支持">
+<meta property="og:description" content="理解Keystone身份服务Keystone简介Keystone 是OpenStack项目中的一个重要组件，是OpenStack Identity服务。主要提供身份认证（Authentication）、授权（Authorization）、用户管理。  身份认证（Authentication）： Keystone负责验证用户的身份。它支持多种认证方法，包括用户名&#x2F;密码、令牌（Token）、">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/09/15/2023-09-15-1694788656.png">
 <meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/09/15/2023-09-15-1694789109.png">
 <meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/09/16/2023-09-16-1694795373.png">
 <meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/09/16/2023-09-16-1694795401.png">
 <meta property="article:published_time" content="2023-09-15T03:52:33.000Z">
-<meta property="article:modified_time" content="2023-09-18T06:52:25.873Z">
+<meta property="article:modified_time" content="2023-09-20T14:25:51.547Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://vault.taojie.fun:28089/i/2023/09/15/2023-09-15-1694788656.png">
 
@@ -115,7 +115,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%90%86%E8%A7%A3Keystone%E8%BA%AB%E4%BB%BD%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.</span> <span class="nav-text">理解Keystone身份服务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Keystone%E7%AE%80%E4%BB%8B"><span class="nav-number">1.1.</span> <span class="nav-text">Keystone简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Keystone%E7%9B%B8%E5%85%B3%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A"><span class="nav-number">1.2.</span> <span class="nav-text">Keystone相关名词解释</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Keystone%E7%9A%84%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84"><span class="nav-number">1.3.</span> <span class="nav-text">Keystone的层次结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Keystone%E7%9A%84%E8%AE%A4%E8%AF%81%E6%B5%81%E7%A8%8B"><span class="nav-number">1.4.</span> <span class="nav-text">Keystone的认证流程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Keystone%E6%9C%8D%E5%8A%A1%E7%9A%84%E5%AE%89%E8%A3%85%E3%80%81%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">Keystone服务的安装、配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Keystone%E6%9C%8D%E5%8A%A1%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">3.</span> <span class="nav-text">Keystone服务的初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Keystone%E6%9C%8D%E5%8A%A1%E8%AE%A4%E8%AF%81%E3%80%81%E8%BA%AB%E4%BB%BD%E7%AE%A1%E7%90%86"><span class="nav-number">4.</span> <span class="nav-text">Keystone服务认证、身份管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87OpenStack-%E7%AE%A1%E7%90%86%E5%91%BD%E4%BB%A4%E8%BF%9B%E8%A1%8C%E8%BA%AB%E4%BB%BD%E7%AE%A1%E7%90%86"><span class="nav-number">4.1.</span> <span class="nav-text">通过OpenStack 管理命令进行身份管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87API%E8%BF%9B%E8%A1%8C%E8%BA%AB%E4%BB%BD%E7%AE%A1%E7%90%86"><span class="nav-number">4.2.</span> <span class="nav-text">通过API进行身份管理</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%90%86%E8%A7%A3Keystone%E8%BA%AB%E4%BB%BD%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.</span> <span class="nav-text">理解Keystone身份服务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Keystone%E7%AE%80%E4%BB%8B"><span class="nav-number">1.1.</span> <span class="nav-text">Keystone简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Keystone%E7%9B%B8%E5%85%B3%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A"><span class="nav-number">1.2.</span> <span class="nav-text">Keystone相关名词解释</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Keystone%E7%9A%84%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84"><span class="nav-number">1.3.</span> <span class="nav-text">Keystone的层次结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Keystone%E7%9A%84%E8%AE%A4%E8%AF%81%E6%B5%81%E7%A8%8B"><span class="nav-number">1.4.</span> <span class="nav-text">Keystone的认证流程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Keystone%E6%9C%8D%E5%8A%A1%E5%AE%89%E8%A3%85"><span class="nav-number">2.</span> <span class="nav-text">Keystone服务安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%9C%E4%B8%9A%E4%B8%8E%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83"><span class="nav-number">2.1.</span> <span class="nav-text">作业与实验环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE"><span class="nav-number">2.2.</span> <span class="nav-text">安装与配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Keystone%E6%9C%8D%E5%8A%A1%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">2.3.</span> <span class="nav-text">Keystone服务初始化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Keystone%E6%9C%8D%E5%8A%A1%E8%AE%A4%E8%AF%81%E3%80%81%E8%BA%AB%E4%BB%BD%E7%AE%A1%E7%90%86"><span class="nav-number">3.</span> <span class="nav-text">Keystone服务认证、身份管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87OpenStack-%E7%AE%A1%E7%90%86%E5%91%BD%E4%BB%A4%E8%BF%9B%E8%A1%8C%E8%BA%AB%E4%BB%BD%E7%AE%A1%E7%90%86"><span class="nav-number">3.1.</span> <span class="nav-text">通过OpenStack 管理命令进行身份管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87API%E8%BF%9B%E8%A1%8C%E8%BA%AB%E4%BB%BD%E7%AE%A1%E7%90%86"><span class="nav-number">3.2.</span> <span class="nav-text">通过API进行身份管理</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -128,7 +128,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-count">20</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -192,7 +192,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-09-18 14:52:25" itemprop="dateModified" datetime="2023-09-18T14:52:25+08:00">2023-09-18</time>
+      <time title="修改时间：2023-09-20 22:25:51" itemprop="dateModified" datetime="2023-09-20T22:25:51+08:00">2023-09-20</time>
     </span>
 
   
@@ -204,10 +204,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><blockquote>
-<p><a target="_blank" rel="noopener" href="https://wxstc.fanya.chaoxing.com/portal">超星网址</a><br>控制节点：快照5.3.13，计算节点：5.3.9</p>
-</blockquote>
-<h2 id="理解Keystone身份服务"><a href="#理解Keystone身份服务" class="headerlink" title="理解Keystone身份服务"></a>理解Keystone身份服务</h2><h3 id="Keystone简介"><a href="#Keystone简介" class="headerlink" title="Keystone简介"></a>Keystone简介</h3><p>Keystone 是OpenStack项目中的一个重要组件，是OpenStack Identity服务。主要提供身份认证（Authentication）、授权（Authorization）、用户管理。</p>
+    <div class="post-body" itemprop="articleBody"><h2 id="理解Keystone身份服务"><a href="#理解Keystone身份服务" class="headerlink" title="理解Keystone身份服务"></a>理解Keystone身份服务</h2><h3 id="Keystone简介"><a href="#Keystone简介" class="headerlink" title="Keystone简介"></a>Keystone简介</h3><p>Keystone 是OpenStack项目中的一个重要组件，是OpenStack Identity服务。主要提供身份认证（Authentication）、授权（Authorization）、用户管理。</p>
 <ul>
 <li><p>身份认证（Authentication）： Keystone负责验证用户的身份。它支持多种认证方法，包括用户名&#x2F;密码、令牌（Token）、证书等。用户可以使用这些认证方法之一进行身份验证，以访问OpenStack中的资源。</p>
 </li>
@@ -236,7 +233,10 @@
 
 <h3 id="Keystone的认证流程"><a href="#Keystone的认证流程" class="headerlink" title="Keystone的认证流程"></a>Keystone的认证流程</h3><img src="https://vault.taojie.fun:28089/i/2023/09/15/2023-09-15-1694789109.png" alt="1694789108795.png" title="1694789108795.png" />
 
-<h2 id="Keystone服务的安装、配置"><a href="#Keystone服务的安装、配置" class="headerlink" title="Keystone服务的安装、配置"></a>Keystone服务的安装、配置</h2><ol>
+<h2 id="Keystone服务安装"><a href="#Keystone服务安装" class="headerlink" title="Keystone服务安装"></a>Keystone服务安装</h2><h3 id="作业与实验环境"><a href="#作业与实验环境" class="headerlink" title="作业与实验环境"></a>作业与实验环境</h3><blockquote>
+<p><a target="_blank" rel="noopener" href="https://wxstc.fanya.chaoxing.com/portal">超星网址</a><br><code>快照管理</code>：控制节点选择<code>快照5.3.13</code>，计算节点选择<code>快照5.3.9</code></p>
+</blockquote>
+<h3 id="安装与配置"><a href="#安装与配置" class="headerlink" title="安装与配置"></a>安装与配置</h3><ol>
 <li><p>Keystone是运行在Web服务器上的Web应用，需要安装以下软件包：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># yum -y install openstack-keystone httpd mod_wsgi</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
@@ -319,7 +319,7 @@ MariaDB <span class="token punctuation">[</span>keystone<span class="token punct
 </ul>
 </li>
 </ol>
-<h2 id="Keystone服务的初始化"><a href="#Keystone服务的初始化" class="headerlink" title="Keystone服务的初始化"></a>Keystone服务的初始化</h2><ol>
+<h3 id="Keystone服务初始化"><a href="#Keystone服务初始化" class="headerlink" title="Keystone服务初始化"></a>Keystone服务初始化</h3><ol>
 <li><p>初始化fernet密钥库</p>
  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 生成用来加密解密令牌的fernet密钥</span>
 <span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone</span>
@@ -494,6 +494,9 @@ export OS_IMAGE_API_VERSION=2<span aria-hidden="true" class="line-numbers-rows">
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2023/09/20/private_clouds/4.OpenStack%E9%95%9C%E5%83%8F%E7%AE%A1%E7%90%86/" rel="next" title="OpenStack镜像管理与制作">
+                  OpenStack镜像管理与制作 <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
     </footer>

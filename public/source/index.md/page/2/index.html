@@ -118,7 +118,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-count">20</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -136,6 +136,306 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/23/linux_shell/10.%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7awk/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/04/23/linux_shell/10.%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7awk/" class="post-title-link" itemprop="url">文本处理工具awk</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-04-23 13:26:57" itemprop="dateCreated datePublished" datetime="2023-04-23T13:26:57+08:00">2023-04-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-09-03 13:17:06" itemprop="dateModified" datetime="2023-09-03T13:17:06+08:00">2023-09-03</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="awk简介"><a href="#awk简介" class="headerlink" title="awk简介"></a>awk简介</h2><p>awk是一种用于处理文本数据的工具，可以从文本文件或者标准输入、一个或多个文件中提取和处理数据。<br>awk以逐行扫描方式处理数据，从第一行到最后一行以查找匹配某个特定模式的文本行，并且对这些文本行执行指定动作。</p>
+<h2 id="awk版本"><a href="#awk版本" class="headerlink" title="awk版本"></a>awk版本</h2><p>awk有众多版本包括传统awk、新版awk、gawk等，其中gawk是GNU组织开发的版本，也是目前最流行和最广泛使用的awk版本。gawk在传统awk和nawk的基础上添加了许多新功能和改进，例如更丰富的正则表达式支持、高级的数学和字符串处理函数、用户自定义函数等。gawk通常作为<code>/bin/gawk</code>或<code>/usr/bin/gawk</code>提供，是GNU工具集中的一部分，可以在多个平台上使用。<br>不同的awk可能在语法、功能和性能方面略有不同，在使用awk时应注意选择合适的版本，根据具体需求和系统环境来决定使用哪个版本。</p>
+<h2 id="awk格式"><a href="#awk格式" class="headerlink" title="awk格式"></a>awk格式</h2><p>awk基本格式如下：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">awk 'pattern &#123; action &#125;' file
+awk '&#123; action &#125;' file
+awk 'pattern' file<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li><code>pattern</code>: 可以是一个正则表达式，也可以是一个字符串或数字，用于匹配文本中的某个字段或整行</li>
+<li><code>action</code>: 是在匹配到的文本上执行的操作，可以是一个或多个命令，多个命令之间用换行或分号 <code>;</code> 分隔</li>
+<li><code>file</code>: 是输入文件的名称，没有<code>file</code>参数时从标准输入读取数据</li>
+</ul>
+<p>在awk命令中，<code>pattern</code>和<code>action</code>之间通过大括号 <code>&#123;&#125;</code> 进行分隔，<code>pattern</code>用于匹配文本行，当匹配成功时，对应的<code>action</code>将被执行。</p>
+<p>awk还支持在处理数据前和处理数据后运行命令，完整格式如下：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">awk 'BEGIN &#123;command&#125; pattern &#123; action &#125; END &#123;command&#125;' file<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">echo</span> <span class="token string">"10 20 30 40 50"</span> <span class="token operator">|</span> <span class="token function">awk</span> <span class="token string">'BEGIN &#123;sum = 0; print "sum:", sum&#125; &#123;sum += $1&#125; END &#123;print "Sum:", sum&#125;'</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="https://vault.taojie.fun:28089/i/2023/09/02/note10.text-processing-tools-awk-2023-04-24-09-42-32.png" alt="10.text-processing-tools-awk-2023-04-24-09-42-32"></p>
+<h2 id="从标准输入读取数据"><a href="#从标准输入读取数据" class="headerlink" title="从标准输入读取数据"></a>从标准输入读取数据</h2><h3 id="从命令行读取数据"><a href="#从命令行读取数据" class="headerlink" title="从命令行读取数据"></a>从命令行读取数据</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> <span class="token string">'&#123;print "Hello World"&#125;'</span>
+<span class="token builtin class-name">test</span>
+Hello World
+abc
+Hello World<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>以上awk命令没有指定<code>file</code>参数，awk不会直接给出运行结果，它会等待标准输入的数据，当用户输入字符后awk会执行相应的命令并产生输出。如果要终止awk程序需要使用<code>Ctrl+D</code>产生一个EOF字符，此时会返回到命令行下。</p>
+<h3 id="通过管道符号从命令读取数据"><a href="#通过管道符号从命令读取数据" class="headerlink" title="通过管道符号从命令读取数据"></a>通过管道符号从命令读取数据</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@6e455ed15da7:~$ <span class="token function">ps</span> -aux<span class="token operator">|</span><span class="token function">awk</span> <span class="token string">'/bash/'</span>
+root           <span class="token number">1</span>  <span class="token number">0.0</span>  <span class="token number">0.0</span>  <span class="token number">18228</span>  <span class="token number">3012</span> pts/0    Ss+  Apr22   <span class="token number">0</span>:00 /bin/bash
+root          <span class="token number">11</span>  <span class="token number">0.0</span>  <span class="token number">0.0</span>  <span class="token number">18232</span>  <span class="token number">3240</span> pts/1    Ss   <span class="token number">13</span>:36   <span class="token number">0</span>:00 /bin/bash
+ubuntu       <span class="token number">269</span>  <span class="token number">0.0</span>  <span class="token number">0.0</span>  <span class="token number">18228</span>  <span class="token number">3144</span> pts/1    S    <span class="token number">13</span>:39   <span class="token number">0</span>:00 <span class="token function">bash</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>以上awk命令通过管道符号<code>|</code>从前面一个命令的输出结果从读取数据进行处理。</p>
+<h2 id="从文件中读取数据和命令"><a href="#从文件中读取数据和命令" class="headerlink" title="从文件中读取数据和命令"></a>从文件中读取数据和命令</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> <span class="token string">'/Alice/'</span> example.txt
+Alice,25,Female,New York
+ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> <span class="token string">'/Male/'</span> example.txt
+Bob,30,Male,Los Angeles
+Charlie,22,Male,Chicago
+David,35,Male,Houston<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>以上awk命令指定了<code>file</code>参数，awk会从文件中以行为单位读取数据并且使用<code>pattern</code>所表示的匹配模式进行数据匹配，由于没有指定<code>action</code>参数，awk将匹配到的数据直接输出到标准输出。</p>
+<p>awk和sed一样可以从文件中读取命令：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">awk</span> <span class="token parameter variable">-f</span> script_file.awk example.txt<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="awk工作原理"><a href="#awk工作原理" class="headerlink" title="awk工作原理"></a>awk工作原理</h2><ol>
+<li>awk对文件或者标准输入的内容一次只处理一行，将获取到的这一行数据赋给变量$0</li>
+<li>这一行的内容按awk内部变量FS定义的分隔符（缺省为空格，包括制表符tab）分解成多个字段，每一个字段存储在从$1开始的变量中。</li>
+</ol>
+<p>以以下数据为例：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">Name Age Gender City
+Alice 25 Female New York
+Bob 30 Male Los Angeles
+Charlie 22 Male Chicago
+David 35 Male Houston
+Eve 28 Female Miami<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>以下awk命令的运行结果：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> <span class="token string">'&#123;print $1,$3&#125;'</span> example.txt
+Name Gender
+Alice Female
+Bob Male
+Charlie Male
+David Male
+Eve Female<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ol>
+<li>awk首先将第一行数据存放在变量$0中进行处理。</li>
+<li>将<code>$0</code>中的数据以空格为分隔符（内部变量<code>FS</code>所定义）进行分解，分别存放在从<code>$1</code>开始的内部变量中。</li>
+<li>在输出结果的每一行中第一个字段是存放在<code>$1</code>中的数据，第二个字段是存放在<code>$3</code>中的数据。</li>
+<li>awk命令中的逗号映射为一个内部变量-输出字段分隔符<code>OFS</code>（默认为空格）两个字段之间由空格间隔。</li>
+<li>处理完一行数据后读取下一行数据到<code>$0</code>中进行处理直到所以数据处理完毕。</li>
+</ol>
+<h2 id="格式化输出"><a href="#格式化输出" class="headerlink" title="格式化输出"></a>格式化输出</h2><h3 id="print函数"><a href="#print函数" class="headerlink" title="print函数"></a>print函数</h3><p>print函数用于打印不需要特别编排格式的简单输出。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> <span class="token string">'&#123;print "Name:" $1 "Age:" $2&#125;'</span> example.txt
+Name:NameAge:Age
+Name:AliceAge:25
+Name:BobAge:30
+Name:CharlieAge:22
+Name:DavidAge:35
+Name:EveAge:28
+ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> <span class="token string">'&#123;print "Name:" $1, "Age:" $2&#125;'</span> example.txt
+Name:Name Age:Age
+Name:Alice Age:25
+Name:Bob Age:30
+Name:Charlie Age:22
+Name:David Age:35
+Name:Eve Age:28<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>逗号<code>,</code>表示内部变量<code>OFS</code>（用来表示输出字段的分隔符，默认为空格）。<br>print还支持以下转义序列：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">\b：退格符（ASCII 008）
+\t：制表符（ASCII 009）
+\n：换行符（ASCII 010）
+\f：换页符（ASCII 012）
+\r：回车符（ASCII 013）<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>print中使用转义序列进行数据输出：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> <span class="token string">'&#123;print "Name:" $1 "\tAge:" $2&#125;'</span> example.txt
+Name:Name       Age:Age
+Name:Alice      Age:25
+Name:Bob        Age:30
+Name:Charlie    Age:22
+Name:David      Age:35
+Name:Eve        Age:28<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="printf函数"><a href="#printf函数" class="headerlink" title="printf函数"></a>printf函数</h3><p><code>printf</code>函数能够进行更加精细的格式化输出，用法和C语言中<code>printf</code>函数的用法一样。语句中包含一个加引号的控制串，控制串中包含若干格式说明和修饰符。控制串后面跟一个逗号，之后是一列由逗号分隔的表达式。<code>printf</code>会根据控制串来编排表达式的格式。<br><code>printf</code>和<code>print</code>不同的是printf在行尾不会自动换行，如果要换行必须使用转义字符<code>\n</code></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> <span class="token string">'&#123;printf "[Name:%-10s]\tAge:%s", $1, $2&#125;'</span> example.txt
+<span class="token punctuation">[</span>Name:Name      <span class="token punctuation">]</span>       Age:Age<span class="token punctuation">[</span>Name:Alice     <span class="token punctuation">]</span>        Age:25<span class="token punctuation">[</span>Name:Bob       <span class="token punctuation">]</span> Age:30<span class="token punctuation">[</span>Name:Charlie   <span class="token punctuation">]</span>      Age:22<span class="token punctuation">[</span>Name:David     <span class="token punctuation">]</span> Age:35<span class="token punctuation">[</span>Name:Eve       <span class="token punctuation">]</span> Age:28ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> <span class="token string">'&#123;printf "[Name:%-10s]\tAge:%s\n", $1, $2&#125;'</span> example.txt
+<span class="token punctuation">[</span>Name:Name      <span class="token punctuation">]</span>       Age:Age
+<span class="token punctuation">[</span>Name:Alice     <span class="token punctuation">]</span>       Age:25
+<span class="token punctuation">[</span>Name:Bob       <span class="token punctuation">]</span>       Age:30
+<span class="token punctuation">[</span>Name:Charlie   <span class="token punctuation">]</span>       Age:22
+<span class="token punctuation">[</span>Name:David     <span class="token punctuation">]</span>       Age:35
+<span class="token punctuation">[</span>Name:Eve       <span class="token punctuation">]</span>       Age:28<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="记录与字段"><a href="#记录与字段" class="headerlink" title="记录与字段"></a>记录与字段</h2><h3 id="记录"><a href="#记录" class="headerlink" title="记录"></a>记录</h3><p>在awk中每一行数据称为一条记录，以换行符结束。</p>
+<ul>
+<li>记录分隔符：默认情况下，输入和输出记录的分隔符都是回车符，分别保存在内部变量<code>ORS</code>和<code>RS</code>中。</li>
+<li>变量<code>$0</code>表示当前整条记录，变量NR表示当前记录的记录号，每处理一条记录，NR值加一。</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> <span class="token string">'&#123;print NR,$0&#125;'</span> example.txt
+<span class="token number">1</span> Name Age Gender City
+<span class="token number">2</span> Alice <span class="token number">25</span> Female New York
+<span class="token number">3</span> Bob <span class="token number">30</span> Male Los Angeles
+<span class="token number">4</span> Charlie <span class="token number">22</span> Male Chicago
+<span class="token number">5</span> David <span class="token number">35</span> Male Houston
+<span class="token number">6</span> Eve <span class="token number">28</span> Female Miami<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="字段"><a href="#字段" class="headerlink" title="字段"></a>字段</h3><p>每一条记录都是由称为字段的词组成，默认情况下字段之间用空白符（空格或者制表符）分隔。<code>NF</code>变量保存每个记录的字段数量。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> <span class="token string">'&#123;print NF,$0&#125;'</span> example.txt
+<span class="token number">4</span> Name Age Gender City
+<span class="token number">5</span> Alice <span class="token number">25</span> Female New York
+<span class="token number">5</span> Bob <span class="token number">30</span> Male Los Angeles
+<span class="token number">4</span> Charlie <span class="token number">22</span> Male Chicago
+<span class="token number">4</span> David <span class="token number">35</span> Male Houston
+<span class="token number">4</span> Eve <span class="token number">28</span> Female Miami<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="字段分隔符"><a href="#字段分隔符" class="headerlink" title="字段分隔符"></a>字段分隔符</h3><p>字段分隔符由内部变量<code>FS</code>保存，可以在命令中通过<code>-F</code>选项修改<code>FS</code>的值。<br>先使用<code>sed</code>命令将<code>example.txt</code>文件中的空格替换为逗号：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@6e455ed15da7:~$ <span class="token function">sed</span> <span class="token parameter variable">-i</span> <span class="token string">'s/ /,/g'</span> example.txt
+ubuntu@6e455ed15da7:~$ <span class="token function">cat</span> example.txt
+Name,Age,Gender,City
+Alice,25,Female,New,York
+Bob,30,Male,Los,Angeles
+Charlie,22,Male,Chicago
+David,35,Male,Houston
+Eve,28,Female,Miami<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然后使用awk并通过<code>-F</code>选项替换分隔符进行输出：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> <span class="token string">'&#123;print "Name:" $1, "Age:" $2&#125;'</span> example.txt
+Name:Name,Age,Gender,City Age:
+Name:Alice,25,Female,New,York Age:
+Name:Bob,30,Male,Los,Angeles Age:
+Name:Charlie,22,Male,Chicago Age:
+Name:David,35,Male,Houston Age:
+Name:Eve,28,Female,Miami Age:
+ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> -F, <span class="token string">'&#123;print "Name:" $1, "Age:" $2&#125;'</span> example.txt
+Name:Name Age:Age
+Name:Alice Age:25
+Name:Bob Age:30
+Name:Charlie Age:22
+Name:David Age:35
+Name:Eve Age:28<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="匹配模式与正则表达式"><a href="#匹配模式与正则表达式" class="headerlink" title="匹配模式与正则表达式"></a>匹配模式与正则表达式</h2><h3 id="匹配模式"><a href="#匹配模式" class="headerlink" title="匹配模式"></a>匹配模式</h3><p>awk中的模式可以是一个正则表达式或者用来判定条件真伪的表达式。</p>
+<p>使用<code>Alice</code>进行数据匹配：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@6e455ed15da7:~$ <span class="token function">cat</span> example.txt
+Name Age Gender City
+Alice <span class="token number">25</span> Female New York
+Bob <span class="token number">30</span> Male Los Angeles
+Charlie <span class="token number">22</span> Male Chicago
+David <span class="token number">35</span> Male Houston
+Eve <span class="token number">28</span> Female Miami
+ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> <span class="token string">'/Alice/'</span> example.txt
+Alice <span class="token number">25</span> Female New York<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>使用条件表达式进行数据匹配：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@6e455ed15da7:~$ <span class="token function">cat</span> example.txt
+Name Age Gender City
+Alice <span class="token number">25</span> Female New York
+Bob <span class="token number">30</span> Male Los Angeles
+Charlie <span class="token number">22</span> Male Chicago
+David <span class="token number">35</span> Male Houston
+Eve <span class="token number">28</span> Female Miami
+ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> <span class="token string">'$2 &lt; 25'</span> example.txt
+Charlie <span class="token number">22</span> Male Chicago<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="正则表达式模式与操作"><a href="#正则表达式模式与操作" class="headerlink" title="正则表达式模式与操作"></a>正则表达式模式与操作</h3><p>使用正则表达式模式<code>Alice</code>进行数据匹配，然后通过<code>print</code>函数进行格式化输出：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> <span class="token string">'/Alice/&#123;print "Name:" $1&#125;'</span> example.txt
+Name:Alice
+ubuntu@6e455ed15da7:~$ <span class="token function">cat</span> example.txt
+Name Age Gender City
+Alice <span class="token number">25</span> Female New York
+Bob <span class="token number">30</span> Male Los Angeles
+Charlie <span class="token number">22</span> Male Chicago
+David <span class="token number">35</span> Male Houston
+Eve <span class="token number">28</span> Female Miami
+ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> <span class="token string">'/Alice/&#123;print "Name:" $1&#125;'</span> example.txt
+Name:Alice<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>格式化输出<code>example.txt</code>文件中所有以大写字母<code>A-C</code>开头的行：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@6e455ed15da7:~$ <span class="token function">cat</span> example.txt
+Name Age Gender City
+Alice <span class="token number">25</span> Female New York
+Bob <span class="token number">30</span> Male Los Angeles
+Charlie <span class="token number">22</span> Male Chicago
+David <span class="token number">35</span> Male Houston
+Eve <span class="token number">28</span> Female Miami
+ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> <span class="token string">'/^[A-C]+.*/&#123;print "Name:" $1&#125;'</span> example.txt
+Name:Alice
+Name:Bob
+Name:Charlie<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h2><h3 id="显示系统下各用户所使用的shell"><a href="#显示系统下各用户所使用的shell" class="headerlink" title="显示系统下各用户所使用的shell"></a>显示系统下各用户所使用的shell</h3><p>查看当前<code>/etc/passwd</code>格式：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@6e455ed15da7:~$ <span class="token function">cat</span> /etc/passwd<span class="token operator">|</span><span class="token function">head</span>
+root:x:0:0:root:/root:/bin/bash<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>使用awk显示各用户使用的shell:</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">User:root Shell:/bin/bash
+User:daemon Shell:/usr/sbin/nologin
+User:bin Shell:/usr/sbin/nologin
+User:sys Shell:/usr/sbin/nologin
+User:sync Shell:/bin/sync
+User:games Shell:/usr/sbin/nologin
+User:man Shell:/usr/sbin/nologin
+User:lp Shell:/usr/sbin/nologin
+User:mail Shell:/usr/sbin/nologin
+User:news Shell:/usr/sbin/nologin<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
