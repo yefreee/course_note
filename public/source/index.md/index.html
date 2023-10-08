@@ -118,7 +118,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-count">21</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -136,6 +136,277 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/10/06/private_clouds/5.OpenStack%E9%95%9C%E5%83%8F%E5%88%B6%E4%BD%9C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/10/06/private_clouds/5.OpenStack%E9%95%9C%E5%83%8F%E5%88%B6%E4%BD%9C/" class="post-title-link" itemprop="url">OpenStack镜像管理与制作（二）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-10-06 11:00:09" itemprop="dateCreated datePublished" datetime="2023-10-06T11:00:09+08:00">2023-10-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-10-08 13:08:05" itemprop="dateModified" datetime="2023-10-08T13:08:05+08:00">2023-10-08</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="虚拟机镜像制作方法"><a href="#虚拟机镜像制作方法" class="headerlink" title="虚拟机镜像制作方法"></a>虚拟机镜像制作方法</h2><p>OpenStack平台所使用的镜像文件是一种虚拟机镜像，我们简称为镜像。而虚拟机镜像本质上是一个包含虚拟磁盘的单个文件，该虚拟磁盘上安装了可引导的操作系统。</p>
+<p>上一节课已经介绍了通过下载官方预制的虚拟机镜像，这种途径获取到的镜像文件大都默认禁用SSH密码身份验证，同时包含<code>cloud-init</code>来支持SSH密钥对和用户数据的注入。通过密钥实现登录之后可以做进一步的定制，最后通过创建快照重新生成新的虚拟机镜像。</p>
+<p>以上这种获取、修改、生成新的镜像的方法容易理解、实现过程简单，适用于需要进行轻度定制的场景。如果需要进行深度的定制或者需要定制特定平台的镜像文件时可以通过更多的途径制作镜像。</p>
+<p>其他制作虚拟机镜像的方法：</p>
+<ul>
+<li>通过工具（Guestfish,guestmount）修改虚拟机镜像</li>
+<li>通过工具（Diskimage-builder）创建虚拟机镜像</li>
+<li>手动创建虚拟机镜像</li>
+</ul>
+<h2 id="fedora环境安装"><a href="#fedora环境安装" class="headerlink" title="fedora环境安装"></a>fedora环境安装</h2><ol>
+<li><p>用浏览器下载fedora镜像</p>
+</li>
+<li><p>使用VMware安装fedora系统，内存4G。</p>
+</li>
+<li><p>进入桌面后打开fedora的远程连接。</p>
+ <img src="https://vault.taojie.fun:28089/i/2023/10/08/2023-10-08-1696740814.png" alt="1696740813374.png" title="1696740813374.png" />
+</li>
+<li><p>打开fedora终端下载以下资源。</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">wget</span> https://download.cirros-cloud.net/0.5.1/cirros-0.5.1-x86_64-disk.img <span class="token operator">&amp;</span>
+<span class="token function">wget</span> https://go.microsoft.com/fwlink/p/?LinkID<span class="token operator">=</span><span class="token number">2195443</span><span class="token operator">&amp;</span><span class="token assign-left variable">clcid</span><span class="token operator">=</span>0x804<span class="token operator">&amp;</span><span class="token assign-left variable">culture</span><span class="token operator">=</span>zh-cn<span class="token operator">&amp;</span><span class="token assign-left variable">country</span><span class="token operator">=</span>CN <span class="token parameter variable">-O</span> winserver-2012.iso <span class="token operator">&amp;</span>
+<span class="token function">wget</span> https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/virtio-win.iso <span class="token operator">&amp;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li>
+</ol>
+<h2 id="Guestfish使用"><a href="#Guestfish使用" class="headerlink" title="Guestfish使用"></a>Guestfish使用</h2><p>Guestfish是一个用于访问和修改虚拟机磁盘镜像的工具，它提供了一种交互式方式来浏览、修改虚拟机的文件系统。</p>
+<ol>
+<li><p>Guestfish安装</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># sudo dnf -y install libguestfs-tools</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>Guestfish用法示例</p>
+<ol>
+<li><p>假设需要修改的虚拟机镜像文件名为<code>centos63_desktop.img</code>，通过以下命令以root身份挂载为读写模式：</p>
+  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># guestfish --rw -a centos63_desktop.img</span>
+
+Welcome to Guestfish, the libguestfs filesystem interactive shell <span class="token keyword">for</span>
+editing virtual machine filesystems.
+
+Type: <span class="token string">'help'</span> <span class="token keyword">for</span> <span class="token builtin class-name">help</span> on commands
+<span class="token string">'man'</span> to <span class="token builtin class-name">read</span> the manual
+<span class="token string">'quit'</span> to quit the shell
+
+<span class="token operator">></span><span class="token operator">&lt;</span>fs<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>此时进入Guestfish的会话，提示符为<code>&gt;&lt;fs&gt;</code></p>
+</blockquote>
+</li>
+<li><p>首先在Guestfish提示符下使用<code>run</code>命令启动一个虚拟机才能执行其他操作，该虚拟机将用于执行所有文件操作。</p>
+  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span><span class="token operator">&lt;</span>fs<span class="token operator">></span> run<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>通过list-filesystems命令查看文件系统。</p>
+  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span><span class="token operator">&lt;</span>fs<span class="token operator">></span> list-filesystems
+/dev/vda1: ext4
+/dev/vg_centosbase/lv_root: ext4
+/dev/vg_centosbase/lv_swap: swap<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>挂载包含根分区的逻辑卷并修改文件。</p>
+  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span><span class="token operator">&lt;</span>fs<span class="token operator">></span> <span class="token function">mount</span> /dev/vg_centosbase/lv_root /<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span><span class="token operator">&lt;</span>fs<span class="token operator">></span> <span class="token function">rm</span> /etc/udev/rules.d/70-persistent-net.rules<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span><span class="token operator">&lt;</span>fs<span class="token operator">></span> edit /etc/sysconfig/network-scripts/ifcfg-eth0<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span><span class="token operator">&lt;</span>fs<span class="token operator">></span> <span class="token builtin class-name">exit</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+</ol>
+</li>
+</ol>
+<h2 id="Guestmount使用"><a href="#Guestmount使用" class="headerlink" title="Guestmount使用"></a>Guestmount使用</h2><p><code>Guestmount</code>是一个用于挂载虚拟机磁盘镜像的工具，它允许在宿主机上将虚拟机磁盘镜像挂载为宿主机文件系统的一部分，从而可以直接访问和修改虚拟机镜像中的文件。Guestmount可以在不启动虚拟机的情况下进行操作，提供了对镜像中文件的读写访问权限。通过Guestmount，可以像操作本地文件系统一样，使用标准的文件操作命令（例如cp、mv、rm 等）</p>
+<ul>
+<li><p>Guestmount用法示例</p>
+<ol>
+<li><p>假设需要修改的虚拟机镜像文件名为<code>centos63_desktop.img</code>，从该文件中挂载根分区到<code>/mnt</code>目录。</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># guestmount -a centos63_desktop.qcow2 -m /dev/vg_centosbase/lv_root --rw /mnt</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>当预先不知道具体的挂载点时可以通过选项<code>-i</code>自动决定所用的挂载点。</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># guestmount -a centos63_desktop.qcow2 -i --rw /mnt</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>修改完成后卸载挂载点。</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># umount /mnt</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+</ol>
+</li>
+</ul>
+<h2 id="Diskimage-builder使用"><a href="#Diskimage-builder使用" class="headerlink" title="Diskimage-builder使用"></a>Diskimage-builder使用</h2><p>Diskimage-builder（DIB）是一个用于创建定制化操作系统磁盘镜像的工具。它是一个开源项目，旨在帮助开发者和系统管理员构建适合特定用途的操作系统镜像，例如用于虚拟机、容器、云平台等环境。</p>
+<ol>
+<li><p>Diskimage-builder安装。</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># dnf install diskimage-builder</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>创建一个通用的Ubuntu虚拟磁盘镜像。</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># disk-image-create ubuntu vm</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>还可以通过设置命令行选项或者环境变量实现其他镜像的构造。</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># disk-image-create -a armhf ubuntu vm</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>除此之外还可以通过YAML文件描述需要构造的镜像。</p>
+ <pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token comment"># 元素列表，表示构建镜像时要包含的元素</span>
+<span class="token key atrule">elements</span><span class="token punctuation">:</span>
+<span class="token punctuation">-</span> centos7<span class="token punctuation">-</span>minimal
+<span class="token punctuation">-</span> install<span class="token punctuation">-</span>packages
+
+<span class="token comment"># 镜像类型，指定生成的镜像格式</span>
+<span class="token key atrule">image_types</span><span class="token punctuation">:</span>
+<span class="token punctuation">-</span> qcow2
+<span class="token punctuation">-</span> raw
+
+<span class="token comment"># 操作系统发行版和版本</span>
+<span class="token key atrule">release</span><span class="token punctuation">:</span> centos7
+
+<span class="token comment"># 构建参数和配置</span>
+<span class="token key atrule">properties</span><span class="token punctuation">:</span>
+<span class="token comment"># 用户名和密码</span>
+<span class="token key atrule">user</span><span class="token punctuation">:</span> myuser
+<span class="token key atrule">password</span><span class="token punctuation">:</span> mypassword<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ol>
+<h2 id="手动定制虚拟磁盘镜像"><a href="#手动定制虚拟磁盘镜像" class="headerlink" title="手动定制虚拟磁盘镜像"></a>手动定制虚拟磁盘镜像</h2><p>除了可以通过上述的工具在已有的虚拟磁盘文件的基础上进行修改以外还可以手动定制虚拟磁盘镜像，这个过程需要通过ISO CD文件安装操作系统后通过图形控制台远程配置虚拟机完成定制。主要分为以下几步：</p>
+<ol>
+<li><p>通过<code>kvm+qemu</code>方案安装操作系统虚拟机。</p>
+</li>
+<li><p>通过<code>virt-viewer</code>连接虚拟机后实现进一步配置、定制。</p>
+</li>
+<li><p>上传定制好的系统镜像到OpenStack平台完成验证。</p>
+</li>
+</ol>
+<h3 id="操作系统虚拟机安装"><a href="#操作系统虚拟机安装" class="headerlink" title="操作系统虚拟机安装"></a>操作系统虚拟机安装</h3><h4 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h4><ol>
+<li><p>在安装系统之前需要获取系统安装包、VirtIO驱动，上面步骤已经提前下载好。</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 下载Windows Server 2012的软件安装包</span>
+<span class="token punctuation">[</span>fedora@fedora ~<span class="token punctuation">]</span>$ <span class="token function">wget</span> https://go.microsoft.com/fwlink/p/?LinkID<span class="token operator">=</span><span class="token number">2195443</span><span class="token operator">&amp;</span><span class="token assign-left variable">clcid</span><span class="token operator">=</span>0x804<span class="token operator">&amp;</span><span class="token assign-left variable">culture</span><span class="token operator">=</span>zh-cn<span class="token operator">&amp;</span><span class="token assign-left variable">country</span><span class="token operator">=</span>CN <span class="token parameter variable">-O</span> winserver-2012.iso <span class="token operator">&amp;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 下载适用的VirtIO驱动文件</span>
+<span class="token punctuation">[</span>fedora@fedora ~<span class="token punctuation">]</span>$ <span class="token function">wget</span> https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/virtio-win.iso <span class="token operator">&amp;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+</li>
+<li><p>创建大小为15G的qcow2格式的虚拟磁盘文件。</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>fedora@fedora ~<span class="token punctuation">]</span>$ qemu-img create <span class="token parameter variable">-f</span> qcow2 ws2012.qcow2 15G
+Formatting <span class="token string">'ws2012.qcow2'</span>, <span class="token assign-left variable">fmt</span><span class="token operator">=</span>qcow2 <span class="token assign-left variable">size</span><span class="token operator">=</span><span class="token number">16106127360</span> <span class="token assign-left variable">cluster_size</span><span class="token operator">=</span><span class="token number">65536</span> <span class="token assign-left variable">lazy_refcounts</span><span class="token operator">=</span>off <span class="token assign-left variable">refcount_bits</span><span class="token operator">=</span><span class="token number">16</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+</li>
+<li><p>安装虚拟化相关的软件包。</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># virt-install 是一个命令行工具，用于在虚拟化环境中创建和安装虚拟机</span>
+<span class="token comment"># virt-manager是一个虚拟机管理工具</span>
+<span class="token comment"># virt_viewer是一个用于查看虚拟机图形界面的工具</span>
+<span class="token punctuation">[</span>fedora@fedora ~<span class="token punctuation">]</span>$ <span class="token function">sudo</span> dnf <span class="token function">install</span> <span class="token parameter variable">-y</span> qemu-kvm libvirt virt-install virt-manager virt-viewer<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>执行virt-install命令启动Win-server操作系统。</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">virt-install <span class="token parameter variable">--connect</span> qemu:///system <span class="token punctuation">\</span>
+<span class="token parameter variable">--name</span> ws2012 <span class="token parameter variable">--ram</span> <span class="token number">2048</span> <span class="token parameter variable">--vcpus</span> <span class="token number">2</span> <span class="token punctuation">\</span>
+<span class="token parameter variable">--network</span> <span class="token assign-left variable">network</span><span class="token operator">=</span>default,model<span class="token operator">=</span>virtio <span class="token punctuation">\</span>
+<span class="token parameter variable">--disk</span> <span class="token assign-left variable">path</span><span class="token operator">=</span>ws2012.qcow2,format<span class="token operator">=</span>qcow2,device<span class="token operator">=</span>disk,bus<span class="token operator">=</span>virtio <span class="token punctuation">\</span>
+<span class="token parameter variable">--cdrom</span> winserver-2012.iso <span class="token punctuation">\</span>
+<span class="token parameter variable">--disk</span> <span class="token assign-left variable">path</span><span class="token operator">=</span>virtio-win.iso,device<span class="token operator">=</span>cdrom <span class="token punctuation">\</span>
+<span class="token parameter variable">--vnc</span> --os-type windows --os-variant win2k12 <span class="token punctuation">\</span>
+<span class="token parameter variable">--boot</span> cdrom,menu<span class="token operator">=</span>on<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>通过virt-viewer控制台登录启动的windows server虚拟机完成安装。</p>
+ <img src="https://vault.taojie.fun:28089/i/2023/10/08/2023-10-08-1696731826.png" alt="1696731825728.png" title="1696731825728.png" />
+
+<blockquote>
+<p>安装系统时选择第二个带GUI桌面的标准版。<br> <img src="https://vault.taojie.fun:28089/i/2023/10/08/2023-10-08-1696731966.png" alt="1696731965295.png" title="1696731965295.png" /></p>
+</blockquote>
+ <img src="https://vault.taojie.fun:28089/i/2023/10/08/2023-10-08-1696737341.png" alt="1696737340360.png" title="1696737340360.png" />
+</li>
+<li><p>选择<code>Load driver</code>加载scsi驱动。</p>
+<blockquote>
+<p>E:\virtio-win-0.1XX\viostor\2k12\amd64<br> E:\NETKVM\2k12\amd64</p>
+</blockquote>
+ <img src="https://vault.taojie.fun:28089/i/2023/10/08/2023-10-08-1696737650.png" alt="1696737648562.png" title="1696737648562.png" />
+</li>
+<li><p>重启虚拟机，在以下启动界面按ESC后选择第二个分区启动系统。</p>
+ <img src="https://vault.taojie.fun:28089/i/2023/10/08/2023-10-08-1696738960.png" alt="1696738959698.png" title="1696738959698.png" />
+
+ <img src="https://vault.taojie.fun:28089/i/2023/10/08/2023-10-08-1696738975.png" alt="1696738974281.png" title="1696738974281.png" />
+</li>
+<li><p>进入系统后按下图配置允许远程登录、配置防火墙规则。</p>
+ <img src="https://vault.taojie.fun:28089/i/2023/10/08/2023-10-08-1696739234.png" alt="1696739233738.png" title="1696739233738.png" />
+
+ <img src="https://vault.taojie.fun:28089/i/2023/10/08/2023-10-08-1696739246.png" alt="1696739245196.png" title="1696739245196.png" />
+</li>
+<li><p>启动命令行执行以下命令安装VirtIO驱动。</p>
+ <pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">CD \
+C:\pnputil <span class="token operator">-</span>i <span class="token operator">-</span>a D:\viostor\2k12r2\amd64\<span class="token operator">*</span><span class="token punctuation">.</span>INF<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+</li>
+<li><p>设置PowerShell的执行策略为不受限制。</p>
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">C:\powershell
+C:\<span class="token function">Set-ExecutionPolicy</span> Unrestricted<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+</li>
+<li><p>下载Cloudbase-Init并安装。</p>
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">C:\<span class="token function">Invoke-WebRequest</span> <span class="token operator">-</span>UseBasicParsing https:<span class="token operator">/</span><span class="token operator">/</span>cloudbase<span class="token punctuation">.</span>it/downloads/CloudbaseInitSetup_Stable_ x64<span class="token punctuation">.</span>msi <span class="token operator">-</span>OutFile cloudbaseinit<span class="token punctuation">.</span>msi
+C:\<span class="token punctuation">.</span>\cloudbaseinit<span class="token punctuation">.</span>msi<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+</li>
+<li><p>启动安装向导后设置初始化选项、完成安装。</p>
+<img src="https://vault.taojie.fun:28089/i/2023/10/08/2023-10-08-1696739848.png" alt="1696739847088.png" title="1696739847088.png" />
+
+<img src="https://vault.taojie.fun:28089/i/2023/10/08/2023-10-08-1696739861.png" alt="1696739859425.png" title="1696739859425.png" />
+
+<img src="https://vault.taojie.fun:28089/i/2023/10/08/2023-10-08-1696739904.png" alt="1696739903072.png" title="1696739903072.png" />
+
+<img src="https://vault.taojie.fun:28089/i/2023/10/08/2023-10-08-1696739923.png" alt="1696739922332.png" title="1696739922332.png" />
+</li>
+<li><p>将生成的<code>ws2012.qcow2</code>传到<code>控制节点</code>上、上传到OpenStack后启动实例。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">scp</span> ws2012.qcow2 root@192.168.10.10:/root<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -163,7 +434,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/09/20/private_clouds/4.OpenStack%E9%95%9C%E5%83%8F%E7%AE%A1%E7%90%86/" class="post-title-link" itemprop="url">OpenStack镜像管理与制作</a>
+          <a href="/2023/09/20/private_clouds/4.OpenStack%E9%95%9C%E5%83%8F%E7%AE%A1%E7%90%86/" class="post-title-link" itemprop="url">OpenStack镜像管理与制作（一）</a>
         </h2>
 
         <div class="post-meta-container">
@@ -181,7 +452,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-09-21 02:59:30" itemprop="dateModified" datetime="2023-09-21T02:59:30+08:00">2023-09-21</time>
+      <time title="修改时间：2023-10-06 15:52:23" itemprop="dateModified" datetime="2023-10-06T15:52:23+08:00">2023-10-06</time>
     </span>
 
   
@@ -543,7 +814,7 @@ EOF</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span>
 <span class="token operator">|</span> 3a211d53-30e2-4d42-a7cf-ee55786b176a <span class="token operator">|</span> cirros      <span class="token operator">|</span> active <span class="token operator">|</span>
 +--------------------------------------+-------------+--------+
 <span class="token comment"># 2. 将本地快照文件转换成镜像</span>
-<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack image create centos_test_image --file /var/lib/glance/images/26b59df3-4fbe-4368-abd9-a5e5b58efe50  -disk-format qcow2 --container-format bare</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack image create centos_test_image --file /var/lib/glance/images/26b59df3-4fbe-4368-abd9-a5e5b58efe50  --disk-format qcow2 --container-format bare</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 </ol>
 
       
@@ -3861,419 +4132,8 @@ x<span class="token operator">++</span><span class="token punctuation">;</span><
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/06/09/c_program/1.%E7%AC%AC%E4%B8%80%E5%91%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | ">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/06/09/c_program/1.%E7%AC%AC%E4%B8%80%E5%91%A8/" class="post-title-link" itemprop="url">第一周</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-06-09 11:31:25" itemprop="dateCreated datePublished" datetime="2023-06-09T11:31:25+08:00">2023-06-09</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-09-03 13:17:06" itemprop="dateModified" datetime="2023-09-03T13:17:06+08:00">2023-09-03</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="名词解释"><a href="#名词解释" class="headerlink" title="名词解释"></a>名词解释</h2><ol>
-<li><p>高级语言、低级语言、机器语言</p>
-<ol>
-<li>高级语言（High-Level Language）：<br> 高级语言是一种相对抽象和易于理解的编程语言，其目的是提供更高层次的抽象和功能，使程序员能够更容易地编写复杂的程序。高级语言使用人类可读的语法和结构，使用更高级别的概念和抽象，使得程序的编写更容易、更快速。高级语言通常需要通过编译或解释器转换为机器语言才能在计算机上执行。常见的高级语言包括C、C++、Java、Python和JavaScript等。</li>
-<li>低级语言（Low-Level Language）：<br> 低级语言是与计算机硬件更接近的编程语言，它使用更接近机器语言的语法和结构。低级语言通常直接操作计算机的底层硬件和资源，提供了对硬件细节的更多控制。低级语言可以更高效地利用计算机的资源，但编写和理解低级语言程序相对更困难。汇编语言和机器语言都属于低级语言。</li>
-<li>机器语言（Machine Language）：<br> 机器语言是计算机硬件直接能理解和执行的语言。它由二进制位组成，表示计算机指令和数据。机器语言是计算机可以直接执行的最底层的语言。每个计算机的机器语言是特定于该计算机体系结构的。编写机器语言程序需要对机器指令和二进制表示有深入的了解。由于机器语言的复杂性和难以理解，通常使用高级语言来编写程序，然后通过编译器或解释器将其转换为机器语言。</li>
-</ol>
-</li>
-<li><p>解释型语言和编译型语</p>
-<p> <img src="https://vault.taojie.fun:28089/i/2023/09/02/note1.%E7%AC%AC%E4%B8%80%E5%91%A8-2023-06-09-10-53-51.png" alt="1.第一周-2023-06-09-10-53-51"></p>
-<p> Python 如此设计的原因在于将程序的执行与底层硬件进一步地分离，无需担心程序的编译、汇编以及链接过程，使得 Python 程序相较于 C 程序而言更加易于移植。</p>
-</li>
-<li><p>C语言源代码到可执行文件的过程</p>
-<ol>
-<li>C源代码：<br> 程序员使用C语言编写源代码，源代码以<code>.c</code>为扩展名。源代码包含了程序的逻辑和功能的定义。</li>
-<li>预处理：<br> 在编译之前，C预处理器会处理源代码。预处理器执行宏展开、条件编译等操作，生成经过预处理的源代码。</li>
-<li>编译：<br> 经过预处理的源代码会被编译器翻译成汇编代码。编译器将C源代码转换为汇编语言表示，生成汇编代码文件（<code>.s</code>文件）。</li>
-<li>汇编：<br> 汇编器将汇编代码转换为机器码指令。它将汇编代码文件翻译成机器可执行的指令，并生成目标文件（<code>.o</code>文件）。</li>
-<li>链接：<br> 链接器将目标文件与其他必要的库文件进行链接，生成最终的可执行文件。链接器解析目标文件中的符号引用，并将其与库函数和其他目标文件中的符号定义进行关联。链接器生成一个包含所有必要信息的可执行文件。</li>
-<li>可执行文件：<br> 最终的可执行文件是操作系统可以直接执行的二进制文件。它包含了程序的机器码指令、数据和其他必要的信息。可执行文件可以通过命令行或操作系统的运行环境来执行。</li>
-</ol>
-</li>
-<li><p>静态语言和动态语言</p>
-<ol>
-<li><p>静态语言（Static Language）：<br> 静态语言是在编译时进行类型检查的语言。在静态语言中，变量的类型在编译时确定，并且编译器会对类型进行检查。在编译过程中，变量的类型和使用方法需要在代码中明确声明和定义。静态语言的编译器会检查变量的类型是否与其使用方式相匹配，以避免类型错误。常见的静态语言包括C、C++、Java等。</p>
-<p> 优点：</p>
-<ol>
-<li>更早地发现类型错误，提前检测潜在的编程错误。</li>
-<li>在编译时进行类型检查，提高代码的稳定性和可靠性。</li>
-<li>性能较好，由于类型已经确定，编译器可以进行更多的优化。</li>
-</ol>
-<p> 缺点：</p>
-<ol>
-<li>代码相对冗长，需要显式声明和定义类型。</li>
-<li>编译时间较长，需要进行较多的类型检查和编译过程。</li>
-</ol>
-</li>
-<li><p>动态语言（Dynamic Language）：<br> 动态语言是在运行时进行类型检查的语言。在动态语言中，变量的类型可以根据其赋值进行推断，并且可以在运行时动态地改变变量的类型。动态语言的编译器或解释器在运行时进行类型检查和解析。常见的动态语言包括Python、JavaScript、Ruby等。</p>
-<p> 优点：</p>
-<ol>
-<li>灵活性高，可以在运行时动态地改变变量的类型和行为。</li>
-<li>代码相对简洁，无需显式声明和定义类型，灵活性提高了开发效率。</li>
-</ol>
-<p> 缺点：</p>
-<ol>
-<li>需要在运行时进行类型检查和解析，性能可能相对较低。</li>
-<li>容易出现运行时类型错误，只能在运行时才能发现。</li>
-</ol>
-</li>
-</ol>
-<p> 需要注意的是，静态语言和动态语言并非绝对的对立关系，很多语言在某些方面可以具备静态语言和动态语言的特性。例如，Java是静态语言，但具备一些动态语言的特性，如反射和动态代理。同样，Python是动态语言，但也可以通过类型注解等方式实现静态类型检查。</p>
-</li>
-</ol>
-<h2 id="C语言开发环境"><a href="#C语言开发环境" class="headerlink" title="C语言开发环境"></a>C语言开发环境</h2><ol>
-<li><p>在线运行平台（一键运行）：</p>
-<ol>
-<li><a target="_blank" rel="noopener" href="https://www.nhooo.com/tool/c/">https://www.nhooo.com/tool/c/</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.bejson.com/runcode/c740/">https://www.bejson.com/runcode/c740/</a></li>
-</ol>
-</li>
-<li><p>IDE（集成开发环境）：</p>
-<ol>
-<li><p>Visual Studio（一站式安装，一键编译运行）</p>
-<p> <a target="_blank" rel="noopener" href="https://visualstudio.microsoft.com/zh-hans/">Visual Studio下载地址</a>，<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/71110525">中文安装教程</a></p>
-</li>
-<li><p>VSCode + mingw（配置灵活且繁琐，一键编译运行）</p>
-<p> <a target="_blank" rel="noopener" href="https://code.visualstudio.com/download">VSCode下载地址</a>，<a target="_blank" rel="noopener" href="https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win64/Personal%20Builds/mingw-builds/8.1.0/threads-win32/seh/x86_64-8.1.0-release-win32-seh-rt_v6-rev0.7z">mingw压缩包地址</a>，<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/354400717">vscode和mingw安装教程</a></p>
-</li>
-</ol>
-</li>
-<li><p>Linux环境（vim+gcc）</p>
-<p> 编译命令<code>gcc -o 目标文件名 源文件</code></p>
-<p> 例：<code>gcc -o test test.c</code> 将名为<code>test.c</code>的源文件编译成名为<code>test</code>的目标文件</p>
-</li>
-</ol>
-<h2 id="C语言程序的结构"><a href="#C语言程序的结构" class="headerlink" title="C语言程序的结构"></a>C语言程序的结构</h2><ul>
-<li><p>简单的C程序实例</p>
-  <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
-
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-    <span class="token comment">/* 定义一个名为num的变量 */</span>
-    <span class="token keyword">int</span> num<span class="token punctuation">;</span>
-    <span class="token comment">/* 为num赋一个值 */</span>
-    num <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
-
-    <span class="token comment">/* 使用printf()函数 */</span>
-    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"I am a simple "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"computer.\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"My favorite number is %d because it is first.\n"</span><span class="token punctuation">,</span> num<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
-</ul>
-<ol>
-<li><p><code>#include</code>指令和头文件</p>
-<p> <code>#include</code>这行代码是一条C预处理器指令。通常，C编译器在编译前会对源代码做一些准备工作，即预处理。</p>
-<p> <code>#include &lt;stdio.h&gt;</code>的作用相当于把<code>stdio.h</code>文件中的所有内容都输入该行所在的位置。实际上，这是一种“拷贝-粘贴”的操作。</p>
-</li>
-<li><p><code>main()</code>函数</p>
-<p> C程序从<code>main()</code>函数开始执行。除了<code>main()</code>函数，你可以任意命名其他函数，而且main()函数必须是开始的函数。<code>int</code>是main()函数的返回类型。这表明main()函数返回的值是整数。返回到哪里？返回给操作系统通常，函数名后面的圆括号中包含一些传入函数的信息。该例中没有传递任何信息。因此，圆括号内是单词<code>void</code> 。</p>
- <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">//错误的main函数定义1</span>
-<span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-
-<span class="token comment">//错误的main函数定义2</span>
-<span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-
-<span class="token comment">//正确的main函数定义1</span>
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
-
-<span class="token comment">//正确的main函数定义2</span>
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p> <code>int main(int argc, char *argv[])</code> 是C语言中常见的<code>main</code>函数的定义方式，它用于接收命令行参数。</p>
-<p> 参数解释：</p>
-<ul>
-<li><code>int argc</code>：表示命令行参数的数量（Argument Count）。</li>
-<li><code>char *argv[]</code>：表示命令行参数的数组（Argument Vector），是一个指针数组，每个指针指向一个以null结尾的字符串，即命令行参数的值。</li>
-</ul>
-<p> 使用这种方式定义的<code>main</code>函数可以接收命令行传递的参数，如下所示：</p>
- <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
-
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"argc: %d\n"</span><span class="token punctuation">,</span> argc<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> argc<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"argv[%d]: %s\n"</span><span class="token punctuation">,</span> i<span class="token punctuation">,</span> argv<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p> 运行该程序并传递参数，例如：</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">./program arg1 arg2 arg3<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p> 程序运行结果会输出命令行参数的数量以及每个参数的值，如：</p>
- <pre class="line-numbers language-text" data-language="text"><code class="language-text">argc: 4
-argv[0]: ./program
-argv[1]: arg1
-argv[2]: arg2
-argv[3]: arg3<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>注释</p>
-<p> 在程序中，被两个<code>/* */</code>符号括起来的部分是程序的注释。写注释能让他人（包括自己）更容易明白你所写的程序。C 语言注释的好处之一是，可将注释放在任意的地方，甚至是与要解释的内容在同一行。较长的注释可单独放一行或多行。所有的注释都会被编译器忽略。</p>
- <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">/* 这是一条C注释。 */</span>
-<span class="token comment">/* 这也是一条注释，
-被分成两行。*/</span>
-<span class="token comment">/*
-也可以这样写注释。
-*/</span>
-<span class="token comment">/* 这条注释无效，因为缺少了结束标记。
-
-// 这种注释只能写成一行</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>花括号、函数体和块</p>
-<p> 花括号把main()函数括起来。一般而言，所有的C函数都使用<code>花括号</code>标记<code>函数体的开始和结束</code>。这是规定，不能省略。只有花括号（{}）能起这种作用，圆括号（()）和方括号（[]）都不行。花括号还可用于把函数中的多条语句<code>合并</code>为一个<code>单元或块</code>。</p>
-</li>
-<li><p>声明（declaration）</p>
-<p> 声明是C语言最重要的特性之一。在该例中，声明完成了两件事。其一，在函数中有一个名为<br> num的变量（<code>variable</code>）。其二，<code>int</code>表明<code>num</code>是一个<code>整数</code>（即，没有小数点或小数部分的数）。<code>int</code>是一种数据类型。编译器使用这些信息为<code>num</code>变量在内存中分配存储空间。</p>
-</li>
-<li><p>赋值</p>
-<p> 赋值是C语言的基本操作之一。该行代码的意思是“把值1赋给变量num”。在执行int num;声明时，编译器在计算机内存中为变量num预留了空间，然后在执行这行赋值表达式语句时，把值储存在之前预留的位置。可以给num赋不同的值，这就是num之所以被称为变量（variable）的原因。</p>
-</li>
-<li><p><code>printf()</code>函数</p>
-<p> 示例代码中有3行代码都使用了C语言的一个标准函数：<code>printf()</code>。圆括号表明printf是一个函数名。圆括号中的内容是从main()函数传递给printf()函数的信息。例如，上面的第1行把<code>I am a simple</code>传递给printf()函数。该信息被称为参数。</p>
-<p> 换行符是一个转义序列（escape sequence）。转义序列用于代表难以表示或无法输入的字符。如，\t代表Tab键，\b代表Backspace键（退格键）。每个转义序列都以反斜杠字符（\）开始</p>
-</li>
-<li><p><code>return</code>语句</p>
-<p> return语句是示例程序中的最后一条语句。<code>int main(void)</code>中的int表明main()函数应返回一个<code>整数</code>。C标准要求main()这样做。有返回值的C函数要有return语句。该语句以return关键字开始，后面是待返回的值，并以分号结尾。如果遗漏 main()函数中的 return 语句，程序在运行至最外面的右花括号（}）时会返回0。因此，可以省略main()函数末尾的return语句。但是，不要在其他有返回值的函数中漏掉它。</p>
-</li>
-</ol>
-<h2 id="C语言源程序的书写格式"><a href="#C语言源程序的书写格式" class="headerlink" title="C语言源程序的书写格式"></a>C语言源程序的书写格式</h2><ol>
-<li><p>缩进：使用适当的缩进来表示代码块的层次结构，常见的缩进为4个空格或一个制表符（Tab）。</p>
-</li>
-<li><p>大括号：对于控制结构、函数等代码块，使用大括号将其括起来，以表示代码块的开始和结束。</p>
- <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">if</span> <span class="token punctuation">(</span>condition<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token comment">// 代码块</span>
-    <span class="token comment">// ...</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>空格：在运算符、逗号、分号等符号周围添加适当的空格，以提高代码的可读性。</p>
- <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> sum <span class="token operator">=</span> a <span class="token operator">+</span> b<span class="token punctuation">;</span>
-<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d "</span><span class="token punctuation">,</span> i<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>注释：使用注释来解释代码的功能、目的、算法等，以增加代码的可读性和可维护性。</p>
- <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">// 计算两个数的和</span>
-<span class="token keyword">int</span> sum <span class="token operator">=</span> a <span class="token operator">+</span> b<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-</li>
-<li><p>命名规范：使用有意义的变量名、函数名和常量名，遵循命名规范，以提高代码的可读性和可维护性。</p>
- <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> numberOfStudents <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
-<span class="token keyword">void</span> <span class="token function">printMessage</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token comment">// 函数体</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>换行：在较长的语句中，适当地进行换行，以保持代码的可读性。</p>
- <pre class="line-numbers language-c" data-language="c"><code class="language-c">longResult <span class="token operator">=</span> <span class="token punctuation">(</span>longValue1 <span class="token operator">+</span> longValue2 <span class="token operator">+</span> longValue3<span class="token punctuation">)</span> <span class="token operator">/</span>
-             <span class="token punctuation">(</span>longValue4 <span class="token operator">-</span> longValue5<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
-</ol>
-<h2 id="C语言数据类型"><a href="#C语言数据类型" class="headerlink" title="C语言数据类型"></a>C语言数据类型</h2><ol>
-<li><p>整型（Integer）：</p>
-<ul>
-<li><code>int</code>：表示整数类型。通常占用4个字节。</li>
-<li><code>short</code>：表示短整数类型。通常占用2个字节。</li>
-<li><code>long</code>：表示长整数类型。通常占用4个或8个字节，取决于编译器和操作系统。</li>
-</ul>
-<p> 示例代码：</p>
- <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> num1 <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
-<span class="token keyword">short</span> num2 <span class="token operator">=</span> <span class="token number">20</span><span class="token punctuation">;</span>
-<span class="token keyword">long</span> num3 <span class="token operator">=</span> <span class="token number">30L</span><span class="token punctuation">;</span>  <span class="token comment">// 后缀L表示长整数类型</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>浮点型（Floating-point）：</p>
-<ul>
-<li><code>float</code>：表示单精度浮点数类型。通常占用4个字节。</li>
-<li><code>double</code>：表示双精度浮点数类型。通常占用8个字节。</li>
-</ul>
-<p> 示例代码：</p>
- <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">float</span> num1 <span class="token operator">=</span> <span class="token number">3.14f</span><span class="token punctuation">;</span>  <span class="token comment">// 后缀f表示单精度浮点数类型</span>
-<span class="token keyword">double</span> num2 <span class="token operator">=</span> <span class="token number">2.71828</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-</li>
-<li><p>字符型（Character）：</p>
-<ul>
-<li><code>char</code>：表示字符类型。通常占用1个字节。</li>
-</ul>
-<p> 示例代码：</p>
- <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">char</span> ch1 <span class="token operator">=</span> <span class="token char">'A'</span><span class="token punctuation">;</span>
-<span class="token keyword">char</span> ch2 <span class="token operator">=</span> <span class="token char">'B'</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-</li>
-<li><p>布尔型（Boolean）：</p>
-<ul>
-<li><code>bool</code>：表示布尔类型，只能取<code>true</code>（非零值）或<code>false</code>（零值）。</li>
-</ul>
-<p> 示例代码：</p>
- <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdbool.h></span>  <span class="token comment">// 需要包含stdbool.h头文件</span></span>
-
-bool flag1 <span class="token operator">=</span> true<span class="token punctuation">;</span>
-bool flag2 <span class="token operator">=</span> false<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></li>
-</ol>
-<h3 id="数据类型示例代码"><a href="#数据类型示例代码" class="headerlink" title="数据类型示例代码"></a>数据类型示例代码</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdbool.h></span></span>
-
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token comment">// 整型示例</span>
-    <span class="token keyword">int</span> num1 <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
-    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"整数num1 = %d，整型大小: %u 字节\n"</span><span class="token punctuation">,</span> num1<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>num1<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token keyword">short</span> num2 <span class="token operator">=</span> <span class="token number">20</span><span class="token punctuation">;</span>
-    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"短整数num2 = %hd，短整数大小: %u 字节\n"</span><span class="token punctuation">,</span> num2<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>num2<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token keyword">long</span> num3 <span class="token operator">=</span> <span class="token number">30L</span><span class="token punctuation">;</span>
-    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"长整数num3 = %ld，长整数大小: %u 字节\n"</span><span class="token punctuation">,</span> num3<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>num3<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token comment">// 浮点型示例</span>
-    <span class="token keyword">float</span> num4 <span class="token operator">=</span> <span class="token number">3.14f</span><span class="token punctuation">;</span>
-    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"单精度浮点数num4 = %f，单精度浮点数大小: %u 字节\n"</span><span class="token punctuation">,</span> num4<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>num4<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token keyword">double</span> num5 <span class="token operator">=</span> <span class="token number">2.71828</span><span class="token punctuation">;</span>
-    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"双精度浮点数num5 = %lf，双精度浮点数大小: %u 字节\n"</span><span class="token punctuation">,</span> num5<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>num5<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token comment">// 字符型示例</span>
-    <span class="token keyword">char</span> ch1 <span class="token operator">=</span> <span class="token char">'A'</span><span class="token punctuation">;</span>
-    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"字符ch1 = %c，字符大小: %u 字节\n"</span><span class="token punctuation">,</span> ch1<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>ch1<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token keyword">char</span> ch2 <span class="token operator">=</span> <span class="token number">66</span><span class="token punctuation">;</span>  <span class="token comment">// ASCII码值</span>
-    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"字符ch2 = %c，字符大小: %u 字节\n"</span><span class="token punctuation">,</span> ch2<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>ch2<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token comment">// 布尔型示例</span>
-    bool flag1 <span class="token operator">=</span> true<span class="token punctuation">;</span>
-    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"布尔数flag1 = %d，布尔值大小: %u 字节\n"</span><span class="token punctuation">,</span> flag1<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>flag1<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    bool flag2 <span class="token operator">=</span> false<span class="token punctuation">;</span>
-    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"布尔数flag2 = %d，布尔值大小: %u 字节\n"</span><span class="token punctuation">,</span> flag2<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>flag2<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="C语言的运算符"><a href="#C语言的运算符" class="headerlink" title="C语言的运算符"></a>C语言的运算符</h2><p>C语言中有多种类型的运算符，用于执行各种算术、逻辑和位操作。以下是C语言中常见的运算符类型：</p>
-<ol>
-<li>算术运算符：用于执行基本的算术操作，如加法、减法、乘法、除法、取模等。<ul>
-<li><code>+</code>：加法运算</li>
-<li><code>-</code>：减法运算</li>
-<li>*：乘法运算</li>
-<li><code>/</code>：除法运算</li>
-<li><code>%</code>：取模（取余）运算</li>
-</ul>
-</li>
-<li>关系运算符：用于比较两个值之间的关系，返回一个布尔值（1表示真，0表示假）。<ul>
-<li><code>==</code>：等于</li>
-<li><code>!=</code>：不等于</li>
-<li><code>&lt;</code>：小于</li>
-<li><code>&gt;</code>：大于</li>
-<li><code>&lt;=</code>：小于等于</li>
-<li><code>&gt;=</code>：大于等于</li>
-</ul>
-</li>
-<li>逻辑运算符：用于执行逻辑操作，对布尔值进行组合和求反。<ul>
-<li><code>&amp;&amp;</code>：逻辑与（与）</li>
-<li><code>||</code>：逻辑或（或）</li>
-<li><code>!</code>：逻辑非（非）</li>
-</ul>
-</li>
-<li>位运算符：用于对二进制数据的位进行操作。<ul>
-<li><code>&amp;</code>：按位与</li>
-<li><code>|</code>：按位或</li>
-<li><code>^</code>：按位异或</li>
-<li><code>~</code>：按位取反</li>
-<li><code>&lt;&lt;</code>：左移</li>
-<li><code>&gt;&gt;</code>：右移</li>
-</ul>
-</li>
-<li>赋值运算符：用于给变量赋值。<ul>
-<li><code>=</code>：简单赋值</li>
-<li><code>+=</code>：加法赋值</li>
-<li><code>=</code>：减法赋值</li>
-<li><code>=</code>：乘法赋值</li>
-<li><code>/=</code>：除法赋值</li>
-<li><code>%=</code>：取模赋值</li>
-<li><code>&lt;&lt;=</code>：左移赋值</li>
-<li><code>&gt;&gt;=</code>：右移赋值</li>
-<li><code>&amp;=</code>：按位与赋值</li>
-<li><code>|=</code>：按位或赋值</li>
-<li><code>^=</code>：按位异或赋值</li>
-</ul>
-</li>
-<li>自增和自减运算符：用于对变量进行递增或递减操作。<ul>
-<li><code>++</code>：自增</li>
-<li><code>-</code>：自减</li>
-</ul>
-</li>
-<li>条件运算符：用于根据条件选择不同的值。<ul>
-<li><code>? :</code>：条件表达式，也称为三元运算符。</li>
-</ul>
-</li>
-<li>其他运算符：还有一些其他类型的运算符，如指针运算符、sizeof运算符、类型转换运算符等。</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/source/index.md/page/2/">2</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/source/index.md/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/source/index.md/page/2/">2</a><a class="page-number" href="/source/index.md/page/3/">3</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/source/index.md/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>
