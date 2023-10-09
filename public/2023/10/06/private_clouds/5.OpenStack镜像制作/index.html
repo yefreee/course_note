@@ -26,11 +26,19 @@
 <meta property="og:site_name">
 <meta property="og:description" content="虚拟机镜像制作方法OpenStack平台所使用的镜像文件是一种虚拟机镜像，我们简称为镜像。而虚拟机镜像本质上是一个包含虚拟磁盘的单个文件，该虚拟磁盘上安装了可引导的操作系统。 上一节课已经介绍了通过下载官方预制的虚拟机镜像，这种途径获取到的镜像文件大都默认禁用SSH密码身份验证，同时包含cloud-init来支持SSH密钥对和用户数据的注入。通过密钥实现登录之后可以做进一步的定制，最后通过创建快照">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/10/09/2023-10-09-1696814955.png">
+<meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/10/09/2023-10-09-1696815014.png">
 <meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/10/08/2023-10-08-1696740814.png">
+<meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/10/09/2023-10-09-1696815764.png">
+<meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/10/09/2023-10-09-1696816865.png">
+<meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/10/09/2023-10-09-1696816715.png">
+<meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/10/09/2023-10-09-1696817359.png">
+<meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/10/09/2023-10-09-1696817530.png">
 <meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/10/08/2023-10-08-1696731826.png">
-<meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/10/08/2023-10-08-1696731966.png">
-<meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/10/08/2023-10-08-1696737341.png">
+<meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/10/09/2023-10-09-1696826963.png">
+<meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/10/09/2023-10-09-1696827045.png">
 <meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/10/08/2023-10-08-1696737650.png">
+<meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/10/09/2023-10-09-1696821264.png">
 <meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/10/08/2023-10-08-1696738960.png">
 <meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/10/08/2023-10-08-1696738975.png">
 <meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/10/08/2023-10-08-1696739234.png">
@@ -40,9 +48,9 @@
 <meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/10/08/2023-10-08-1696739904.png">
 <meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/10/08/2023-10-08-1696739923.png">
 <meta property="article:published_time" content="2023-10-06T03:00:09.000Z">
-<meta property="article:modified_time" content="2023-10-08T05:08:05.020Z">
+<meta property="article:modified_time" content="2023-10-09T04:54:05.524Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://vault.taojie.fun:28089/i/2023/10/08/2023-10-08-1696740814.png">
+<meta name="twitter:image" content="https://vault.taojie.fun:28089/i/2023/10/09/2023-10-09-1696814955.png">
 
 
 <link rel="canonical" href="http://example.com/2023/10/06/private_clouds/5.OpenStack%E9%95%9C%E5%83%8F%E5%88%B6%E4%BD%9C/">
@@ -124,7 +132,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%95%9C%E5%83%8F%E5%88%B6%E4%BD%9C%E6%96%B9%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">虚拟机镜像制作方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fedora%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85"><span class="nav-number">2.</span> <span class="nav-text">fedora环境安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Guestfish%E4%BD%BF%E7%94%A8"><span class="nav-number">3.</span> <span class="nav-text">Guestfish使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Guestmount%E4%BD%BF%E7%94%A8"><span class="nav-number">4.</span> <span class="nav-text">Guestmount使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Diskimage-builder%E4%BD%BF%E7%94%A8"><span class="nav-number">5.</span> <span class="nav-text">Diskimage-builder使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%8B%E5%8A%A8%E5%AE%9A%E5%88%B6%E8%99%9A%E6%8B%9F%E7%A3%81%E7%9B%98%E9%95%9C%E5%83%8F"><span class="nav-number">6.</span> <span class="nav-text">手动定制虚拟磁盘镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85"><span class="nav-number">6.1.</span> <span class="nav-text">操作系统虚拟机安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">6.1.1.</span> <span class="nav-text">准备工作</span></a></li></ol></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%95%9C%E5%83%8F%E5%88%B6%E4%BD%9C%E6%96%B9%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">虚拟机镜像制作方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fedora%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85"><span class="nav-number">2.</span> <span class="nav-text">fedora环境安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8samba%E8%8E%B7%E5%8F%96fedora%E5%AE%89%E8%A3%85%E5%8C%85"><span class="nav-number">2.1.</span> <span class="nav-text">使用samba获取fedora安装包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85%E3%80%81%E9%85%8D%E7%BD%AE"><span class="nav-number">2.2.</span> <span class="nav-text">系统安装、配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Guestfish%E4%BD%BF%E7%94%A8"><span class="nav-number">3.</span> <span class="nav-text">Guestfish使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Guestfish%E5%AE%89%E8%A3%85"><span class="nav-number">3.1.</span> <span class="nav-text">Guestfish安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E9%9C%80%E8%A6%81%E4%BF%AE%E6%94%B9%E7%9A%84%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F"><span class="nav-number">3.2.</span> <span class="nav-text">获取需要修改的系统镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%95%9C%E5%83%8F%E5%AE%9A%E5%88%B6"><span class="nav-number">3.3.</span> <span class="nav-text">镜像定制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AA%8C%E8%AF%81%E5%AE%9A%E5%88%B6%E7%BB%93%E6%9E%9C"><span class="nav-number">3.4.</span> <span class="nav-text">验证定制结果</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Guestmount%E4%BD%BF%E7%94%A8"><span class="nav-number">4.</span> <span class="nav-text">Guestmount使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Diskimage-builder%E4%BD%BF%E7%94%A8"><span class="nav-number">5.</span> <span class="nav-text">Diskimage-builder使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%8B%E5%8A%A8%E5%AE%9A%E5%88%B6%E8%99%9A%E6%8B%9F%E7%A3%81%E7%9B%98%E9%95%9C%E5%83%8F"><span class="nav-number">6.</span> <span class="nav-text">手动定制虚拟磁盘镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85"><span class="nav-number">6.1.</span> <span class="nav-text">操作系统虚拟机安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">6.1.1.</span> <span class="nav-text">准备工作</span></a></li></ol></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -201,7 +209,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-10-08 13:08:05" itemprop="dateModified" datetime="2023-10-08T13:08:05+08:00">2023-10-08</time>
+      <time title="修改时间：2023-10-09 12:54:05" itemprop="dateModified" datetime="2023-10-09T12:54:05+08:00">2023-10-09</time>
     </span>
 
   
@@ -222,28 +230,52 @@
 <li>通过工具（Diskimage-builder）创建虚拟机镜像</li>
 <li>手动创建虚拟机镜像</li>
 </ul>
-<h2 id="fedora环境安装"><a href="#fedora环境安装" class="headerlink" title="fedora环境安装"></a>fedora环境安装</h2><ol>
-<li><p>用浏览器下载fedora镜像</p>
+<h2 id="fedora环境安装"><a href="#fedora环境安装" class="headerlink" title="fedora环境安装"></a>fedora环境安装</h2><h3 id="使用samba获取fedora安装包"><a href="#使用samba获取fedora安装包" class="headerlink" title="使用samba获取fedora安装包"></a>使用samba获取fedora安装包</h3><ol>
+<li><p>学生机使用的是空白密码的账户，需要修改策略。</p>
+<ul>
+<li>按Windows + R键调出运行框，输入“gpedit.msc”命令以打开本地组策略编辑器，依次导航到：计算机配置 &gt; Windows 设置 &gt; 安全设置 &gt; 本地策略 &gt; 安全选项。</li>
+</ul>
+ <img src="https://vault.taojie.fun:28089/i/2023/10/09/2023-10-09-1696814955.png" alt="1696814955556.png" title="1696814955556.png" />
+
+<ul>
+<li>在右侧窗格中找到“账户：使用空密码的本地账户只允许进行控制台登录”，然后双击打开，将其设置为“已禁用”，再单击“应用”和“确定”。</li>
+</ul>
+ <img src="https://vault.taojie.fun:28089/i/2023/10/09/2023-10-09-1696815014.png" alt="1696815014064.png" title="1696815014064.png" />
 </li>
-<li><p>使用VMware安装fedora系统，内存4G。</p>
+<li><p>Windows + E打开文件资源管理器在搜索栏输入<code>//192.168.3.47</code>打开后将文件<code>Fedora-Workstation-Live-x86_64-38-1.6.iso</code>拉取到本地。</p>
+</li>
+</ol>
+<h3 id="系统安装、配置"><a href="#系统安装、配置" class="headerlink" title="系统安装、配置"></a>系统安装、配置</h3><ol>
+<li><p>使用VMware安装fedora系统，内存6G，密码设置时可以统一使用<code>fedora00</code>。</p>
 </li>
 <li><p>进入桌面后打开fedora的远程连接。</p>
- <img src="https://vault.taojie.fun:28089/i/2023/10/08/2023-10-08-1696740814.png" alt="1696740813374.png" title="1696740813374.png" />
-</li>
-<li><p>打开fedora终端下载以下资源。</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">wget</span> https://download.cirros-cloud.net/0.5.1/cirros-0.5.1-x86_64-disk.img <span class="token operator">&amp;</span>
-<span class="token function">wget</span> https://go.microsoft.com/fwlink/p/?LinkID<span class="token operator">=</span><span class="token number">2195443</span><span class="token operator">&amp;</span><span class="token assign-left variable">clcid</span><span class="token operator">=</span>0x804<span class="token operator">&amp;</span><span class="token assign-left variable">culture</span><span class="token operator">=</span>zh-cn<span class="token operator">&amp;</span><span class="token assign-left variable">country</span><span class="token operator">=</span>CN <span class="token parameter variable">-O</span> winserver-2012.iso <span class="token operator">&amp;</span>
-<span class="token function">wget</span> https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/virtio-win.iso <span class="token operator">&amp;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li>
+ <img src="https://vault.taojie.fun:28089/i/2023/10/08/2023-10-08-1696740814.png" alt="1696740813374.png" title="1696740813374.png" /></li>
 </ol>
 <h2 id="Guestfish使用"><a href="#Guestfish使用" class="headerlink" title="Guestfish使用"></a>Guestfish使用</h2><p>Guestfish是一个用于访问和修改虚拟机磁盘镜像的工具，它提供了一种交互式方式来浏览、修改虚拟机的文件系统。</p>
-<ol>
-<li><p>Guestfish安装</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># sudo dnf -y install libguestfs-tools</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="Guestfish安装"><a href="#Guestfish安装" class="headerlink" title="Guestfish安装"></a>Guestfish安装</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># sudo dnf -y install libguestfs-tools</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="获取需要修改的系统镜像"><a href="#获取需要修改的系统镜像" class="headerlink" title="获取需要修改的系统镜像"></a>获取需要修改的系统镜像</h3><ol>
+<li><p>在fedora系统中打开终端使用<code>ip a</code>获取ip地址。</p>
+</li>
+<li><p>从samba共享的文件中拉取<code>WinSCP-5.19.3</code>，使用第一步中获取到的ip地址和fedora的账户密码登录会话。</p>
+ <img src="https://vault.taojie.fun:28089/i/2023/10/09/2023-10-09-1696815764.png" alt="1696815764123.png" title="1696815764123.png" />
+</li>
+<li><p>将本地D盘的<code>CentOS-7-x86_64-GenericCloud-2003.qcow2</code>文件拉取到fedora系统中。</p>
+</li>
+</ol>
+<h3 id="镜像定制"><a href="#镜像定制" class="headerlink" title="镜像定制"></a>镜像定制</h3><ol>
+<li><p>在fedora桌面上打开终端执行<code>openssl passwd -l 123123</code>生成加密的字符串并<code>复制</code>用于设置root密码。</p>
+ <img src="https://vault.taojie.fun:28089/i/2023/10/09/2023-10-09-1696816865.png" alt="1696816865524.png" title="1696816865524.png" />
 </li>
 <li><p>Guestfish用法示例</p>
+</li>
+</ol>
+<blockquote>
+<p>定制内容是设置centos镜像的root和centos账户的直接登录，需要修改<code>/etc/shadow</code>和<code>/etc/cloud/cloud.cfg</code>两个文件。</p>
+</blockquote>
 <ol>
-<li><p>假设需要修改的虚拟机镜像文件名为<code>centos63_desktop.img</code>，通过以下命令以root身份挂载为读写模式：</p>
-  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># guestfish --rw -a centos63_desktop.img</span>
+<li><p>需要修改的虚拟机镜像文件名为<code>CentOS-7-x86_64-GenericCloud-2003.qcow2</code>，通过以下命令以root身份挂载为读写模式：</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># guestfish --rw -a CentOS-7-x86_64-GenericCloud-2003.qcow2</span>
 
 Welcome to Guestfish, the libguestfs filesystem interactive shell <span class="token keyword">for</span>
 editing virtual machine filesystems.
@@ -257,27 +289,44 @@ Type: <span class="token string">'help'</span> <span class="token keyword">for</
 <blockquote>
 <p>此时进入Guestfish的会话，提示符为<code>&gt;&lt;fs&gt;</code></p>
 </blockquote>
+ <img src="https://vault.taojie.fun:28089/i/2023/10/09/2023-10-09-1696816715.png" alt="1696816715465.png" title="1696816715465.png" />
 </li>
 <li><p>首先在Guestfish提示符下使用<code>run</code>命令启动一个虚拟机才能执行其他操作，该虚拟机将用于执行所有文件操作。</p>
-  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span><span class="token operator">&lt;</span>fs<span class="token operator">></span> run<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span><span class="token operator">&lt;</span>fs<span class="token operator">></span> run<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 </li>
 <li><p>通过list-filesystems命令查看文件系统。</p>
-  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span><span class="token operator">&lt;</span>fs<span class="token operator">></span> list-filesystems
-/dev/vda1: ext4
-/dev/vg_centosbase/lv_root: ext4
-/dev/vg_centosbase/lv_swap: swap<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span><span class="token operator">&lt;</span>fs<span class="token operator">></span> list-filesystems<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<blockquote>
+<p>作业1：上传显示的镜像分区信息。</p>
+</blockquote>
 </li>
-<li><p>挂载包含根分区的逻辑卷并修改文件。</p>
-  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span><span class="token operator">&lt;</span>fs<span class="token operator">></span> <span class="token function">mount</span> /dev/vg_centosbase/lv_root /<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<li><p>挂载包含根目录的分区并修改文件<code>/etc/shadow</code>用来给root账户设置密码。</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span><span class="token operator">&lt;</span>fs<span class="token operator">></span> <span class="token function">mount</span> /dev/sda1 /<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span><span class="token operator">&lt;</span>fs<span class="token operator">></span> <span class="token function">rm</span> /etc/udev/rules.d/70-persistent-net.rules<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span><span class="token operator">&lt;</span>fs<span class="token operator">></span> <span class="token function">vi</span> /etc/shadow<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span><span class="token operator">&lt;</span>fs<span class="token operator">></span> edit /etc/sysconfig/network-scripts/ifcfg-eth0<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span><span class="token operator">&lt;</span>fs<span class="token operator">></span> <span class="token builtin class-name">exit</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+<blockquote>
+<p>在文件的第一行的第一、二个冒号中间插入之前复制的所生成的root密码。</p>
+</blockquote>
+ <img src="https://vault.taojie.fun:28089/i/2023/10/09/2023-10-09-1696817359.png" alt="1696817359200.png" title="1696817359200.png" />
+</li>
+<li><p>修改<code>/etc/cloud/cloud.cfg</code>文件。</p>
+<p> 在第58行下添加<code>plain_text_passwd: &#39;000000&#39;</code>字段用来给centos用户设置初始密码<code>000000</code>。</p>
+ <img src="https://vault.taojie.fun:28089/i/2023/10/09/2023-10-09-1696817530.png" alt="1696817529748.png" title="1696817529748.png" />
+</li>
+<li><p>退出guestfish视图</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span><span class="token operator">&lt;</span>fs<span class="token operator">></span> <span class="token builtin class-name">exit</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
 </ol>
+<h3 id="验证定制结果"><a href="#验证定制结果" class="headerlink" title="验证定制结果"></a>验证定制结果</h3><ol>
+<li><p>通过WinSCP将修改好的<code>CentOS-7-x86_64-GenericCloud-2003.qcow2</code>传输回本地的Windows。</p>
+</li>
+<li><p>关闭fedora虚拟机、打开<code>控制节点</code>和<code>计算节点</code>，登录<code>192.168.10.20</code>，上传镜像到OpenStack、参考<a target="_blank" rel="noopener" href="https://abc.taojie.fun/2023/09/20/private_clouds/4.openstack%E9%95%9C%E5%83%8F%E7%AE%A1%E7%90%86/#%E5%88%9B%E5%BB%BA%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%9E%E4%BE%8B">创建虚拟机实例</a>创建Centos实例并使用root和centos账户登录，验证登录结果。</p>
 </li>
 </ol>
+<blockquote>
+<p>作业2:上传登录后的截图</p>
+</blockquote>
 <h2 id="Guestmount使用"><a href="#Guestmount使用" class="headerlink" title="Guestmount使用"></a>Guestmount使用</h2><p><code>Guestmount</code>是一个用于挂载虚拟机磁盘镜像的工具，它允许在宿主机上将虚拟机磁盘镜像挂载为宿主机文件系统的一部分，从而可以直接访问和修改虚拟机镜像中的文件。Guestmount可以在不启动虚拟机的情况下进行操作，提供了对镜像中文件的读写访问权限。通过Guestmount，可以像操作本地文件系统一样，使用标准的文件操作命令（例如cp、mv、rm 等）</p>
 <ul>
 <li><p>Guestmount用法示例</p>
@@ -334,16 +383,11 @@ Type: <span class="token string">'help'</span> <span class="token keyword">for</
 </li>
 </ol>
 <h3 id="操作系统虚拟机安装"><a href="#操作系统虚拟机安装" class="headerlink" title="操作系统虚拟机安装"></a>操作系统虚拟机安装</h3><h4 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h4><ol>
-<li><p>在安装系统之前需要获取系统安装包、VirtIO驱动，上面步骤已经提前下载好。</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 下载Windows Server 2012的软件安装包</span>
-<span class="token punctuation">[</span>fedora@fedora ~<span class="token punctuation">]</span>$ <span class="token function">wget</span> https://go.microsoft.com/fwlink/p/?LinkID<span class="token operator">=</span><span class="token number">2195443</span><span class="token operator">&amp;</span><span class="token assign-left variable">clcid</span><span class="token operator">=</span>0x804<span class="token operator">&amp;</span><span class="token assign-left variable">culture</span><span class="token operator">=</span>zh-cn<span class="token operator">&amp;</span><span class="token assign-left variable">country</span><span class="token operator">=</span>CN <span class="token parameter variable">-O</span> winserver-2012.iso <span class="token operator">&amp;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 下载适用的VirtIO驱动文件</span>
-<span class="token punctuation">[</span>fedora@fedora ~<span class="token punctuation">]</span>$ <span class="token function">wget</span> https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/virtio-win.iso <span class="token operator">&amp;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<li><p>在安装系统之前需要获取系统安装包、VirtIO驱动，从samba服务器上拉取文件<code>cn_windows_server_2012_r2_with_update_x64_dvd_6052725.iso</code>和<code>virtio-win-0.1.185.iso</code>。</p>
 </li>
-<li><p>创建大小为15G的qcow2格式的虚拟磁盘文件。</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>fedora@fedora ~<span class="token punctuation">]</span>$ qemu-img create <span class="token parameter variable">-f</span> qcow2 ws2012.qcow2 15G
-Formatting <span class="token string">'ws2012.qcow2'</span>, <span class="token assign-left variable">fmt</span><span class="token operator">=</span>qcow2 <span class="token assign-left variable">size</span><span class="token operator">=</span><span class="token number">16106127360</span> <span class="token assign-left variable">cluster_size</span><span class="token operator">=</span><span class="token number">65536</span> <span class="token assign-left variable">lazy_refcounts</span><span class="token operator">=</span>off <span class="token assign-left variable">refcount_bits</span><span class="token operator">=</span><span class="token number">16</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<li><p>创建大小为20G的qcow2格式的虚拟磁盘文件。</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>fedora@fedora ~<span class="token punctuation">]</span>$ qemu-img create <span class="token parameter variable">-f</span> qcow2 ws2012.qcow2 20G
+Formatting <span class="token string">'ws2012.qcow2'</span>, <span class="token assign-left variable">fmt</span><span class="token operator">=</span>qcow2 <span class="token assign-left variable">cluster_size</span><span class="token operator">=</span><span class="token number">65536</span> <span class="token assign-left variable">extended_l2</span><span class="token operator">=</span>off <span class="token assign-left variable">compression_type</span><span class="token operator">=</span>zlib <span class="token assign-left variable">size</span><span class="token operator">=</span><span class="token number">21474836480</span> <span class="token assign-left variable">lazy_refcounts</span><span class="token operator">=</span>off <span class="token assign-left variable">refcount_bits</span><span class="token operator">=</span><span class="token number">16</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 </li>
 <li><p>安装虚拟化相关的软件包。</p>
  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># virt-install 是一个命令行工具，用于在虚拟化环境中创建和安装虚拟机</span>
@@ -356,24 +400,34 @@ Formatting <span class="token string">'ws2012.qcow2'</span>, <span class="token 
 <span class="token parameter variable">--name</span> ws2012 <span class="token parameter variable">--ram</span> <span class="token number">2048</span> <span class="token parameter variable">--vcpus</span> <span class="token number">2</span> <span class="token punctuation">\</span>
 <span class="token parameter variable">--network</span> <span class="token assign-left variable">network</span><span class="token operator">=</span>default,model<span class="token operator">=</span>virtio <span class="token punctuation">\</span>
 <span class="token parameter variable">--disk</span> <span class="token assign-left variable">path</span><span class="token operator">=</span>ws2012.qcow2,format<span class="token operator">=</span>qcow2,device<span class="token operator">=</span>disk,bus<span class="token operator">=</span>virtio <span class="token punctuation">\</span>
-<span class="token parameter variable">--cdrom</span> winserver-2012.iso <span class="token punctuation">\</span>
+<span class="token parameter variable">--cdrom</span> cn_windows_server_2012_r2_with_update_x64_dvd_6052725.iso <span class="token punctuation">\</span>
 <span class="token parameter variable">--disk</span> <span class="token assign-left variable">path</span><span class="token operator">=</span>virtio-win.iso,device<span class="token operator">=</span>cdrom <span class="token punctuation">\</span>
 <span class="token parameter variable">--vnc</span> --os-type windows --os-variant win2k12 <span class="token punctuation">\</span>
 <span class="token parameter variable">--boot</span> cdrom,menu<span class="token operator">=</span>on<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
-<li><p>通过virt-viewer控制台登录启动的windows server虚拟机完成安装。</p>
+<li><p>在图形终端中执行<code>virt-manager</code>打开虚拟机控制同。通过控制台登录启动的windows server虚拟机完成安装。</p>
+<blockquote>
+<p>系统密钥：NB4WH-BBBYV-3MPPC-9RCMV-46XCB</p>
+</blockquote>
  <img src="https://vault.taojie.fun:28089/i/2023/10/08/2023-10-08-1696731826.png" alt="1696731825728.png" title="1696731825728.png" />
 
 <blockquote>
-<p>安装系统时选择第二个带GUI桌面的标准版。<br> <img src="https://vault.taojie.fun:28089/i/2023/10/08/2023-10-08-1696731966.png" alt="1696731965295.png" title="1696731965295.png" /></p>
+<p>安装系统时选择第二个带GUI桌面的标准版，安装方式选择第二个。</p>
 </blockquote>
- <img src="https://vault.taojie.fun:28089/i/2023/10/08/2023-10-08-1696737341.png" alt="1696737340360.png" title="1696737340360.png" />
+ <img src="https://vault.taojie.fun:28089/i/2023/10/09/2023-10-09-1696826963.png" alt="1696826962933.png" title="1696826962933.png" />
+
+ <img src="https://vault.taojie.fun:28089/i/2023/10/09/2023-10-09-1696827045.png" alt="1696827044800.png" title="1696827044800.png" />
 </li>
-<li><p>选择<code>Load driver</code>加载scsi驱动。</p>
+<li><p>选择<code>加载驱动程序</code>-&gt;<code>浏览</code>从以下路径加载scsi和网络驱动。</p>
 <blockquote>
 <p>E:\virtio-win-0.1XX\viostor\2k12\amd64<br> E:\NETKVM\2k12\amd64</p>
 </blockquote>
  <img src="https://vault.taojie.fun:28089/i/2023/10/08/2023-10-08-1696737650.png" alt="1696737648562.png" title="1696737648562.png" />
+</li>
+<li><p>选择<code>驱动器0</code>、点下一步安装系统。</p>
+</li>
+<li><p>系统安装完成后在虚拟机管理器中点击查看 -&gt; 详情 -&gt; 引导选项，选中VirtIO磁盘。</p>
+ <img src="https://vault.taojie.fun:28089/i/2023/10/09/2023-10-09-1696821264.png" alt="1696821263632.png" title="1696821263632.png" />
 </li>
 <li><p>重启虚拟机，在以下启动界面按ESC后选择第二个分区启动系统。</p>
  <img src="https://vault.taojie.fun:28089/i/2023/10/08/2023-10-08-1696738960.png" alt="1696738959698.png" title="1696738959698.png" />
@@ -381,12 +435,12 @@ Formatting <span class="token string">'ws2012.qcow2'</span>, <span class="token 
  <img src="https://vault.taojie.fun:28089/i/2023/10/08/2023-10-08-1696738975.png" alt="1696738974281.png" title="1696738974281.png" />
 </li>
 <li><p>进入系统后按下图配置允许远程登录、配置防火墙规则。</p>
- <img src="https://vault.taojie.fun:28089/i/2023/10/08/2023-10-08-1696739234.png" alt="1696739233738.png" title="1696739233738.png" />
+<img src="https://vault.taojie.fun:28089/i/2023/10/08/2023-10-08-1696739234.png" alt="1696739233738.png" title="1696739233738.png" />
 
- <img src="https://vault.taojie.fun:28089/i/2023/10/08/2023-10-08-1696739246.png" alt="1696739245196.png" title="1696739245196.png" />
+<img src="https://vault.taojie.fun:28089/i/2023/10/08/2023-10-08-1696739246.png" alt="1696739245196.png" title="1696739245196.png" />
 </li>
 <li><p>启动命令行执行以下命令安装VirtIO驱动。</p>
- <pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">CD \
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">CD \
 C:\pnputil <span class="token operator">-</span>i <span class="token operator">-</span>a D:\viostor\2k12r2\amd64\<span class="token operator">*</span><span class="token punctuation">.</span>INF<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 </li>
 <li><p>设置PowerShell的执行策略为不受限制。</p>
@@ -409,6 +463,9 @@ C:\<span class="token punctuation">.</span>\cloudbaseinit<span class="token punc
 <li><p>将生成的<code>ws2012.qcow2</code>传到<code>控制节点</code>上、上传到OpenStack后启动实例。</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">scp</span> ws2012.qcow2 root@192.168.10.10:/root<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
 </ol>
+<blockquote>
+<p>作业三：windows实例启动后截图上传。</p>
+</blockquote>
 
     </div>
 
