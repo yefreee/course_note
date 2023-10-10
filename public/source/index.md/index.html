@@ -181,7 +181,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-10-10 13:23:34" itemprop="dateModified" datetime="2023-10-10T13:23:34+08:00">2023-10-10</time>
+      <time title="修改时间：2023-10-10 15:04:05" itemprop="dateModified" datetime="2023-10-10T15:04:05+08:00">2023-10-10</time>
     </span>
 
   
@@ -225,8 +225,28 @@
  <img src="https://vault.taojie.fun:28089/i/2023/10/10/2023-10-10-1696913542.png" alt="1696913541159.png" title="1696913541159.png" /></li>
 </ol>
 <h2 id="Guestfish使用"><a href="#Guestfish使用" class="headerlink" title="Guestfish使用"></a>Guestfish使用</h2><p>Guestfish是一个用于访问和修改虚拟机磁盘镜像的工具，它提供了一种交互式方式来浏览、修改虚拟机的文件系统。</p>
-<h3 id="Guestfish安装"><a href="#Guestfish安装" class="headerlink" title="Guestfish安装"></a>Guestfish安装</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># sudo dnf -y install libguestfs-tools</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="Guestfish安装配置"><a href="#Guestfish安装配置" class="headerlink" title="Guestfish安装配置"></a>Guestfish安装配置</h3><ul>
+<li><p>在fedora桌面上打开终端执行命令替换国内源。</p>
+  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">sed</span> <span class="token parameter variable">-e</span> <span class="token string">'s|^metalink=|#metalink=|g'</span> <span class="token punctuation">\</span>
+     <span class="token parameter variable">-e</span> <span class="token string">'s|^#baseurl=http://download.example/pub/fedora/linux|baseurl=https://mirrors.tuna.tsinghua.edu.cn/fedora|g'</span> <span class="token punctuation">\</span>
+     <span class="token parameter variable">-i.bak</span> <span class="token punctuation">\</span>
+     /etc/yum.repos.d/fedora.repo <span class="token punctuation">\</span>
+     /etc/yum.repos.d/fedora-modular.repo <span class="token punctuation">\</span>
+     /etc/yum.repos.d/fedora-updates.repo <span class="token punctuation">\</span>
+     /etc/yum.repos.d/fedora-updates-modular.repo<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># sudo dnf -y install libguestfs-tools</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
+<ul>
+<li><p>执行命令安装<code>libvirt</code>服务。</p>
+  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> dnf <span class="token function">install</span> libvirt<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>修改libvirt配置<code>sudo vi /etc/libvirt/qemu.conf</code>。</p>
+  <img src="https://vault.taojie.fun:28089/i/2023/10/10/2023-10-10-1696912516.png" alt="1696912515114.png" title="1696912515114.png" />
+</li>
+<li><p>启动libvirt服务。</p>
+  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> systemctl start libvirtd<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+</ul>
 <h3 id="获取需要修改的系统镜像"><a href="#获取需要修改的系统镜像" class="headerlink" title="获取需要修改的系统镜像"></a>获取需要修改的系统镜像</h3><ol>
 <li><p>在fedora系统中打开终端使用<code>ip a</code>获取ip地址。</p>
 </li>
@@ -237,29 +257,11 @@
 </li>
 </ol>
 <h3 id="镜像定制"><a href="#镜像定制" class="headerlink" title="镜像定制"></a>镜像定制</h3><ul>
-<li><p>在fedora桌面上打开终端执行命令替换国内源。</p>
-  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">sed</span> <span class="token parameter variable">-e</span> <span class="token string">'s|^metalink=|#metalink=|g'</span> <span class="token punctuation">\</span>
-     <span class="token parameter variable">-e</span> <span class="token string">'s|^#baseurl=http://download.example/pub/fedora/linux|baseurl=https://mirrors.tuna.tsinghua.edu.cn/fedora|g'</span> <span class="token punctuation">\</span>
-     <span class="token parameter variable">-i.bak</span> <span class="token punctuation">\</span>
-     /etc/yum.repos.d/fedora.repo <span class="token punctuation">\</span>
-     /etc/yum.repos.d/fedora-modular.repo <span class="token punctuation">\</span>
-     /etc/yum.repos.d/fedora-updates.repo <span class="token punctuation">\</span>
-     /etc/yum.repos.d/fedora-updates-modular.repo<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
 <li><p>执行执行<code>sudo dnf install openssl</code>安装openssl，执行<code>openssl passwd -1 123123</code>生成加密的字符串并<code>复制</code>用于设置root密码。</p>
-  <img src="https://vault.taojie.fun:28089/i/2023/10/09/2023-10-09-1696816865.png" alt="1696816865524.png" title="1696816865524.png" />
-</li>
-<li><p>执行命令安装<code>libvirt</code>服务。</p>
-  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> dnf <span class="token function">install</span> libvirt<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li><p>修改libvirt配置，第442和446行。</p>
-  <img src="https://vault.taojie.fun:28089/i/2023/10/10/2023-10-10-1696912516.png" alt="1696912515114.png" title="1696912515114.png" />
-</li>
-<li><p>启动libvirt服务。</p>
-  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> systemctl start libvirtd<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+  <img src="https://vault.taojie.fun:28089/i/2023/10/09/2023-10-09-1696816865.png" alt="1696816865524.png" title="1696816865524.png" /></li>
 </ul>
-<h4 id="Guestfish用法示例"><a href="#Guestfish用法示例" class="headerlink" title="Guestfish用法示例"></a>Guestfish用法示例</h4><blockquote>
-<p>定制内容是设置centos镜像的root和centos账户的直接登录，需要修改<code>/etc/shadow</code>和<code>/etc/cloud/cloud.cfg</code>两个文件。</p>
+<blockquote>
+<p>定制内容是设置centos镜像的root和centos账户的直接登录、开启bash运行程序。</p>
 </blockquote>
 <ol>
 <li><p>需要修改的虚拟机镜像文件名为<code>CentOS-7-x86_64-GenericCloud-2003.qcow2</code>，通过以下命令以root身份挂载为读写模式：</p>
@@ -335,7 +337,16 @@ yum <span class="token function">install</span> <span class="token parameter var
 <h3 id="验证定制结果"><a href="#验证定制结果" class="headerlink" title="验证定制结果"></a>验证定制结果</h3><ol>
 <li><p>通过WinSCP将修改好的<code>CentOS-7-x86_64-GenericCloud-2003.qcow2</code>传输回本地的Windows。</p>
 </li>
-<li><p>关闭fedora虚拟机、打开<code>控制节点</code>和<code>计算节点</code>，登录<code>192.168.10.20</code>，上传镜像到OpenStack、参考<a target="_blank" rel="noopener" href="https://abc.taojie.fun/2023/09/20/private_clouds/4.openstack%E9%95%9C%E5%83%8F%E7%AE%A1%E7%90%86/#%E5%88%9B%E5%BB%BA%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%9E%E4%BE%8B">创建虚拟机实例</a>创建Centos实例并使用root和centos账户登录，验证登录结果。</p>
+<li><p>关闭fedora虚拟机、打开<code>控制节点</code>和<code>计算节点</code>，登录<code>192.168.10.20</code>，上传镜像到OpenStack。</p>
+</li>
+<li><p>创建<code>外网网络</code>，<code>实例类型</code>。</p>
+ <img src="https://vault.taojie.fun:28089/i/2023/10/10/2023-10-10-1696914149.png" alt="1696914147788.png" title="1696914147788.png" />
+
+ <img src="https://vault.taojie.fun:28089/i/2023/10/10/2023-10-10-1696914165.png" alt="1696914164389.png" title="1696914164389.png" />
+
+ <img src="https://vault.taojie.fun:28089/i/2023/10/10/2023-10-10-1696914183.png" alt="1696914182196.png" title="1696914182196.png" />
+</li>
+<li><p>参考<a target="_blank" rel="noopener" href="https://abc.taojie.fun/2023/09/20/private_clouds/4.openstack%E9%95%9C%E5%83%8F%E7%AE%A1%E7%90%86/#%E5%88%9B%E5%BB%BA%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%9E%E4%BE%8B">创建虚拟机实例</a>创建Centos实例并使用root和centos账户登录，验证登录结果。</p>
 </li>
 </ol>
 <blockquote>
