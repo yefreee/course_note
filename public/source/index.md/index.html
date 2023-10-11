@@ -181,7 +181,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-10-11 00:56:33" itemprop="dateModified" datetime="2023-10-11T00:56:33+08:00">2023-10-11</time>
+      <time title="修改时间：2023-10-12 00:02:52" itemprop="dateModified" datetime="2023-10-12T00:02:52+08:00">2023-10-12</time>
     </span>
 
   
@@ -218,7 +218,7 @@
 </ul>
  <img src="https://vault.taojie.fun:28089/i/2023/10/09/2023-10-09-1696815014.png" alt="1696815014064.png" title="1696815014064.png" />
 </li>
-<li><p>Windows + E打开文件资源管理器在搜索栏输入<code>\\192.168.3.47</code>打开后将文件<code>CentOS-7-x86_64-GenericCloud-2003.qcow2</code>拉取到Windows本地目录<code>D:\\镜像\私有云上课镜像\</code>覆盖目录下的同名文件。</p>
+<li><p>Windows + E打开文件资源管理器在搜索栏输入<code>\\192.168.3.47</code>打开后将文件<code>CentOS-7-x86_64-GenericCloud-2003.qcow2</code>拉取到Windows本地目录<code>D:\\镜像\</code>覆盖目录下的同名文件。</p>
  <img src="https://vault.taojie.fun:28089/i/2023/10/11/2023-10-11-1696954122.png" alt="1696954122919.png" title="1696954122919.png" /></li>
 </ol>
 <h2 id="实验环境准备"><a href="#实验环境准备" class="headerlink" title="实验环境准备"></a>实验环境准备</h2><blockquote>
@@ -298,14 +298,23 @@ Type: <span class="token string">'help'</span> <span class="token keyword">for</
  <img src="https://vault.taojie.fun:28089/i/2023/10/09/2023-10-09-1696817530.png" alt="1696817529748.png" title="1696817529748.png" />
 </li>
 <li><p>使用<code>vi</code>添加以下所有内容到<code>/etc/rc.d/rc.local</code>文件，设置开机自启任务。</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum <span class="token function">install</span> <span class="token parameter variable">-y</span> <span class="token function">wget</span>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sed</span> <span class="token parameter variable">-e</span> <span class="token string">'s|^mirrorlist=|#mirrorlist=|g'</span> <span class="token punctuation">\</span>
+     <span class="token parameter variable">-e</span> <span class="token string">'s|^#baseurl=http://mirror.centos.org/centos|baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos|g'</span> <span class="token punctuation">\</span>
+     <span class="token parameter variable">-i.bak</span> <span class="token punctuation">\</span>
+     /etc/yum.repos.d/CentOS-*.repo
+
+yum <span class="token function">install</span> <span class="token parameter variable">-y</span> epel-release
+<span class="token function">sed</span> <span class="token parameter variable">-e</span> <span class="token string">'s!^metalink=!#metalink=!g'</span> <span class="token punctuation">\</span>
+<span class="token parameter variable">-e</span> <span class="token string">'s!^#baseurl=!baseurl=!g'</span> <span class="token punctuation">\</span>
+<span class="token parameter variable">-e</span> <span class="token string">'s!https\?://download\.fedoraproject\.org/pub/epel!https://mirrors.tuna.tsinghua.edu.cn/epel!g'</span> <span class="token punctuation">\</span>
+<span class="token parameter variable">-e</span> <span class="token string">'s!https\?://download\.example/pub/epel!https://mirrors.tuna.tsinghua.edu.cn/epel!g'</span> <span class="token punctuation">\</span>
+<span class="token parameter variable">-i</span> /etc/yum.repos.d/epel*.repo
+
+yum <span class="token function">install</span> <span class="token parameter variable">-y</span> <span class="token function">wget</span>
 <span class="token function">wget</span> --no-check-certificate http://search.cpan.org/CPAN/authors/id/K/KB/KBAUCOM/Term-Animation-2.4.tar.gz <span class="token parameter variable">-O</span> /root/Term-Animation-2.4.tar.gz
 <span class="token function">tar</span> xf /root/Term-Animation-2.4.tar.gz <span class="token parameter variable">-C</span> /root
 <span class="token builtin class-name">cd</span> /root/Term-Animation-2.4/
 
-yum <span class="token function">install</span> <span class="token parameter variable">-y</span> epel-release
-<span class="token function">sed</span> <span class="token parameter variable">-i</span> <span class="token string">"s/#baseurl/baseurl/"</span> /etc/yum.repos.d/epel.repo
-<span class="token function">sed</span> <span class="token parameter variable">-i</span> <span class="token string">"s/metalink/#metalink/"</span> /etc/yum.repos.d/epel.repo
 yum <span class="token function">install</span> <span class="token parameter variable">-y</span> perl-Curses
 yum <span class="token function">install</span> <span class="token parameter variable">-y</span> perl-ExtUtils-CBuilder perl-ExtUtils-MakeMaker
 <span class="token builtin class-name">cd</span> /root/Term-Animation-2.4/  <span class="token operator">&amp;&amp;</span> perl Makefile.PL
@@ -315,7 +324,7 @@ yum <span class="token function">install</span> <span class="token parameter var
 <span class="token function">wget</span> --no-check-certificate http://www.robobunny.com/projects/asciiquarium/asciiquarium.tar.gz <span class="token parameter variable">-O</span> /root/asciiquarium.tar.gz
 <span class="token function">tar</span> <span class="token parameter variable">-zxvf</span> /root/asciiquarium.tar.gz <span class="token parameter variable">-C</span> /root
 <span class="token function">cp</span> /root/asciiquarium_1.1/asciiquarium /usr/local/bin
-<span class="token function">chmod</span> +x /usr/local/bin/asciiquarium<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token function">chmod</span> +x /usr/local/bin/asciiquarium<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
 <li><p>脚本赋权。</p>
  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span><span class="token operator">&lt;</span>fs<span class="token operator">></span> <span class="token function">chmod</span> <span class="token number">777</span> /etc/rc.d/rc.local<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -323,8 +332,9 @@ yum <span class="token function">install</span> <span class="token parameter var
 <li><p>使用<code>vi</code>修改<code>/root/.bashrc</code>文件，设置bash自启动命令，添加以下命令到最后。</p>
  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">asciiquarium<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 </li>
-<li><p>退出guestfish视图</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span><span class="token operator">&lt;</span>fs<span class="token operator">></span> <span class="token builtin class-name">exit</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+<li><p>卸载挂载点、退出guestfish视图</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span><span class="token operator">&lt;</span>fs<span class="token operator">></span> <span class="token function">umount</span> /
+<span class="token operator">></span><span class="token operator">&lt;</span>fs<span class="token operator">></span> <span class="token builtin class-name">exit</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
 </ol>
 <h3 id="验证定制结果"><a href="#验证定制结果" class="headerlink" title="验证定制结果"></a>验证定制结果</h3><ol>
 <li><p>通过WinSCP将修改好的<code>CentOS-7-x86_64-GenericCloud-2003.qcow2</code>传输回本地的Windows桌面。</p>
@@ -338,7 +348,7 @@ yum <span class="token function">install</span> <span class="token parameter var
 
  <img src="https://vault.taojie.fun:28089/i/2023/10/10/2023-10-10-1696914149.png" alt="1696914147788.png" title="1696914147788.png" />
 
- <img src="https://vault.taojie.fun:28089/i/2023/10/10/2023-10-10-1696914183.png" alt="1696914182196.png" title="1696914182196.png" />
+ <img src="https://vault.taojie.fun:28089/i/2023/10/11/2023-10-11-1697039186.png" alt="1697039186362.png" title="1697039186362.png" />
 </li>
 <li><p>创建Centos实例并使用root账户登录（密码是上文配置的123123）验证结果，应该会显示下图所示的屏保动画。</p>
  <img src="https://vault.taojie.fun:28089/i/2023/10/11/2023-10-11-1696956749.png" alt="1696956749740.png" title="1696956749740.png" /></li>
