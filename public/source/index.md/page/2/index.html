@@ -118,7 +118,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">22</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -136,6 +136,409 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/06/16/c_program/2.%E7%AC%AC%E4%BA%8C%E5%91%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/06/16/c_program/2.%E7%AC%AC%E4%BA%8C%E5%91%A8/" class="post-title-link" itemprop="url">第二周</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-06-16 21:30:30" itemprop="dateCreated datePublished" datetime="2023-06-16T21:30:30+08:00">2023-06-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-09-03 13:17:06" itemprop="dateModified" datetime="2023-09-03T13:17:06+08:00">2023-09-03</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="C语言的运算符"><a href="#C语言的运算符" class="headerlink" title="C语言的运算符"></a>C语言的运算符</h2><h3 id="运算符分类"><a href="#运算符分类" class="headerlink" title="运算符分类"></a>运算符分类</h3><p>C语言中有多种类型的运算符，用于执行各种算术、逻辑和位操作。以下是C语言中常见的运算符类型：</p>
+<ol>
+<li><p>算术运算符：用于执行基本的算术操作，如加法、减法、乘法、除法、取模等。</p>
+<ul>
+<li><code>+</code>：加法运算</li>
+<li><code>-</code>：减法运算</li>
+<li><code>*</code>：乘法运算</li>
+<li><code>/</code>：除法运算</li>
+<li><code>%</code>：取模（取余）运算</li>
+</ul>
+</li>
+<li><p>关系运算符：用于比较两个值之间的关系，返回一个布尔值（1表示真，0表示假）。</p>
+<ul>
+<li><code>==</code>：等于</li>
+<li><code>!=</code>：不等于</li>
+<li><code>&lt;</code>：小于</li>
+<li><code>&gt;</code>：大于</li>
+<li><code>&lt;=</code>：小于等于</li>
+<li><code>&gt;=</code>：大于等于</li>
+</ul>
+ <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> num <span class="token operator">=</span> <span class="token number">65</span><span class="token punctuation">;</span>
+    <span class="token keyword">char</span> ch <span class="token operator">=</span> <span class="token char">'A'</span><span class="token punctuation">;</span>
+
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"num == ch: %d\n"</span><span class="token punctuation">,</span> num <span class="token operator">==</span> ch<span class="token punctuation">)</span><span class="token punctuation">;</span>       <span class="token comment">// 65 == 'B' -> 1 (true)</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"num != ch: %d\n"</span><span class="token punctuation">,</span> num <span class="token operator">!=</span> ch<span class="token punctuation">)</span><span class="token punctuation">;</span>       <span class="token comment">// 65 != 'B' -> 0 (false)</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"num > ch: %d\n"</span><span class="token punctuation">,</span> num <span class="token operator">></span> ch<span class="token punctuation">)</span><span class="token punctuation">;</span>         <span class="token comment">// 65 > 'B' -> 0 (false)</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"num &lt; ch: %d\n"</span><span class="token punctuation">,</span> num <span class="token operator">&lt;</span> ch<span class="token punctuation">)</span><span class="token punctuation">;</span>         <span class="token comment">// 65 &lt; 'B' -> 0 (false)</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"num >= ch: %d\n"</span><span class="token punctuation">,</span> num <span class="token operator">>=</span> ch<span class="token punctuation">)</span><span class="token punctuation">;</span>       <span class="token comment">// 65 >= 'B' -> 1 (true)</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"num &lt;= ch: %d\n"</span><span class="token punctuation">,</span> num <span class="token operator">&lt;=</span> ch<span class="token punctuation">)</span><span class="token punctuation">;</span>       <span class="token comment">// 65 &lt;= 'B' -> 1 (true)</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>逻辑运算符：用于执行逻辑操作，对布尔值进行组合和求反。</p>
+<ul>
+<li><code>&amp;&amp;</code>：逻辑与（与）</li>
+<li><code>||</code>：逻辑或（或）</li>
+<li><code>!</code>：逻辑非（非）</li>
+</ul>
+ <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> a <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">,</span> b <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">,</span> c <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 逻辑与运算符（&amp;&amp;）</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d\n"</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>a <span class="token operator">&lt;</span> b<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span>b <span class="token operator">&lt;</span> c<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 1 (true) &amp;&amp; 1 (true) -> 1 (true)</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d\n"</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>a <span class="token operator">&lt;</span> b<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span>b <span class="token operator">></span> c<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 1 (true) &amp;&amp; 0 (false) -> 0 (false)</span>
+
+    <span class="token comment">// 逻辑或运算符（||）</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d\n"</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>a <span class="token operator">&lt;</span> b<span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token punctuation">(</span>b <span class="token operator">&lt;</span> c<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 1 (true) || 1 (true) -> 1 (true)</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d\n"</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>a <span class="token operator">&lt;</span> b<span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token punctuation">(</span>b <span class="token operator">></span> c<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 1 (true) || 0 (false) -> 1 (false)</span>
+
+    <span class="token comment">// 逻辑非运算符（!）</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d\n"</span><span class="token punctuation">,</span> <span class="token operator">!</span><span class="token punctuation">(</span>a <span class="token operator">&lt;</span> b<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// !(1 (true)) -> 0 (false)</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d\n"</span><span class="token punctuation">,</span> <span class="token operator">!</span><span class="token punctuation">(</span>a <span class="token operator">></span> b<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// !(0 (false)) -> 1 (true)</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>位运算符：用于对二进制数据的位进行操作。</p>
+<ul>
+<li><code>&amp;</code>：按位与</li>
+<li><code>|</code>：按位或</li>
+<li><code>^</code>：按位异或</li>
+<li><code>~</code>：按位取反</li>
+<li><code>&lt;&lt;</code>：左移</li>
+<li><code>&gt;&gt;</code>：右移</li>
+</ul>
+ <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token comment">//unsigned int类型通常32位，以下所有位运算省略高24位的计算，只计算后8位</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">int</span> a <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span>   <span class="token comment">// 二进制表示为 00000101</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">int</span> b <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>   <span class="token comment">// 二进制表示为 00000011</span>
+
+    <span class="token comment">// 按位与运算符（&amp;）</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">int</span> result1 <span class="token operator">=</span> a <span class="token operator">&amp;</span> b<span class="token punctuation">;</span>    <span class="token comment">// 00000101 &amp; 00000011 = 00000001</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Result 1: %u\n"</span><span class="token punctuation">,</span> result1<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 输出：1</span>
+
+    <span class="token comment">// 按位或运算符（|）</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">int</span> result2 <span class="token operator">=</span> a <span class="token operator">|</span> b<span class="token punctuation">;</span>    <span class="token comment">// 00000101 | 00000011 = 00000111</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Result 2: %u\n"</span><span class="token punctuation">,</span> result2<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 输出：7</span>
+
+    <span class="token comment">// 按位异或运算符（^）</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">int</span> result3 <span class="token operator">=</span> a <span class="token operator">^</span> b<span class="token punctuation">;</span>    <span class="token comment">// 00000101 ^ 00000011 = 00000110</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Result 3: %u\n"</span><span class="token punctuation">,</span> result3<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 输出：6</span>
+
+    <span class="token comment">// 按位取反运算符（~）</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">int</span> result4 <span class="token operator">=</span> <span class="token operator">~</span>a<span class="token punctuation">;</span>       <span class="token comment">// ~00000101 = 11111010</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Result 4: %u\n"</span><span class="token punctuation">,</span> result4<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 输出：4294967290</span>
+
+    <span class="token comment">// 左移运算符（&lt;&lt;）</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">int</span> result5 <span class="token operator">=</span> a <span class="token operator">&lt;&lt;</span> <span class="token number">2</span><span class="token punctuation">;</span>   <span class="token comment">// 00000101 &lt;&lt; 2 = 00010100</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Result 5: %u\n"</span><span class="token punctuation">,</span> result5<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 输出：20</span>
+
+    <span class="token comment">// 右移运算符（>>）</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">int</span> result6 <span class="token operator">=</span> a <span class="token operator">>></span> <span class="token number">1</span><span class="token punctuation">;</span>   <span class="token comment">// 00000101 >> 1 = 00000010</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Result 6: %u\n"</span><span class="token punctuation">,</span> result6<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 输出：2</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>赋值运算符：用于给变量赋值。</p>
+<ul>
+<li><code>=</code>：简单赋值</li>
+<li><code>+=</code>：加法赋值</li>
+<li><code>-=</code>：减法赋值</li>
+<li><code>*=</code>：乘法赋值</li>
+<li><code>/=</code>：除法赋值</li>
+<li><code>%=</code>：取模赋值</li>
+<li><code>&lt;&lt;=</code>：左移赋值</li>
+<li><code>&gt;&gt;=</code>：右移赋值</li>
+<li><code>&amp;=</code>：按位与赋值</li>
+<li><code>|=</code>：按位或赋值</li>
+<li><code>^=</code>：按位异或赋值</li>
+</ul>
+ <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> a <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> b <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> c <span class="token operator">=</span> <span class="token number">7</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 取模赋值运算符（%=）</span>
+    b <span class="token operator">%=</span> a<span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"b: %d\n"</span><span class="token punctuation">,</span> b<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 输出：3</span>
+
+    <span class="token comment">// 左移赋值运算符（&lt;&lt;=）</span>
+    a <span class="token operator">&lt;&lt;=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"a: %d\n"</span><span class="token punctuation">,</span> a<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 输出：20</span>
+
+    <span class="token comment">// 右移赋值运算符（>>=）</span>
+    c <span class="token operator">>>=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"c: %d\n"</span><span class="token punctuation">,</span> c<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 输出：3</span>
+
+    <span class="token comment">// 按位与赋值运算符（&amp;=）</span>
+    a <span class="token operator">&amp;=</span> b<span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"a: %d\n"</span><span class="token punctuation">,</span> a<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 输出：0</span>
+
+    <span class="token comment">// 按位或赋值运算符（|=）</span>
+    c <span class="token operator">|=</span> b<span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"c: %d\n"</span><span class="token punctuation">,</span> c<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 输出：3</span>
+
+    <span class="token comment">// 按位异或赋值运算符（^=）</span>
+    a <span class="token operator">^=</span> b<span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"a: %d\n"</span><span class="token punctuation">,</span> a<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 输出：3</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>自增和自减运算符：用于对变量进行递增或递减操作。</p>
+<ul>
+<li><code>++</code>：自增</li>
+<li><code>--</code>：自减</li>
+</ul>
+ <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> a <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> b <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> c<span class="token punctuation">;</span>
+
+    <span class="token comment">// 自增运算符（++）</span>
+    c <span class="token operator">=</span> a<span class="token operator">++</span><span class="token punctuation">;</span>           <span class="token comment">// 先赋值后加1</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d\n"</span><span class="token punctuation">,</span> c<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 输出：5</span>
+
+    <span class="token comment">// 前置自增运算符（++）</span>
+    c <span class="token operator">=</span> <span class="token operator">++</span>a<span class="token punctuation">;</span>           <span class="token comment">// 先加1后赋值</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d\n"</span><span class="token punctuation">,</span> c<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 输出：7</span>
+
+    <span class="token comment">// 自减运算符（--）</span>
+    c <span class="token operator">=</span> b<span class="token operator">--</span><span class="token punctuation">;</span>           <span class="token comment">// 先赋值后减1</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d\n"</span><span class="token punctuation">,</span> c<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 输出：10</span>
+
+    <span class="token comment">// 前置自减运算符（--）</span>
+    c <span class="token operator">=</span> <span class="token operator">--</span>b<span class="token punctuation">;</span>           <span class="token comment">// 先减1后赋值</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d\n"</span><span class="token punctuation">,</span> c<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 输出：8</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>条件运算符：用于根据条件选择不同的值。</p>
+<ul>
+<li><p><code>? :</code>：条件表达式，也称为三元运算符。</p>
+</li>
+<li><p>语法格式</p>
+  <pre class="line-numbers language-text" data-language="text"><code class="language-text">条件表达式 ? 表达式1 : 表达式2<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>  如果条件表达式的结果为真（非零），则整个表达式的值为表达式1的值；如果条件表达式的结果为假（零），则整个表达式的值为表达式2的值。</p>
+</li>
+</ul>
+ <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> a <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> b <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 使用条件运算符选择较大的数赋给变量c</span>
+    <span class="token keyword">int</span> c <span class="token operator">=</span> <span class="token punctuation">(</span>a <span class="token operator">></span> b<span class="token punctuation">)</span> <span class="token operator">?</span> a <span class="token operator">:</span> b<span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"c: %d\n"</span><span class="token punctuation">,</span> c<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 输出：10</span>
+
+    <span class="token comment">// 使用条件运算符选择绝对值较大的数赋给变量d</span>
+    <span class="token keyword">int</span> d <span class="token operator">=</span> <span class="token punctuation">(</span>a <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">?</span> a <span class="token operator">:</span> <span class="token operator">-</span>a<span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"d: %d\n"</span><span class="token punctuation">,</span> d<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 输出：5</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>逗号运算符</p>
+<p> 逗号运算符是C语言中的一个运算符，它用逗号 <code>,</code> 分隔多个表达式，形成一个逗号表达式。逗号表达式的求值规则是从左到右依次对每个表达式进行求值，并返回最右边表达式的值作为整个逗号表达式的结果。</p>
+<ol>
+<li><p>表达式顺序执行：逗号运算符可以用于在同一个语句中按顺序执行多个表达式，每个表达式都会被求值，但只有最后一个表达式的值会作为整个逗号表达式的结果。例如：</p>
+ <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> a <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">,</span> b <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">,</span> c <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> result <span class="token operator">=</span> <span class="token punctuation">(</span>a<span class="token operator">++</span><span class="token punctuation">,</span> b<span class="token operator">++</span><span class="token punctuation">,</span> c<span class="token operator">++</span><span class="token punctuation">,</span> a <span class="token operator">+</span> b <span class="token operator">+</span> c<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 逐个增加 a、b、c 的值，然后计算 a + b + c 的结果，赋给 result</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+</li>
+<li><p>多个初始化语句：逗号运算符可以在变量初始化时一次性初始化多个变量。例如：</p>
+ <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> x <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">,</span> y <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">,</span> z <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> z<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
+</ol>
+</li>
+<li><p>其他运算符：还有一些其他类型的运算符，如指针运算符、sizeof运算符、类型转换运算符等。</p>
+</li>
+</ol>
+<h3 id="运算符优先级"><a href="#运算符优先级" class="headerlink" title="运算符优先级"></a>运算符优先级</h3><p><img src="https://vault.taojie.fun:28089/i/2023/09/02/note1.%E7%AC%AC%E4%B8%80%E5%91%A8-2023-06-09-11-36-00.png" alt="1.第一周-2023-06-09-11-36-00"></p>
+<p><img src="https://vault.taojie.fun:28089/i/2023/09/02/note1.%E7%AC%AC%E4%B8%80%E5%91%A8-2023-06-09-11-36-08.png" alt="1.第一周-2023-06-09-11-36-08"></p>
+<p><img src="https://vault.taojie.fun:28089/i/2023/09/02/note1.%E7%AC%AC%E4%B8%80%E5%91%A8-2023-06-09-11-36-21.png" alt="1.第一周-2023-06-09-11-36-21"></p>
+<h3 id="运算符优先级示例代码"><a href="#运算符优先级示例代码" class="headerlink" title="运算符优先级示例代码"></a>运算符优先级示例代码</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> a <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">,</span> b <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">,</span> c <span class="token operator">=</span> <span class="token number">7</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> result1 <span class="token operator">=</span> a <span class="token operator">+</span> b <span class="token operator">*</span> c<span class="token punctuation">;</span>        <span class="token comment">// 5 + 3 * 7 = 26</span>
+    <span class="token keyword">int</span> result2 <span class="token operator">=</span> <span class="token punctuation">(</span>a <span class="token operator">+</span> b<span class="token punctuation">)</span> <span class="token operator">*</span> c<span class="token punctuation">;</span>      <span class="token comment">// (5 + 3) * 7 = 56</span>
+    <span class="token keyword">int</span> result3 <span class="token operator">=</span> a <span class="token operator">*</span> b <span class="token operator">/</span> c<span class="token punctuation">;</span>        <span class="token comment">// 5 * 3 / 7 = 2</span>
+    <span class="token keyword">int</span> result4 <span class="token operator">=</span> a <span class="token operator">*</span> <span class="token punctuation">(</span>b <span class="token operator">/</span> c<span class="token punctuation">)</span><span class="token punctuation">;</span>      <span class="token comment">// 5 * (3 / 7) = 0</span>
+    <span class="token keyword">int</span> result5 <span class="token operator">=</span> a <span class="token operator">%</span> b <span class="token operator">+</span> c<span class="token punctuation">;</span>        <span class="token comment">// 5 % 3 + 7 = 9</span>
+    <span class="token keyword">int</span> result6 <span class="token operator">=</span> a <span class="token operator">&lt;&lt;</span> b <span class="token operator">+</span> c<span class="token punctuation">;</span>       <span class="token comment">// 5 &lt;&lt; (3 + 7) = 5120</span>
+    <span class="token keyword">int</span> result7 <span class="token operator">=</span> <span class="token punctuation">(</span>a <span class="token operator">&lt;&lt;</span> b<span class="token punctuation">)</span> <span class="token operator">+</span> c<span class="token punctuation">;</span>     <span class="token comment">// (5 &lt;&lt; 3) + 7 = 47</span>
+    <span class="token keyword">int</span> result8 <span class="token operator">=</span> a <span class="token operator">&lt;</span> b <span class="token operator">&amp;&amp;</span> b <span class="token operator">&lt;</span> c<span class="token punctuation">;</span>   <span class="token comment">// 5 &lt; 3 &amp;&amp; 3 &lt; 7 = 0 (false)</span>
+    <span class="token keyword">int</span> result9 <span class="token operator">=</span> a <span class="token operator">&lt;</span> b <span class="token operator">||</span> b <span class="token operator">&lt;</span> c<span class="token punctuation">;</span>   <span class="token comment">// 5 &lt; 3 || 3 &lt; 7 = 1 (true)</span>
+    <span class="token keyword">int</span> result10 <span class="token operator">=</span> a <span class="token operator">==</span> b <span class="token operator">?</span> c <span class="token operator">:</span> a<span class="token punctuation">;</span>  <span class="token comment">// 5 == 3 ? 7 : 5 = 5</span>
+
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Result 1: %d\n"</span><span class="token punctuation">,</span> result1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Result 2: %d\n"</span><span class="token punctuation">,</span> result2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Result 3: %d\n"</span><span class="token punctuation">,</span> result3<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Result 4: %d\n"</span><span class="token punctuation">,</span> result4<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Result 5: %d\n"</span><span class="token punctuation">,</span> result5<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Result 6: %d\n"</span><span class="token punctuation">,</span> result6<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Result 7: %d\n"</span><span class="token punctuation">,</span> result7<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Result 8: %d\n"</span><span class="token punctuation">,</span> result8<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Result 9: %d\n"</span><span class="token punctuation">,</span> result9<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Result 10: %d\n"</span><span class="token punctuation">,</span> result10<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h2><p>类型转换（Type Conversion）是将一个数据类型的值转换为另一个数据类型的过程。在C语言中，类型转换可分为隐式类型转换（Implicit Conversion）和显式类型转换（Explicit Conversion）两种形式。</p>
+<ol>
+<li><p>隐式类型转换：隐式类型转换是指在表达式中自动进行的类型转换，不需要显式地指定转换操作符。常见的隐式类型转换有：</p>
+<ul>
+<li><p>涉及两种类型的运算，两个值会被分别转换成两种类型的更高级别。</p>
+<p>  类型的级别从高至低依次是long double、double、float、unsigned long long、long long、unsigned long、long、unsigned int、int。例外的情况是，当long 和 int 的大小相同时，unsigned int比long的级别高。之所以short和char类型没有列出，是因为它们已经被升级到int或unsigned int。</p>
+</li>
+<li><p>在赋值表达式语句中，计算的最终结果会被转换成被赋值变量的类型。这个过程可能导致类型升级或降级（demotion）。所谓降级，是指把一种类型转换成更低级别的类型。</p>
+</li>
+</ul>
+ <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> a <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span>
+    <span class="token keyword">double</span> b <span class="token operator">=</span> <span class="token number">3.14</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 隐式类型转换</span>
+    <span class="token keyword">double</span> c <span class="token operator">=</span> a<span class="token punctuation">;</span> <span class="token comment">// 将整型变量a隐式转换为double类型</span>
+    <span class="token keyword">int</span> d <span class="token operator">=</span> b<span class="token punctuation">;</span>    <span class="token comment">// 将double类型变量b隐式转换为整型</span>
+
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"c: %f\n"</span><span class="token punctuation">,</span> c<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 输出：5.000000</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"d: %d\n"</span><span class="token punctuation">,</span> d<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 输出：3</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%f"</span><span class="token punctuation">,</span> a <span class="token operator">+</span> b<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 输出：8.140000</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>显式类型转换：显式类型转换是通过显式地使用类型转换操作符来执行的。它允许我们将一个数据类型强制转换为另一个数据类型。显式类型转换的语法形式如下：</p>
+ <pre class="line-numbers language-text" data-language="text"><code class="language-text">(目标类型) 表达式<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+ <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> a <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span>
+    <span class="token keyword">double</span> b <span class="token operator">=</span> <span class="token number">3.14</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 显式类型转换</span>
+    <span class="token keyword">int</span> e <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span>b<span class="token punctuation">;</span>        <span class="token comment">// 将double类型变量b显式转换为整型</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"e: %d\n"</span><span class="token punctuation">,</span> e<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 输出：3</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ol>
+<h2 id="表达式语句，空语句，复合语句"><a href="#表达式语句，空语句，复合语句" class="headerlink" title="表达式语句，空语句，复合语句"></a>表达式语句，空语句，复合语句</h2><p>在C语言中，有三种常见的语句类型：表达式语句（Expression Statement），空语句（Empty Statement）和复合语句（Compound Statement）。</p>
+<ol>
+<li><p>表达式语句（Expression Statement）：表达式语句由一个表达式和一个分号组成，用于执行一个表达式并丢弃其结果。表达式可以是函数调用、赋值表达式、递增递减表达式等。例如：</p>
+ <pre class="line-numbers language-c" data-language="c"><code class="language-c">x <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span>           <span class="token comment">// 赋值表达式作为表达式语句</span>
+<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Hello"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 函数调用作为表达式语句</span>
+x<span class="token operator">++</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>空语句（Empty Statement）：空语句只包含一个分号，用于表示一个空操作。空语句在某些情况下可以用作占位符，或者在循环中作为一个空的循环体。例如：</p>
+ <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token punctuation">;</span> <span class="token comment">// 空语句</span>
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">10</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> 
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 空循环体</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p> 空语句不做任何操作，它在语法上是合法的语句，但不会有任何实际的影响。</p>
+</li>
+<li><p>复合语句（Compound Statement）：复合语句是由一对花括号 <code>&#123;&#125;</code> 包围的语句块，可以包含多条语句。复合语句常用于定义函数体或在控制流语句中使用。例如：</p>
+ <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> x <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span>          <span class="token comment">// 定义变量</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Value: %d"</span><span class="token punctuation">,</span> x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    x<span class="token operator">++</span><span class="token punctuation">;</span>                <span class="token comment">// 修改变量的值</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Updated Value: %d"</span><span class="token punctuation">,</span> x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p> 这些语句类型在C语言中用于不同的场景和目的。表达式语句用于执行表达式并丢弃结果，空语句表示一个空操作，复合语句用于组织多个语句形成一个语句块。了解这些语句类型可以帮助我们编写清晰、有效的代码。</p>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -3061,303 +3464,6 @@ The result is<span aria-hidden="true" class="line-numbers-rows"><span></span><sp
     <span class="token builtin class-name">echo</span> <span class="token string">"Result: <span class="token variable">$result</span>"</span>
     <span class="token builtin class-name">return</span> <span class="token number">0</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/18/linux_shell/8.%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | ">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/04/18/linux_shell/8.%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="post-title-link" itemprop="url">正则表达式</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-04-18 11:31:23" itemprop="dateCreated datePublished" datetime="2023-04-18T11:31:23+08:00">2023-04-18</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-09-03 13:17:06" itemprop="dateModified" datetime="2023-09-03T13:17:06+08:00">2023-09-03</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>正则表达式定义：由一系列特定字符组成的字符串，用来匹配目标文本中符合指定条件的字符或者字符串。</p>
-<p>在编写处理字符串的程序或网页时，经常会有查找符合某些复杂规则的字符串的需要。正则表达式就是用于描述这些规则的工具。换句话说，<strong>正则表达式就是记录文本规则的代码</strong>。</p>
-<p><img src="https://vault.taojie.fun:28089/i/2023/09/02/note8.%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F-2023-06-16-21-24-50.png" alt="8.正则表达式-2023-06-16-21-24-50"></p>
-<p>如果你想查找某个目录下的所有的Word文档的话，你会搜索<code>*.doc</code>。在这里，<code>*</code>会被解释成任意的字符串。和通配符类似，正则表达式也是用来进行文本匹配的工具，只不过比起通配符，它能更精确地描述你的需求——当然，代价就是更复杂——比如你可以编写一个正则表达式，用来查找所有以0开头，后面跟着2-3个数字，然后是一个连字号”-“，最后是7或8位数字的字符串(像<em>010-12345678</em>或<em>0376-7654321</em>)。</p>
-<h2 id="入门"><a href="#入门" class="headerlink" title="入门"></a>入门</h2><p>正则表达式练习平台：<a target="_blank" rel="noopener" href="https://tool.oschina.net/regex/">https://tool.oschina.net/regex/</a></p>
-<p>最简单的正则表达式举例： <code>hi</code> ，它可以精确匹配这样的字符串：由两个字符组成，前一个字符是<code>h</code>,后一个是<code>i</code>。通常，处理正则表达式的工具会提供一个忽略大小写的选项，如果选中了这个选项，它可以匹配<code>hi,HI,Hi,hI</code>这四种情况中的任意一种。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@sh:~$ <span class="token builtin class-name">echo</span> <span class="token string">"hi,Hi"</span> <span class="token operator">|</span><span class="token function">grep</span> <span class="token parameter variable">-i</span> <span class="token string">"hi"</span>
-hi,Hi
-ubuntu@sh:~$
-ubuntu@sh:~$ <span class="token builtin class-name">echo</span> <span class="token string">"hi,Hi,HI,hI"</span> <span class="token operator">|</span><span class="token function">grep</span> <span class="token parameter variable">-i</span> <span class="token string">"hi"</span>
-hi,Hi,HI,hI<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="元字符"><a href="#元字符" class="headerlink" title="元字符"></a>元字符</h2><p>当目标文本中包含很多字符，比如<code>him,history,high</code>等等。用hi来查找的话，这里边的<code>hi</code>也会被找出来。如果要精确地查找hi这个单词的话，我们应该使用<code>\bhi\b</code>。\b是正则表达式规定的一个特殊代码（元字符，metacharacter），代表着单词的开头或结尾，也就是单词的分界处。</p>
-<p>假如要找的是<code>hi</code>后面不远处跟着一个<code>Lucy</code>，应该用<code>\bhi\b.*\bLucy\b</code>。</p>
-<p>这里，<code>.</code>是另一个元字符，匹配除了换行符以外的任意字符。<em>同样是元字符，不过它代表的不是字符，也不是位置，而是数量——它指定</em>前边的内容可以连续重复使用任意次以使整个表达式得到匹配。因此，<code>.</code>连在一起就意味着任意数量的不包含换行的字符。现在<code>\bhi\b.*\bLucy\b</code>的意思就很明显：先是一个单词<code>hi</code>,然后是任意个任意字符(但不能是换行)，最后是<code>Lucy</code>这个单词。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@sh:~$ <span class="token builtin class-name">echo</span> <span class="token string">"hi,Hi,HI,hI,Lucy"</span> <span class="token operator">|</span><span class="token function">grep</span> <span class="token parameter variable">-o</span> <span class="token string">"<span class="token entity" title="\b">\b</span>hi<span class="token entity" title="\b">\b</span>.*<span class="token entity" title="\b">\b</span>Lucy<span class="token entity" title="\b">\b</span>"</span>
-hi,Hi,HI,hI,Lucy<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p><code>0\d\d-\d\d\d\d\d\d\d\d</code>匹配这样的字符串：以0开头，然后是两个数字，然后是一个连字号“-”，最后是8个数字(也就是中国的电话号码)。这里的<code>\d</code>是个新的元字符，匹配一位数字(0，或1，或2，或……)。-不是元字符，只匹配它本身——连字符。</p>
-<p>也可以这样写这个表达式：<code>0\d&#123;2&#125;-\d&#123;8&#125;</code>。这里<code>\d</code>后面的<code>&#123;2&#125;(&#123;8&#125;)</code>的意思是前面<code>\d</code>必须连续重复匹配<code>2次(8次)</code>。</p>
-<p>练习1：匹配国际格式的电话号码<code>+086-185-553-24528</code></p>
-<p>练习2：匹配国内电话号码<code>0511-4405222、021-87888822</code></p>
-<ul>
-<li>常用的元字符</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>代码</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>.</td>
-<td>匹配除换行符以外的任意字符</td>
-</tr>
-<tr>
-<td>\w</td>
-<td>匹配字母或数字或下划线或汉字</td>
-</tr>
-<tr>
-<td>\s</td>
-<td>匹配任意的空白符</td>
-</tr>
-<tr>
-<td>\d</td>
-<td>匹配数字</td>
-</tr>
-<tr>
-<td>\b</td>
-<td>匹配单词的开始或结束</td>
-</tr>
-<tr>
-<td>^</td>
-<td>匹配字符串的开始</td>
-</tr>
-<tr>
-<td>$</td>
-<td>匹配字符串的结束</td>
-</tr>
-</tbody></table>
-<p>元字符<code>^</code>（和数字6在同一个键位上的符号）和<code>$</code>都匹配一个位置，这和<code>\b</code>有点类似。^匹配你要用来查找的字符串的开头，$匹配结尾。这两个代码在验证输入的内容时非常有用，比如一个网站如果要求你填写的QQ号必须为5位到12位数字时，可以使用：<code>^\d&#123;5,12&#125;$</code>。</p>
-<ul>
-<li>常用的限定符</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>代码&#x2F;语法</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>*</td>
-<td>重复零次或更多次</td>
-</tr>
-<tr>
-<td>+</td>
-<td>重复一次或更多次</td>
-</tr>
-<tr>
-<td>?</td>
-<td>重复零次或一次</td>
-</tr>
-<tr>
-<td>{n}</td>
-<td>重复n次</td>
-</tr>
-<tr>
-<td>{n,}</td>
-<td>重复n次或更多次</td>
-</tr>
-<tr>
-<td>{n,m}</td>
-<td>重复n到m次</td>
-</tr>
-</tbody></table>
-<ol>
-<li><code>\ba\w*\b</code>匹配以字母<code>a</code>开头的单词——先是某个单词开始处<code>(\b)</code>，然后是字母<code>a</code>,然后是任意数量的字母或数字<code>(\w*)</code>，最后是单词结束处<code>(\b)</code>。</li>
-<li><code>\d+</code>匹配1个或更多连续的数字。这里的<code>+</code>是和<em>类似的元字符，不同的是</em>匹配重复任意次(可能是0次)，而<code>+</code>则匹配重复1次或更多次。</li>
-<li><code>\b\w&#123;6&#125;\b</code> 匹配刚好6个字符的单词。</li>
-</ol>
-<h2 id="字符转义"><a href="#字符转义" class="headerlink" title="字符转义"></a>字符转义</h2><p>如果想查找元字符本身的话，比如查找<code>.</code>,或者<code>*</code>,就出现了问题：你没办法指定它们，因为它们会被解释成别的意思。这时就得使用<code>\</code>来取消这些字符的特殊意义。因此，应该使用<code>\.</code>和<code>\*</code>。当然，要查找<code>\</code>本身，也得用<code>\\</code>.</p>
-<p>例如：<code>deerchao\.cn</code>匹配<code>deerchao.cn</code>，<code>C:\\Windows</code>匹配<code>C:\Windows</code>。</p>
-<h2 id="字符类"><a href="#字符类" class="headerlink" title="字符类"></a>字符类</h2><p>要想查找数字，字母或数字，空白是很简单的，因为已经有了对应这些字符集合的元字符，但是如果想匹配没有预定义元字符的字符集合，需要在方括号中列出他们：<code>[aeiou]</code>就匹配任何一个英文元音字母，<code>[.?!]</code>匹配标点符号(.或?或!)。</p>
-<p>练习3：匹配(010)88886666，或022-22334455，或02912345678。</p>
-<h2 id="分组"><a href="#分组" class="headerlink" title="分组"></a>分组</h2><p>想要重复多个字符又该怎么办？可以用小括号来指定<strong>子表达式</strong>(也叫做<strong>分组</strong>)，然后就可以指定这个子表达式的重复次数了。<code>(\d&#123;1,3&#125;\.)&#123;3&#125;\d&#123;1,3&#125;</code>是一个简单的IP地址匹配表达式。要理解这个表达式，按下列顺序分析它：</p>
-<ol>
-<li><code>\d&#123;1,3&#125;</code>匹配1到3位的数字</li>
-<li><code>(\d&#123;1,3&#125;\.)&#123;3&#125;</code>匹配三位数字加上一个英文句号(这个整体也就是这个<strong>分组</strong>)重复3次</li>
-<li>最后再加上一个一到三位的数字<code>(\d&#123;1,3&#125;)</code>。</li>
-</ol>
-<p>它也将匹配*<code>256.300.888.999</code>*这种不可能存在的IP地址。如果能使用算术比较的话，或许能简单地解决这个问题，但是正则表达式中并不提供关于数学的任何功能，所以只能使用冗长的分组，选择，字符类来描述一个正确的IP地址：<code>((2[0-4]\d|25[0-5]|[01]?\d\d?)\.)&#123;3&#125;(2[0-4]\d|25[0-5]|[01]?\d\d?)</code>。</p>
-<p>理解这个表达式的关键是理解<code>2[0-4]\d|25[0-5]|[01]?\d\d?</code>。</p>
-<h2 id="反义"><a href="#反义" class="headerlink" title="反义"></a>反义</h2><p>有时需要查找不属于某个能简单定义的字符类的字符。比如想查找除了数字以外，其它任意字符都行的情况，这时需要用到<strong>反义</strong>。</p>
-<table>
-<thead>
-<tr>
-<th>代码&#x2F;语法</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>\W</td>
-<td>匹配任意不是字母，数字，下划线，汉字的字符</td>
-</tr>
-<tr>
-<td>\S</td>
-<td>匹配任意不是空白符的字符</td>
-</tr>
-<tr>
-<td>\D</td>
-<td>匹配任意非数字的字符</td>
-</tr>
-<tr>
-<td>\B</td>
-<td>匹配不是单词开头或结束的位置</td>
-</tr>
-<tr>
-<td>[^x]</td>
-<td>匹配除了x以外的任意字符</td>
-</tr>
-<tr>
-<td>[^aeiou]</td>
-<td>匹配除了aeiou这几个字母以外的任意字符</td>
-</tr>
-</tbody></table>
-<p>例子：<code>\S+</code>匹配不包含空白符的字符串。</p>
-<p><code>&lt;a[^&gt;]+&gt;</code>匹配用尖括号括起来的以a开头的字符串。</p>
-<h2 id="贪婪与懒惰"><a href="#贪婪与懒惰" class="headerlink" title="贪婪与懒惰"></a>贪婪与懒惰</h2><p>当正则表达式中包含能接受重复的限定符时，通常的行为是（在使整个表达式能得到匹配的前提下）匹配<strong>尽可能多</strong>的字符。以这个表达式为例：<code>a.*b</code>，它将会匹配最长的以<code>a</code>开始，以<code>b</code>结束的字符串。如果用它来搜索*<code>aabab</code>*的话，它会匹配整个字符串<code>aabab</code>。这被称为<strong>贪婪</strong>匹配。</p>
-<p>有时，我们更需要<strong>懒惰</strong>匹配，也就是匹配<strong>尽可能少</strong>的字符。前面给出的限定符都可以被转化为懒惰匹配模式，只要在它后面加上一个问号<code>?</code>。这样<code>.*?</code>就意味着匹配任意数量的重复，但是在能使整个匹配成功的前提下使用最少的重复。</p>
-<p>举例：<code>a.*?b</code>匹配最短的，以<code>a</code>开始，以<code>b</code>结束的字符串。如果把它应用于*<code>aabab</code>*的话，它会匹配<code>aab</code>（第一到第三个字符）和<code>ab</code>（第四到第五个字符）。</p>
-<table>
-<thead>
-<tr>
-<th>代码&#x2F;语法</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>*?</td>
-<td>重复任意次，但尽可能少重复</td>
-</tr>
-<tr>
-<td>+?</td>
-<td>重复1次或更多次，但尽可能少重复</td>
-</tr>
-<tr>
-<td>??</td>
-<td>重复0次或1次，但尽可能少重复</td>
-</tr>
-<tr>
-<td>{n,m}?</td>
-<td>重复n到m次，但尽可能少重复</td>
-</tr>
-<tr>
-<td>{n,}?</td>
-<td>重复n次以上，但尽可能少重复</td>
-</tr>
-</tbody></table>
-<h2 id="grep命令"><a href="#grep命令" class="headerlink" title="grep命令"></a>grep命令</h2><h3 id="grep基本用法"><a href="#grep基本用法" class="headerlink" title="grep基本用法"></a>grep基本用法</h3><p><code>Linux grep (global regular expression)</code> 命令用于查找文件里符合条件的字符串或正则表达式。</p>
-<p>grep 指令用于查找内容包含指定的范本样式的文件，如果发现某文件的内容符合所指定的范本样式，预设 grep 指令会把含有范本样式的那一列显示出来。若不指定任何文件名称，或是所给予的文件名为 <code>-</code>，则 grep 指令会从标准输入设备读取数据。</p>
-<ul>
-<li><p>基于目标文件进行查找</p>
-  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@sh:~$ <span class="token function">grep</span> <span class="token string">"ubuntu"</span> /etc/passwd
-ubuntu:x:1000:1000:ubuntu,,,:/home/ubuntu:/bin/bash<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-</li>
-<li><p>基于标准输入进行查找</p>
-  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@sh:~$ <span class="token function">ps</span> <span class="token parameter variable">-aux</span> <span class="token operator">|</span><span class="token function">grep</span> <span class="token function">ssh</span>
-root        <span class="token number">864</span>  <span class="token number">0.0</span>  <span class="token number">0.1</span>  <span class="token number">65508</span>  <span class="token number">5424</span> ?        Ss   Mar26   <span class="token number">0</span>:00 /usr/sbin/sshd <span class="token parameter variable">-D</span>
-root      <span class="token number">18851</span>  <span class="token number">0.0</span>  <span class="token number">0.1</span>  <span class="token number">92796</span>  <span class="token number">6836</span> ?        Ss   Apr06   <span class="token number">0</span>:00 sshd: ubuntu <span class="token punctuation">[</span>priv<span class="token punctuation">]</span>
-ubuntu    <span class="token number">18878</span>  <span class="token number">0.0</span>  <span class="token number">0.0</span>  <span class="token number">92796</span>  <span class="token number">3988</span> ?        S    Apr06   <span class="token number">0</span>:02 sshd: ubuntu@pts/0
-ubuntu    <span class="token number">23726</span>  <span class="token number">0.0</span>  <span class="token number">0.0</span>  <span class="token number">14220</span>  <span class="token number">1028</span> pts/0    S+   <span class="token number">21</span>:08   <span class="token number">0</span>:00 <span class="token function">grep</span> <span class="token parameter variable">--color</span><span class="token operator">=</span>auto <span class="token function">ssh</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>常用选项</p>
-<ul>
-<li><code>i</code>：忽略大小写进行匹配。</li>
-<li><code>v</code>：反向查找，只打印不匹配的行。</li>
-<li><code>n</code>：显示匹配行的行号。</li>
-<li><code>r</code>：递归查找子目录中的文件。</li>
-<li><code>l</code>：只打印匹配的文件名。</li>
-<li><code>c</code>：只打印匹配的行数。</li>
-</ul>
-</li>
-</ul>
-<h3 id="grep结合正则表达式用法"><a href="#grep结合正则表达式用法" class="headerlink" title="grep结合正则表达式用法"></a>grep结合正则表达式用法</h3><ul>
-<li><p>已有文本文件<code>example.txt</code>，其中存储了一些人的信息，包括姓名、年龄和职业，每行一个人的信息：</p>
-  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">John Smith, <span class="token number">25</span>, Engineer
-Alice Brown, <span class="token number">30</span>, Teacher
-Bob Johnson, <span class="token number">40</span>, Lawyer<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<p>  查找年龄在 30 岁及以上的人的信息，可以使用以下命令：</p>
-  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">grep</span> <span class="token string">'[3-9][0-9],.*'</span> example.txt<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li><p>找出<code>~</code>目录下以<code>.sh</code>结尾的文件名</p>
-  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">find</span> ~ <span class="token parameter variable">-name</span> <span class="token string">"*.sh"</span> <span class="token operator">|</span><span class="token function">grep</span> <span class="token parameter variable">-Eo</span> <span class="token string">"[^/]+\.sh"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-</ul>
-<p>练习4：显示&#x2F;etc&#x2F;passwd中不以<code>/bin/bash</code>结尾的行</p>
-<p>练习1答案：<code>\+\d&#123;3&#125;-\d&#123;3&#125;-\d&#123;3&#125;-\d&#123;5&#125;</code></p>
-<p>练习2答案：<code>0\d&#123;3&#125;-\d&#123;7&#125;|0\d&#123;2&#125;-\d&#123;8&#125;</code></p>
-<p>练习3答案：<code>\(?0\d&#123;2&#125;[)-]?\d&#123;8&#125;</code></p>
-<p>练习4答案：<code>cat /etc/passwd |grep -Ev &quot;(/bin/bash)$”</code></p>
 
       
     </div>
