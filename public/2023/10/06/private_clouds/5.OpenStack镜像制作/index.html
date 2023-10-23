@@ -26,8 +26,6 @@
 <meta property="og:site_name">
 <meta property="og:description" content="虚拟机镜像制作方法OpenStack平台所使用的镜像文件是一种虚拟机镜像，我们简称为镜像。而虚拟机镜像本质上是一个包含虚拟磁盘的单个文件，该虚拟磁盘上安装了可引导的操作系统。 上一节课已经介绍了通过下载官方预制的虚拟机镜像，这种途径获取到的镜像文件大都默认禁用SSH密码身份验证，同时包含cloud-init来支持SSH密钥对和用户数据的注入。通过密钥实现登录之后可以做进一步的定制，最后通过创建快照">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/10/09/2023-10-09-1696814955.png">
-<meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/10/09/2023-10-09-1696815014.png">
 <meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/10/11/2023-10-11-1696954122.png">
 <meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/10/11/2023-10-11-1696954933.png">
 <meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/10/11/2023-10-11-1696956085.png">
@@ -53,9 +51,9 @@
 <meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/10/08/2023-10-08-1696739923.png">
 <meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/10/17/2023-10-17-1697509897.png">
 <meta property="article:published_time" content="2023-10-06T03:00:09.000Z">
-<meta property="article:modified_time" content="2023-10-18T13:51:34.160Z">
+<meta property="article:modified_time" content="2023-10-19T09:30:12.407Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://vault.taojie.fun:28089/i/2023/10/09/2023-10-09-1696814955.png">
+<meta name="twitter:image" content="https://vault.taojie.fun:28089/i/2023/10/11/2023-10-11-1696954122.png">
 
 
 <link rel="canonical" href="http://example.com/2023/10/06/private_clouds/5.OpenStack%E9%95%9C%E5%83%8F%E5%88%B6%E4%BD%9C/">
@@ -150,7 +148,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-count">23</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -214,7 +212,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-10-18 21:51:34" itemprop="dateModified" datetime="2023-10-18T21:51:34+08:00">2023-10-18</time>
+      <time title="修改时间：2023-10-19 17:30:12" itemprop="dateModified" datetime="2023-10-19T17:30:12+08:00">2023-10-19</time>
     </span>
 
   
@@ -238,21 +236,9 @@
 <h2 id="获取实验资源"><a href="#获取实验资源" class="headerlink" title="获取实验资源"></a>获取实验资源</h2><blockquote>
 <p>这一步从教师机获取实验所用的镜像。</p>
 </blockquote>
-<ol>
-<li><p>学生机使用的是空白密码的账户，需要修改策略才能使用文件共享功能。</p>
-<ul>
-<li>按Windows + R键调出运行框，输入“gpedit.msc”命令以打开本地组策略编辑器，依次导航到：计算机配置 &gt; Windows 设置 &gt; 安全设置 &gt; 本地策略 &gt; 安全选项。</li>
-</ul>
- <img src="https://vault.taojie.fun:28089/i/2023/10/09/2023-10-09-1696814955.png" alt="1696814955556.png" title="1696814955556.png" />
+<p>Windows + E打开文件资源管理器在搜索栏输入<code>\\192.168.3.47</code>打开后将文件<code>CentOS-7-x86_64-GenericCloud-2003.qcow2</code>拉取到Windows本地目录<code>D:\\镜像\</code>覆盖目录下的同名文件。</p>
+<img src="https://vault.taojie.fun:28089/i/2023/10/11/2023-10-11-1696954122.png" alt="1696954122919.png" title="1696954122919.png" />
 
-<ul>
-<li>在右侧窗格中找到“账户：使用空密码的本地账户只允许进行控制台登录”，然后双击打开，将其设置为“已禁用”，再单击“应用”和“确定”。</li>
-</ul>
- <img src="https://vault.taojie.fun:28089/i/2023/10/09/2023-10-09-1696815014.png" alt="1696815014064.png" title="1696815014064.png" />
-</li>
-<li><p>Windows + E打开文件资源管理器在搜索栏输入<code>\\192.168.3.47</code>打开后将文件<code>CentOS-7-x86_64-GenericCloud-2003.qcow2</code>拉取到Windows本地目录<code>D:\\镜像\</code>覆盖目录下的同名文件。</p>
- <img src="https://vault.taojie.fun:28089/i/2023/10/11/2023-10-11-1696954122.png" alt="1696954122919.png" title="1696954122919.png" /></li>
-</ol>
 <h2 id="实验环境准备"><a href="#实验环境准备" class="headerlink" title="实验环境准备"></a>实验环境准备</h2><blockquote>
 <p>设置<code>控制节点</code>快照版本<code>5.3.8</code></p>
 </blockquote>
@@ -441,7 +427,7 @@ Type: <span class="token string">'help'</span> <span class="token keyword">for</
 <p><a target="_blank" rel="noopener" href="https://wxstc.fanya.chaoxing.com/portal">超星网址</a><br>虚拟机使用<code>xnode1</code>，登录账户：root，密码：000000</p>
 </blockquote>
 <h3 id="系统资源准备"><a href="#系统资源准备" class="headerlink" title="系统资源准备"></a>系统资源准备</h3><ol>
-<li><p>在安装系统之前需要删除部分<code>C盘</code>内容后，获取系统安装包、VirtIO驱动，参考第一节从共享文件中拉取文件到桌面上<code>cn_windows_server_2012_r2_with_update_x64_dvd_6052725.iso</code>、<code>virtio-win-0.1.185.iso</code>、<code>WinSCP.exe</code>。</p>
+<li><p>在安装系统之前需要删除部分<code>C盘</code>内容，获取系统安装包、VirtIO驱动，参考第一节从共享文件中拉取文件到桌面上<code>cn_windows_server_2012_r2_with_update_x64_dvd_6052725.iso</code>、<code>virtio-win-0.1.185.iso</code>、<code>WinSCP.exe</code>。</p>
 </li>
 <li><p>打开虚拟机<code>xnode1</code>，使用vmware控制台登录。</p>
 </li>
@@ -539,7 +525,7 @@ Formatting <span class="token string">'ws2012.qcow2'</span>, <span class="token 
 </li>
 <li><p>选择<code>加载驱动程序</code>-&gt;<code>浏览</code>从以下路径加载scsi和网络驱动。</p>
 <blockquote>
-<p>E:\virtio-win-0.1.185\viostor\2k12r2\amd64<br>E:\NETKVM\2k12r2\amd64</p>
+<p>D:\virtio-win-0.1.185\viostor\2k12r2\amd64<br>D:\virtio-win-0.1.185\NETKVM\2k12r2\amd64</p>
 </blockquote>
  <img src="https://vault.taojie.fun:28089/i/2023/10/08/2023-10-08-1696737650.png" alt="1696737648562.png" title="1696737648562.png" />
 </li>
@@ -614,7 +600,7 @@ Id    Name                           State
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2023/10/14/private_clouds/6.OpenStack%E5%AE%9E%E4%BE%8B%E7%AE%A1%E7%90%86/" rel="next" title="OpenStack实例管理">
+                <a href="/2023/10/14/private_clouds/6.OpenStack%E5%AE%9E%E4%BE%8B%E7%AE%A1%E7%90%86%EF%BC%88%E4%B8%80%EF%BC%89/" rel="next" title="OpenStack实例管理">
                   OpenStack实例管理 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
