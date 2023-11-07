@@ -519,7 +519,7 @@ Created symlink from /etc/systemd/system/multi-user.target.wants/neutron-l3-agen
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-11-06 14:35:09" itemprop="dateModified" datetime="2023-11-06T14:35:09+08:00">2023-11-06</time>
+      <time title="修改时间：2023-11-07 21:27:01" itemprop="dateModified" datetime="2023-11-07T21:27:01+08:00">2023-11-07</time>
     </span>
 
   
@@ -745,10 +745,7 @@ network_data.json  vendor_data2.json
 <h2 id="实例迁移"><a href="#实例迁移" class="headerlink" title="实例迁移"></a>实例迁移</h2><ol>
 <li><p>这一步设置两个计算节点之间的ssh免密访问，先在<code>compute</code>上配置。</p>
 <ol>
-<li><p>查找<code>StrictHostKeyChecking</code>修改为<code>no</code>。</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@compute ~<span class="token punctuation">]</span><span class="token comment"># vi /var/lib/nova/.ssh/config</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li><p>设置<code>nova</code>的<code>login</code>登录。</p>
+<li><p>设置<code>nova</code>的登录功能。</p>
  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@compute ~<span class="token punctuation">]</span><span class="token comment"># vi /etc/passwd</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p> 找到nova用户，参考修改：</p>
@@ -757,22 +754,24 @@ nova:x:162:162:OpenStack Nova Daemons:/var/lib/nova:/sbin/nologin
 <span class="token comment"># 改为：</span>
 nova:x:162:162:OpenStack Nova Daemons:/var/lib/nova:/bin/bash<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
-<li><p>将前两步的配置发送到另一个计算节点。</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@compute ~<span class="token punctuation">]</span><span class="token comment"># scp /var/lib/nova/.ssh/config root@compute2:/var/lib/nova/.ssh/config</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li><p>用第三步scp命令发送修改好的<code>/etc/passwd</code>文件到compute2上。</p>
+<li><p>将前一步所修改的配置发送到<code>compute2</code>。</p>
  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@compute ~<span class="token punctuation">]</span><span class="token comment"># scp /etc/passwd root@compute2:/etc/passwd</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 </li>
-<li><p>设置nova密码，这一步在两个计算节点上设置。</p>
+<li><p>设置nova密码，这一步在两个计算节点分别上设置。</p>
  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@compute ~<span class="token punctuation">]</span><span class="token comment"># passwd nova</span>
 <span class="token punctuation">[</span>root@compute2 ~<span class="token punctuation">]</span><span class="token comment"># passwd nova</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 </li>
-<li><p>使用<code>su - nova</code>命令切换nova用户，生成密钥对。</p>
+<li><p>在<code>compute</code>节点使用<code>su - nova</code>命令切换nova用户，生成密钥对。</p>
  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">bash-4.2$ ssh-keygen <span class="token parameter variable">-t</span> rsa <span class="token parameter variable">-P</span> <span class="token string">''</span>
 Generating public/private rsa key pair.
 Enter <span class="token function">file</span> <span class="token keyword">in</span> <span class="token function">which</span> to save the key <span class="token punctuation">(</span>/var/lib/nova/.ssh/id_rsa<span class="token punctuation">)</span>: 回车<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 </li>
-<li><p>在compute2上同样切换到nova用户，生成密钥对。</p>
+<li><p>在<code>comptue2</code>节点重复第四步生成密钥对。</p>
+</li>
+<li><p>在<code>compute</code>节点执行<code>echo &#39;StrictHostKeyChecking no&#39; &gt;&gt; /var/lib/nova/.ssh/config</code>关闭严格主机密钥检查。</p>
+</li>
+<li><p>将前一步所修改的配置发送到<code>compute2</code>。</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@compute ~<span class="token punctuation">]</span><span class="token comment"># scp /var/lib/nova/.ssh/config root@compute2:/var/lib/nova/.ssh/config</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 </li>
 <li><p>使用以下命令查看生成的公钥文件，把两台计算节点的公钥复制粘贴到对方的<code>/var/lib/nova/.ssh/authorized_keys</code>文件中。</p>
  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">bash-4.2$ <span class="token function">cat</span> /var/lib/nova/.ssh/id_rsa.pub<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -784,7 +783,11 @@ compute
 Last login: Wed Nov  <span class="token number">1</span> 01:22:32 <span class="token number">2023</span> from compute
 SIOCSIFFLAGS: Operation not permitted
 -bash-4.2$ <span class="token builtin class-name">echo</span> <span class="token environment constant">$HOSTNAME</span>
-compute2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+compute2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>在两台计算节点上<code>Ctrl + D</code>回到root用户，重启以下服务。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@compute ~<span class="token punctuation">]</span><span class="token comment"># systemctl restart libvirtd openstack-nova-compute</span>
+<span class="token punctuation">[</span>root@compute2 ~<span class="token punctuation">]</span><span class="token comment"># systemctl restart libvirtd openstack-nova-compute neutron-linuxbridge-agent</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
 </ol>
 </li>
 <li><p>虚拟机实例冷迁移。</p>
