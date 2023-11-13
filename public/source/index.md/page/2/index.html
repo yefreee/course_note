@@ -118,7 +118,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-count">25</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -136,6 +136,475 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/06/16/c_program/3.%E7%AC%AC%E4%B8%89%E5%91%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/06/16/c_program/3.%E7%AC%AC%E4%B8%89%E5%91%A8/" class="post-title-link" itemprop="url">第三周</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-06-16 22:22:10" itemprop="dateCreated datePublished" datetime="2023-06-16T22:22:10+08:00">2023-06-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-09-03 13:17:06" itemprop="dateModified" datetime="2023-09-03T13:17:06+08:00">2023-09-03</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="C语言中的输入输出函数"><a href="#C语言中的输入输出函数" class="headerlink" title="C语言中的输入输出函数"></a>C语言中的输入输出函数</h2><p>C语言有很多函数能够实现各种信息的输入和输出，信息的输入主要来源是标准输入（键盘），信息的输出主要目标是标准输出（屏幕），下面介绍几种常见的输入输出函数。</p>
+<h3 id="printf和scanf"><a href="#printf和scanf" class="headerlink" title="printf和scanf"></a>printf和scanf</h3><ol>
+<li><p>printf用于将数据格式化输出到标准输出（通常是屏幕）</p>
+<p> printf函数原型如下：</p>
+ <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">printf</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>format<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p> printf() 函数接受一个格式化字符串<code>format</code>和可变数量的参数，根据格式化字符串中的占位符将参数格式化为字符串并输出到标准输出（通常是控制台）。返回值为输出的字符数。</p>
+<p> 常见的格式化占位符以及含义：</p>
+ <pre class="line-numbers language-text" data-language="text"><code class="language-text">%d：输出有符号十进制整数。
+%u：输出无符号十进制整数。
+%f：输出浮点数。
+%c：输出字符。
+%s：输出字符串。
+%x：输出无符号十六进制整数。
+%o：输出无符号八进制整数。
+%e：以指数形式输出浮点数。
+%p：输出指针的地址。
+%%：输出一个百分号。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p> 创建test.c文件并编辑以下代码，注释部分为运行结果：</p>
+ <pre class="line-numbers language-c" data-language="c"><div class="caption"><span>print用法示例</span></div><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">int</span> num <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+<span class="token keyword">float</span> pi <span class="token operator">=</span> <span class="token number">3.14159</span><span class="token punctuation">;</span>
+<span class="token keyword">char</span> ch <span class="token operator">=</span> <span class="token char">'A'</span><span class="token punctuation">;</span>
+<span class="token keyword">char</span> str<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">"Hello, World!"</span><span class="token punctuation">;</span>
+
+<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Integer: %d\n"</span><span class="token punctuation">,</span> num<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">//Integer: 10</span>
+<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Float: %.2f\n"</span><span class="token punctuation">,</span> pi<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">//Float: 3.14</span>
+<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Integer: %d\nFloat: %.2f\n"</span><span class="token punctuation">,</span> num<span class="token punctuation">,</span> pi<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Character: %c\n"</span><span class="token punctuation">,</span> ch<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">//Character: A</span>
+<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"String: %s\n"</span><span class="token punctuation">,</span> str<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">//String: Hello, World!</span>
+
+<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>scanf用于从标准输入（通常是键盘）读取格式化的数据</p>
+<p> scanf原型如下：</p>
+ <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">scanf</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>format<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p> scanf() 函数接受一个格式化字符串<code>format</code>和对应的参数列表，根据格式化字符串中的占位符从输入流中读取数据，并将读取到的数据存储到对应的变量中。返回值为成功读取的变量的数量。</p>
+<p> 创建test.c文件并编辑以下代码：</p>
+ <pre class="line-numbers language-c" data-language="c"><div class="caption"><span>scanf用法示例</span></div><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> num<span class="token punctuation">;</span>
+    <span class="token keyword">float</span> pi<span class="token punctuation">;</span>
+    <span class="token keyword">char</span> ch<span class="token punctuation">;</span>
+    <span class="token keyword">char</span> str<span class="token punctuation">[</span><span class="token number">100</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Enter an integer: "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">scanf</span><span class="token punctuation">(</span><span class="token string">"%d"</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>num<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Enter a float: "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">scanf</span><span class="token punctuation">(</span><span class="token string">"%f"</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>pi<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Enter a character: "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">scanf</span><span class="token punctuation">(</span><span class="token string">" %c"</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>ch<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Enter a string: "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">scanf</span><span class="token punctuation">(</span><span class="token string">"%s"</span><span class="token punctuation">,</span> str<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Integer: %d\n"</span><span class="token punctuation">,</span> num<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Float: %.2f\n"</span><span class="token punctuation">,</span> pi<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Character: %c\n"</span><span class="token punctuation">,</span> ch<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"String: %s\n"</span><span class="token punctuation">,</span> str<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p> 使用<code>gcc -o test test.c</code>命令编译后使用<code>./test</code>运行代码，按提示信息输入相应类型的数据：</p>
+ <pre class="line-numbers language-text" data-language="text"><code class="language-text">Enter an integer: 10
+Enter a float: 10.1
+Enter a character: d
+Enter a string: string
+Integer: 10
+Float: 10.10
+Character: d
+String: string<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ol>
+<h3 id="getchar和putchar"><a href="#getchar和putchar" class="headerlink" title="getchar和putchar"></a>getchar和putchar</h3><ol>
+<li><p>getchar用于从输入流中读取单个字符</p>
+<p> getchar函数原型如下：</p>
+ <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">getchar</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p> getchar() 函数没有参数，它从标准输入（通常是键盘）读取一个字符，并返回读取到的字符的ASCII码值（作为整数）。</p>
+<p> 创建test.c文件并编辑以下代码：</p>
+ <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">char</span> ch<span class="token punctuation">;</span>
+    
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Enter a character: "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    ch <span class="token operator">=</span> <span class="token function">getchar</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"You entered: %c\n"</span><span class="token punctuation">,</span> ch<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p> 使用<code>gcc -o test test.c</code>命令编译后使用<code>./test</code>运行代码，按提示信息输入相应类型的数据：</p>
+ <pre class="line-numbers language-text" data-language="text"><code class="language-text">Enter a character: d
+You entered: d
+
+Enter a character: dd
+You entered: d<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>putchar用于将一个字符输出到标准输出（通常是屏幕）</p>
+<p> putchar函数原型如下：</p>
+ <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">putchar</span><span class="token punctuation">(</span><span class="token keyword">int</span> c<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p> putchar()函数接受一个整数参数<code>c</code>，它表示要输出的字符的ASCII码值。函数将该字符输出到标准输出，并返回输出的字符。</p>
+<p> 创建test.c文件并编辑以下代码：</p>
+ <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">char</span> ch <span class="token operator">=</span> <span class="token char">'A'</span><span class="token punctuation">;</span>
+    
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Character: "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">putchar</span><span class="token punctuation">(</span>ch<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">putchar</span><span class="token punctuation">(</span><span class="token char">'\n'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+ <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p> 使用<code>gcc -o test test.c</code>命令编译后使用<code>./test</code>运行代码，按提示信息输入相应类型的数据：</p>
+ <pre class="line-numbers language-text" data-language="text"><code class="language-text">Character: A
+ <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
+</ol>
+<h3 id="其他输入输出函数"><a href="#其他输入输出函数" class="headerlink" title="其他输入输出函数"></a>其他输入输出函数</h3><ul>
+<li><p>标准输入输出（stdio.h库）：</p>
+<ul>
+<li>printf()：用于将数据格式化输出到标准输出（通常是控制台）。</li>
+<li>scanf()：用于从标准输入（键盘）读取格式化的数据。</li>
+<li>getchar()：用于从标准输入（键盘）读取单个字符。</li>
+<li>puts()：用于将字符串输出到标准输出（控制台）并自动换行。</li>
+<li>gets()：用于从标准输入（键盘）读取字符串（已被弃用，请使用 fgets()）。</li>
+</ul>
+</li>
+<li><p>文件输入输出（stdio.h库）：</p>
+<ul>
+<li>fopen()：打开文件并返回文件指针。</li>
+<li>fclose()：关闭文件。</li>
+<li>fprintf()：将数据格式化输出到文件。</li>
+<li>fscanf()：从文件读取格式化的数据。</li>
+<li>fgets()：从文件读取一行字符串。</li>
+</ul>
+</li>
+<li><p>字符输入输出（ctype.h库）：</p>
+<ul>
+<li>putc()：将一个字符写入指定的文件。</li>
+<li>getc()：从指定的文件读取一个字符。</li>
+</ul>
+</li>
+<li><p>格式化输出（stdarg.h库）：</p>
+<ul>
+<li>sprintf()：将数据格式化输出到字符串。</li>
+<li>printf()：将数据格式化输出到字符串或标准输出。</li>
+</ul>
+</li>
+</ul>
+<h2 id="控制语句：分支和跳转"><a href="#控制语句：分支和跳转" class="headerlink" title="控制语句：分支和跳转"></a>控制语句：分支和跳转</h2><h3 id="if语句"><a href="#if语句" class="headerlink" title="if语句"></a>if语句</h3><p>if语句的语法格式：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">if</span><span class="token punctuation">(</span>boolean_expression<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+   <span class="token comment">/* 如果布尔表达式为真将执行的语句 */</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>如果布尔表达式为 true，则 if 语句内的代码块将被执行。如果布尔表达式为 false，则 if 语句结束后的第一组代码（闭括号后）将被执行。<br>C 语言把任何非零和非空的值假定为 true，把零或 null 假定为 false。</p>
+<p>创建test.c文件，编辑以下代码：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> num<span class="token punctuation">;</span>
+
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Enter a number: "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">scanf</span><span class="token punctuation">(</span><span class="token string">"%d"</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>num<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>num <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"The number is positive.\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>num <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"The number is negative.\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"The number is zero.\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>可以使用各种类型的运算符来构建表达式：</p>
+<ol>
+<li><p>关系运算符：</p>
+ <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> a <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">,</span> b <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>a <span class="token operator">==</span> b<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+<span class="token comment">// 执行代码块</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>逻辑运算符：</p>
+ <pre class="line-numbers language-c" data-language="c"><code class="language-c">    <span class="token keyword">int</span> x <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">,</span> y <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>x <span class="token operator">></span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> y <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// 执行代码块</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>位运算符：</p>
+ <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">unsigned</span> <span class="token keyword">int</span> flags <span class="token operator">=</span> <span class="token number">0</span>b1011<span class="token punctuation">;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>flags <span class="token operator">&amp;</span> <span class="token number">0</span>b1000<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// 执行代码块</span>
+<span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ol>
+<h3 id="switch语句"><a href="#switch语句" class="headerlink" title="switch语句"></a>switch语句</h3><p><code>switch</code>语句是C语言中用于多路分支的控制语句，它根据表达式的值，选择性地执行与每个选项相关联的代码块。以下是<code>switch</code>语句的基本用法：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">switch</span> <span class="token punctuation">(</span>expression<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">case</span> constant1<span class="token operator">:</span>
+        <span class="token comment">// 与 constant1 相关的代码块</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token keyword">case</span> constant2<span class="token operator">:</span>
+        <span class="token comment">// 与 constant2 相关的代码块</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token comment">// 更多的 case 分支...</span>
+    <span class="token keyword">default</span><span class="token operator">:</span>
+        <span class="token comment">// 默认情况的代码块</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><code>switch</code>语句包含以下几个部分：</p>
+<ol>
+<li><p><code>expression</code>：一个表达式，其结果将与每个case分支的常量值进行比较。</p>
+</li>
+<li><p><code>case</code>分支：每个case后面跟着一个常量表达式，用于与expression进行比较。如果expression的值与某个case的常量值匹配，将执行与该case相关联的代码块。</p>
+</li>
+<li><p><code>break</code>语句：在每个case分支的代码块结束时使用break语句，以终止switch语句的执行。如果忽略了break语句，将会发生”穿透”现象，即会继续执行下一个case分支中的代码块，直到遇到break或switch语句结束。</p>
+</li>
+<li><p><code>default</code>分支：在所有的case分支都不匹配时，将执行default分支中的代码块。default是可选的，可以省略。</p>
+</li>
+</ol>
+<p>创建test.c文件，编辑以下代码：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> choice<span class="token punctuation">;</span>
+
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Enter a number between 1 and 3: "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">scanf</span><span class="token punctuation">(</span><span class="token string">"%d"</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>choice<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">switch</span> <span class="token punctuation">(</span>choice<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">case</span> <span class="token number">1</span><span class="token operator">:</span>
+            <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"You selected option 1.\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token keyword">case</span> <span class="token number">2</span><span class="token operator">:</span>
+            <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"You selected option 2.\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token keyword">case</span> <span class="token number">3</span><span class="token operator">:</span>
+            <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"You selected option 3.\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token keyword">default</span><span class="token operator">:</span>
+            <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Invalid option.\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>使用<code>gcc -o test test.c</code>命令编译后使用<code>./test</code>运行代码，按提示信息输入相应类型的数据：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">Enter a number between 1 and 3: 2
+You selected option 2.
+
+Enter a number between 1 and 3: 5
+Invalid option.
+
+Enter a number between 1 and 3: 2.1
+You selected option 2.
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="控制语句：循环"><a href="#控制语句：循环" class="headerlink" title="控制语句：循环"></a>控制语句：循环</h2><h3 id="for循环"><a href="#for循环" class="headerlink" title="for循环"></a>for循环</h3><p>for循环是C语言中常用的一种迭代控制结构，它可以用于重复执行一段代码块，且提供了更灵活的循环控制。以下是for循环的语法：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">for</span> <span class="token punctuation">(</span>initialization<span class="token punctuation">;</span> condition<span class="token punctuation">;</span> increment<span class="token operator">/</span>decrement<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// 循环体代码块</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>for循环包含以下四个部分：</p>
+<ol>
+<li><p>initialization：在循环开始前执行的初始化表达式，用于初始化循环计数器或其他变量。</p>
+</li>
+<li><p>condition：在每次循环迭代前进行判断的条件表达式。只有当条件为真时，循环体中的代码块才会执行。如果条件为假，循环将结束，程序将继续执行循环后的代码。</p>
+</li>
+<li><p>increment&#x2F;decrement：在每次循环迭代后执行的增量或减量操作。它用于更新循环计数器或其他变量的值，以控制循环的进程。</p>
+</li>
+<li><p>循环体代码块：在 for 循环的花括号内部，是需要重复执行的代码块。这些代码将按照循环条件和增量&#x2F;减量操作的规则反复执行。</p>
+</li>
+</ol>
+<p>创建test.c文件，编辑以下代码：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> i<span class="token punctuation">;</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> <span class="token number">5</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Count: %d\n"</span><span class="token punctuation">,</span> i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>使用<code>gcc -o test test.c</code>命令编译后使用<code>./test</code>运行代码，按提示信息输入相应类型的数据：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">Count: 1
+Count: 2
+Count: 3
+Count: 4
+Count: 5<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>需要注意的是，for循环的各个部分都是可选的。如果省略了某个部分，相应的功能将被忽略，但循环仍然可以正常工作。例如，可以省略初始化表达式或增量操作，只保留条件表达式，以及在循环体内手动控制循环变量的更新。这样的灵活性使得for循环非常适用于各种迭代场景。</p>
+<h3 id="while循环和do-while循环"><a href="#while循环和do-while循环" class="headerlink" title="while循环和do-while循环"></a>while循环和do-while循环</h3><p><code>while</code>循环是C语言中的一种迭代控制结构，它用于重复执行一段代码块，只要给定的条件为真。以下是<code>while</code>循环的语法</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">while</span> <span class="token punctuation">(</span>condition<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// 循环体代码块</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>while 循环包含以下两个部分：</p>
+<ol>
+<li><p>condition：一个条件表达式，用于判断循环是否继续执行。如果条件为真，循环将继续执行循环体中的代码块；如果条件为假，循环将结束，程序将继续执行循环后的代码。</p>
+</li>
+<li><p>循环体代码块：在 while 循环的花括号内部，是需要重复执行的代码块。这些代码将反复执行，直到条件为假。</p>
+</li>
+</ol>
+<p>创建test.c文件，编辑以下代码：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> count <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>count <span class="token operator">&lt;</span> <span class="token number">5</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Count: %d\n"</span><span class="token punctuation">,</span> count<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        count<span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>在上述示例中，<code>while</code>循环的条件是<code>count&lt;5</code>，只要<code>count</code>的值小于5，循环体中的代码块将被重复执行。每次循环，<code>count</code>的值会递增，并打印出当前的值。当<code>count</code>的值达到或超过5时，条件为假，循环结束。</p>
+<p>需要注意的是，如果条件一开始就为假，循环体中的代码块将不会执行，循环将被跳过。因此，在使用<code>while</code>循环时，请确保循环条件能够在某个时刻变为假，以避免陷入无限循环。通常，在循环体中需要修改条件表达式或使用控制语句（如<code>break</code>）来终止循环。</p>
+<h3 id="continue语句和break语句"><a href="#continue语句和break语句" class="headerlink" title="continue语句和break语句"></a>continue语句和break语句</h3><p>continue语句用于跳过当前循环迭代中剩余的代码，直接进行下一次迭代。它的作用是终止当前迭代的剩余代码，然后重新开始下一次循环迭代。continue语句通常与条件语句结合使用，用于在满足特定条件时跳过当前迭代。</p>
+<p>创建test.c文件，编辑以下代码：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> i<span class="token punctuation">;</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> <span class="token number">5</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>i <span class="token operator">==</span> <span class="token number">3</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">continue</span><span class="token punctuation">;</span> <span class="token comment">// 当 i 等于 3 时跳过当前迭代</span>
+        <span class="token punctuation">&#125;</span>
+
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Count: %d\n"</span><span class="token punctuation">,</span> i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>使用<code>gcc -o test test.c</code>命令编译后使用<code>./test</code>运行代码，按提示信息输入相应类型的数据：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">Count: 1
+Count: 2
+Count: 4
+Count: 5<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>在上述示例中，当<code>i</code>等于<code>3</code>时，<code>continue</code>语句将跳过<code>printf</code>语句，直接进入下一次循环迭代。因此，输出结果中不会包含数字<code>3</code>。</p>
+<p><code>break</code>语句用于完全终止当前的循环，不再执行循环中的任何代码，并跳出循环体继续执行循环后的代码。它通常与条件语句结合使用，用于在满足特定条件时提前结束循环。</p>
+<p>创建test.c文件，编辑以下代码：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> i<span class="token punctuation">;</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> <span class="token number">5</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>i <span class="token operator">==</span> <span class="token number">3</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span> <span class="token comment">// 当 i 等于 3 时终止循环</span>
+        <span class="token punctuation">&#125;</span>
+
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Count: %d\n"</span><span class="token punctuation">,</span> i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>使用<code>gcc -o test test.c</code>命令编译后使用<code>./test</code>运行代码，按提示信息输入相应类型的数据：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">Count: 1
+Count: 2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>在上述示例中，当<code>i</code>等于<code>3</code>时，<code>break</code>语句将完全终止循环，不再执行任何循环代码。因此，输出结果中只包含数字<code>1</code>和<code>2</code>，循环在此处结束。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -3387,375 +3856,6 @@ EOF</span>
 第 4 次迭代
 退出循环
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/18/linux_shell/5.%E5%A4%84%E7%90%86%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | ">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/04/18/linux_shell/5.%E5%A4%84%E7%90%86%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5/" class="post-title-link" itemprop="url">处理用户输入</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-04-18 11:31:23" itemprop="dateCreated datePublished" datetime="2023-04-18T11:31:23+08:00">2023-04-18</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-09-03 13:17:06" itemprop="dateModified" datetime="2023-09-03T13:17:06+08:00">2023-09-03</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <ul>
-<li>bash shell提供了一些不同的方法从用户处获得数据，包括命令行参数、命令行选项、直接从键盘读取。</li>
-</ul>
-<h2 id="命令行参数"><a href="#命令行参数" class="headerlink" title="命令行参数"></a>命令行参数</h2><h3 id="读取参数"><a href="#读取参数" class="headerlink" title="读取参数"></a>读取参数</h3><p>在Shell脚本中，命令行参数可以通过特殊变量 <strong><code>$1</code><strong>、</strong><code>$2</code><strong>、</strong><code>$3</code></strong> … **<code>$n</code>**来获取，其中 **<code>$1</code><strong>表示第一个参数，</strong><code>$2</code><strong>表示第二个参数，以此类推，</strong><code>$n</code>**表示第 n 个参数。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
-
-<span class="token builtin class-name">echo</span> <span class="token string">"第一个参数为：<span class="token variable">$1</span>"</span>
-<span class="token builtin class-name">echo</span> <span class="token string">"第二个参数为：<span class="token variable">$2</span>"</span>
-<span class="token builtin class-name">echo</span> <span class="token string">"第三个参数为：<span class="token variable">$3</span>"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<ol>
-<li><p>利用<code>for</code>循环和命令行参数计算阶乘：</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
-
-<span class="token assign-left variable">n</span><span class="token operator">=</span><span class="token variable">$1</span>
-<span class="token assign-left variable">fact</span><span class="token operator">=</span><span class="token number">1</span>
-
-<span class="token keyword">for</span><span class="token variable"><span class="token punctuation">((</span>i<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span> i<span class="token operator">&lt;=</span>$n<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">))</span></span>
-<span class="token keyword">do</span>
-   <span class="token assign-left variable">fact</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$((</span>fact <span class="token operator">*</span> i<span class="token variable">))</span></span>  
-<span class="token keyword">done</span>
-<span class="token builtin class-name">echo</span> <span class="token string">"Factorial of <span class="token variable">$n</span> is <span class="token variable">$fact</span>"</span>
-<span class="token builtin class-name">exit</span> <span class="token number">0</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>将带有空格的文本字符串传递给脚本时需要注意用引号，引号在进行传递时只表明数据的起止位置，不作为数据的一部分：</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
-
-<span class="token builtin class-name">echo</span> Hello <span class="token variable">$1</span>, glad to meet you.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>当参数超过9个时需要修改变量名，变量名两侧加上花括号。</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
-<span class="token comment"># handling lots of parameters</span>
-<span class="token comment">#</span>
-<span class="token assign-left variable">total</span><span class="token operator">=</span>$<span class="token punctuation">[</span> <span class="token variable">$&#123;10&#125;</span> * <span class="token variable">$&#123;11&#125;</span> <span class="token punctuation">]</span>
-<span class="token builtin class-name">echo</span> The tenth parameter is <span class="token variable">$&#123;10&#125;</span>
-<span class="token builtin class-name">echo</span> The eleventh parameter is <span class="token variable">$&#123;11&#125;</span>
-<span class="token builtin class-name">echo</span> The total is <span class="token variable">$total</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p> 运行脚本：</p>
- <pre class="line-numbers language-text" data-language="text"><code class="language-text">The tenth parameter is 10
-The eleventh parameter is 11
-The total is 110<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li>
-</ol>
-<h3 id="读取脚本名"><a href="#读取脚本名" class="headerlink" title="读取脚本名"></a>读取脚本名</h3><p>可以用<code>$0</code>参数获取shell在命令行启动的脚本名：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
-<span class="token comment"># Testing the $0 parameter</span>
-<span class="token comment">#</span>
-<span class="token builtin class-name">echo</span> The zero parameter is <span class="token builtin class-name">set</span> to: <span class="token variable">$0</span>
-<span class="token comment">#</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>当传给<code>$0</code>变量的实际字符串不仅仅是脚本名，而是完整的脚本路径时，变量<code>$0</code>就会使用整个路径：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@sh:~$ <span class="token function">bash</span> ~/temp.sh
-The zero parameter is <span class="token builtin class-name">set</span> to: /home/ubuntu/temp.sh<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p>basename命令会返回不包含路径的脚本名：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
-<span class="token comment"># Testing the $0 parameter</span>
-<span class="token comment">#</span>
-<span class="token assign-left variable">name</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span><span class="token function">basename</span> $0<span class="token variable">)</span></span>
-
-<span class="token builtin class-name">echo</span> The zero parameter is <span class="token builtin class-name">set</span> to: <span class="token variable">$name</span>
-<span class="token comment">#</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>基于脚本名实现不同功能的脚本：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
-<span class="token comment"># Testing a Multi-function script</span>
-<span class="token comment">#</span>
-<span class="token assign-left variable">name</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span><span class="token function">basename</span> $0<span class="token variable">)</span></span>
-<span class="token comment">#</span>
-<span class="token keyword">if</span> <span class="token punctuation">[</span> <span class="token variable">$name</span> <span class="token operator">=</span> <span class="token string">"addem"</span> <span class="token punctuation">]</span>
-<span class="token keyword">then</span>
-<span class="token assign-left variable">total</span><span class="token operator">=</span>$<span class="token punctuation">[</span> <span class="token variable">$1</span> + <span class="token variable">$2</span> <span class="token punctuation">]</span>
-<span class="token comment">#</span>
-<span class="token keyword">elif</span> <span class="token punctuation">[</span> <span class="token variable">$name</span> <span class="token operator">=</span> <span class="token string">"multem"</span> <span class="token punctuation">]</span>
-<span class="token keyword">then</span>
-<span class="token assign-left variable">total</span><span class="token operator">=</span>$<span class="token punctuation">[</span> <span class="token variable">$1</span> * <span class="token variable">$2</span> <span class="token punctuation">]</span>
-<span class="token keyword">fi</span>
-<span class="token comment">#</span>
-<span class="token builtin class-name">echo</span>
-<span class="token builtin class-name">echo</span> The calculated value is <span class="token variable">$total</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">cp</span> temp.sh addem
-$ <span class="token function">ln</span> <span class="token parameter variable">-s</span> temp.sh multem
-
-$ <span class="token function">bash</span> addem <span class="token number">2</span> <span class="token number">5</span>
-The calculated value is <span class="token number">7</span>
-
-$ <span class="token function">bash</span> multem <span class="token number">2</span> <span class="token number">5</span>
-The calculated value is <span class="token number">10</span>
-$
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="测试参数"><a href="#测试参数" class="headerlink" title="测试参数"></a>测试参数</h3><p>在脚本内使用参数时需要考虑到当用户输入错误参数时的情况：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
-
-<span class="token assign-left variable">n</span><span class="token operator">=</span><span class="token variable">$1</span>
-<span class="token assign-left variable">fact</span><span class="token operator">=</span><span class="token number">1</span>
-
-<span class="token keyword">if</span> <span class="token punctuation">[</span> <span class="token variable">$n</span> <span class="token parameter variable">-eq</span> <span class="token number">0</span> <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
-  <span class="token builtin class-name">echo</span> <span class="token string">"Factorial of 0 is 1"</span>
-  <span class="token builtin class-name">exit</span> <span class="token number">0</span>
-<span class="token keyword">elif</span> <span class="token punctuation">[</span> <span class="token variable">$n</span> <span class="token parameter variable">-lt</span> <span class="token number">0</span> <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
-  <span class="token builtin class-name">echo</span> <span class="token string">"Invalid input. Number must be a positive integer"</span>
-  <span class="token builtin class-name">exit</span> <span class="token number">1</span>
-<span class="token keyword">fi</span>
-
-<span class="token keyword">for</span> <span class="token variable"><span class="token punctuation">((</span>i<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span> i<span class="token operator">&lt;=</span>$n<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">))</span></span><span class="token punctuation">;</span> <span class="token keyword">do</span>
-  <span class="token assign-left variable">fact</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$((</span>fact <span class="token operator">*</span> i<span class="token variable">))</span></span>
-<span class="token keyword">done</span>
-
-<span class="token builtin class-name">echo</span> <span class="token string">"Factorial of <span class="token variable">$n</span> is <span class="token variable">$fact</span>"</span>
-<span class="token builtin class-name">exit</span> <span class="token number">0</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="特殊参数变量"><a href="#特殊参数变量" class="headerlink" title="特殊参数变量"></a>特殊参数变量</h2><h3 id="参数统计"><a href="#参数统计" class="headerlink" title="参数统计"></a>参数统计</h3><p>使用特殊变量可以帮助我们更方便的检查用户传递给脚本的参数。特殊变量<code>$#</code>含有脚本运行时携带的命令行参数的个数。可以在脚本中任何地方使用这个特殊变量，就跟普通变量一样。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
-<span class="token comment"># getting the number of parameters</span>
-<span class="token comment">#</span>
-<span class="token builtin class-name">echo</span> There were <span class="token variable">$#</span> parameters supplied.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>执行结果：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@sh:~$ <span class="token function">bash</span> temp.sh
-There were <span class="token number">0</span> parameters supplied.
-
-ubuntu@sh:~$ <span class="token function">bash</span> temp.sh <span class="token number">1</span> <span class="token number">2</span> <span class="token number">3</span> <span class="token number">4</span> <span class="token number">5</span>
-There were <span class="token number">5</span> parameters supplied.
-
-ubuntu@sh:~$ <span class="token function">bash</span> temp.sh <span class="token string">"Hello world"</span>
-There were <span class="token number">1</span> parameters supplied.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>在使用参数前测试参数总数：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
-
-<span class="token keyword">if</span> <span class="token punctuation">[</span> <span class="token variable">$#</span> <span class="token parameter variable">-ne</span> <span class="token number">1</span> <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
-  <span class="token builtin class-name">echo</span> <span class="token string">"Usage: <span class="token variable">$0</span> number"</span>
-  <span class="token builtin class-name">exit</span> <span class="token number">1</span>
-<span class="token keyword">fi</span>
-
-<span class="token assign-left variable">n</span><span class="token operator">=</span><span class="token variable">$1</span>
-<span class="token assign-left variable">fact</span><span class="token operator">=</span><span class="token number">1</span>
-
-<span class="token keyword">if</span> <span class="token punctuation">[</span> <span class="token variable">$n</span> <span class="token parameter variable">-eq</span> <span class="token number">0</span> <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
-  <span class="token builtin class-name">echo</span> <span class="token string">"Factorial of 0 is 1"</span>
-  <span class="token builtin class-name">exit</span> <span class="token number">0</span>
-<span class="token keyword">elif</span> <span class="token punctuation">[</span> <span class="token variable">$n</span> <span class="token parameter variable">-lt</span> <span class="token number">0</span> <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
-  <span class="token builtin class-name">echo</span> <span class="token string">"Invalid input. Number must be a positive integer"</span>
-  <span class="token builtin class-name">exit</span> <span class="token number">1</span>
-<span class="token keyword">fi</span>
-
-<span class="token keyword">for</span> <span class="token variable"><span class="token punctuation">((</span>i<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span> i<span class="token operator">&lt;=</span>$n<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">))</span></span><span class="token punctuation">;</span> <span class="token keyword">do</span>
-  <span class="token assign-left variable">fact</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$((</span>fact <span class="token operator">*</span> i<span class="token variable">))</span></span>
-<span class="token keyword">done</span>
-
-<span class="token builtin class-name">echo</span> <span class="token string">"Factorial of <span class="token variable">$n</span> is <span class="token variable">$fact</span>"</span>
-<span class="token builtin class-name">exit</span> <span class="token number">0</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="抓取所有的数据"><a href="#抓取所有的数据" class="headerlink" title="抓取所有的数据"></a>抓取所有的数据</h3><p><code>$*</code>变量会将命令行上提供的所有参数当作一个单词保存。这个单词包含了命令行中出现的每<br>一个参数值。基本上<code>$*</code>变量会将这些参数视为一个整体，而不是多个个体。<br>另一方面，<code>$@</code>变量会将命令行上提供的所有参数当作同一字符串中的多个独立的单词。这样<br>你就能够遍历所有的参数值，得到每个参数。这通常通过<code>for</code>命令完成。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
-<span class="token comment"># testing $* and $@</span>
-<span class="token comment">#j,r:</span>
-<span class="token builtin class-name">echo</span>
-<span class="token assign-left variable">count</span><span class="token operator">=</span><span class="token number">1</span>
-<span class="token comment">#</span>
-<span class="token keyword">for</span> <span class="token for-or-select variable">param</span> <span class="token keyword">in</span> <span class="token string">"<span class="token variable">$*</span>"</span>
-<span class="token keyword">do</span>
-<span class="token builtin class-name">echo</span> <span class="token string">"\<span class="token variable">$*</span> Parameter #<span class="token variable">$count</span> = <span class="token variable">$param</span>"</span>
-<span class="token assign-left variable">count</span><span class="token operator">=</span>$<span class="token punctuation">[</span> <span class="token variable">$count</span> + <span class="token number">1</span> <span class="token punctuation">]</span>
-<span class="token keyword">done</span>
-<span class="token comment">#</span>
-<span class="token builtin class-name">echo</span>
-<span class="token assign-left variable">count</span><span class="token operator">=</span><span class="token number">1</span>
-<span class="token comment">#</span>
-<span class="token keyword">for</span> <span class="token for-or-select variable">param</span> <span class="token keyword">in</span> <span class="token string">"<span class="token variable">$@</span>"</span>
-<span class="token keyword">do</span>
-<span class="token builtin class-name">echo</span> <span class="token string">"\<span class="token variable">$@</span> Parameter #<span class="token variable">$count</span> = <span class="token variable">$param</span>"</span>
-<span class="token assign-left variable">count</span><span class="token operator">=</span>$<span class="token punctuation">[</span> <span class="token variable">$count</span> + <span class="token number">1</span> <span class="token punctuation">]</span>
-<span class="token keyword">done</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="移动变量"><a href="#移动变量" class="headerlink" title="移动变量"></a>移动变量</h2><p>bash shell的<code>shift</code>命令能够用来操作命令行参数。在使用<code>shift</code>命令时，默认情况下它会将每个参数变量向左移动一个位置。所以，变量<code>$3</code>的值会移到$2中，变量<code>$2</code>的值会移到<code>$1</code>中，而变量<code>$1</code>的值则会被删除（注意，变量<code>$0</code>的值，也就是程序名，不会改变）。</p>
-<p>这是遍历命令行参数的另一个好方法，尤其是在你不知道到底有多少参数时。你可以只操作第一个参数，移动参数，然后继续操作第一个参数。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
-
-<span class="token keyword">while</span> <span class="token punctuation">[</span> <span class="token parameter variable">-n</span> <span class="token string">"<span class="token variable">$1</span>"</span> <span class="token punctuation">]</span>
-<span class="token keyword">do</span>
-                <span class="token assign-left variable">sum</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$((</span>$sum<span class="token operator">+</span>$<span class="token number">1</span><span class="token variable">))</span></span>
-                <span class="token builtin class-name">shift</span>
-<span class="token keyword">done</span>
-
-<span class="token builtin class-name">echo</span> <span class="token assign-left variable">sum</span><span class="token operator">=</span><span class="token variable">$sum</span>
-<span class="token builtin class-name">exit</span> <span class="token number">0</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@sh:~$ <span class="token function">bash</span> temp.sh <span class="token number">1</span> <span class="token number">2</span> <span class="token number">3</span>
-<span class="token assign-left variable">sum</span><span class="token operator">=</span><span class="token number">6</span>
-
-ubuntu@sh:~$ <span class="token function">bash</span> temp.sh <span class="token number">1</span> <span class="token number">2</span> <span class="token number">3</span> <span class="token number">4</span> <span class="token number">5</span> <span class="token number">6</span>
-<span class="token assign-left variable">sum</span><span class="token operator">=</span><span class="token number">21</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="处理选项"><a href="#处理选项" class="headerlink" title="处理选项"></a>处理选项</h2><p>选项是跟在单破折线后面的单个字母，它能改变命令的行为。</p>
-<h3 id="处理简单选项"><a href="#处理简单选项" class="headerlink" title="处理简单选项"></a>处理简单选项</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
-
-<span class="token builtin class-name">echo</span>
-<span class="token keyword">while</span> <span class="token punctuation">[</span> <span class="token parameter variable">-n</span> <span class="token string">"<span class="token variable">$1</span>"</span> <span class="token punctuation">]</span>
-<span class="token keyword">do</span>
-         <span class="token keyword">case</span> <span class="token string">"<span class="token variable">$1</span>"</span> <span class="token keyword">in</span>
-                                -a<span class="token punctuation">)</span> <span class="token builtin class-name">echo</span> <span class="token string">"Found the -a option"</span> <span class="token punctuation">;</span><span class="token punctuation">;</span>
-                                -b<span class="token punctuation">)</span> <span class="token builtin class-name">echo</span> <span class="token string">"Found the -b option"</span> <span class="token punctuation">;</span><span class="token punctuation">;</span>
-                                -c<span class="token punctuation">)</span> <span class="token builtin class-name">echo</span> <span class="token string">"Found the -c option"</span> <span class="token punctuation">;</span><span class="token punctuation">;</span>
-                                *<span class="token punctuation">)</span> <span class="token builtin class-name">echo</span> <span class="token string">"<span class="token variable">$1</span> is not an option"</span> <span class="token punctuation">;</span><span class="token punctuation">;</span>
-         <span class="token keyword">esac</span>
-         <span class="token builtin class-name">shift</span>
-<span class="token keyword">done</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="分离参数和选项、处理带值选项"><a href="#分离参数和选项、处理带值选项" class="headerlink" title="分离参数和选项、处理带值选项"></a>分离参数和选项、处理带值选项</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
-<span class="token comment"># extracting options and parameters</span>
-<span class="token builtin class-name">echo</span>
-<span class="token keyword">while</span> <span class="token punctuation">[</span> <span class="token parameter variable">-n</span> <span class="token string">"<span class="token variable">$1</span>"</span> <span class="token punctuation">]</span>
-<span class="token keyword">do</span>
-                <span class="token keyword">case</span> <span class="token string">"<span class="token variable">$1</span>"</span> <span class="token keyword">in</span>
-                                -a<span class="token punctuation">)</span> <span class="token builtin class-name">echo</span> <span class="token string">"Found the -a option"</span> <span class="token punctuation">;</span><span class="token punctuation">;</span>
-                                -b<span class="token punctuation">)</span> <span class="token builtin class-name">echo</span> <span class="token string">"Found the -b option"</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
-                                -c<span class="token punctuation">)</span> <span class="token builtin class-name">echo</span> <span class="token string">"Found the -c option"</span> 
-                   <span class="token assign-left variable">coption</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span>$2 * $3<span class="token variable">)</span></span>
-                   <span class="token builtin class-name">echo</span> <span class="token variable">$coption</span>
-                   <span class="token builtin class-name">shift</span>
-                   <span class="token builtin class-name">shift</span>
-                   <span class="token punctuation">;</span><span class="token punctuation">;</span>
-                                --<span class="token punctuation">)</span> <span class="token builtin class-name">shift</span>
-                                                <span class="token builtin class-name">break</span> <span class="token punctuation">;</span><span class="token punctuation">;</span>
-                                *<span class="token punctuation">)</span> <span class="token builtin class-name">echo</span> <span class="token string">"<span class="token variable">$1</span> is not an option"</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
-                <span class="token keyword">esac</span>
-                <span class="token builtin class-name">shift</span>
-<span class="token keyword">done</span>
-<span class="token comment">#</span>
-<span class="token assign-left variable">count</span><span class="token operator">=</span><span class="token number">1</span>
-<span class="token keyword">for</span> <span class="token for-or-select variable">param</span> <span class="token keyword">in</span> <span class="token variable">$@</span>
-<span class="token keyword">do</span>
-                <span class="token builtin class-name">echo</span> <span class="token string">"Parameter #<span class="token variable">$count</span>: <span class="token variable">$param</span>"</span>
-                <span class="token assign-left variable">count</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$((</span> $count <span class="token operator">+</span> <span class="token number">1</span> <span class="token variable">))</span></span>
-<span class="token keyword">done</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="利用选项和参数实现阶乘和求和的计算工具"><a href="#利用选项和参数实现阶乘和求和的计算工具" class="headerlink" title="利用选项和参数实现阶乘和求和的计算工具"></a>利用选项和参数实现阶乘和求和的计算工具</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
-
-<span class="token keyword">if</span> <span class="token punctuation">[</span> <span class="token variable">$#</span> <span class="token parameter variable">-eq</span> <span class="token number">0</span> <span class="token punctuation">]</span> <span class="token operator">||</span> <span class="token punctuation">[</span> <span class="token variable">$#</span> <span class="token parameter variable">-eq</span> <span class="token number">1</span> <span class="token punctuation">]</span>
-<span class="token keyword">then</span>
-                <span class="token builtin class-name">echo</span>
-                <span class="token builtin class-name">echo</span> <span class="token string">"sum and factorial tool"</span>
-                <span class="token builtin class-name">echo</span> <span class="token string">"Usage:"</span>
-                <span class="token builtin class-name">echo</span> <span class="token string">"          -a number ..."</span>
-                <span class="token builtin class-name">echo</span> <span class="token string">"          -f number"</span>
-                <span class="token builtin class-name">exit</span> <span class="token number">1</span>
-<span class="token keyword">fi</span>
-
-<span class="token keyword">case</span> <span class="token string">"<span class="token variable">$1</span>"</span> <span class="token keyword">in</span>
-                -a<span class="token punctuation">)</span>
-                                <span class="token keyword">while</span> <span class="token punctuation">[</span> <span class="token parameter variable">-n</span> <span class="token string">"<span class="token variable">$2</span>"</span> <span class="token punctuation">]</span>
-                                <span class="token keyword">do</span>
-                                                <span class="token assign-left variable">sum</span><span class="token operator">=</span>$<span class="token punctuation">[</span><span class="token variable">$sum</span> + <span class="token variable">$2</span><span class="token punctuation">]</span>
-                                                <span class="token builtin class-name">shift</span>
-                                <span class="token keyword">done</span>
-                                <span class="token builtin class-name">echo</span> <span class="token string">"sum=<span class="token variable">$sum</span>"</span>
-                                <span class="token builtin class-name">exit</span> <span class="token number">0</span>
-<span class="token comment"># shift</span>
-<span class="token comment"># for i in $@</span>
-<span class="token comment"># do</span>
- <span class="token comment"># sum=$((sum + i))</span>
-<span class="token comment"># done</span>
-<span class="token comment"># exit 0</span>
-                                <span class="token punctuation">;</span><span class="token punctuation">;</span>
-                -f<span class="token punctuation">)</span>
-                                <span class="token keyword">if</span> <span class="token punctuation">[</span> <span class="token variable">$2</span> <span class="token parameter variable">-eq</span> <span class="token number">0</span> <span class="token punctuation">]</span>
-                                <span class="token keyword">then</span>
-                                                <span class="token builtin class-name">echo</span> <span class="token string">"fact=1"</span>
-                                                <span class="token builtin class-name">exit</span> <span class="token number">0</span>
-                                <span class="token keyword">fi</span>
-                                <span class="token assign-left variable">fact</span><span class="token operator">=</span><span class="token number">1</span>
-                                <span class="token keyword">for</span><span class="token variable"><span class="token punctuation">((</span>i<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span> i<span class="token operator">&lt;=</span>$<span class="token number">2</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">))</span></span>
-                                <span class="token keyword">do</span>
-                                                <span class="token assign-left variable">fact</span><span class="token operator">=</span>$<span class="token punctuation">[</span><span class="token variable">$fact</span> * <span class="token variable">$i</span><span class="token punctuation">]</span>
-                                <span class="token keyword">done</span>
-                                <span class="token builtin class-name">echo</span> <span class="token assign-left variable">fact</span><span class="token operator">=</span><span class="token variable">$fact</span>
-                                <span class="token builtin class-name">exit</span> <span class="token number">0</span>
-                                <span class="token punctuation">;</span><span class="token punctuation">;</span>
-                -h<span class="token punctuation">)</span>
-                                <span class="token punctuation">;</span><span class="token punctuation">;</span>
-                *<span class="token punctuation">)</span>
-                                <span class="token builtin class-name">echo</span>
-                                <span class="token builtin class-name">echo</span> <span class="token string">"sum and factorial tool"</span>
-                                <span class="token builtin class-name">echo</span> <span class="token string">"Usage:"</span>
-                                <span class="token builtin class-name">echo</span> <span class="token string">"          -a number ..."</span>
-                                <span class="token builtin class-name">echo</span> <span class="token string">"          -f number"</span>
-                                <span class="token punctuation">;</span><span class="token punctuation">;</span>
-<span class="token keyword">esac</span>
-<span class="token builtin class-name">exit</span> <span class="token number">0</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="标准化选项"><a href="#标准化选项" class="headerlink" title="标准化选项"></a>标准化选项</h2><p><img src="https://vault.taojie.fun:28089/i/2023/09/02/note5.%E5%A4%84%E7%90%86%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5-2023-06-16-21-20-42.png" alt="5.处理用户输入-2023-06-16-21-20-42"></p>
 
       
     </div>
