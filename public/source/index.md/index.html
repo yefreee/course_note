@@ -118,7 +118,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-count">26</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -145,7 +145,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/11/08/private_clouds/9.OpenStack%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/11/15/private_clouds/10.OpenStack%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86-Swift/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -163,7 +163,282 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/11/08/private_clouds/9.OpenStack%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86/" class="post-title-link" itemprop="url">OpenStack存储管理</a>
+          <a href="/2023/11/15/private_clouds/10.OpenStack%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86-Swift/" class="post-title-link" itemprop="url">OpenStack存储管理-Swift</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-15 16:21:22" itemprop="dateCreated datePublished" datetime="2023-11-15T16:21:22+08:00">2023-11-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-11-21 19:51:11" itemprop="dateModified" datetime="2023-11-21T19:51:11+08:00">2023-11-21</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="作业与实验环境"><a href="#作业与实验环境" class="headerlink" title="作业与实验环境"></a>作业与实验环境</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://wxstc.fanya.chaoxing.com/portal">超星网址</a><br>虚拟机<code>openstack-allinone</code>，账户<code>root</code>，密码<code>000000</code></p>
+</blockquote>
+<h2 id="Swift相关概念"><a href="#Swift相关概念" class="headerlink" title="Swift相关概念"></a>Swift相关概念</h2><p>Swift是一个分布式对象存储系统，属于OpenStack的一个核心组件之一。作为对象存储它可以为大规模的数据存储提供高可用性、可扩展性和数据安全性。它允许用户将大量的数据存储在云上，并且可以随时访问、检索和管理这些数据。在openstack中，Swift也可以作为Glance的后端存储，负责存储镜像文件。</p>
+<h3 id="块存储、对象存储、文件存储"><a href="#块存储、对象存储、文件存储" class="headerlink" title="块存储、对象存储、文件存储"></a>块存储、对象存储、文件存储</h3><p>这三者的本质差别是使用数据的“用户”不同：块存储的用户是可以读写块设备的软件系统，例如传统的文件系统、数据库；文件存储的用户是自然人；对象存储的用户则是其它计算机软件。</p>
+<h3 id="Swift特点"><a href="#Swift特点" class="headerlink" title="Swift特点"></a>Swift特点</h3><ol>
+<li><p>高可用性：Swift采用了多副本、冗余和分布式架构，以确保数据的高可用性和可靠性。当一个存储节点发生故障时，系统可以自动地将数据复制到其他节点上，以保证数据的完整性和可用性。</p>
+</li>
+<li><p>可扩展性：Swift可以轻松地扩展到数千台服务器，支持PB级别的数据存储，同时也支持水平和垂直扩展，以应对日益增长的数据需求。</p>
+</li>
+<li><p>强安全性：Swift提供了多种安全机制，包括认证、授权、访问控制、加密等，以保护用户的数据免受恶意攻击和非法访问。</p>
+</li>
+<li><p>高性能：Swift采用了分布式存储和负载均衡技术，以确保数据的快速访问和高效传输。同时，Swift还支持多种数据访问协议，如RESTful API、Swift API、S3 API等，以满足不同用户的需求。</p>
+</li>
+<li><p>易用性：Swift提供了简单、易用的API和Web界面。</p>
+</li>
+</ol>
+<h3 id="Swift架构"><a href="#Swift架构" class="headerlink" title="Swift架构"></a>Swift架构</h3><img src="https://vault.taojie.fun:28089/i/2023/11/18/2023-11-18-1700271777.png" alt="1700271777569.png" title="1700271777569.png" />
+
+<h4 id="Swift对象的层次模型"><a href="#Swift对象的层次模型" class="headerlink" title="Swift对象的层次模型"></a>Swift对象的层次模型</h4><img src="https://vault.taojie.fun:28089/i/2023/11/16/2023-11-16-1700110449.png" alt="1700110449415.png" title="1700110449415.png" />
+
+<ol>
+<li><p>Swift 采用层次数据模型，共设三层逻辑结构：Account&#x2F;Container&#x2F;Object（即账户&#x2F;容器&#x2F;对象），每层节点数均没有限制，可以任意扩展。</p>
+</li>
+<li><p>账户和个人账户不是一个概念，可理解为租户，用来做顶层的隔离机制，可以被多个个人账户所共同使用。</p>
+</li>
+<li><p>容器代表封装一组对象，类似文件夹或目录（容器不能像文件夹一样嵌套）；叶子节点代表对象（对象由元数据和内容两部分组成）。</p>
+</li>
+</ol>
+<img src="https://vault.taojie.fun:28089/i/2023/11/18/2023-11-18-1700272354.png" alt="1700272354216.png" title="1700272354216.png" />
+
+<h4 id="数据一致性"><a href="#数据一致性" class="headerlink" title="数据一致性"></a>数据一致性</h4><ol>
+<li><p>Replicator(复制器) – 复制的目的是在网络中断或硬盘故障等临时错误情况下保持系统状态一致。复制过程将本地数据与每个远程副本进行比较，以确保它们都包含最新版本。</p>
+</li>
+<li><p>Updater(更新器) – 有时，容器或账户数据无法立即更新。这通常发生在故障情况或高负载期间。如果更新失败，更新会在本地文件系统上排队，更新器将处理失败的更新。</p>
+</li>
+<li><p>Auditor(审计器) – 审计器会抓取本地服务器，检查对象、容器和账户的完整性。如果发现损坏，文件将被隔离，复制器将从另一个副本替换坏文件。</p>
+</li>
+</ol>
+<h2 id="Swift实验"><a href="#Swift实验" class="headerlink" title="Swift实验"></a>Swift实验</h2><p>查看系统中正在运行的swift相关的服务。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># systemctl -l |grep "swift"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<img src="https://vault.taojie.fun:28089/i/2023/11/18/2023-11-18-1700273105.png" alt="1700273105539.png" title="1700273105539.png" />
+
+<h3 id="Swift命令行使用"><a href="#Swift命令行使用" class="headerlink" title="Swift命令行使用"></a>Swift命令行使用</h3><ol>
+<li><p>swift命令行工具的名称是<code>swift</code>，可通过<code>swift post</code>命令创建容器。</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># swift post test_container</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>使用<code>swift list</code>命令插件当前用户下所创建的容器。</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># swift list</span>
+test_container<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+</li>
+<li><p>创建一个文件并把它上传到容器<code>test_container</code>中。</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># touch test.txt</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># swift upload test_container test.txt</span>
+test.txt<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>同样使用<code>swift list</code> + <code>容器名</code>可以列出指定容器内所包含的对象。</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># swift list test_container</span>
+test.txt<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+</li>
+<li><p>使用<code>swift download</code>命令将对象从存储中下载到本地。</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># swift download test_container test.txt</span>
+test.txt <span class="token punctuation">[</span>auth <span class="token number">0</span>.694s, headers <span class="token number">1</span>.014s, total <span class="token number">1</span>.015s, <span class="token number">0.000</span> MB/s<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+</li>
+<li><p>查看当前存储情况。</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># swift stat</span>
+                        Account: AUTH_f9ff39ba9daa4e5a8fee1fc50e2d2b34
+                    Containers: <span class="token number">1</span>
+                        Objects: <span class="token number">1</span>
+                        Bytes: <span class="token number">0</span>
+Containers <span class="token keyword">in</span> policy <span class="token string">"policy-0"</span><span class="token builtin class-name">:</span> <span class="token number">1</span>
+Objects <span class="token keyword">in</span> policy <span class="token string">"policy-0"</span><span class="token builtin class-name">:</span> <span class="token number">1</span>
+    Bytes <span class="token keyword">in</span> policy <span class="token string">"policy-0"</span><span class="token builtin class-name">:</span> <span class="token number">0</span>
+    X-Account-Project-Domain-Id: 9321f21a94ef4f85993e92a228892418
+                    X-Timestamp: <span class="token number">1700303560.27498</span>
+                    X-Trans-Id: txa1c625c0e1f845b883322-006558a140
+                Content-Type: text/plain<span class="token punctuation">;</span> <span class="token assign-left variable">charset</span><span class="token operator">=</span>utf-8
+                Accept-Ranges: bytes<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>作业1：使用命令查看当前的存储情况后截图。</p>
+</blockquote>
+</li>
+<li><p>使用<code>swift delete</code>删除容器中的对象。</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># swift delete test_container test.txt</span>
+test.txt
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># swift list test_container</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment">#</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ol>
+<h3 id="Swift-Api使用"><a href="#Swift-Api使用" class="headerlink" title="Swift Api使用"></a>Swift Api使用</h3><ol>
+<li><p>使用<code>swift auth</code>获取swift服务的地址和token(令牌)。</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># swift auth</span>
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">OS_STORAGE_URL</span><span class="token operator">=</span>http://controller:8080/v1/AUTH_f9ff39ba9daa4e5a8fee1fc50e2d2b34
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">OS_AUTH_TOKEN</span><span class="token operator">=</span>gAAAAABlWKPJhp_TU9OxT6j7jzESq5oyxTE25nk_0Idy0BfaNv75-rMwXtUEfRNqBES5IJ0dV3k-BjejVSta5rpEctCWpeyxTYSmqwRYTB6En1yr678mNgQzwJUJKY2CFKnS28K1UX_lOrI1T0zzgeTtYucrV3sYPX9cR9vfeIsnZkcnEAaxFbYwLKgltlZ8kOeqIikD-_Ka<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>执行上述命令将url和获取到的token导出为环境变量。</p>
+</li>
+<li><p>使用<code>curl</code>工具通过<code>GET</code>请求方式查看当前的容器列表。</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># curl -X GET -H "X-Auth-Token: $OS_AUTH_TOKEN" $OS_STORAGE_URL</span>
+test_container<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+</li>
+<li><p>通过<code>PUT</code>请求，上传文件到对象存储并命名为<code>test.txt</code>，然后查看容器内的对象列表。</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># curl -X PUT -H "X-Auth-Token: $OS_AUTH_TOKEN" --data-binary "/root/test.txt" $OS_STORAGE_URL/test_container/test.txt</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment">#</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment">#</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># curl -X GET -H "X-Auth-Token: $OS_AUTH_TOKEN" $OS_STORAGE_URL/test_container</span>
+test.txt<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ol>
+<blockquote>
+<p>作业2：通过api请求查看到容器内的对象列表后截图上传。</p>
+</blockquote>
+<h3 id="Horizon界面使用对象存储"><a href="#Horizon界面使用对象存储" class="headerlink" title="Horizon界面使用对象存储"></a>Horizon界面使用对象存储</h3><p>在项目-&gt;对象存储菜单内可以上传、删除文件，也可以对容器进行管理。</p>
+<img src="https://vault.taojie.fun:28089/i/2023/11/19/2023-11-19-1700395312.png" alt="1700395313493.png" title="1700395313493.png" />
+
+<h3 id="配置Swift作为Glance后端存储"><a href="#配置Swift作为Glance后端存储" class="headerlink" title="配置Swift作为Glance后端存储"></a>配置Swift作为Glance后端存储</h3><p>Glance的后端存储默认为本地e文件系统，这个实验是将Glance的后端存储配置为Swift对象存储，上传到OpenStack平台的镜像文件会被保存在对象存储中。</p>
+<ol>
+<li><p>修改Glance的配置文件<code>/etc/glance/glance-api.conf</code>。</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>glance_store<span class="token punctuation">]</span>
+<span class="token comment"># 添加swift存储</span>
+stores <span class="token operator">=</span> file,http,swift
+<span class="token comment"># 默认使用swift存储</span>
+default_store <span class="token operator">=</span> swift<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 设置多项目存储以及项目授权</span>
+swift_store_multi_tenant <span class="token operator">=</span> <span class="token boolean">true</span>
+swift_store_admin_tenants <span class="token operator">=</span> admin<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>重启Glance相关服务。</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># systemctl restart openstack-glance*</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>登录Horizon控制台上传镜像并验证对象存储内的镜像文件。</p>
+ <img src="https://vault.taojie.fun:28089/i/2023/11/20/2023-11-20-1700464992.png" alt="1700464991941.png" title="1700464991941.png" />
+
+ <img src="https://vault.taojie.fun:28089/i/2023/11/20/2023-11-20-1700465024.png" alt="1700465024334.png" title="1700465024334.png" /></li>
+</ol>
+<blockquote>
+<p>作业3：上传镜像文件后能在容器菜单内看到上传的镜像后截图。</p>
+</blockquote>
+<h3 id="Swift-ACL-访问控制"><a href="#Swift-ACL-访问控制" class="headerlink" title="Swift ACL(访问控制)"></a>Swift ACL(访问控制)</h3><p>通常，要创建、读取和修改容器和对象，必须是帐户的所有者。但是，所有者可以使用访问控制列表 (ACL) 向其他用户授予访问权限。</p>
+<p>ACL 有两种类型：</p>
+<ul>
+<li><p>Container ACLs(容器 ACL)：这些是在容器上指定的，并且仅适用于该容器和容器中的对象。</p>
+</li>
+<li><p>Account ACLs(帐户 ACL)：这些是在帐户级别指定的，并适用于帐户中的所有容器和对象。</p>
+</li>
+</ul>
+<p>容器 ACL 存储在 <code>X-Container-Write</code> 和 <code>X-Container-Read</code> 元数据中。</p>
+<ul>
+<li><p>X-Container-Write 授予对容器内的对象执行 PUT、POST 和 DELETE 操作的能力。</p>
+</li>
+<li><p>X-Container-Read 授予对容器内的对象执行 GET 和 HEAD 操作的能力。</p>
+</li>
+</ul>
+<p>容器 ACL 使用”V1” ACL 语法，它是逗号分隔的元素字符串，如下例所示：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">.r:*,.rlistings,7ec59e87c6584c348b563254aae4c221:*<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>常见的ACL元素：</p>
+<ul>
+<li><p>.r:*：任何用户都可以访问对象。请求中不需要令牌。</p>
+</li>
+<li><p>.r:<referrer>：引用者被授予对对象的访问权限。 Referrer 由请求中的 Referer 请求头标识。不需要令牌。</p>
+</li>
+<li><p>.rlistings：任何用户都可以对容器执行 HEAD 或 GET 操作，前提是该用户还具有对象的读取访问权限（例如，还具有 .r:* 或 .r:<referrer>。不需要令牌。</p>
+</li>
+</ul>
+<ol>
+<li><p>容器ACL示例1：</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 以下内容允许任何人列出 www 容器中的对象并下载对象。用户不需要在请求中包含令牌。</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># swift post test_container --read-acl ".r:*,.rlistings"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 查看容器的元数据信息</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># swift stat test_container</span>
+        Account: AUTH_f9ff39ba9daa4e5a8fee1fc50e2d2b34
+    Container: test_container
+        Objects: <span class="token number">1</span>
+        Bytes: <span class="token number">16338944</span>
+        Read ACL: .r:*,.rlistings
+    Write ACL: f9ff39ba9daa4e5a8fee1fc50e2d2b34:*
+        Sync To:
+        Sync Key:
+Accept-Ranges: bytes
+    X-Trans-Id: txe1e7e2f4469447688ca85-00655cd5e2
+X-Storage-Policy: Policy-0
+    X-Timestamp: <span class="token number">1700517288.39236</span>
+    Content-Type: text/plain<span class="token punctuation">;</span> <span class="token assign-left variable">charset</span><span class="token operator">=</span>utf-8<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p> 退出当前的admin用户，使用demo用户登录查看容器<code>test_container</code>的信息。</p>
+<blockquote>
+<p>作业4：使用demo用户能够看到容器信息后截图。</p>
+</blockquote>
+</li>
+<li><p>容器ACL示例2：</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 以下内容允许 77b8f82565f14814bece56e50c4c240f 项目的任何成员上传和下载对象或列出 www 容器的内容。请求中必须包含范围为 77b8f82565f14814bece56e50c4c240f 项目的令牌：</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># swift post test_container --read-acl "77b8f82565f14814bece56e50c4c240f:*" \</span>
+            --write-acl <span class="token string">"77b8f82565f14814bece56e50c4c240f:*"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p> 此时用户demo无法查看到容器信息，因为demo不属于上述项目内。使用demo用户在身份管理菜单内添加demo到admin项目后能够再次看到容器信息。</p>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/11/08/private_clouds/9.OpenStack%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86-Cinder/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/11/08/private_clouds/9.OpenStack%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86-Cinder/" class="post-title-link" itemprop="url">OpenStack存储管理</a>
         </h2>
 
         <div class="post-meta-container">
@@ -181,7 +456,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-11-13 12:31:34" itemprop="dateModified" datetime="2023-11-13T12:31:34+08:00">2023-11-13</time>
+      <time title="修改时间：2023-11-18 10:02:36" itemprop="dateModified" datetime="2023-11-18T10:02:36+08:00">2023-11-18</time>
     </span>
 
   
@@ -319,7 +594,7 @@ Block device           <span class="token number">253</span>:4<span aria-hidden=
 </blockquote>
 </li>
 <li><p>设置LVM过滤。</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 1.修改lvm.conf不过滤/dev/sdc</span>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 1.修改lvm.conf第130行不过滤/dev/sdc</span>
 <span class="token punctuation">[</span>root@compute ~<span class="token punctuation">]</span><span class="token comment"># vi /etc/lvm/lvm.conf</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p> 将原文：</p>
@@ -375,7 +650,7 @@ VG UUID               254qGq-XDu8-Tq4S-xaBI-cInk-op3B-YmtOqw<span aria-hidden="t
 </blockquote>
 </li>
 </ol>
-<h2 id="Cinder块存储服务"><a href="#Cinder块存储服务" class="headerlink" title="Cinder块存储服务"></a>Cinder块存储服务</h2><p>Cinder 是 OpenStack 中的块存储服务组件，用于提供持久化的块级存储。它允许用户创建、管理和分配块存储卷，并将这些卷连接到虚拟机实例，以供其使用。</p>
+<h2 id="Cinder块存储服务"><a href="#Cinder块存储服务" class="headerlink" title="Cinder块存储服务"></a>Cinder块存储服务</h2><p>Cinder 是 OpenStack 中的块存储服务组件，用于提供持久化的块级存储。Cinder向用户提供基于数据块的存储设备访问服务，以卷的形式提供给虚拟机实例挂载，为实例提供额外的存储空间。用户可以自主创建、管理和分配块存储卷，并将这些卷连接到虚拟机实例，以供其使用。</p>
 <ol>
 <li><p>列出卷的信息、查看卷的详细信息。</p>
  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack volume list          # 1.查看当前的卷信息</span>
@@ -468,7 +743,7 @@ VG UUID               254qGq-XDu8-Tq4S-xaBI-cInk-op3B-YmtOqw<span aria-hidden="t
 <li><p>创建实例类型、网络、实例。</p>
  <img src="https://vault.taojie.fun:28089/i/2023/09/15/2023-09-15-1694785336.png"/>
 
- <img src="https://vault.taojie.fun:28089/i/2023/09/13/2023-09-13-1694604373.png"/>
+ <img src="https://vault.taojie.fun:28089/i/2023/11/06/2023-11-06-1699249390.png"/>
 
  <img src="https://vault.taojie.fun:28089/i/2023/11/06/2023-11-06-1699249465.png"/>
 
@@ -494,7 +769,7 @@ openstack server remove volume  <span class="token operator">&lt;</span>实例<s
 <span class="token operator">|</span> 063025f5-172e-412f-9664-f111cc916ac0 <span class="token operator">|</span> test_volume  <span class="token operator">|</span> in-use    <span class="token operator">|</span>   <span class="token number">10</span> <span class="token operator">|</span> Attached to <span class="token builtin class-name">test</span> on /dev/vdb  <span class="token operator">|</span>
 +--------------------------------------+--------------+-----------+------+-------------------------------+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p> 进入实例的控制台查看实例中的块设备信息，包含10G的块设备&#x2F;dev&#x2F;sdb。</p>
+<p> 进入实例的控制台查看实例中的块设备信息，包含10G的块设备&#x2F;dev&#x2F;vdb。</p>
  <img src="https://vault.taojie.fun:28089/i/2023/11/08/2023-11-08-1699425791.png" alt="1699425791258.png" title="1699425791258.png" />
 
 <p> 使用Horizon控制台连接和分离卷。</p>
@@ -3832,369 +4107,6 @@ repolist: <span class="token number">17,906</span><span aria-hidden="true" class
 <blockquote>
 <p>作业3-登录OpenStack平台后截图上传</p>
 </blockquote>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/06/20/c_program/4.%E7%AC%AC%E5%9B%9B%E5%91%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | ">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/06/20/c_program/4.%E7%AC%AC%E5%9B%9B%E5%91%A8/" class="post-title-link" itemprop="url">第四周</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-06-20 13:15:40" itemprop="dateCreated datePublished" datetime="2023-06-20T13:15:40+08:00">2023-06-20</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-09-03 13:17:06" itemprop="dateModified" datetime="2023-09-03T13:17:06+08:00">2023-09-03</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="一维数组"><a href="#一维数组" class="headerlink" title="一维数组"></a>一维数组</h2><h3 id="一维数组的定义和初始化"><a href="#一维数组的定义和初始化" class="headerlink" title="一维数组的定义和初始化"></a>一维数组的定义和初始化</h3><p>数组属于一种构造数据类型，由一定数量的相同类型的元素构成。</p>
-<ul>
-<li><p>一维数组定义的语法格式：</p>
-  <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token operator">&lt;</span>数据类型<span class="token operator">></span> <span class="token operator">&lt;</span>数组名称<span class="token operator">></span><span class="token punctuation">[</span><span class="token operator">&lt;</span>大小<span class="token operator">></span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token operator">&lt;</span>元素<span class="token number">1</span><span class="token operator">></span><span class="token punctuation">,</span> <span class="token operator">&lt;</span>元素<span class="token number">2</span><span class="token operator">></span><span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">,</span> <span class="token operator">&lt;</span>元素N<span class="token operator">></span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>  其中：</p>
-<ol>
-<li>&lt;数据类型&gt; 指定数组中元素的数据类型，可以是基本类型（如 int、float、char 等）或自定义类型。  </li>
-<li>&lt;数组名称&gt; 是数组的标识符，用于在程序中引用该数组。  </li>
-<li>&lt;大小&gt; 指定数组的大小，即数组中元素的个数。  </li>
-<li>{&lt;元素1&gt;, &lt;元素2&gt;, …, &lt;元素N&gt;} 是可选的初始化列表，用于初始化数组中的元素。</li>
-</ol>
-<p>  数组定义举例：</p>
-  <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">// 定义一个包含 5个整数的数组</span>
-<span class="token keyword">int</span> numbers<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-<span class="token comment">// 定义一个包含 4个字符的数组</span>
-<span class="token keyword">char</span> characters<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token char">'A'</span><span class="token punctuation">,</span> <span class="token char">'B'</span><span class="token punctuation">,</span> <span class="token char">'C'</span><span class="token punctuation">,</span> <span class="token char">'D'</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-<span class="token comment">// 定义一个包含 6个浮点数的数组</span>
-<span class="token keyword">float</span> values<span class="token punctuation">[</span><span class="token number">6</span><span class="token punctuation">]</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>一维数组的初始化</p>
-<p>  创建test.c文件，编辑以下内容，可以通过IDE的调试功能观察数组的初始化:</p>
-  <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
-
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-    <span class="token keyword">int</span> number<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-    <span class="token comment">//定义一个包含4个字符的数组并对前三个元素进行初始化</span>
-    <span class="token keyword">char</span> characters<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token char">'A'</span><span class="token punctuation">,</span> <span class="token char">'B'</span><span class="token punctuation">,</span> <span class="token char">'C'</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-    <span class="token comment">//定义一个包含6个浮点数的数组并对第一个元素进行初始化</span>
-    <span class="token keyword">float</span> values<span class="token punctuation">[</span><span class="token number">6</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token number">1.0</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
-</ul>
-<h3 id="一维数组的引用"><a href="#一维数组的引用" class="headerlink" title="一维数组的引用"></a>一维数组的引用</h3><p><img src="https://vault.taojie.fun:28089/i/2023/09/02/note4.%E7%AC%AC%E5%9B%9B%E5%91%A8-2023-06-24-00-05-18.png" alt="4.第四周-2023-06-24-00-05-18"></p>
-<p>创建test.c文件，编辑以下代码：</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
-
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-    <span class="token keyword">int</span> number<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-
-    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"第一个元素是：%d\n"</span><span class="token punctuation">,</span> number<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">//输出：第一个元素是：1</span>
-    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"第二个元素是：%d\n"</span><span class="token punctuation">,</span> number<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">//输出：第二个元素是：2</span>
-    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"第三个元素是：%d\n"</span><span class="token punctuation">,</span> number<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">//输出：第三个元素是：3</span>
-
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="二维数组"><a href="#二维数组" class="headerlink" title="二维数组"></a>二维数组</h2><p>二维数组是由多个一维数组组成的数据结构，在C语言中可以使用以下方式进行定义和初始化：</p>
-<pre class="line-numbers language-text" data-language="text"><code class="language-text">数据类型 数组名[行数][列数];<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p><img src="https://vault.taojie.fun:28089/i/2023/09/02/note4.%E7%AC%AC%E5%9B%9B%E5%91%A8-2023-06-24-00-40-55.png" alt="4.第四周-2023-06-24-00-40-55"></p>
-<p>创建test.c文件，编辑以下代码：</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
-
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token comment">// 定义一个 3x4 的整数二维数组</span>
-    <span class="token keyword">int</span> number<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-
-    <span class="token comment">// 初始化二维数组的元素</span>
-    number<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
-    number<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
-    number<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
-    number<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">4</span><span class="token punctuation">;</span>
-
-    <span class="token comment">//在定义时初始化数组</span>
-    <span class="token keyword">int</span> num<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
-    <span class="token punctuation">&#123;</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-    <span class="token punctuation">&#123;</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-    <span class="token punctuation">&#123;</span><span class="token number">9</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">11</span><span class="token punctuation">,</span> <span class="token number">12</span><span class="token punctuation">&#125;</span>
-    <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-
-
-    <span class="token comment">// 打印输出二维数组的元素</span>
-    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"number:\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">3</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> <span class="token number">4</span><span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d "</span><span class="token punctuation">,</span> number<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="字符串与字符数组"><a href="#字符串与字符数组" class="headerlink" title="字符串与字符数组"></a>字符串与字符数组</h2><p>创建test.c文件，编辑以下代码：</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;string.h></span></span>
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-    <span class="token comment">/*字符数组赋初值*/</span>
-    <span class="token keyword">char</span> cArr<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token char">'I'</span><span class="token punctuation">,</span><span class="token char">'L'</span><span class="token punctuation">,</span><span class="token char">'O'</span><span class="token punctuation">,</span><span class="token char">'V'</span><span class="token punctuation">,</span><span class="token char">'E'</span><span class="token punctuation">,</span><span class="token char">'C'</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-    <span class="token comment">/*字符串赋初值
-    编译时会自动在末尾增加一个 null 字符*/</span>
-    <span class="token keyword">char</span> sArr<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">"ILOVEC"</span><span class="token punctuation">;</span>
-    <span class="token comment">/*用sizeof（）求长度*/</span>
-    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"cArr的长度=%d\n"</span><span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>cArr<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">//输出：cArr的长度=6</span>
-    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"sArr的长度=%d\n"</span><span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>sArr<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">//输出：sArr的长度=7</span>
-    <span class="token comment">/*用strlen（）求长度*/</span>
-    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"cArr的长度=%d\n"</span><span class="token punctuation">,</span> <span class="token function">strlen</span><span class="token punctuation">(</span>cArr<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">//输出：cArr的长度=12</span>
-    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"sArr的长度=%d\n"</span><span class="token punctuation">,</span> <span class="token function">strlen</span><span class="token punctuation">(</span>sArr<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">//输出：sArr的长度=6</span>
-    <span class="token comment">/*用printf的%s打印内容*/</span>
-    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"cArr的内容=%s\n"</span><span class="token punctuation">,</span> cArr<span class="token punctuation">)</span><span class="token punctuation">;</span>            <span class="token comment">//输出：cArr的内容=ILOVECILOVEC</span>
-    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"sArr的内容=%s\n"</span><span class="token punctuation">,</span> sArr<span class="token punctuation">)</span><span class="token punctuation">;</span>            <span class="token comment">//输出：sArr的内容=ILOVEC</span>
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<ul>
-<li>对于字符数组，其长度是固定的，其中任何一个数组元素都可以为 null 字符。因此，字符数组不一定是字符串。</li>
-<li>对于字符串，它必须以 null 结尾，其后的字符不属于该字符串。字符串一定是字符数组，它是最后一个字符为 null 字符的字符数组。</li>
-</ul>
-<h2 id="函数的定义和调用"><a href="#函数的定义和调用" class="headerlink" title="函数的定义和调用"></a>函数的定义和调用</h2><p>函数定义的一般格式：</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c">返回值类型 函数名<span class="token punctuation">(</span>参数列表<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token comment">// 函数体</span>
-    <span class="token comment">// 执行特定的功能代码</span>
-    <span class="token comment">// 可能包含 return 语句用于返回结果</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>创建test.c文件，编辑以下代码：</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
-
-<span class="token comment">// 用户自定义函数，计算两个整数的和</span>
-<span class="token keyword">int</span> <span class="token function">sum</span><span class="token punctuation">(</span><span class="token keyword">int</span> a<span class="token punctuation">,</span> <span class="token keyword">int</span> b<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">int</span> result <span class="token operator">=</span> a <span class="token operator">+</span> b<span class="token punctuation">;</span>
-    <span class="token keyword">return</span> result<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
-
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">int</span> num1 <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> num2 <span class="token operator">=</span> <span class="token number">7</span><span class="token punctuation">;</span>
-
-    <span class="token comment">// 调用自定义函数</span>
-    <span class="token keyword">int</span> result <span class="token operator">=</span> <span class="token function">sum</span><span class="token punctuation">(</span>num1<span class="token punctuation">,</span> num2<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    
-    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"The sum is: %d\n"</span><span class="token punctuation">,</span> result<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>需要注意以下几点：</p>
-<ol>
-<li>返回值类型：指定函数返回的结果的类型，可以是整数类型、浮点类型、字符类型或指针类型等。</li>
-<li>函数名：用于标识函数的名称，在调用函数时使用该名称。</li>
-<li>参数列表：列出函数接受的参数类型和参数名称，多个参数之间用逗号分隔。</li>
-<li>函数体：包含了执行特定功能的代码，可以是一条或多条语句。</li>
-<li>返回值：使用return语句将结果返回给调用者。返回值类型必须与函数定义中的返回值类型匹配。</li>
-</ol>
-<p>函数声明的用法：</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
-
-<span class="token comment">// 函数声明</span>
-<span class="token keyword">int</span> <span class="token function">sum</span><span class="token punctuation">(</span><span class="token keyword">int</span> a<span class="token punctuation">,</span> <span class="token keyword">int</span> b<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">int</span> num1 <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> num2 <span class="token operator">=</span> <span class="token number">7</span><span class="token punctuation">;</span>
-
-    <span class="token comment">// 调用自定义函数</span>
-    <span class="token keyword">int</span> result <span class="token operator">=</span> <span class="token function">sum</span><span class="token punctuation">(</span>num1<span class="token punctuation">,</span> num2<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    
-    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"The sum is: %d\n"</span><span class="token punctuation">,</span> result<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
-
-<span class="token comment">// 函数定义</span>
-<span class="token keyword">int</span> <span class="token function">sum</span><span class="token punctuation">(</span><span class="token keyword">int</span> a<span class="token punctuation">,</span> <span class="token keyword">int</span> b<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">int</span> result <span class="token operator">=</span> a <span class="token operator">+</span> b<span class="token punctuation">;</span>
-    <span class="token keyword">return</span> result<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="函数的值传递"><a href="#函数的值传递" class="headerlink" title="函数的值传递"></a>函数的值传递</h3><p>在 C 语言中，函数参数的传递方式是值传递（pass-by-value）。这意味着在函数调用时，实际参数的值会被复制给形式参数（函数定义中的参数），并在函数内部使用。因此，函数内部对形式参数的修改不会影响到实际参数的值。</p>
-<p>创建test.c文件，编辑以下代码：</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
-
-<span class="token keyword">void</span> <span class="token function">modifyValue</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    x <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>  <span class="token comment">// 修改形式参数 x 的值</span>
-<span class="token punctuation">&#125;</span>
-
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">int</span> num <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span>
-
-    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Before function call: %d\n"</span><span class="token punctuation">,</span> num<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">//输出结果：Before function call: 5</span>
-
-    <span class="token function">modifyValue</span><span class="token punctuation">(</span>num<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 调用函数，传递实际参数 num</span>
-
-    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"After function call: %d\n"</span><span class="token punctuation">,</span> num<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">//输出结果：After function call: 5</span>
-
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>需要注意的是，如果实际参数是指针类型，函数可以通过指针间接地修改实际参数所指向的值。这是因为指针本身也是一个值，通过复制指针的值，函数可以访问和修改指针所指向的内存。但是，这并不改变值传递的本质，只是通过指针来间接地修改了实际参数的值。</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
-
-<span class="token keyword">void</span> <span class="token function">modifyValue</span><span class="token punctuation">(</span><span class="token keyword">int</span> <span class="token operator">*</span>ptr<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token operator">*</span>ptr <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>  <span class="token comment">// 通过指针修改实际参数的值</span>
-<span class="token punctuation">&#125;</span>
-
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">int</span> num <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span>
-
-    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Before function call: %d\n"</span><span class="token punctuation">,</span> num<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token function">modifyValue</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>num<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 传递实际参数的地址作为指针参数</span>
-
-    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"After function call: %d\n"</span><span class="token punctuation">,</span> num<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="递归调用"><a href="#递归调用" class="headerlink" title="递归调用"></a>递归调用</h3><p>在 C 语言中，递归调用是指一个函数直接或间接地调用自身。递归调用通常用于解决可以分解为相同问题的子问题的情况，每次递归调用都在更小的范围内解决问题，直到达到终止条件。</p>
-<p>下面是一个示例，演示了在 C 语言中使用递归调用计算斐波那契数列的第 n 个数字（斐波那契数列前11位：1，1，2，3，5，8，13，21，34，55，89）：</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
-
-<span class="token keyword">int</span> <span class="token function">fibonacci</span><span class="token punctuation">(</span><span class="token keyword">int</span> n<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token comment">// 终止条件</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>n <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>n <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-  
-    <span class="token comment">// 递归调用</span>
-    <span class="token keyword">return</span> <span class="token function">fibonacci</span><span class="token punctuation">(</span>n <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token function">fibonacci</span><span class="token punctuation">(</span>n <span class="token operator">-</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
-
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">int</span> n <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> result <span class="token operator">=</span> <span class="token function">fibonacci</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"The %dth Fibonacci number is: %d\n"</span><span class="token punctuation">,</span> n<span class="token punctuation">,</span> result<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="全局变量和局部变量"><a href="#全局变量和局部变量" class="headerlink" title="全局变量和局部变量"></a>全局变量和局部变量</h3><p>在C语言中，局部变量和全局变量是两种不同的变量类型，它们具有不同的作用域和生存周期。</p>
-<ul>
-<li><p>局部变量</p>
-<ol>
-<li>局部变量是在函数内部声明的变量，它只在函数的作用域内可见。</li>
-<li>局部变量的作用域仅限于声明它的函数内部，函数执行结束后，局部变量将被销毁。</li>
-<li>局部变量必须在使用之前先进行声明。</li>
-<li>局部变量的生命周期随着函数的调用和执行而开始和结束。</li>
-</ol>
-<p>  示例代码：</p>
-  <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span> <span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
-
-<span class="token keyword">void</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">int</span> x <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>  <span class="token comment">// 局部变量 x</span>
-    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Inside foo: %d\n"</span><span class="token punctuation">,</span> x<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
-
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment">// printf("%d\n", x);  // 错误，无法访问 foo 函数内的局部变量 x</span>
-
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>全局变量</p>
-<ol>
-<li>全局变量是在函数外部声明的变量，它可以在整个程序的任何地方访问。</li>
-<li>全局变量的作用域从声明开始，延伸到文件的末尾，可以在程序的任何地方使用和修改它。</li>
-<li>全局变量在程序启动时创建，在程序结束时销毁。</li>
-<li>全局变量可以在任何函数内部进行访问，但需要通过关键字 extern 进行声明。</li>
-</ol>
-<p>  示例代码：</p>
-  <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span> <span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
-
-<span class="token keyword">int</span> globalVar <span class="token operator">=</span> <span class="token number">20</span><span class="token punctuation">;</span>  <span class="token comment">// 全局变量</span>
-
-<span class="token keyword">void</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Inside foo: %d\n"</span><span class="token punctuation">,</span> globalVar<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
-
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Inside main: %d\n"</span><span class="token punctuation">,</span> globalVar<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
-</ul>
-<p> 需要注意的是，全局变量的使用应谨慎，因为全局变量的可见性和可修改性可能会导致程序的可维护性和可理解性下降。一般来说，应该尽量避免过度使用全局变量，而是优先使用局部变量来限制变量的作用范围，以提高代码的可读性和可维护性。</p>
 
       
     </div>
