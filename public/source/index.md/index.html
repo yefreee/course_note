@@ -181,7 +181,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-12-04 11:12:21" itemprop="dateModified" datetime="2023-12-04T11:12:21+08:00">2023-12-04</time>
+      <time title="修改时间：2023-12-04 14:43:44" itemprop="dateModified" datetime="2023-12-04T14:43:44+08:00">2023-12-04</time>
     </span>
 
   
@@ -246,11 +246,11 @@
 description: Simple template to deploy a single compute instance
 
 resources:
-my_instance:
+  my_instance:
     type: OS::Nova::Server
     properties:
-    image: cirros
-    flavor: m1.small<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+      image: cirros
+      flavor: m1.small<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
 <li><p>通过模板文件启动一个名为<code>demo-struct</code>的堆栈：</p>
  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack stack create -t demo.yaml demo-struct</span>
@@ -292,11 +292,11 @@ Are you sure you want to delete this stack<span class="token punctuation">(</spa
 description: Simple template to deploy a single compute instance
 
 resources:
-my_instance:
+  my_instance:
     type: OS::Nova::Server
     properties:
-    image: cirros
-    flavor: m1.small<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+      image: cirros
+      flavor: m1.small<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <ul>
 <li><p>heat_template_version: 每个模板文件必须要包含的键，值是具体的版本号，比如<code>2013-05-23</code>，参考<a target="_blank" rel="noopener" href="https://docs.openstack.org/heat/latest/template_guide/hot_spec.html#hot-spec-template-version">Heat template version list</a>获取版本号。</p>
@@ -314,21 +314,21 @@ my_instance:
 description: Simple template to deploy a single compute instance
 
 parameters:
-image_id:
+  image_id:
     type: string
     label: Image ID
     description: Image to be used for compute instance
-flavor:
+  flavor:
     type: string
     label: Instance Type
     description: Type of instance (flavor) to be used
 
 resources:
-my_instance:
+  my_instance:
     type: OS::Nova::Server
     properties:
-    image: &#123; get_param: image_id &#125;
-    flavor: &#123; get_param: flavor &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+      image: &#123; get_param: image_id &#125;
+      flavor: &#123; get_param: flavor &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p> 模板中涉及到的两个参数必须在构建堆栈的过程中提供，<code>get_param</code>内建函数检索用户所提供的值并用于相关属性。</p>
 </li>
@@ -349,7 +349,7 @@ my_instance:
 <li><p>给模板设置默认参数，默认参数可以当用户没有提供参数时用来构建堆栈。</p>
 <p> 参考代码片段修改<code>demo.yaml</code>文件：</p>
  <pre class="line-numbers language-YAML" data-language="YAML"><code class="language-YAML">parameters:
-flavor:
+  flavor:
     type: string
     label: Instance Type
     description: Flavor to be used
