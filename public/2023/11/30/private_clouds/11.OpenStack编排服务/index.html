@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.17.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Heat(编排服务)简介Heat是一个使用声明性模板格式，通过OpenStack 原生 REST API 编排复合云应用程序的服务。 Heat模板指定了资源之间的关系（例如，某个卷连接到某个实例）。这样，Heat 就可以调用 OpenStack API，以正确的顺序创建所有基础设施，从而完全启动应用程序。开发人员能够在程序中使用模板以实现资源的自动化部署。 Heat特点 标准化和可重复性：使用 H">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenStack编排服务">
+<meta property="og:url" content="http://example.com/2023/11/30/private_clouds/11.OpenStack%E7%BC%96%E6%8E%92%E6%9C%8D%E5%8A%A1/index.html">
+<meta property="og:site_name">
+<meta property="og:description" content="Heat(编排服务)简介Heat是一个使用声明性模板格式，通过OpenStack 原生 REST API 编排复合云应用程序的服务。 Heat模板指定了资源之间的关系（例如，某个卷连接到某个实例）。这样，Heat 就可以调用 OpenStack API，以正确的顺序创建所有基础设施，从而完全启动应用程序。开发人员能够在程序中使用模板以实现资源的自动化部署。 Heat特点 标准化和可重复性：使用 H">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/12/04/2023-12-04-1701649020.png">
+<meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/12/04/2023-12-04-1701649472.png">
+<meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/12/03/2023-12-03-1701610473.png">
+<meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/12/04/2023-12-04-1701650466.png">
+<meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/12/04/2023-12-04-1701651162.png">
+<meta property="article:published_time" content="2023-11-30T12:34:35.000Z">
+<meta property="article:modified_time" content="2023-12-04T03:12:21.961Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://vault.taojie.fun:28089/i/2023/12/04/2023-12-04-1701649020.png">
+
+
+<link rel="canonical" href="http://example.com/2023/11/30/private_clouds/11.OpenStack%E7%BC%96%E6%8E%92%E6%9C%8D%E5%8A%A1/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/11/30/private_clouds/11.OpenStack%E7%BC%96%E6%8E%92%E6%9C%8D%E5%8A%A1/","path":"2023/11/30/private_clouds/11.OpenStack编排服务/","title":"OpenStack编排服务"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>OpenStack编排服务 | </title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title"></p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Heat-%E7%BC%96%E6%8E%92%E6%9C%8D%E5%8A%A1-%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">Heat(编排服务)简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Heat%E7%89%B9%E7%82%B9"><span class="nav-number">1.1.</span> <span class="nav-text">Heat特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Heat%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">1.2.</span> <span class="nav-text">Heat基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Heat%E6%9E%B6%E6%9E%84"><span class="nav-number">1.3.</span> <span class="nav-text">Heat架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Heat%E5%91%BD%E4%BB%A4"><span class="nav-number">1.4.</span> <span class="nav-text">Heat命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Heat%E5%AE%9E%E9%AA%8C"><span class="nav-number">2.</span> <span class="nav-text">Heat实验</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%9C%E4%B8%9A%E4%B8%8E%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83"><span class="nav-number">2.1.</span> <span class="nav-text">作业与实验环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E6%A8%A1%E6%9D%BF%E5%90%AF%E5%8A%A8%E4%B8%80%E4%B8%AA%E5%A0%86%E6%A0%88"><span class="nav-number">2.2.</span> <span class="nav-text">通过模板启动一个堆栈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E6%9D%BF%E6%96%87%E4%BB%B6%E5%9F%BA%E6%9C%AC%E6%9E%84%E6%88%90"><span class="nav-number">2.3.</span> <span class="nav-text">模板文件基本构成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E6%9D%BF%E6%96%87%E4%BB%B6%E7%9A%84%E8%BE%93%E5%85%A5%E5%8F%82%E6%95%B0"><span class="nav-number">2.4.</span> <span class="nav-text">模板文件的输入参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA%E6%A8%A1%E6%9D%BF%E6%96%87%E4%BB%B6"><span class="nav-number">2.5.</span> <span class="nav-text">编写一个模板文件</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name"></p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/11/30/private_clouds/11.OpenStack%E7%BC%96%E6%8E%92%E6%9C%8D%E5%8A%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="OpenStack编排服务 | ">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          OpenStack编排服务
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-30 20:34:35" itemprop="dateCreated datePublished" datetime="2023-11-30T20:34:35+08:00">2023-11-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-12-04 11:12:21" itemprop="dateModified" datetime="2023-12-04T11:12:21+08:00">2023-12-04</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="Heat-编排服务-简介"><a href="#Heat-编排服务-简介" class="headerlink" title="Heat(编排服务)简介"></a>Heat(编排服务)简介</h2><p>Heat是一个使用声明性模板格式，通过OpenStack 原生 REST API 编排复合云应用程序的服务。</p>
+<p>Heat模板指定了资源之间的关系（例如，某个卷连接到某个实例）。这样，Heat 就可以调用 OpenStack API，以正确的顺序创建所有基础设施，从而完全启动应用程序。开发人员能够在程序中使用模板以实现资源的自动化部署。</p>
+<h3 id="Heat特点"><a href="#Heat特点" class="headerlink" title="Heat特点"></a>Heat特点</h3><ol>
+<li><p>标准化和可重复性：使用 Heat 可以将基础设施和应用程序的配置标准化为模板。这样可以在不同的环境中重复使用这些模板，从而确保配置的一致性和可重复性。无论是在开发、测试还是生产环境中，都可以使用相同的模板进行部署，提高了部署的可靠性和可维护性。</p>
+</li>
+<li><p>简化复杂性：在云环境中，应用程序通常由多个互相关联的资源组成，如虚拟机、网络、存储等。使用 Heat，您可以定义这些资源之间的依赖关系和配置规则，以确保它们按正确的顺序启动和配置。这样可以简化复杂的资源编排过程，减少手动操作和错误，并提供更一致的部署结果。</p>
+</li>
+<li><p>弹性和可伸缩性：Heat 允许根据需求动态调整资源的数量和规模。通过定义资源组和循环可以实现资源的弹性扩展和收缩，以适应应用程序的变化和负载的波动。这提供了更高的弹性和可伸缩性，使得应用程序可以根据需求自动调整资源。</p>
+</li>
+<li><p>可视化和审计：Heat 提供了堆栈拓扑图的可视化功能，可以直观地展示资源之间的关系和依赖。这对于理解和审核基础设施的配置非常有帮助。同时，Heat 还提供了审计功能，可以记录堆栈的操作和资源状态的变化，用于跟踪和审计的目的。</p>
+</li>
+</ol>
+<h3 id="Heat基本概念"><a href="#Heat基本概念" class="headerlink" title="Heat基本概念"></a>Heat基本概念</h3><ol>
+<li><p>堆栈（stack）：管理资源的集合。单个模板中定义的实例化资源的集合，是 Heat 管理应用程序的逻辑单元，往往对应一个应用程序。</p>
+</li>
+<li><p>模板（template）：如何使用代码定义和描述堆栈。描述了所有组件资源以及组件资源之间的关系，是 Heat 的核心。</p>
+</li>
+<li><p>资源（resource）：将在编排期间创建或修改的对象。资源可以是网络、路由器、子网、实例、卷、浮动IP、安全组等。</p>
+</li>
+</ol>
+<h3 id="Heat架构"><a href="#Heat架构" class="headerlink" title="Heat架构"></a>Heat架构</h3><img src="https://vault.taojie.fun:28089/i/2023/12/04/2023-12-04-1701649020.png" alt="1701649019123.png" title="1701649019123.png" />
+
+<ol>
+<li><p>heat command-line client：CLI通过与 heat-api 通信，来调用 API 实现相关功能。终端开发者可以直接使用编排 REST API。</p>
+</li>
+<li><p>heat-api：实现 OpenStack 原生支持的 REST API。该组件通过把 API 请求经由 AMQP 传送给 Heat engine 来处理 API 请求。</p>
+</li>
+<li><p>heat-engine：执行模板内容，最终完成应用系统的创建和部署，并把执行结果返回给 API 调用者。</p>
+</li>
+</ol>
+<h3 id="Heat命令"><a href="#Heat命令" class="headerlink" title="Heat命令"></a>Heat命令</h3><img src="https://vault.taojie.fun:28089/i/2023/12/04/2023-12-04-1701649472.png" alt="1701649471789.png" title="1701649471789.png" />
+
+<h2 id="Heat实验"><a href="#Heat实验" class="headerlink" title="Heat实验"></a>Heat实验</h2><h3 id="作业与实验环境"><a href="#作业与实验环境" class="headerlink" title="作业与实验环境"></a>作业与实验环境</h3><blockquote>
+<p><a target="_blank" rel="noopener" href="https://wxstc.fanya.chaoxing.com/portal">超星网址</a><br>虚拟机<code>openstack-allinone</code>，账户<code>root</code>，密码<code>000000</code></p>
+</blockquote>
+<ol>
+<li><p>VmWare需要修改网络设置，在编辑-&gt;虚拟网络编辑器中将Vmnet1网卡的子网由原来的<code>192.168.10.0</code>改为<code>192.168.100.0</code>。</p>
+ <img src="https://vault.taojie.fun:28089/i/2023/12/03/2023-12-03-1701610473.png" alt="1701610472777.png" title="1701610472777.png" />
+</li>
+<li><p>后续实验需要启动实例，Horizon登录地址<code>192.168.100.10/dashboard</code>，使用域<code>xiandian</code>、用户名<code>admin</code>、密码<code>000000</code>登录之后<code>上传</code>本地<code>D盘</code>的cirros镜像到OpenStack平台。</p>
+ <img src="https://vault.taojie.fun:28089/i/2023/12/04/2023-12-04-1701650466.png" alt="1701650465473.png" title="1701650465473.png" />
+</li>
+<li><p>执行脚本完成身份认证。</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># source /etc/keystone/admin-openrc.sh</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+</ol>
+<h3 id="通过模板启动一个堆栈"><a href="#通过模板启动一个堆栈" class="headerlink" title="通过模板启动一个堆栈"></a>通过模板启动一个堆栈</h3><ol>
+<li><p>将以下模板文件保存到<code>demo.yaml</code>文件中：</p>
+ <pre class="line-numbers language-YAML" data-language="YAML"><code class="language-YAML">heat_template_version: 2015-04-30
+
+description: Simple template to deploy a single compute instance
+
+resources:
+my_instance:
+    type: OS::Nova::Server
+    properties:
+    image: cirros
+    flavor: m1.small<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>通过模板文件启动一个名为<code>demo-struct</code>的堆栈：</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack stack create -t demo.yaml demo-struct</span>
++---------------------+-----------------------------------------------------+
+<span class="token operator">|</span> Field               <span class="token operator">|</span> Value                                               <span class="token operator">|</span>
++---------------------+-----------------------------------------------------+
+<span class="token operator">|</span> <span class="token function">id</span>                  <span class="token operator">|</span> d76d18cc-e637-42f3-b4be-cbcaafd9740a                <span class="token operator">|</span>
+<span class="token operator">|</span> stack_name          <span class="token operator">|</span> demo-struct                                         <span class="token operator">|</span>
+<span class="token operator">|</span> description         <span class="token operator">|</span> Simple template to deploy a single compute instance <span class="token operator">|</span>
+<span class="token operator">|</span> creation_time       <span class="token operator">|</span> <span class="token number">2023</span>-12-01T08:47:36                                 <span class="token operator">|</span>
+<span class="token operator">|</span> updated_time        <span class="token operator">|</span> None                                                <span class="token operator">|</span>
+<span class="token operator">|</span> stack_status        <span class="token operator">|</span> CREATE_IN_PROGRESS                                  <span class="token operator">|</span>
+<span class="token operator">|</span> stack_status_reason <span class="token operator">|</span> Stack CREATE started                                <span class="token operator">|</span>
++---------------------+-----------------------------------------------------+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>查看Horizon上的实例运行状态：</p>
+ <img src="https://vault.taojie.fun:28089/i/2023/12/04/2023-12-04-1701651162.png" alt="1701651161368.png" title="1701651161368.png" />
+
+<p> 或者通过OpenStack命令查看实例列表：</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack server list</span>
+
++--------------------------------------+--------------------------------------+--------+---------------------+
+<span class="token operator">|</span> ID                                   <span class="token operator">|</span> Name                                 <span class="token operator">|</span> Status <span class="token operator">|</span> Networks            <span class="token operator">|</span>
++--------------------------------------+--------------------------------------+--------+---------------------+
+<span class="token operator">|</span> 2324c631-cf3e-49eb-a8e2-be384341e4ac <span class="token operator">|</span> demo-struct-my_instance-clk6vt6fuwe4 <span class="token operator">|</span> ACTIVE <span class="token operator">|</span>                     <span class="token operator">|</span>
++--------------------------------------+--------------------------------------+--------+---------------------+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>作业1：查看实例的运行状态后截图上传。</p>
+</blockquote>
+</li>
+<li><p>删除堆栈：</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack stack delete demo-struct</span>
+Are you sure you want to delete this stack<span class="token punctuation">(</span>s<span class="token punctuation">)</span> <span class="token punctuation">[</span>y/N<span class="token punctuation">]</span>? y<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
+</ol>
+<h3 id="模板文件基本构成"><a href="#模板文件基本构成" class="headerlink" title="模板文件基本构成"></a>模板文件基本构成</h3><p>参考上文的模板文件：</p>
+<pre class="line-numbers language-YAML" data-language="YAML"><code class="language-YAML">heat_template_version: 2015-04-30
+
+description: Simple template to deploy a single compute instance
+
+resources:
+my_instance:
+    type: OS::Nova::Server
+    properties:
+    image: cirros
+    flavor: m1.small<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li><p>heat_template_version: 每个模板文件必须要包含的键，值是具体的版本号，比如<code>2013-05-23</code>，参考<a target="_blank" rel="noopener" href="https://docs.openstack.org/heat/latest/template_guide/hot_spec.html#hot-spec-template-version">Heat template version list</a>获取版本号。</p>
+</li>
+<li><p>description: 可选的键，用来描述模板所执行操作，支持多行文本。</p>
+</li>
+<li><p>resorces: 必须要包含的键，至少需要定义一个resource，上述例子中定义了一个实例资源并包含了若干个属性。</p>
+</li>
+</ul>
+<h3 id="模板文件的输入参数"><a href="#模板文件的输入参数" class="headerlink" title="模板文件的输入参数"></a>模板文件的输入参数</h3><p>模板文件中的<code>parameters</code>段允许用户在构建的过程中自定义模板。比如用户可以提供<code>镜像ID</code>和<code>实例类型</code>来构建堆栈，通过输入参数可以使得模板更容易重用。</p>
+<ol>
+<li><p>以下是一个引入数据参数的模板示例，参考修改上文的<code>demo.yaml</code>文件：</p>
+ <pre class="line-numbers language-YAML" data-language="YAML"><code class="language-YAML">heat_template_version: 2015-04-30
+
+description: Simple template to deploy a single compute instance
+
+parameters:
+image_id:
+    type: string
+    label: Image ID
+    description: Image to be used for compute instance
+flavor:
+    type: string
+    label: Instance Type
+    description: Type of instance (flavor) to be used
+
+resources:
+my_instance:
+    type: OS::Nova::Server
+    properties:
+    image: &#123; get_param: image_id &#125;
+    flavor: &#123; get_param: flavor &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p> 模板中涉及到的两个参数必须在构建堆栈的过程中提供，<code>get_param</code>内建函数检索用户所提供的值并用于相关属性。</p>
+</li>
+<li><p>通过传递参数来构建堆栈:</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack stack create -t demo.yaml demo-struct --parameter image_id=cirros --parameter flavor=m1.small</span>
++---------------------+-----------------------------------------------------+
+<span class="token operator">|</span> Field               <span class="token operator">|</span> Value                                               <span class="token operator">|</span>
++---------------------+-----------------------------------------------------+
+<span class="token operator">|</span> <span class="token function">id</span>                  <span class="token operator">|</span> f3ab8bbe-f769-495f-88db-46a6a373aa22                <span class="token operator">|</span>
+<span class="token operator">|</span> stack_name          <span class="token operator">|</span> demo-struct                                         <span class="token operator">|</span>
+<span class="token operator">|</span> description         <span class="token operator">|</span> Simple template to deploy a single compute instance <span class="token operator">|</span>
+<span class="token operator">|</span> creation_time       <span class="token operator">|</span> <span class="token number">2023</span>-12-04T09:24:14                                 <span class="token operator">|</span>
+<span class="token operator">|</span> updated_time        <span class="token operator">|</span> None                                                <span class="token operator">|</span>
+<span class="token operator">|</span> stack_status        <span class="token operator">|</span> CREATE_IN_PROGRESS                                  <span class="token operator">|</span>
+<span class="token operator">|</span> stack_status_reason <span class="token operator">|</span>                                                     <span class="token operator">|</span>
++---------------------+-----------------------------------------------------+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>给模板设置默认参数，默认参数可以当用户没有提供参数时用来构建堆栈。</p>
+<p> 参考代码片段修改<code>demo.yaml</code>文件：</p>
+ <pre class="line-numbers language-YAML" data-language="YAML"><code class="language-YAML">parameters:
+flavor:
+    type: string
+    label: Instance Type
+    description: Flavor to be used
+    default: m1.small<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p> 当模板中没有设置默认参数时，用户必须提供所有参数，否则堆栈就会创建失败。</p>
+</li>
+<li><p>修改完以上片段后只提供image属性来启动一个堆栈。</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack stack create -t demo.yaml demo-struct --parameter image_id=cirros</span>
++---------------------+-----------------------------------------------------+
+<span class="token operator">|</span> Field               <span class="token operator">|</span> Value                                               <span class="token operator">|</span>
++---------------------+-----------------------------------------------------+
+<span class="token operator">|</span> <span class="token function">id</span>                  <span class="token operator">|</span> 1765bf8d-f792-4ac7-b842-664773fa79c1                <span class="token operator">|</span>
+<span class="token operator">|</span> stack_name          <span class="token operator">|</span> demo-struct                                         <span class="token operator">|</span>
+<span class="token operator">|</span> description         <span class="token operator">|</span> Simple template to deploy a single compute instance <span class="token operator">|</span>
+<span class="token operator">|</span> creation_time       <span class="token operator">|</span> <span class="token number">2023</span>-12-04T09:38:36                                 <span class="token operator">|</span>
+<span class="token operator">|</span> updated_time        <span class="token operator">|</span> None                                                <span class="token operator">|</span>
+<span class="token operator">|</span> stack_status        <span class="token operator">|</span> CREATE_IN_PROGRESS                                  <span class="token operator">|</span>
+<span class="token operator">|</span> stack_status_reason <span class="token operator">|</span> Stack CREATE started                                <span class="token operator">|</span>
++---------------------+-----------------------------------------------------+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>作业2：使用默认参数的方式启动堆栈后上传截图。</p>
+</blockquote>
+</li>
+<li><p>对于用户输入的参数可以进行限制。</p>
+<p> 可以通过在<code>parameters</code>段中添加<code>constraints</code>属性并定义一个列表来限制用户输入的参数，参考以下片段修改<code>demo.yaml</code>:</p>
+ <pre class="line-numbers language-YAML" data-language="YAML"><code class="language-YAML">parameters:
+    flavor:
+        type: string
+        label: Instance Type
+        description: Type of instance (flavor) to be used
+        constraints:
+        - allowed_values: [ m1.medium, m1.large, m1.xlarge ]
+          description: Value must be one of m1.medium, m1.large or m1.xlarge.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p> 除了直接对参数的值做限制以外还可以使用多个条件进行限制，下面是一个限制指定创建数据库密码的参数的示例：</p>
+ <pre class="line-numbers language-YAML" data-language="YAML"><code class="language-YAML">parameters:
+    database_password:
+        type: string
+        label: Database Password
+        description: Password to be used for database
+        hidden: true
+        constraints:
+        - length: &#123; min: 6, max: 8 &#125;
+          description: Password length must be between 6 and 8 characters.
+        - allowed_pattern: &quot;[a-zA-Z0-9]+&quot;
+          description: Password must consist of characters and numbers only.
+        - allowed_pattern: &quot;[A-Z]+[a-zA-Z0-9]*&quot;
+          description: Password must start with an uppercase character.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ol>
+<h3 id="编写一个模板文件"><a href="#编写一个模板文件" class="headerlink" title="编写一个模板文件"></a>编写一个模板文件</h3><p>参考以下代码编写一个模板文件，实现从卷启动实例。</p>
+<pre class="line-numbers language-YAML" data-language="YAML"><code class="language-YAML">resources:
+  bootable_volume:
+    type: OS::Cinder::Volume
+    properties:
+      size: 10
+      image: ubuntu-trusty-x86_64
+
+  instance:
+    type: OS::Nova::Server
+    properties:
+      flavor: m1.small
+      networks:
+        - network: private
+      block_device_mapping:
+        - device_name: vda
+          volume_id: &#123; get_resource: bootable_volume &#125;
+          delete_on_termination: false<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>作业3：进入实例的控制台后截图上传。</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/11/15/private_clouds/10.OpenStack%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86-Swift/" rel="prev" title="OpenStack存储管理-Swift">
+                  <i class="fa fa-chevron-left"></i> OpenStack存储管理-Swift
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder"></span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

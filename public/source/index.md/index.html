@@ -118,7 +118,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-count">27</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -136,6 +136,310 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/11/30/private_clouds/11.OpenStack%E7%BC%96%E6%8E%92%E6%9C%8D%E5%8A%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/11/30/private_clouds/11.OpenStack%E7%BC%96%E6%8E%92%E6%9C%8D%E5%8A%A1/" class="post-title-link" itemprop="url">OpenStack编排服务</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-30 20:34:35" itemprop="dateCreated datePublished" datetime="2023-11-30T20:34:35+08:00">2023-11-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-12-04 11:12:21" itemprop="dateModified" datetime="2023-12-04T11:12:21+08:00">2023-12-04</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Heat-编排服务-简介"><a href="#Heat-编排服务-简介" class="headerlink" title="Heat(编排服务)简介"></a>Heat(编排服务)简介</h2><p>Heat是一个使用声明性模板格式，通过OpenStack 原生 REST API 编排复合云应用程序的服务。</p>
+<p>Heat模板指定了资源之间的关系（例如，某个卷连接到某个实例）。这样，Heat 就可以调用 OpenStack API，以正确的顺序创建所有基础设施，从而完全启动应用程序。开发人员能够在程序中使用模板以实现资源的自动化部署。</p>
+<h3 id="Heat特点"><a href="#Heat特点" class="headerlink" title="Heat特点"></a>Heat特点</h3><ol>
+<li><p>标准化和可重复性：使用 Heat 可以将基础设施和应用程序的配置标准化为模板。这样可以在不同的环境中重复使用这些模板，从而确保配置的一致性和可重复性。无论是在开发、测试还是生产环境中，都可以使用相同的模板进行部署，提高了部署的可靠性和可维护性。</p>
+</li>
+<li><p>简化复杂性：在云环境中，应用程序通常由多个互相关联的资源组成，如虚拟机、网络、存储等。使用 Heat，您可以定义这些资源之间的依赖关系和配置规则，以确保它们按正确的顺序启动和配置。这样可以简化复杂的资源编排过程，减少手动操作和错误，并提供更一致的部署结果。</p>
+</li>
+<li><p>弹性和可伸缩性：Heat 允许根据需求动态调整资源的数量和规模。通过定义资源组和循环可以实现资源的弹性扩展和收缩，以适应应用程序的变化和负载的波动。这提供了更高的弹性和可伸缩性，使得应用程序可以根据需求自动调整资源。</p>
+</li>
+<li><p>可视化和审计：Heat 提供了堆栈拓扑图的可视化功能，可以直观地展示资源之间的关系和依赖。这对于理解和审核基础设施的配置非常有帮助。同时，Heat 还提供了审计功能，可以记录堆栈的操作和资源状态的变化，用于跟踪和审计的目的。</p>
+</li>
+</ol>
+<h3 id="Heat基本概念"><a href="#Heat基本概念" class="headerlink" title="Heat基本概念"></a>Heat基本概念</h3><ol>
+<li><p>堆栈（stack）：管理资源的集合。单个模板中定义的实例化资源的集合，是 Heat 管理应用程序的逻辑单元，往往对应一个应用程序。</p>
+</li>
+<li><p>模板（template）：如何使用代码定义和描述堆栈。描述了所有组件资源以及组件资源之间的关系，是 Heat 的核心。</p>
+</li>
+<li><p>资源（resource）：将在编排期间创建或修改的对象。资源可以是网络、路由器、子网、实例、卷、浮动IP、安全组等。</p>
+</li>
+</ol>
+<h3 id="Heat架构"><a href="#Heat架构" class="headerlink" title="Heat架构"></a>Heat架构</h3><img src="https://vault.taojie.fun:28089/i/2023/12/04/2023-12-04-1701649020.png" alt="1701649019123.png" title="1701649019123.png" />
+
+<ol>
+<li><p>heat command-line client：CLI通过与 heat-api 通信，来调用 API 实现相关功能。终端开发者可以直接使用编排 REST API。</p>
+</li>
+<li><p>heat-api：实现 OpenStack 原生支持的 REST API。该组件通过把 API 请求经由 AMQP 传送给 Heat engine 来处理 API 请求。</p>
+</li>
+<li><p>heat-engine：执行模板内容，最终完成应用系统的创建和部署，并把执行结果返回给 API 调用者。</p>
+</li>
+</ol>
+<h3 id="Heat命令"><a href="#Heat命令" class="headerlink" title="Heat命令"></a>Heat命令</h3><img src="https://vault.taojie.fun:28089/i/2023/12/04/2023-12-04-1701649472.png" alt="1701649471789.png" title="1701649471789.png" />
+
+<h2 id="Heat实验"><a href="#Heat实验" class="headerlink" title="Heat实验"></a>Heat实验</h2><h3 id="作业与实验环境"><a href="#作业与实验环境" class="headerlink" title="作业与实验环境"></a>作业与实验环境</h3><blockquote>
+<p><a target="_blank" rel="noopener" href="https://wxstc.fanya.chaoxing.com/portal">超星网址</a><br>虚拟机<code>openstack-allinone</code>，账户<code>root</code>，密码<code>000000</code></p>
+</blockquote>
+<ol>
+<li><p>VmWare需要修改网络设置，在编辑-&gt;虚拟网络编辑器中将Vmnet1网卡的子网由原来的<code>192.168.10.0</code>改为<code>192.168.100.0</code>。</p>
+ <img src="https://vault.taojie.fun:28089/i/2023/12/03/2023-12-03-1701610473.png" alt="1701610472777.png" title="1701610472777.png" />
+</li>
+<li><p>后续实验需要启动实例，Horizon登录地址<code>192.168.100.10/dashboard</code>，使用域<code>xiandian</code>、用户名<code>admin</code>、密码<code>000000</code>登录之后<code>上传</code>本地<code>D盘</code>的cirros镜像到OpenStack平台。</p>
+ <img src="https://vault.taojie.fun:28089/i/2023/12/04/2023-12-04-1701650466.png" alt="1701650465473.png" title="1701650465473.png" />
+</li>
+<li><p>执行脚本完成身份认证。</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># source /etc/keystone/admin-openrc.sh</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+</ol>
+<h3 id="通过模板启动一个堆栈"><a href="#通过模板启动一个堆栈" class="headerlink" title="通过模板启动一个堆栈"></a>通过模板启动一个堆栈</h3><ol>
+<li><p>将以下模板文件保存到<code>demo.yaml</code>文件中：</p>
+ <pre class="line-numbers language-YAML" data-language="YAML"><code class="language-YAML">heat_template_version: 2015-04-30
+
+description: Simple template to deploy a single compute instance
+
+resources:
+my_instance:
+    type: OS::Nova::Server
+    properties:
+    image: cirros
+    flavor: m1.small<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>通过模板文件启动一个名为<code>demo-struct</code>的堆栈：</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack stack create -t demo.yaml demo-struct</span>
++---------------------+-----------------------------------------------------+
+<span class="token operator">|</span> Field               <span class="token operator">|</span> Value                                               <span class="token operator">|</span>
++---------------------+-----------------------------------------------------+
+<span class="token operator">|</span> <span class="token function">id</span>                  <span class="token operator">|</span> d76d18cc-e637-42f3-b4be-cbcaafd9740a                <span class="token operator">|</span>
+<span class="token operator">|</span> stack_name          <span class="token operator">|</span> demo-struct                                         <span class="token operator">|</span>
+<span class="token operator">|</span> description         <span class="token operator">|</span> Simple template to deploy a single compute instance <span class="token operator">|</span>
+<span class="token operator">|</span> creation_time       <span class="token operator">|</span> <span class="token number">2023</span>-12-01T08:47:36                                 <span class="token operator">|</span>
+<span class="token operator">|</span> updated_time        <span class="token operator">|</span> None                                                <span class="token operator">|</span>
+<span class="token operator">|</span> stack_status        <span class="token operator">|</span> CREATE_IN_PROGRESS                                  <span class="token operator">|</span>
+<span class="token operator">|</span> stack_status_reason <span class="token operator">|</span> Stack CREATE started                                <span class="token operator">|</span>
++---------------------+-----------------------------------------------------+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>查看Horizon上的实例运行状态：</p>
+ <img src="https://vault.taojie.fun:28089/i/2023/12/04/2023-12-04-1701651162.png" alt="1701651161368.png" title="1701651161368.png" />
+
+<p> 或者通过OpenStack命令查看实例列表：</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack server list</span>
+
++--------------------------------------+--------------------------------------+--------+---------------------+
+<span class="token operator">|</span> ID                                   <span class="token operator">|</span> Name                                 <span class="token operator">|</span> Status <span class="token operator">|</span> Networks            <span class="token operator">|</span>
++--------------------------------------+--------------------------------------+--------+---------------------+
+<span class="token operator">|</span> 2324c631-cf3e-49eb-a8e2-be384341e4ac <span class="token operator">|</span> demo-struct-my_instance-clk6vt6fuwe4 <span class="token operator">|</span> ACTIVE <span class="token operator">|</span>                     <span class="token operator">|</span>
++--------------------------------------+--------------------------------------+--------+---------------------+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>作业1：查看实例的运行状态后截图上传。</p>
+</blockquote>
+</li>
+<li><p>删除堆栈：</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack stack delete demo-struct</span>
+Are you sure you want to delete this stack<span class="token punctuation">(</span>s<span class="token punctuation">)</span> <span class="token punctuation">[</span>y/N<span class="token punctuation">]</span>? y<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
+</ol>
+<h3 id="模板文件基本构成"><a href="#模板文件基本构成" class="headerlink" title="模板文件基本构成"></a>模板文件基本构成</h3><p>参考上文的模板文件：</p>
+<pre class="line-numbers language-YAML" data-language="YAML"><code class="language-YAML">heat_template_version: 2015-04-30
+
+description: Simple template to deploy a single compute instance
+
+resources:
+my_instance:
+    type: OS::Nova::Server
+    properties:
+    image: cirros
+    flavor: m1.small<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li><p>heat_template_version: 每个模板文件必须要包含的键，值是具体的版本号，比如<code>2013-05-23</code>，参考<a target="_blank" rel="noopener" href="https://docs.openstack.org/heat/latest/template_guide/hot_spec.html#hot-spec-template-version">Heat template version list</a>获取版本号。</p>
+</li>
+<li><p>description: 可选的键，用来描述模板所执行操作，支持多行文本。</p>
+</li>
+<li><p>resorces: 必须要包含的键，至少需要定义一个resource，上述例子中定义了一个实例资源并包含了若干个属性。</p>
+</li>
+</ul>
+<h3 id="模板文件的输入参数"><a href="#模板文件的输入参数" class="headerlink" title="模板文件的输入参数"></a>模板文件的输入参数</h3><p>模板文件中的<code>parameters</code>段允许用户在构建的过程中自定义模板。比如用户可以提供<code>镜像ID</code>和<code>实例类型</code>来构建堆栈，通过输入参数可以使得模板更容易重用。</p>
+<ol>
+<li><p>以下是一个引入数据参数的模板示例，参考修改上文的<code>demo.yaml</code>文件：</p>
+ <pre class="line-numbers language-YAML" data-language="YAML"><code class="language-YAML">heat_template_version: 2015-04-30
+
+description: Simple template to deploy a single compute instance
+
+parameters:
+image_id:
+    type: string
+    label: Image ID
+    description: Image to be used for compute instance
+flavor:
+    type: string
+    label: Instance Type
+    description: Type of instance (flavor) to be used
+
+resources:
+my_instance:
+    type: OS::Nova::Server
+    properties:
+    image: &#123; get_param: image_id &#125;
+    flavor: &#123; get_param: flavor &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p> 模板中涉及到的两个参数必须在构建堆栈的过程中提供，<code>get_param</code>内建函数检索用户所提供的值并用于相关属性。</p>
+</li>
+<li><p>通过传递参数来构建堆栈:</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack stack create -t demo.yaml demo-struct --parameter image_id=cirros --parameter flavor=m1.small</span>
++---------------------+-----------------------------------------------------+
+<span class="token operator">|</span> Field               <span class="token operator">|</span> Value                                               <span class="token operator">|</span>
++---------------------+-----------------------------------------------------+
+<span class="token operator">|</span> <span class="token function">id</span>                  <span class="token operator">|</span> f3ab8bbe-f769-495f-88db-46a6a373aa22                <span class="token operator">|</span>
+<span class="token operator">|</span> stack_name          <span class="token operator">|</span> demo-struct                                         <span class="token operator">|</span>
+<span class="token operator">|</span> description         <span class="token operator">|</span> Simple template to deploy a single compute instance <span class="token operator">|</span>
+<span class="token operator">|</span> creation_time       <span class="token operator">|</span> <span class="token number">2023</span>-12-04T09:24:14                                 <span class="token operator">|</span>
+<span class="token operator">|</span> updated_time        <span class="token operator">|</span> None                                                <span class="token operator">|</span>
+<span class="token operator">|</span> stack_status        <span class="token operator">|</span> CREATE_IN_PROGRESS                                  <span class="token operator">|</span>
+<span class="token operator">|</span> stack_status_reason <span class="token operator">|</span>                                                     <span class="token operator">|</span>
++---------------------+-----------------------------------------------------+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>给模板设置默认参数，默认参数可以当用户没有提供参数时用来构建堆栈。</p>
+<p> 参考代码片段修改<code>demo.yaml</code>文件：</p>
+ <pre class="line-numbers language-YAML" data-language="YAML"><code class="language-YAML">parameters:
+flavor:
+    type: string
+    label: Instance Type
+    description: Flavor to be used
+    default: m1.small<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p> 当模板中没有设置默认参数时，用户必须提供所有参数，否则堆栈就会创建失败。</p>
+</li>
+<li><p>修改完以上片段后只提供image属性来启动一个堆栈。</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack stack create -t demo.yaml demo-struct --parameter image_id=cirros</span>
++---------------------+-----------------------------------------------------+
+<span class="token operator">|</span> Field               <span class="token operator">|</span> Value                                               <span class="token operator">|</span>
++---------------------+-----------------------------------------------------+
+<span class="token operator">|</span> <span class="token function">id</span>                  <span class="token operator">|</span> 1765bf8d-f792-4ac7-b842-664773fa79c1                <span class="token operator">|</span>
+<span class="token operator">|</span> stack_name          <span class="token operator">|</span> demo-struct                                         <span class="token operator">|</span>
+<span class="token operator">|</span> description         <span class="token operator">|</span> Simple template to deploy a single compute instance <span class="token operator">|</span>
+<span class="token operator">|</span> creation_time       <span class="token operator">|</span> <span class="token number">2023</span>-12-04T09:38:36                                 <span class="token operator">|</span>
+<span class="token operator">|</span> updated_time        <span class="token operator">|</span> None                                                <span class="token operator">|</span>
+<span class="token operator">|</span> stack_status        <span class="token operator">|</span> CREATE_IN_PROGRESS                                  <span class="token operator">|</span>
+<span class="token operator">|</span> stack_status_reason <span class="token operator">|</span> Stack CREATE started                                <span class="token operator">|</span>
++---------------------+-----------------------------------------------------+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>作业2：使用默认参数的方式启动堆栈后上传截图。</p>
+</blockquote>
+</li>
+<li><p>对于用户输入的参数可以进行限制。</p>
+<p> 可以通过在<code>parameters</code>段中添加<code>constraints</code>属性并定义一个列表来限制用户输入的参数，参考以下片段修改<code>demo.yaml</code>:</p>
+ <pre class="line-numbers language-YAML" data-language="YAML"><code class="language-YAML">parameters:
+    flavor:
+        type: string
+        label: Instance Type
+        description: Type of instance (flavor) to be used
+        constraints:
+        - allowed_values: [ m1.medium, m1.large, m1.xlarge ]
+          description: Value must be one of m1.medium, m1.large or m1.xlarge.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p> 除了直接对参数的值做限制以外还可以使用多个条件进行限制，下面是一个限制指定创建数据库密码的参数的示例：</p>
+ <pre class="line-numbers language-YAML" data-language="YAML"><code class="language-YAML">parameters:
+    database_password:
+        type: string
+        label: Database Password
+        description: Password to be used for database
+        hidden: true
+        constraints:
+        - length: &#123; min: 6, max: 8 &#125;
+          description: Password length must be between 6 and 8 characters.
+        - allowed_pattern: &quot;[a-zA-Z0-9]+&quot;
+          description: Password must consist of characters and numbers only.
+        - allowed_pattern: &quot;[A-Z]+[a-zA-Z0-9]*&quot;
+          description: Password must start with an uppercase character.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ol>
+<h3 id="编写一个模板文件"><a href="#编写一个模板文件" class="headerlink" title="编写一个模板文件"></a>编写一个模板文件</h3><p>参考以下代码编写一个模板文件，实现从卷启动实例。</p>
+<pre class="line-numbers language-YAML" data-language="YAML"><code class="language-YAML">resources:
+  bootable_volume:
+    type: OS::Cinder::Volume
+    properties:
+      size: 10
+      image: ubuntu-trusty-x86_64
+
+  instance:
+    type: OS::Nova::Server
+    properties:
+      flavor: m1.small
+      networks:
+        - network: private
+      block_device_mapping:
+        - device_name: vda
+          volume_id: &#123; get_resource: bootable_volume &#125;
+          delete_on_termination: false<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>作业3：进入实例的控制台后截图上传。</p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -181,7 +485,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-11-28 13:04:47" itemprop="dateModified" datetime="2023-11-28T13:04:47+08:00">2023-11-28</time>
+      <time title="修改时间：2023-12-04 08:26:57" itemprop="dateModified" datetime="2023-12-04T08:26:57+08:00">2023-12-04</time>
     </span>
 
   
@@ -194,10 +498,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="作业与实验环境"><a href="#作业与实验环境" class="headerlink" title="作业与实验环境"></a>作业与实验环境</h2><blockquote>
-<p><a target="_blank" rel="noopener" href="https://wxstc.fanya.chaoxing.com/portal">超星网址</a><br>虚拟机<code>openstack-allinone</code>，账户<code>root</code>，密码<code>000000</code></p>
-</blockquote>
-<h2 id="Swift相关概念"><a href="#Swift相关概念" class="headerlink" title="Swift相关概念"></a>Swift相关概念</h2><p>Swift是一个分布式对象存储系统，属于OpenStack的一个核心组件之一。作为对象存储它可以为大规模的数据存储提供高可用性、可扩展性和数据安全性。它允许用户将大量的数据存储在云上，并且可以随时访问、检索和管理这些数据。在openstack中，Swift也可以作为Glance的后端存储，负责存储镜像文件。</p>
+          <h2 id="Swift相关概念"><a href="#Swift相关概念" class="headerlink" title="Swift相关概念"></a>Swift相关概念</h2><p>Swift是一个分布式对象存储系统，属于OpenStack的一个核心组件之一。作为对象存储它可以为大规模的数据存储提供高可用性、可扩展性和数据安全性。它允许用户将大量的数据存储在云上，并且可以随时访问、检索和管理这些数据。在openstack中，Swift也可以作为Glance的后端存储，负责存储镜像文件。</p>
 <h3 id="块存储、对象存储、文件存储"><a href="#块存储、对象存储、文件存储" class="headerlink" title="块存储、对象存储、文件存储"></a>块存储、对象存储、文件存储</h3><p>这三者的本质差别是使用数据的“用户”不同：块存储的用户是可以读写块设备的软件系统，例如传统的文件系统、数据库；文件存储的用户是自然人；对象存储的用户则是其它计算机软件。</p>
 <h3 id="Swift特点"><a href="#Swift特点" class="headerlink" title="Swift特点"></a>Swift特点</h3><ol>
 <li><p>高可用性：Swift采用了多副本、冗余和分布式架构，以确保数据的高可用性和可靠性。当一个存储节点发生故障时，系统可以自动地将数据复制到其他节点上，以保证数据的完整性和可用性。</p>
@@ -233,12 +534,18 @@
 <li><p>Auditor(审计器) – 审计器会抓取本地服务器，检查对象、容器和账户的完整性。如果发现损坏，文件将被隔离，复制器将从另一个副本替换坏文件。</p>
 </li>
 </ol>
-<h2 id="Swift实验"><a href="#Swift实验" class="headerlink" title="Swift实验"></a>Swift实验</h2><p>查看系统中正在运行的swift相关的服务。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># systemctl -l |grep "swift"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<img src="https://vault.taojie.fun:28089/i/2023/11/18/2023-11-18-1700273105.png" alt="1700273105539.png" title="1700273105539.png" />
+<h2 id="Swift实验"><a href="#Swift实验" class="headerlink" title="Swift实验"></a>Swift实验</h2><h3 id="作业与实验环境"><a href="#作业与实验环境" class="headerlink" title="作业与实验环境"></a>作业与实验环境</h3><blockquote>
+<p><a target="_blank" rel="noopener" href="https://wxstc.fanya.chaoxing.com/portal">超星网址</a><br>虚拟机<code>openstack-allinone</code>，账户<code>root</code>，密码<code>000000</code></p>
+</blockquote>
+<p>VmWare需要修改网络设置，在编辑-&gt;虚拟网络编辑器中将Vmnet1网卡的子网由原来的<code>192.168.10.0</code>改为<code>192.168.100.0</code>。</p>
+<img src="https://vault.taojie.fun:28089/i/2023/12/03/2023-12-03-1701610473.png" alt="1701610472777.png" title="1701610472777.png" />
 
 <h3 id="Swift命令行使用"><a href="#Swift命令行使用" class="headerlink" title="Swift命令行使用"></a>Swift命令行使用</h3><ol>
+<li><p>查看系统中正在运行的swift相关的服务。</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># systemctl -l |grep "swift"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+ <img src="https://vault.taojie.fun:28089/i/2023/11/18/2023-11-18-1700273105.png" alt="1700273105539.png" title="1700273105539.png" />
+</li>
 <li><p>执行脚本完成身份认证。</p>
  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># source /etc/keystone/admin-openrc.sh</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 </li>
@@ -309,7 +616,8 @@ test.txt<span aria-hidden="true" class="line-numbers-rows"><span></span><span></
 <blockquote>
 <p>作业2：通过api请求查看到容器内的对象列表后截图上传。</p>
 </blockquote>
-<h3 id="Horizon界面使用对象存储"><a href="#Horizon界面使用对象存储" class="headerlink" title="Horizon界面使用对象存储"></a>Horizon界面使用对象存储</h3><p>在项目-&gt;对象存储菜单内可以上传、删除文件，也可以对容器进行管理。</p>
+<h3 id="Horizon界面使用对象存储"><a href="#Horizon界面使用对象存储" class="headerlink" title="Horizon界面使用对象存储"></a>Horizon界面使用对象存储</h3><p>Horizon登录地址<code>192.168.100.10/dashboard</code>，使用域<code>xiandian</code>、用户名<code>admin</code>、密码<code>000000</code>登录。</p>
+<p>在项目-&gt;对象存储菜单内可以上传、删除文件，也可以对容器进行管理。</p>
 <img src="https://vault.taojie.fun:28089/i/2023/11/19/2023-11-19-1700395312.png" alt="1700395313493.png" title="1700395313493.png" />
 
 <h3 id="配置Swift作为Glance后端存储"><a href="#配置Swift作为Glance后端存储" class="headerlink" title="配置Swift作为Glance后端存储"></a>配置Swift作为Glance后端存储</h3><p>Glance的后端存储默认为本地e文件系统，这个实验是将Glance的后端存储配置为Swift对象存储，上传到OpenStack平台的镜像文件会被保存在对象存储中。</p>
@@ -325,7 +633,8 @@ default_store <span class="token operator">=</span> swift<span aria-hidden="true
 swift_store_multi_tenant <span class="token operator">=</span> <span class="token boolean">true</span>
 swift_store_admin_tenants <span class="token operator">=</span> admin<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">swift_store_create_container_on_put <span class="token operator">=</span> <span class="token boolean">true</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 设置允许创建容器</span>
+swift_store_create_container_on_put <span class="token operator">=</span> <span class="token boolean">true</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 </li>
 <li><p>重启Glance相关服务。</p>
  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># systemctl restart openstack-glance*</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -3447,671 +3756,6 @@ export OS_IMAGE_API_VERSION=2<span aria-hidden="true" class="line-numbers-rows">
 </ul>
 </li>
 </ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/06/27/private_clouds/1.%E5%88%9D%E8%AF%86%E4%BA%91%E8%AE%A1%E7%AE%97%E4%B8%8EOpenStack/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | ">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/06/27/private_clouds/1.%E5%88%9D%E8%AF%86%E4%BA%91%E8%AE%A1%E7%AE%97%E4%B8%8EOpenStack/" class="post-title-link" itemprop="url">初识云计算与OpenStack</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-06-27 22:11:49" itemprop="dateCreated datePublished" datetime="2023-06-27T22:11:49+08:00">2023-06-27</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-09-14 07:59:40" itemprop="dateModified" datetime="2023-09-14T07:59:40+08:00">2023-09-14</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <blockquote>
-<p><a target="_blank" rel="noopener" href="https://wxstc.fanya.chaoxing.com/portal">超星网址</a></p>
-</blockquote>
-<h2 id="传统的计算模式"><a href="#传统的计算模式" class="headerlink" title="传统的计算模式"></a>传统的计算模式</h2><h3 id="计算机系统结构"><a href="#计算机系统结构" class="headerlink" title="计算机系统结构"></a>计算机系统结构</h3><p><img src="https://vault.taojie.fun:28089/i/2023/09/02/note1.%E5%88%9D%E8%AF%86%E4%BA%91%E8%AE%A1%E7%AE%97%E4%B8%8EOpenstack-2023-08-25-22-09-05.png" alt="1.初识云计算与Openstack-2023-08-25-22-09-05"></p>
-<p>传统的计算模式是指企业或个人在自己的本地环境中构建、管理和维护硬件设备、操作系统和应用程序，以满足其计算和存储需求。</p>
-<blockquote>
-<p>对于个人用户的场景：需要搭建服务或者使用Linux系统环境时，我们往往需要在本地计算机上搭建虚拟机或者单独购买一套硬件来实现。<br>对于企业用户的场景：需要对内向员工提供项目管理等等办公服务、对外向用户提供web服务，数据库服务等等，同样需要在企业内部通过搭建数据中心来实现。</p>
-</blockquote>
-<ul>
-<li>需要购买和维护物理硬件设备，同时需要专业的IT团队来管理硬件和软件设施。（成本过高）</li>
-<li>资源利用率可能不高，硬件设备难以进行快速的资源分配和释放。（企业达到一定规模后难以适应多变的需求）</li>
-<li>扩展时需要购买更多硬件，时间和成本较高。（扩展性差）</li>
-<li>需要考虑容灾和高可用性，可能需要复杂的架构设计。（安全性需要得到保障）</li>
-</ul>
-<h2 id="云计算的概念"><a href="#云计算的概念" class="headerlink" title="云计算的概念"></a>云计算的概念</h2><p><strong>云计算的定义：</strong> 云计算是一种按使用量付费的模式，它可以实现随时随地，便捷地，随需应变地从可配置计算资源共享池中获取所需的资源（例如，网络、服务器、存储、应用、及服务），资源能够快速供应并释放，使管理资源的工作量和与服务提供商的交互减小到最低限度。</p>
-<blockquote>
-<p>和传统模式特点比较</p>
-</blockquote>
-<p><strong>资源池化：</strong> 传统的虚拟化技术是将单个服务器硬件虚拟成多个虚拟机，其目的也是在于提高服务器资源的利用率。但是，由于单个服务器的CPU、内存、硬盘资源颗粒度较小，因此在虚拟化应用中，经常出现资源配置空洞，要么是CPU核数没有分配完，要么是内存没有分配完，更多的情况是硬盘容量存在大量空闲。而服务器资源池化可以更好的解决上述问题。</p>
-<p><img src="https://vault.taojie.fun:28089/i/2023/09/02/note1.%E5%88%9D%E8%AF%86%E4%BA%91%E8%AE%A1%E7%AE%97%E4%B8%8EOpenstack-2023-08-26-14-41-36.jpg" alt="1.初识云计算与Openstack-2023-08-26-14-41-36"></p>
-<h2 id="云计算的特点"><a href="#云计算的特点" class="headerlink" title="云计算的特点"></a>云计算的特点</h2><ol>
-<li>资源池化：云计算中的资源（如计算能力、存储、网络等）被集中管理并池化，供多个用户共享。这种资源的共享和动态分配提高了资源的利用率。</li>
-<li>按需分配： 用户可以根据自己的需求，自主地获取和配置计算资源，无需人工干预。这种自服务模式使用户能够快速获取所需资源，提高了效率。</li>
-<li>快速弹性扩展： 用户可以根据需要快速扩展或缩减资源，以适应业务的变化。这种弹性特性允许用户在高峰时段获得更多资源，而在低谷时段释放资源。</li>
-<li>可用性和容灾性：许多云服务提供商提供高可用性和容灾选项，确保服务在故障时能够持续运行，减少了业务中断的风险。</li>
-</ol>
-<blockquote>
-<p>可扩展一方面使得上云的应用能够根据不同时段的业务需求动态调整资源另一方面，企业可以在不停机的情况下增加任意资源；可用性使得服务器出现故障时会无缝切换到资源池上的其他资源，不管是计算资源还是存储设备都能保证24小时不间断提供服务。<br>基于以上特点总结：用户不需要为应用单独购买服务器、同时不需要付出管理成本，只需要付出租用的成本就可以使用到随时能够扩容的并且有专业人员维护以保障安全的计算服务。</p>
-</blockquote>
-<h2 id="云计算的分类"><a href="#云计算的分类" class="headerlink" title="云计算的分类"></a>云计算的分类</h2><h3 id="按服务对象或者运营模式分类"><a href="#按服务对象或者运营模式分类" class="headerlink" title="按服务对象或者运营模式分类"></a>按服务对象或者运营模式分类</h3><ol>
-<li><p>公有云：“公有”反映了这类云服务并非用户所拥有，公有云是面向大众提供计算资源的服务。是由第三方云服务提供商提供资源，如应用和存储，这些资源是在服务商的场所内部署。用户通过Internet互联网来获取这些资源的使用。<br>公有云的优势是成本低，扩展性非常好。缺点是对于云端的资源缺乏控制、保密数据的安全性、网络性能问题。<br>规模最大的几个公有云厂商：阿里云、Amazon Web Services（AWS）、Google Cloud</p>
-</li>
-<li><p>私有云：“私有”更多是指此类平台属于非共享资源，而非指其安全优势。私有云是为了一个客户单独使用而构建的，所以这些数据、安全和服务质量都较公有云有着更好地保障。<br>在私有云模式中，云平台的资源为包含多个用户的单一组织专用。私有云可由该组织、第三方或两者联合拥有、管理和运营。私有云的部署场所可以是在机构内部，也可以在外部。</p>
-</li>
-<li><p>混合云：混合云结合了公有云和私有云的特点，允许数据和应用在这两者之间流动。组织可以在私有云中部署敏感数据或关键业务应用，同时利用公有云的弹性来处理突发业务需求。混合云模型可以最大程度地平衡安全性、灵活性和成本效益。</p>
-</li>
-</ol>
-<p><img src="https://vault.taojie.fun:28089/i/2023/09/02/note1.%E5%88%9D%E8%AF%86%E4%BA%91%E8%AE%A1%E7%AE%97%E4%B8%8EOpenstack-2023-08-26-20-09-02.png" alt="1.初识云计算与Openstack-2023-08-26-20-09-02"></p>
-<h3 id="按服务类型分类"><a href="#按服务类型分类" class="headerlink" title="按服务类型分类"></a>按服务类型分类</h3><p><img src="https://vault.taojie.fun:28089/i/2023/09/02/note1.%E5%88%9D%E8%AF%86%E4%BA%91%E8%AE%A1%E7%AE%97%E4%B8%8EOpenstack-2023-08-26-20-00-39.jpg" alt="1.初识云计算与Openstack-2023-08-26-20-00-39"></p>
-<ol>
-<li><p>IaaS（Infrastructure as a Service–基础架构即服务）：<br>IaaS提供了基础的计算、存储和网络资源，用户可以在这些资源上构建和管理自己的应用环境。它为用户提供了虚拟化的计算资源，包括虚拟机、存储和网络连接。用户可以根据需要自主配置和管理操作系统、应用程序和数据。</p>
-<blockquote>
-<p>阿里云的ECS服务器，腾讯云的CVM服务器</p>
-</blockquote>
-</li>
-<li><p>PaaS（Platform as a Service–平台即服务）：<br>PaaS在IaaS的基础上提供了更高层次的服务，除了计算、存储和网络，还包括了开发和部署应用程序所需的平台环境。PaaS提供了开发工具、数据库、中间件和运行时环境等，使开发人员能够更专注于应用程序的开发而不必关心底层基础设施。</p>
-<blockquote>
-<p>阿里云的EDAS</p>
-</blockquote>
-<p><img src="https://vault.taojie.fun:28089/i/2023/09/02/note1.%E5%88%9D%E8%AF%86%E4%BA%91%E8%AE%A1%E7%AE%97%E4%B8%8EOpenstack-2023-08-26-16-31-49.png" alt="1.初识云计算与Openstack-2023-08-26-16-31-49"></p>
-</li>
-<li><p>SaaS（Software as a Service–软件即服务）：<br>SaaS提供完整的应用程序，用户通过互联网访问这些应用程序，无需安装和维护。SaaS应用程序由云服务提供商托管和维护，用户只需要通过浏览器或移动应用访问应用功能。</p>
-<blockquote>
-<p>微软的Microsoft 365，各种在线工具。</p>
-</blockquote>
-</li>
-</ol>
-<p><img src="https://vault.taojie.fun:28089/i/2023/09/02/note1.%E5%88%9D%E8%AF%86%E4%BA%91%E8%AE%A1%E7%AE%97%E4%B8%8EOpenstack-2023-08-26-16-32-26.png" alt="1.初识云计算与Openstack-2023-08-26-16-32-26"></p>
-<h2 id="OpenStack介绍"><a href="#OpenStack介绍" class="headerlink" title="OpenStack介绍"></a>OpenStack介绍</h2><p>OpenStack是一个自由、开源的云计算平台。它主要作为基础设施即服务（IaaS）部署在公有云和私有云中，提供虚拟服务器和其他资源给用户使用。该软件平台由相互关联的组件组成，控制着整个数据中心内不同的厂商的处理器、存储和网络资源的硬件池。用户可以通过基于网络的仪表盘、命令行工具或RESTful网络服务来管理。</p>
-<p>OpenStack始于2010年，是Rackspace和美国国家航空航天局的合作项目。截至2012年，它由2012年9月成立的非营利组织OpenStack基金会管理，旨在促进OpenStack软件及其社区。到2018年，已经有500多家公司加入了该项目。在2020年，该基金会宣布它将在2021年更名为Open Infrastructure Foundation（开放基础设施基金会）。</p>
-<h3 id="适用范围"><a href="#适用范围" class="headerlink" title="适用范围"></a>适用范围</h3><p>OpenStack是基础设施即服务（IaaS）软件，让任何人都可以自行建立和提供云计算服务。</p>
-<p>此外，OpenStack也用作建立防火墙内的“私有云”（Private Cloud），提供机构或企业内各部门共享资源。</p>
-<h3 id="发展历程"><a href="#发展历程" class="headerlink" title="发展历程"></a>发展历程</h3><p>OpenStack每半年会发布一个版本，版本从字母A开始向后按顺序的命名；OpenStack社区为了方便描述，因此他们为每一个字母来进行投票，来选出一个单词。</p>
-<p><img src="https://vault.taojie.fun:28089/i/2023/09/02/note1.%E5%88%9D%E8%AF%86%E4%BA%91%E8%AE%A1%E7%AE%97%E4%B8%8EOpenstack-2023-08-26-20-34-27.png" alt="1.初识云计算与Openstack-2023-08-26-20-34-27"></p>
-<h3 id="OpenStack架构"><a href="#OpenStack架构" class="headerlink" title="OpenStack架构"></a>OpenStack架构</h3><p><img src="https://vault.taojie.fun:28089/i/2023/09/02/note1.%E5%88%9D%E8%AF%86%E4%BA%91%E8%AE%A1%E7%AE%97%E4%B8%8EOpenstack-2023-08-26-21-59-40.png" alt="1.初识云计算与Openstack-2023-08-26-21-59-40"></p>
-<h4 id="核心组件"><a href="#核心组件" class="headerlink" title="核心组件"></a>核心组件</h4><ol>
-<li>Keystone： 身份认证服务，用于管理用户、项目和角色，并提供认证和授权功能。</li>
-<li>Nova： 计算服务，用于创建和管理虚拟机实例，提供计算资源。</li>
-<li>Neutron： 网络服务，提供网络资源的管理和连接，包括虚拟网络、子网、路由等。</li>
-<li>Glance： 镜像服务，用于管理虚拟机镜像，用户可以从镜像创建虚拟机实例。</li>
-<li>Placement： 该组件于OpenStack Stein版本引入，主要用于优化虚拟机实例的资源分配和调度。</li>
-</ol>
-<p>其他常用组件：</p>
-<ol>
-<li>Cinder： 块存储服务，提供虚拟机实例所需的持久性块存储，如挂载到虚拟机的卷。</li>
-<li>Swift： 对象存储服务，用于存储非结构化数据，如文件、图像和视频等。</li>
-<li>Horizon： Web 控制台，提供用户界面，用于管理和监控 OpenStack 系统。</li>
-</ol>
-<p><img src="https://vault.taojie.fun:28089/i/2023/09/02/note1.%E5%88%9D%E8%AF%86%E4%BA%91%E8%AE%A1%E7%AE%97%E4%B8%8EOpenstack-2023-08-26-21-11-14.png" alt="1.初识云计算与Openstack-2023-08-26-21-11-14"></p>
-<blockquote>
-<p>OpenStack本身是一个分布式系统，不但各个服务可以分布部署，服务中的组件也可以分布部署。<br>这种分布式特性让OpenStack具备极大的灵活性、伸缩性和高可用性。</p>
-</blockquote>
-<h3 id="示例架构"><a href="#示例架构" class="headerlink" title="示例架构"></a>示例架构</h3><p>示例架构需要至少两个节点（主机）来启动基本虚拟机或实例。块存储和对象存储等可选服务需要额外的节点。</p>
-<p>基本两节点OpenStack部署示例：</p>
-<ol>
-<li><p>控制节点（Controller Node）： 这个节点承担了OpenStack核心服务的角色，例如Identity服务 (Keystone)、Dashboard服务 (Horizon)、Compute服务 (Nova API)、网络服务 (Neutron API) 等。这个节点管理OpenStack环境的整体状态。</p>
-</li>
-<li><p>计算节点（Compute Node）： 这个节点用于运行虚拟机实例。虚拟机的资源会在计算节点上分配和运行。它连接到控制节点以获取任务和指令，并与存储和网络资源进行交互。</p>
-</li>
-</ol>
-<blockquote>
-<p>这种配置适用于非常基本的测试、学习或演示用途，但在生产环境中，为了实现更高的性能、可用性和容错性，通常会使用更多的节点和组件。</p>
-</blockquote>
-<p><img src="https://vault.taojie.fun:28089/i/2023/09/02/note1.%E5%88%9D%E8%AF%86%E4%BA%91%E8%AE%A1%E7%AE%97%E4%B8%8EOpenstack-2023-08-26-22-58-14.png" alt="1.初识云计算与Openstack-2023-08-26-22-58-14"></p>
-<h2 id="使用packstack部署OpenStack平台"><a href="#使用packstack部署OpenStack平台" class="headerlink" title="使用packstack部署OpenStack平台"></a>使用packstack部署OpenStack平台</h2><h3 id="资源清单"><a href="#资源清单" class="headerlink" title="资源清单"></a>资源清单</h3><table>
-<thead>
-<tr>
-<th>资源名称</th>
-<th>说明</th>
-<th>地址</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>openStack-train.iso</td>
-<td>Centos + OpenStack平台镜像</td>
-<td></td>
-</tr>
-</tbody></table>
-<h3 id="基础环境配置"><a href="#基础环境配置" class="headerlink" title="基础环境配置"></a>基础环境配置</h3><h4 id="节点规划"><a href="#节点规划" class="headerlink" title="节点规划"></a>节点规划</h4><table>
-<thead>
-<tr>
-<th>节点名称（主机名）</th>
-<th>外网网卡IP地址（网卡名：ens34）</th>
-<th>内网网卡IP地址（网卡名：ens33）</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>controller</td>
-<td>192.168.20.10</td>
-<td>192.168.10.10</td>
-</tr>
-<tr>
-<td>compute</td>
-<td>192.168.20.20</td>
-<td>192.168.10.20</td>
-</tr>
-</tbody></table>
-<h4 id="利用快照快速恢复系统"><a href="#利用快照快速恢复系统" class="headerlink" title="利用快照快速恢复系统"></a>利用快照快速恢复系统</h4><ol>
-<li><p>控制节点虚拟机环境准备</p>
-<p>虚拟机列表中右键名为<code>控制节点</code>的虚拟机-&gt;快照-&gt;快照管理器，选中<code>项目2 系统安装完成</code>后转到并确认。此时虚拟机<code>控制节点</code>已恢复到系统安装完毕后的版本（利用快照管理器可以将虚拟机快速恢复到之前已经保存过的任意状态）。</p>
-<blockquote>
-<p>这一步创建好的系统ROOT账户密码<code>000000</code></p>
-</blockquote>
-<p><img src="https://vault.taojie.fun:28089/i/2023/09/02/note1.%E5%88%9D%E8%AF%86%E4%BA%91%E8%AE%A1%E7%AE%97%E4%B8%8EOpenstack-2023-08-27-20-43-21.png" alt="1.初识云计算与Openstack-2023-08-27-20-43-21"></p>
-</li>
-<li><p>计算节点虚拟机环境准备</p>
-<p>先关闭<code>控制节点</code>虚拟机，在虚拟机列表中右键名为<code>计算节点</code>的虚拟机-&gt;移除，右键<code>控制节点</code>虚拟机-&gt;管理-&gt;克隆，按照向导提示完成虚拟机克隆，克隆自虚拟机中的当前状态，克隆方法选择<code>完整克隆</code>，虚拟机名称设置为<code>计算节点</code>。</p>
-</li>
-</ol>
-<p>此时运行OpenStack所需的双节点系统环境已经创建完成，接下来做基础配置。</p>
-<h4 id="虚拟机网络配置"><a href="#虚拟机网络配置" class="headerlink" title="虚拟机网络配置"></a>虚拟机网络配置</h4><p>此步骤的配置需要在<code>控制节点</code>和<code>计算节点</code>上完成，每个节点分别有两个网卡需要配置：一个内网网卡和一个外网网卡。</p>
-<ol>
-<li><p>在编辑-&gt;虚拟网络编辑器可以为虚拟机配置桥接模式网络连接、NAT 和仅主机模式网络连接。</p>
-<ol>
-<li><p>桥接模式</p>
-<p>桥接模式网络连接通过使用主机系统上的网络适配器将虚拟机连接到网络。如果主机系统位于网络中，桥接模式网络连接通常是虚拟机访问该网络的最简单途径。</p>
-</li>
-<li><p>NAT模式</p>
-<p>使用 NAT 模式网络时，虚拟机在外部网络中不必具有自己的 IP 地址。主机系统上会建立单独的专用网络。在默认配置中，虚拟机会在此专用网络中通过 DHCP 服务器获取地址。虚拟机和主机系统共享一个网络标识，此标识在外部网络中不可见。</p>
-</li>
-<li><p>仅主机模式</p>
-<p>编辑-&gt;虚拟网络编辑器，右下角更改设置，按照<a href="#%E8%8A%82%E7%82%B9%E8%A7%84%E5%88%92">节点规划</a>将<code>仅主机模式</code>和<code>NAT模式</code>配置为如下图。其中<code>仅主机模式</code>的子网地址为<code>192.168.10.0</code>，<code>NAT模式</code>的子网地址为<code>192.168.20.0</code>。</p>
-<p><img src="https://vault.taojie.fun:28089/i/2023/09/02/note1.%E5%88%9D%E8%AF%86%E4%BA%91%E8%AE%A1%E7%AE%97%E4%B8%8EOpenstack-2023-08-29-14-43-53.png" alt="1.初识云计算与Openstack-2023-08-29-14-43-53"></p>
-</li>
-</ol>
-</li>
-<li><p>启动<code>控制节点</code>虚拟机，在控制节点中使用如下命令编辑<code>网卡ens33</code>的配置文件：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">vi</span> /etc/sysconfig/network-scripts/ifcfg-ens33<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>编辑文件如下：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token assign-left variable">TYPE</span><span class="token operator">=</span>Ethernet
-<span class="token assign-left variable">PROXY_METHOD</span><span class="token operator">=</span>none
-<span class="token assign-left variable">BROWSER_ONLY</span><span class="token operator">=</span>no
-<span class="token assign-left variable">BOOTPROTO</span><span class="token operator">=</span>static        <span class="token comment"># 1. 配置静态分配ip</span>
-<span class="token assign-left variable">DEFROUTE</span><span class="token operator">=</span>yes
-<span class="token assign-left variable">IPV4_FAILURE_FATAL</span><span class="token operator">=</span>no
-<span class="token assign-left variable">IPV6INIT</span><span class="token operator">=</span>yes
-<span class="token assign-left variable">IPV6_AUTOCONF</span><span class="token operator">=</span>yes
-<span class="token assign-left variable">IPV6_DEFROUTE</span><span class="token operator">=</span>yes
-<span class="token assign-left variable">IPV6_FAILURE_FATAL</span><span class="token operator">=</span>no
-<span class="token assign-left variable">IPV6_ADDR_GEN_MODE</span><span class="token operator">=</span>stable-privacy
-<span class="token assign-left variable">NAME</span><span class="token operator">=</span>ens33
-<span class="token assign-left variable">UUID</span><span class="token operator">=</span>266c663e-d288-4d54-b100-00741dda6c70
-<span class="token assign-left variable">DEVICE</span><span class="token operator">=</span>ens33
-<span class="token assign-left variable">ONBOOT</span><span class="token operator">=</span>yes              <span class="token comment"># 2. 配置开机激活网卡</span>
-<span class="token assign-left variable">IPADDR</span><span class="token operator">=</span><span class="token number">192.168</span>.10.10    <span class="token comment"># 3. 配置ip地址</span>
-<span class="token assign-left variable">NETMASK</span><span class="token operator">=</span><span class="token number">255.255</span>.255.0   <span class="token comment"># 4. 配置子网掩码</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<blockquote>
-<p>ens33作为内网网口不需要配置默认网关。</p>
-</blockquote>
-<p>用相同的方法配置外网网卡<code>ens34</code>，配置如下：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token assign-left variable">TYPE</span><span class="token operator">=</span>Ethernet
-<span class="token assign-left variable">PROXY_METHOD</span><span class="token operator">=</span>none
-<span class="token assign-left variable">BROWSER_ONLY</span><span class="token operator">=</span>n
-<span class="token assign-left variable">BOOTPROTO</span><span class="token operator">=</span>static        <span class="token comment"># 1. 配置静态分配ip</span>
-<span class="token assign-left variable">DEFROUTE</span><span class="token operator">=</span>yes
-<span class="token assign-left variable">IPV4_FAILURE_FATAL</span><span class="token operator">=</span>no
-<span class="token assign-left variable">IPV6INIT</span><span class="token operator">=</span>yes
-<span class="token assign-left variable">IPV6_AUTOCONF</span><span class="token operator">=</span>yes
-<span class="token assign-left variable">IPV6_DEFROUTE</span><span class="token operator">=</span>yes
-<span class="token assign-left variable">IPV6_FAILURE_FATAL</span><span class="token operator">=</span>no
-<span class="token assign-left variable">IPV6_ADDR_GEN_MODE</span><span class="token operator">=</span>stable-privacy
-<span class="token assign-left variable">NAME</span><span class="token operator">=</span>ens34
-<span class="token assign-left variable">UUID</span><span class="token operator">=</span>bf2fdda3-d6bf-4a72-953f-02cd83115887
-<span class="token assign-left variable">DEVICE</span><span class="token operator">=</span>ens34
-<span class="token assign-left variable">ONBOOT</span><span class="token operator">=</span>yes              <span class="token comment"># 2. 配置开机激活网卡</span>
-<span class="token assign-left variable">IPADDR</span><span class="token operator">=</span><span class="token number">192.168</span>.20.10    <span class="token comment"># 3. 配置ip地址</span>
-<span class="token assign-left variable">NETMASK</span><span class="token operator">=</span><span class="token number">255.255</span>.255.0   <span class="token comment"># 4. 配置子网掩码</span>
-<span class="token assign-left variable">GATEWAY</span><span class="token operator">=</span><span class="token number">192.168</span>.20.2    <span class="token comment"># 5. 配置网关</span>
-<span class="token assign-left variable">DNS1</span><span class="token operator">=</span><span class="token number">114.114</span>.114.114    <span class="token comment"># 6. 配置dns</span>
-<span class="token assign-left variable">DNS2</span><span class="token operator">=</span><span class="token number">8.8</span>.8.8<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>使用命令<code>ifup + 网卡名</code>激活上一步修改的两个网卡配置</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># ifup ens33</span>
-<span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># ifup ens34</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p>使用命令<code>ip addr</code>查看当前网卡配置：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># ip addr</span>
-<span class="token number">1</span>: lo: <span class="token operator">&lt;</span>LOOPBACK,UP,LOWER_UP<span class="token operator">></span> mtu <span class="token number">65536</span> qdisc noqueue state UNKNOWN group default qlen <span class="token number">1000</span>
-   link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
-   inet <span class="token number">127.0</span>.0.1/8 scope <span class="token function">host</span> lo
-      valid_lft forever preferred_lft forever
-   inet6 ::1/128 scope <span class="token function">host</span>
-      valid_lft forever preferred_lft forever
-<span class="token number">2</span>: ens33: <span class="token operator">&lt;</span>BROADCAST,MULTICAST,UP,LOWER_UP<span class="token operator">></span> mtu <span class="token number">1500</span> qdisc pfifo_fast state UP group default qlen <span class="token number">1000</span>
-   link/ether 00:0c:29:f2:ca:50 brd ff:ff:ff:ff:ff:ff
-   inet <span class="token number">192.168</span>.10.10/24 brd <span class="token number">192.168</span>.10.255 scope global noprefixroute ens33
-      valid_lft forever preferred_lft forever
-   inet6 fe80::922:6217:cb6c:e63/64 scope <span class="token function">link</span> noprefixroute
-      valid_lft forever preferred_lft forever
-<span class="token number">3</span>: ens34: <span class="token operator">&lt;</span>BROADCAST,MULTICAST,UP,LOWER_UP<span class="token operator">></span> mtu <span class="token number">1500</span> qdisc pfifo_fast state UP group default qlen <span class="token number">1000</span>
-   link/ether 00:0c:29:f2:ca:5a brd ff:ff:ff:ff:ff:ff
-   inet <span class="token number">192.168</span>.20.10/24 brd <span class="token number">192.168</span>.20.255 scope global noprefixroute ens34
-      valid_lft forever preferred_lft forever
-   inet6 fe80::9b23:9dcb:6af7:812d/64 scope <span class="token function">link</span> noprefixroute
-      valid_lft forever preferred_lft forever <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<blockquote>
-<p>作业1-参考以下命令，使用<code>ping</code>命令验证当前虚拟机网络，验证完成后截图上传。</p>
-</blockquote>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">//验证内网网卡和宿主机之间的网络连通性
-<span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># ping -c3 -I ens33 192.168.10.1</span>
-PING <span class="token number">192.168</span>.10.1 <span class="token punctuation">(</span><span class="token number">192.168</span>.10.1<span class="token punctuation">)</span> from <span class="token number">192.168</span>.10.10 ens33: <span class="token number">56</span><span class="token punctuation">(</span><span class="token number">84</span><span class="token punctuation">)</span> bytes of data.
-<span class="token number">64</span> bytes from <span class="token number">192.168</span>.10.1: <span class="token assign-left variable">icmp_seq</span><span class="token operator">=</span><span class="token number">1</span> <span class="token assign-left variable">ttl</span><span class="token operator">=</span><span class="token number">128</span> <span class="token assign-left variable">time</span><span class="token operator">=</span><span class="token number">0.154</span> ms
-<span class="token number">64</span> bytes from <span class="token number">192.168</span>.10.1: <span class="token assign-left variable">icmp_seq</span><span class="token operator">=</span><span class="token number">2</span> <span class="token assign-left variable">ttl</span><span class="token operator">=</span><span class="token number">128</span> <span class="token assign-left variable">time</span><span class="token operator">=</span><span class="token number">0.587</span> ms
-<span class="token number">64</span> bytes from <span class="token number">192.168</span>.10.1: <span class="token assign-left variable">icmp_seq</span><span class="token operator">=</span><span class="token number">3</span> <span class="token assign-left variable">ttl</span><span class="token operator">=</span><span class="token number">128</span> <span class="token assign-left variable">time</span><span class="token operator">=</span><span class="token number">0.461</span> ms <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">//验证外网网卡和外网资源的网络连通性
-<span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># ping -c3 -I ens34 www.baidu.com</span>
-PING www.a.shifen.com <span class="token punctuation">(</span><span class="token number">153.3</span>.238.110<span class="token punctuation">)</span> from <span class="token number">192.168</span>.20.10 ens34: <span class="token number">56</span><span class="token punctuation">(</span><span class="token number">84</span><span class="token punctuation">)</span> bytes of data.
-<span class="token number">64</span> bytes from <span class="token number">153.3</span>.238.110 <span class="token punctuation">(</span><span class="token number">153.3</span>.238.110<span class="token punctuation">)</span>: <span class="token assign-left variable">icmp_seq</span><span class="token operator">=</span><span class="token number">1</span> <span class="token assign-left variable">ttl</span><span class="token operator">=</span><span class="token number">128</span> <span class="token assign-left variable">time</span><span class="token operator">=</span><span class="token number">6.73</span> ms
-<span class="token number">64</span> bytes from <span class="token number">153.3</span>.238.110 <span class="token punctuation">(</span><span class="token number">153.3</span>.238.110<span class="token punctuation">)</span>: <span class="token assign-left variable">icmp_seq</span><span class="token operator">=</span><span class="token number">2</span> <span class="token assign-left variable">ttl</span><span class="token operator">=</span><span class="token number">128</span> <span class="token assign-left variable">time</span><span class="token operator">=</span><span class="token number">6.99</span> ms
-<span class="token number">64</span> bytes from <span class="token number">153.3</span>.238.110 <span class="token punctuation">(</span><span class="token number">153.3</span>.238.110<span class="token punctuation">)</span>: <span class="token assign-left variable">icmp_seq</span><span class="token operator">=</span><span class="token number">3</span> <span class="token assign-left variable">ttl</span><span class="token operator">=</span><span class="token number">128</span> <span class="token assign-left variable">time</span><span class="token operator">=</span><span class="token number">6.96</span> ms<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>启动<code>计算节点</code>虚拟机，上述步骤完成后用相同的方法在<code>计算节点</code>上完成网络配置，首先配置内网网卡<code>ens33</code>：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">vi</span> /etc/sysconfig/network-scripts/ifcfg-ens33<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>编辑文件如下：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token assign-left variable">TYPE</span><span class="token operator">=</span>Ethernet
-<span class="token assign-left variable">PROXY_METHOD</span><span class="token operator">=</span>none
-<span class="token assign-left variable">BROWSER_ONLY</span><span class="token operator">=</span>no
-<span class="token assign-left variable">BOOTPROTO</span><span class="token operator">=</span>static        <span class="token comment"># 1. 配置静态分配ip</span>
-<span class="token assign-left variable">DEFROUTE</span><span class="token operator">=</span>yes
-<span class="token assign-left variable">IPV4_FAILURE_FATAL</span><span class="token operator">=</span>no
-<span class="token assign-left variable">IPV6INIT</span><span class="token operator">=</span>yes
-<span class="token assign-left variable">IPV6_AUTOCONF</span><span class="token operator">=</span>yes
-<span class="token assign-left variable">IPV6_DEFROUTE</span><span class="token operator">=</span>yes
-<span class="token assign-left variable">IPV6_FAILURE_FATAL</span><span class="token operator">=</span>no
-<span class="token assign-left variable">IPV6_ADDR_GEN_MODE</span><span class="token operator">=</span>stable-privacy
-<span class="token assign-left variable">NAME</span><span class="token operator">=</span>ens33
-<span class="token assign-left variable">UUID</span><span class="token operator">=</span>266c663e-d288-4d54-b100-00741dda6c70
-<span class="token assign-left variable">DEVICE</span><span class="token operator">=</span>ens33
-<span class="token assign-left variable">ONBOOT</span><span class="token operator">=</span>yes              <span class="token comment"># 2. 配置开机激活网卡</span>
-<span class="token assign-left variable">IPADDR</span><span class="token operator">=</span><span class="token number">192.168</span>.10.20    <span class="token comment"># 3. 配置ip地址</span>
-<span class="token assign-left variable">NETMASK</span><span class="token operator">=</span><span class="token number">255.255</span>.255.0   <span class="token comment"># 4. 配置子网掩码</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>用相同的方法配置外网网卡<code>ens34</code>，配置如下：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token assign-left variable">TYPE</span><span class="token operator">=</span>Ethernet
-<span class="token assign-left variable">PROXY_METHOD</span><span class="token operator">=</span>none
-<span class="token assign-left variable">BROWSER_ONLY</span><span class="token operator">=</span>no
-<span class="token assign-left variable">BOOTPROTO</span><span class="token operator">=</span>static        <span class="token comment"># 1. 配置静态分配ip</span>
-<span class="token assign-left variable">DEFROUTE</span><span class="token operator">=</span>yes
-<span class="token assign-left variable">IPV4_FAILURE_FATAL</span><span class="token operator">=</span>no
-<span class="token assign-left variable">IPV6INIT</span><span class="token operator">=</span>yes
-<span class="token assign-left variable">IPV6_AUTOCONF</span><span class="token operator">=</span>yes
-<span class="token assign-left variable">IPV6_DEFROUTE</span><span class="token operator">=</span>yes
-<span class="token assign-left variable">IPV6_FAILURE_FATAL</span><span class="token operator">=</span>no
-<span class="token assign-left variable">IPV6_ADDR_GEN_MODE</span><span class="token operator">=</span>stable-privacy
-<span class="token assign-left variable">NAME</span><span class="token operator">=</span>ens34
-<span class="token assign-left variable">UUID</span><span class="token operator">=</span>bf2fdda3-d6bf-4a72-953f-02cd83115887
-<span class="token assign-left variable">DEVICE</span><span class="token operator">=</span>ens34
-<span class="token assign-left variable">ONBOOT</span><span class="token operator">=</span>yes              <span class="token comment"># 2. 配置开机激活网卡</span>
-<span class="token assign-left variable">IPADDR</span><span class="token operator">=</span><span class="token number">192.168</span>.20.20    <span class="token comment"># 3. 配置ip地址</span>
-<span class="token assign-left variable">NETMASK</span><span class="token operator">=</span><span class="token number">255.255</span>.255.0   <span class="token comment"># 4. 配置子网掩码</span>
-<span class="token assign-left variable">GATEWAY</span><span class="token operator">=</span><span class="token number">192.168</span>.20.2    <span class="token comment"># 5. 配置网关</span>
-<span class="token assign-left variable">DNS1</span><span class="token operator">=</span><span class="token number">114.114</span>.114.114    <span class="token comment"># 6. 配置dns</span>
-<span class="token assign-left variable">DNS2</span><span class="token operator">=</span><span class="token number">8.8</span>.8.8<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<ul>
-<li><p>使用命令<code>ifup + 网卡名</code>激活上一步修改的两个网卡配置  </p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># ifdown ens33</span>
-<span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># ifdown ens34</span>
-<span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># ifup ens33</span>
-<span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># ifup ens34</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>重复上一步使用<code>ping</code>命令验证<code>计算节点</code>的网络配置</p>
-</li>
-</ul>
-</li>
-</ol>
-<p>到目前为止网络配置完成，下一步开始配置本地yum源</p>
-<h4 id="配置本地YUM源、FTP服务、防火墙"><a href="#配置本地YUM源、FTP服务、防火墙" class="headerlink" title="配置本地YUM源、FTP服务、防火墙"></a>配置本地YUM源、FTP服务、防火墙</h4><ol>
-<li><p>这一步是加载<a href="#%E8%B5%84%E6%BA%90%E6%B8%85%E5%8D%95">资源清单</a>中列出的两个镜像源文件到虚拟机<code>控制节点</code>中。</p>
-<ul>
-<li><p>右键虚拟机<code>控制节点</code>-&gt;设置-&gt;选择已有的CD&#x2F;DVD驱动器-&gt;浏览，选择本地的<code>openStack-train.iso</code>文件后完成镜像的加载，同时勾选已连接。</p>
-<p> <img src="https://vault.taojie.fun:28089/i/2023/09/02/note1.%E5%88%9D%E8%AF%86%E4%BA%91%E8%AE%A1%E7%AE%97%E4%B8%8EOpenstack-2023-08-28-20-13-50.png" alt="1.初识云计算与Openstack-2023-08-28-20-13-50"></p>
-</li>
-</ul>
-</li>
-<li><p>重启<code>控制节点</code>虚拟机，镜像加载到虚拟机<code>控制节点</code>后还需要挂载到系统目录下才能进行读取。</p>
-<ul>
-<li><p>首先创建挂载点，挂载驱动器中的镜像到指定目录</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># mkdir /opt/openstack    # 1. 创建挂载点</span>
-<span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment">#</span>
-<span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># mount /dev/sr0 /opt/openstack  # 2. 挂载openStack-train.iso镜像</span>
-mount: /dev/sr0 is write-protected, mounting read-only<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<blockquote>
-<p>挂载完成后<code>df -h</code>查看挂载情况</p>
-</blockquote>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">/dev/sr0                  16G   16G     <span class="token number">0</span> <span class="token number">100</span>% /opt/openstack<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-</ul>
-</li>
-<li><p>这一步配置<code>控制节点</code>的YUM源，<code>控制节点</code>的源文件在本地。</p>
-<ul>
-<li><p>删除现有的配置文件</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># rm -rf /etc/yum.repos.d/*.repo</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li><p>使用<code>vi /etc/yum.repos.d/local.repo</code>创建并编辑文件<code>local.repo</code>，并添加以下配置：</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>base<span class="token punctuation">]</span>
-<span class="token assign-left variable">name</span><span class="token operator">=</span>base
-<span class="token assign-left variable">baseurl</span><span class="token operator">=</span>file:///opt/openstack/base/
-<span class="token assign-left variable">gpgcheck</span><span class="token operator">=</span><span class="token number">0</span>
-<span class="token assign-left variable">enabled</span><span class="token operator">=</span><span class="token number">1</span>
-<span class="token punctuation">[</span>extras<span class="token punctuation">]</span>
-<span class="token assign-left variable">name</span><span class="token operator">=</span>extras
-<span class="token assign-left variable">baseurl</span><span class="token operator">=</span>file:///opt/openstack/extras/
-<span class="token assign-left variable">gpgcheck</span><span class="token operator">=</span><span class="token number">0</span>
-<span class="token assign-left variable">enabled</span><span class="token operator">=</span><span class="token number">1</span>
-<span class="token punctuation">[</span>updates<span class="token punctuation">]</span>
-<span class="token assign-left variable">name</span><span class="token operator">=</span>updates
-<span class="token assign-left variable">baseurl</span><span class="token operator">=</span>file:///opt/openstack/updates/
-<span class="token assign-left variable">gpgcheck</span><span class="token operator">=</span><span class="token number">0</span>
-<span class="token assign-left variable">enabled</span><span class="token operator">=</span><span class="token number">1</span>
-<span class="token punctuation">[</span>train<span class="token punctuation">]</span>
-<span class="token assign-left variable">name</span><span class="token operator">=</span>train
-<span class="token assign-left variable">baseurl</span><span class="token operator">=</span>file:///opt/openstack/train/
-<span class="token assign-left variable">gpgcheck</span><span class="token operator">=</span><span class="token number">0</span>
-<span class="token assign-left variable">enabled</span><span class="token operator">=</span><span class="token number">1</span>
-<span class="token punctuation">[</span>virt<span class="token punctuation">]</span>
-<span class="token assign-left variable">name</span><span class="token operator">=</span>virt
-<span class="token assign-left variable">baseurl</span><span class="token operator">=</span>file:///opt/openstack/virt/
-<span class="token assign-left variable">gpgcheck</span><span class="token operator">=</span><span class="token number">0</span>
-<span class="token assign-left variable">enabled</span><span class="token operator">=</span><span class="token number">1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>执行以下命令检查YUM源是否可用：</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># yum clean all           # 1. 清除缓存</span>
-Loaded plugins: fastestmirror
-Cleaning repos: base extras train updates virt
-Cleaning up list of fastest mirrors
-<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># yum makecache           # 2. 重建缓存</span>
-Loaded plugins: fastestmirror
-Determining fastest mirrors
-base                                                                                                                      <span class="token operator">|</span> <span class="token number">2.9</span> kB  00:00:00
-extras                                                                                                                    <span class="token operator">|</span> <span class="token number">2.9</span> kB  00:00:00
-train                                                                                                                     <span class="token operator">|</span> <span class="token number">2.9</span> kB  00:00:00
-updates                                                                                                                   <span class="token operator">|</span> <span class="token number">2.9</span> kB  00:00:00
-virt                                                                                                                      <span class="token operator">|</span> <span class="token number">2.9</span> kB  00:00:00
-<span class="token punctuation">(</span><span class="token number">1</span>/15<span class="token punctuation">)</span>: base/primary_db                                                                                                   <span class="token operator">|</span> <span class="token number">6.0</span> MB  00:00:00
-<span class="token punctuation">(</span><span class="token number">2</span>/15<span class="token punctuation">)</span>: base/filelists_db                                                                                                 <span class="token operator">|</span> <span class="token number">7.0</span> MB  00:00:00
-<span class="token punctuation">(</span><span class="token number">3</span>/15<span class="token punctuation">)</span>: base/other_db                                                                                                     <span class="token operator">|</span> <span class="token number">2.5</span> MB  00:00:00
-<span class="token punctuation">(</span><span class="token number">4</span>/15<span class="token punctuation">)</span>: extras/filelists_db                                                                                               <span class="token operator">|</span> <span class="token number">259</span> kB  00:00:00
-<span class="token punctuation">(</span><span class="token number">5</span>/15<span class="token punctuation">)</span>: extras/other_db                                                                                                   <span class="token operator">|</span> <span class="token number">145</span> kB  00:00:00
-<span class="token punctuation">(</span><span class="token number">6</span>/15<span class="token punctuation">)</span>: extras/primary_db                                                                                                 <span class="token operator">|</span> <span class="token number">241</span> kB  00:00:00
-<span class="token punctuation">(</span><span class="token number">7</span>/15<span class="token punctuation">)</span>: train/filelists_db                                                                                               <span class="token operator">|</span> <span class="token number">3.6</span> MB  00:00:00
-<span class="token punctuation">(</span><span class="token number">8</span>/15<span class="token punctuation">)</span>: train/primary_db                                                                                                 <span class="token operator">|</span> <span class="token number">1.2</span> MB  00:00:00
-<span class="token punctuation">(</span><span class="token number">9</span>/15<span class="token punctuation">)</span>: train/other_db                                                                                                   <span class="token operator">|</span> <span class="token number">465</span> kB  00:00:00
-<span class="token punctuation">(</span><span class="token number">10</span>/15<span class="token punctuation">)</span>: updates/filelists_db                                                                                             <span class="token operator">|</span> <span class="token number">6.5</span> MB  00:00:00
-<span class="token punctuation">(</span><span class="token number">11</span>/15<span class="token punctuation">)</span>: updates/primary_db                                                                                               <span class="token operator">|</span>  <span class="token number">14</span> MB  00:00:00
-<span class="token punctuation">(</span><span class="token number">12</span>/15<span class="token punctuation">)</span>: updates/other_db                                                                                                 <span class="token operator">|</span> <span class="token number">914</span> kB  00:00:00
-<span class="token punctuation">(</span><span class="token number">13</span>/15<span class="token punctuation">)</span>: virt/filelists_db                                                                                                <span class="token operator">|</span>  <span class="token number">14</span> kB  00:00:00
-<span class="token punctuation">(</span><span class="token number">14</span>/15<span class="token punctuation">)</span>: virt/other_db                                                                                                    <span class="token operator">|</span>  <span class="token number">45</span> kB  00:00:00
-<span class="token punctuation">(</span><span class="token number">15</span>/15<span class="token punctuation">)</span>: virt/primary_db                                                                                                  <span class="token operator">|</span>  <span class="token number">56</span> kB  00:00:00
-Metadata Cache Created
-<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># yum repolist            # 3. 查看仓库列表</span>
-Loaded plugins: fastestmirror
-Loading mirror speeds from cached hostfile
-repo <span class="token function">id</span>                                                              repo name                                                             status
-base                                                                 base                                                                  <span class="token number">10,039</span>
-extras                                                               extras                                                                   <span class="token number">500</span>
-train                                                                train                                                                  <span class="token number">3,168</span>
-updates                                                              updates                                                                <span class="token number">3,182</span>
-virt                                                                 virt                                                                      <span class="token number">63</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>到目前为止<code>控制节点</code>的YUM源配置完毕，最后在<code>控制节点</code>上设置域名解析、关闭防火墙、安装FTP服务器为<code>计算节点</code>提供服务</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># hostnamectl set-hostname controller  # 1. 修改主机名</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<blockquote>
-<p>修改完主机名后<code>ctrl + D</code>退出当前会话重新登录验证主机名设置是否生效。</p>
-</blockquote>
-<ul>
-<li><p>在<code>/etc/hosts</code>文件最后添加以下两行域名解析</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token number">192.168</span>.10.10 controller
-<span class="token number">192.168</span>.10.20 compute<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-</li>
-<li><p>修改<code>/etc/selinux/config</code>文件中的<code>SELINUX=enforcing</code>为<code>SELINUX=disabled</code></p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config </span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li><p>禁用SELinux和防火墙</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># setenforce 0                   # 1. 禁用SELinux</span>
-<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># systemctl disable firewalld    # 2. 关闭开机启动防火墙</span>
-Removed symlink /etc/systemd/system/multi-user.target.wants/firewalld.service.
-Removed symlink /etc/systemd/system/dbus-org.fedoraproject.FirewallD1.service.
-<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># systemctl stop firewalld       # 3. 立即关闭防火墙</span>
-<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># yum remove -y NetworkManager   # 4. 卸载网络管理器</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>安装配置FTP服务端</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># yum -y install vsftpd       # 1. 安装ftp服务端</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p> 在<code>/etc/vsftpd/vsftpd.conf</code>文件中加入一行<code>anon_root=/opt</code>，设置匿名用户访问的根目录为YUM源所挂载的目录</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># echo "anon_root=/opt" >> /etc/vsftpd/vsftpd.conf</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># systemctl start vsftpd      # 1. 立刻启动FTP服务端</span>
-<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># systemctl enable vsftpd     # 2. 设置开机启动</span>
-Created symlink from /etc/systemd/system/multi-user.target.wants/vsftpd.service to /usr/lib/systemd/system/vsftpd.service.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-<hr>
-<blockquote>
-<p>第二周课前需要将控制节点还原快照5.3.6，计算节点还原快照5.3.4，在此基础上继续下一步配置。</p>
-</blockquote>
-<ol>
-<li><p>这一步配置<code>计算节点</code>的YUM源，通过FTP服务访问挂载到<code>控制节点</code>的源文件。</p>
-<ul>
-<li><p>修改<code>计算节点</code>的主机名</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># hostnamectl set-hostname compute  # 1. 修改主机名</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li><p>在<code>/etc/hosts</code>文件最后添加以下两行域名解析</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token number">192.168</span>.10.10 controller
-<span class="token number">192.168</span>.10.20 compute<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-</li>
-<li><p>修改<code>/etc/selinux/config</code>文件中的<code>SELINUX=enforcing</code>为<code>SELINUX=disabled</code></p>
-</li>
-<li><p>禁用SELinux和防火墙</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@compute ~<span class="token punctuation">]</span><span class="token comment"># setenforce 0                   # 1. 禁用SELinux</span>
-<span class="token punctuation">[</span>root@compute ~<span class="token punctuation">]</span><span class="token comment"># systemctl disable firewalld    # 2. 关闭开机启动防火墙</span>
-Removed symlink /etc/systemd/system/multi-user.target.wants/firewalld.service.
-Removed symlink /etc/systemd/system/dbus-org.fedoraproject.FirewallD1.service.
-<span class="token punctuation">[</span>root@compute ~<span class="token punctuation">]</span><span class="token comment"># systemctl stop firewalld       # 3. 立即关闭防火墙</span>
-<span class="token punctuation">[</span>root@compute ~<span class="token punctuation">]</span><span class="token comment"># yum remove -y NetworkManager   # 4. 卸载网络管理器</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>删除已有配置文件</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@compute ~<span class="token punctuation">]</span><span class="token comment"># rm -rf /etc/yum.repos.d/*.repo</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p> 创建配置文件<code>/etc/yum.repos.d/local.repo</code>，并添加以下配置：</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>base<span class="token punctuation">]</span>
-<span class="token assign-left variable">name</span><span class="token operator">=</span>base
-<span class="token assign-left variable">baseurl</span><span class="token operator">=</span>ftp://controller/openstack/base/
-<span class="token assign-left variable">gpgcheck</span><span class="token operator">=</span><span class="token number">0</span>
-<span class="token assign-left variable">enabled</span><span class="token operator">=</span><span class="token number">1</span>
-<span class="token punctuation">[</span>extras<span class="token punctuation">]</span>
-<span class="token assign-left variable">name</span><span class="token operator">=</span>extras
-<span class="token assign-left variable">baseurl</span><span class="token operator">=</span>ftp://controller/openstack/extras/
-<span class="token assign-left variable">gpgcheck</span><span class="token operator">=</span><span class="token number">0</span>
-<span class="token assign-left variable">enabled</span><span class="token operator">=</span><span class="token number">1</span>
-<span class="token punctuation">[</span>updates<span class="token punctuation">]</span>
-<span class="token assign-left variable">name</span><span class="token operator">=</span>updates
-<span class="token assign-left variable">baseurl</span><span class="token operator">=</span>ftp://controller/openstack/updates/
-<span class="token assign-left variable">gpgcheck</span><span class="token operator">=</span><span class="token number">0</span>
-<span class="token assign-left variable">enabled</span><span class="token operator">=</span><span class="token number">1</span>
-<span class="token punctuation">[</span>train<span class="token punctuation">]</span>
-<span class="token assign-left variable">name</span><span class="token operator">=</span>train
-<span class="token assign-left variable">baseurl</span><span class="token operator">=</span>ftp://controller/openstack/train/
-<span class="token assign-left variable">gpgcheck</span><span class="token operator">=</span><span class="token number">0</span>
-<span class="token assign-left variable">enabled</span><span class="token operator">=</span><span class="token number">1</span>
-<span class="token punctuation">[</span>virt<span class="token punctuation">]</span>
-<span class="token assign-left variable">name</span><span class="token operator">=</span>virt
-<span class="token assign-left variable">baseurl</span><span class="token operator">=</span>ftp://controller/openstack/virt/
-<span class="token assign-left variable">gpgcheck</span><span class="token operator">=</span><span class="token number">0</span>
-<span class="token assign-left variable">enabled</span><span class="token operator">=</span><span class="token number">1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>执行以下命令检查YUM源是否可用：</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@compute ~<span class="token punctuation">]</span><span class="token comment"># yum clean all           # 1. 清除缓存</span>
-Loaded plugins: fastestmirror
-Cleaning repos: base extras train updates virt
-Repository base is listed <span class="token function">more</span> than once <span class="token keyword">in</span> the configuration
-Repository extras is listed <span class="token function">more</span> than once <span class="token keyword">in</span> the configuration
-Repository updates is listed <span class="token function">more</span> than once <span class="token keyword">in</span> the configuration
-Cleaning up list of fastest mirrors
-<span class="token punctuation">[</span>root@compute ~<span class="token punctuation">]</span><span class="token comment"># yum makecache         # 2. 重建缓存</span>
-Loaded plugins: fastestmirror
-Repository base is listed <span class="token function">more</span> than once <span class="token keyword">in</span> the configuration
-Repository extras is listed <span class="token function">more</span> than once <span class="token keyword">in</span> the configuration
-Repository updates is listed <span class="token function">more</span> than once <span class="token keyword">in</span> the configuration
-Determining fastest mirrors
-* base: mirrors.aliyun.com
-* extras: mirrors.aliyun.com
-* updates: mirrors.aliyun.com
-base                                                                                                                      <span class="token operator">|</span> <span class="token number">3.6</span> kB  00:00:00
-extras                                                                                                                    <span class="token operator">|</span> <span class="token number">2.9</span> kB  00:00:00
-train                                                                                                                     <span class="token operator">|</span> <span class="token number">2.9</span> kB  00:00:00
-updates                                                                                                                   <span class="token operator">|</span> <span class="token number">2.9</span> kB  00:00:00
-virt                                                                                                                      <span class="token operator">|</span> <span class="token number">2.9</span> kB  00:00:00
-<span class="token punctuation">(</span><span class="token number">1</span>/15<span class="token punctuation">)</span>: base/primary_db                                                                                                   <span class="token operator">|</span> <span class="token number">6.0</span> MB  00:00:00
-<span class="token punctuation">(</span><span class="token number">2</span>/15<span class="token punctuation">)</span>: base/filelists_db                                                                                                 <span class="token operator">|</span> <span class="token number">7.0</span> MB  00:00:00
-<span class="token punctuation">(</span><span class="token number">3</span>/15<span class="token punctuation">)</span>: base/other_db                                                                                                     <span class="token operator">|</span> <span class="token number">2.5</span> MB  00:00:00
-<span class="token punctuation">(</span><span class="token number">4</span>/15<span class="token punctuation">)</span>: extras/filelists_db                                                                                               <span class="token operator">|</span> <span class="token number">259</span> kB  00:00:00
-<span class="token punctuation">(</span><span class="token number">5</span>/15<span class="token punctuation">)</span>: extras/other_db                                                                                                   <span class="token operator">|</span> <span class="token number">145</span> kB  00:00:00
-<span class="token punctuation">(</span><span class="token number">6</span>/15<span class="token punctuation">)</span>: extras/primary_db                                                                                                 <span class="token operator">|</span> <span class="token number">241</span> kB  00:00:00
-<span class="token punctuation">(</span><span class="token number">7</span>/15<span class="token punctuation">)</span>: train/filelists_db                                                                                               <span class="token operator">|</span> <span class="token number">3.6</span> MB  00:00:00
-<span class="token punctuation">(</span><span class="token number">8</span>/15<span class="token punctuation">)</span>: train/primary_db                                                                                                 <span class="token operator">|</span> <span class="token number">1.2</span> MB  00:00:00
-<span class="token punctuation">(</span><span class="token number">9</span>/15<span class="token punctuation">)</span>: train/other_db                                                                                                   <span class="token operator">|</span> <span class="token number">465</span> kB  00:00:00
-<span class="token punctuation">(</span><span class="token number">10</span>/15<span class="token punctuation">)</span>: updates/filelists_db                                                                                             <span class="token operator">|</span> <span class="token number">6.5</span> MB  00:00:00
-<span class="token punctuation">(</span><span class="token number">11</span>/15<span class="token punctuation">)</span>: updates/primary_db                                                                                               <span class="token operator">|</span>  <span class="token number">14</span> MB  00:00:00
-<span class="token punctuation">(</span><span class="token number">12</span>/15<span class="token punctuation">)</span>: updates/other_db                                                                                                 <span class="token operator">|</span> <span class="token number">914</span> kB  00:00:00
-<span class="token punctuation">(</span><span class="token number">13</span>/15<span class="token punctuation">)</span>: virt/filelists_db                                                                                                <span class="token operator">|</span>  <span class="token number">14</span> kB  00:00:00
-<span class="token punctuation">(</span><span class="token number">14</span>/15<span class="token punctuation">)</span>: virt/other_db                                                                                                    <span class="token operator">|</span>  <span class="token number">45</span> kB  00:00:00
-<span class="token punctuation">(</span><span class="token number">15</span>/15<span class="token punctuation">)</span>: virt/primary_db                                                                                                  <span class="token operator">|</span>  <span class="token number">56</span> kB  00:00:00
-Metadata Cache Created
-<span class="token punctuation">[</span>root@compute ~<span class="token punctuation">]</span><span class="token comment"># yum repolist          # 3. 查看仓库列表</span>
-Loaded plugins: fastestmirror
-Loading mirror speeds from cached hostfile
-repo <span class="token function">id</span>                                                              repo name                                                             status
-base                                                                 base                                                                  <span class="token number">10,039</span>
-extras                                                               extras                                                                   <span class="token number">500</span>
-train                                                                train                                                                  <span class="token number">3,168</span>
-updates                                                              updates                                                                <span class="token number">3,182</span>
-virt                                                                 virt                                                                      <span class="token number">63</span>
-repolist: <span class="token number">17,906</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
-</ul>
-<blockquote>
-<p>作业2-完成上述<code>yum repolist</code>命令后截图上传。</p>
-</blockquote>
-</li>
-</ol>
-<h3 id="安装OpenStack平台"><a href="#安装OpenStack平台" class="headerlink" title="安装OpenStack平台"></a>安装OpenStack平台</h3><ul>
-<li><p><code>控制节点</code>安装配置deltarpm来兼容packstack</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># yum -y install deltarpm</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p> 在<code>/etc/yum.conf</code>文件中加一行禁用deltarpm</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># echo "deltarpm=0" >>/etc/yum.conf</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li><p><code>计算节点</code>安装配置deltarpm来兼容packstack</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@compute ~<span class="token punctuation">]</span><span class="token comment"># yum -y install deltarpm</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p> 在<code>/etc/yum.conf</code>文件中加一行禁用deltarpm</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@compute ~<span class="token punctuation">]</span><span class="token comment"># echo "deltarpm=0" >>/etc/yum.conf</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li><p>配置<code>iptables</code>允许ftp服务的20&#x2F;21端口</p>
-<ol>
-<li><p>编辑文件 <code>/etc/sysconfig/iptables-config</code> ，设置第6行<code>IPTABLES_MODULES=</code>值为<code>ip_conntrack_ftp</code></p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token assign-left variable">IPTABLES_MODULES</span><span class="token operator">=</span><span class="token string">"ip_conntrack_ftp"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li><p>使用<code>iptables</code>命令添加两行防火墙规则</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># iptables -A INPUT -p tcp -m tcp --dport 21 -j ACCEPT</span>
-<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># iptables -A INPUT -p tcp -m tcp --dport 20 -j ACCEPT</span>
-<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># iptables -L</span>
-<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># iptables-save > /etc/sysconfig/iptables</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></li>
-</ol>
-</li>
-<li><p>在控制节点安装packstack</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># yum install -y openstack-packstack</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li><p>生成配置文件</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># packstack --gen-answer-file=openstack.txt --os-neutron-l2-agent=openvswitch --os-neutron-ml2-mechanism-drivers=openvswitch --os-neutron-ml2-tenant-network-types=vxlan --os-neutron-ml2-type-drivers=vxlan,flat --provision-demo=n --os-neutron-ovs-bridge-mappings=extnet:br-ex --os-neutron-ovs-bridge-interfaces=br-ex:ens34</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li><p>修改配置文件中的IP地址为内网IP</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># sed -i 's/192.168.20.10/192.168.10.10/g' openstack.txt</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p> 修改文件<code>openstack.txt</code>中计算机点的IP</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># sed -i 's/CONFIG_COMPUTE_HOSTS=.*/CONFIG_COMPUTE_HOSTS=192.168.10.20/g' openstack.txt</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li><p>开始安装OpenStack</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">packstack --answer-file<span class="token operator">=</span>openstack.txt<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p> packstack运行结束后如下图</p>
-<p> <img src="https://vault.taojie.fun:28089/i/2023/09/02/note1.%E5%88%9D%E8%AF%86%E4%BA%91%E8%AE%A1%E7%AE%97%E4%B8%8EOpenstack-2023-08-31-01-28-23.png" alt="1.初识云计算与Openstack-2023-08-31-01-28-23"></p>
-</li>
-<li><p>登录OpenStack平台</p>
-<p> 接下来可以通过预先配置的网址<a target="_blank" rel="noopener" href="http://192.168.10.10/dashboard">http://192.168.10.10/dashboard</a>访问OpenStack平台</p>
-<p> 账户信息通过<code>cat keystonerc_admin</code>查看</p>
-</li>
-</ul>
-<blockquote>
-<p>作业3-登录OpenStack平台后截图上传</p>
-</blockquote>
 
       
     </div>
