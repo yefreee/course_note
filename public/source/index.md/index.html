@@ -181,7 +181,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-12-11 12:46:53" itemprop="dateModified" datetime="2023-12-11T12:46:53+08:00">2023-12-11</time>
+      <time title="修改时间：2023-12-12 11:06:43" itemprop="dateModified" datetime="2023-12-12T11:06:43+08:00">2023-12-12</time>
     </span>
 
   
@@ -385,10 +385,10 @@
 <span class="token comment"># 导出令牌到环境变量</span>
 <span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># export OS_TOKEN=gAAAAABlduo9h-PcRjEUSOgCRqzg06x6JzWSEMWWm2hFZqbbvh6zdR12vTzYP9HNRhk99fKbK0hDsYz6nVCZmDuqXJHGMaPWUutYxZ38t0jKwbvYDiVtzhAUK12ws6mVzXbjAIVThIv8QZZ_kuvaWhRf0EIp9JNZE0XTAHF_htTb1-v9LqX6aCg</span>
 <span class="token comment"># 发起请求读取计量列表</span>
-<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># curl -X GET -H 'X-Auth-Token: $OS_TOKEN' "http://localhost:8777/v2/meters" |python -m json.tool |less</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># curl -X GET -H "X-Auth-Token: $OS_TOKEN" "http://localhost:8777/v2/meters" |python -m json.tool |less</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 发起请求读取样本列表</span>
-<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># curl -X GET -H 'X-Auth-Token: $OS_TOKEN' "http://localhost:8777/v2/samples" |python -m json.tool |less</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># curl -X GET -H "X-Auth-Token: $OS_TOKEN" "http://localhost:8777/v2/samples" |python -m json.tool |less</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <blockquote>
 <p>作业3：通过api读取到样本后截图上传。</p>
@@ -765,7 +765,7 @@ resources:
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-12-04 08:26:57" itemprop="dateModified" datetime="2023-12-04T08:26:57+08:00">2023-12-04</time>
+      <time title="修改时间：2023-12-12 11:06:08" itemprop="dateModified" datetime="2023-12-12T11:06:08+08:00">2023-12-12</time>
     </span>
 
   
@@ -975,7 +975,7 @@ X-Storage-Policy: Policy-0
     X-Timestamp: <span class="token number">1700517288.39236</span>
     Content-Type: text/plain<span class="token punctuation">;</span> <span class="token assign-left variable">charset</span><span class="token operator">=</span>utf-8<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p> 退出当前的admin用户，使用demo用户登录查看容器<code>test_container</code>的信息。</p>
+<p> 在admin用户下将demo用户添加到admin项目成员中。<br> 退出当前的admin用户，使用demo用户登录、切换项目至admin、查看容器<code>test_container</code>的信息。</p>
 <blockquote>
 <p>作业4：使用demo用户能够看到容器信息后截图。</p>
 </blockquote>
@@ -983,10 +983,7 @@ X-Storage-Policy: Policy-0
 <li><p>容器ACL示例2：</p>
  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 以下内容允许 77b8f82565f14814bece56e50c4c240f 项目的任何成员上传和下载对象或列出 www 容器的内容。请求中必须包含范围为 77b8f82565f14814bece56e50c4c240f 项目的令牌：</span>
 <span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># swift post test_container --read-acl "77b8f82565f14814bece56e50c4c240f:*" \</span>
-            --write-acl <span class="token string">"77b8f82565f14814bece56e50c4c240f:*"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<p> 此时用户demo无法查看到容器信息，因为demo不属于上述项目内。使用demo用户在身份管理菜单内添加demo到admin项目后能够再次看到容器信息。</p>
-</li>
+            --write-acl <span class="token string">"77b8f82565f14814bece56e50c4c240f:*"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li>
 </ol>
 
       
