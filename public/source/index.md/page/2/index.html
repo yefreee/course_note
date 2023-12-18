@@ -118,7 +118,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-count">29</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -136,6 +136,353 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/15/private_clouds/3.OpenStack%E8%BA%AB%E4%BB%BD%E7%AE%A1%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/09/15/private_clouds/3.OpenStack%E8%BA%AB%E4%BB%BD%E7%AE%A1%E7%90%86/" class="post-title-link" itemprop="url">OpenStack身份管理</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-09-15 11:52:33" itemprop="dateCreated datePublished" datetime="2023-09-15T11:52:33+08:00">2023-09-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-09-20 22:25:51" itemprop="dateModified" datetime="2023-09-20T22:25:51+08:00">2023-09-20</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="理解Keystone身份服务"><a href="#理解Keystone身份服务" class="headerlink" title="理解Keystone身份服务"></a>理解Keystone身份服务</h2><h3 id="Keystone简介"><a href="#Keystone简介" class="headerlink" title="Keystone简介"></a>Keystone简介</h3><p>Keystone 是OpenStack项目中的一个重要组件，是OpenStack Identity服务。主要提供身份认证（Authentication）、授权（Authorization）、用户管理。</p>
+<ul>
+<li><p>身份认证（Authentication）： Keystone负责验证用户的身份。它支持多种认证方法，包括用户名&#x2F;密码、令牌（Token）、证书等。用户可以使用这些认证方法之一进行身份验证，以访问OpenStack中的资源。</p>
+</li>
+<li><p>授权（Authorization）： 一旦用户通过身份认证，Keystone会根据用户的身份和权限规则控制用户可以访问的资源和操作。这种授权是基于角色的，用户被分配到特定角色，而角色具有特定的权限。</p>
+</li>
+<li><p>用户和角色管理： Keystone允许管理员创建、管理用户、角色和项目（Project），并分配特定权限给用户或角色。</p>
+</li>
+</ul>
+<h3 id="Keystone相关名词解释"><a href="#Keystone相关名词解释" class="headerlink" title="Keystone相关名词解释"></a>Keystone相关名词解释</h3><ol>
+<li><p>User（用户）： 在 Keystone 中，用户是系统中的实体，代表可以访问 OpenStack 服务的个体。用户通过身份认证来验证其身份。</p>
+</li>
+<li><p>Role（角色）： 角色是一组权限的集合，可以分配给用户或项目。角色决定了用户或项目可以执行的操作。</p>
+</li>
+<li><p>Project（项目）： 项目是 OpenStack 中的逻辑隔离单元，用于组织资源和权限。可以将用户分配到项目中，并管理项目的资源。</p>
+</li>
+<li><p>Domain（域）： 域是一组相关的用户、角色和项目的集合。域可以用于组织和隔离 OpenStack 环境中的用户和项目。</p>
+</li>
+<li><p>Endpoint（终端）： 终端是服务的访问地址，包括 URL 和访问协议。每个服务可以有多个终端，用于访问不同的服务节点。</p>
+</li>
+<li><p>Service（服务）： 服务代表 OpenStack 中的一个功能单元，如计算服务（Nova）、网络服务（Neutron）、镜像服务（Glance）等。每个服务有一个唯一的标识符。</p>
+</li>
+<li><p>Token（令牌）： 令牌是用于身份认证和授权的临时凭证。用户经过身份认证后，会获得一个令牌，该令牌允许他们在一定时间内访问特定资源。</p>
+</li>
+</ol>
+<h3 id="Keystone的层次结构"><a href="#Keystone的层次结构" class="headerlink" title="Keystone的层次结构"></a>Keystone的层次结构</h3><img src="https://vault.taojie.fun:28089/i/2023/09/15/2023-09-15-1694788656.png" alt="4324542b834a4aecb25d739fac41150e (1).png" title="4324542b834a4aecb25d739fac41150e (1).png" />
+
+<h3 id="Keystone的认证流程"><a href="#Keystone的认证流程" class="headerlink" title="Keystone的认证流程"></a>Keystone的认证流程</h3><img src="https://vault.taojie.fun:28089/i/2023/09/15/2023-09-15-1694789109.png" alt="1694789108795.png" title="1694789108795.png" />
+
+<h2 id="Keystone服务安装"><a href="#Keystone服务安装" class="headerlink" title="Keystone服务安装"></a>Keystone服务安装</h2><h3 id="作业与实验环境"><a href="#作业与实验环境" class="headerlink" title="作业与实验环境"></a>作业与实验环境</h3><blockquote>
+<p><a target="_blank" rel="noopener" href="https://wxstc.fanya.chaoxing.com/portal">超星网址</a><br><code>快照管理</code>：控制节点选择<code>快照5.3.13</code>，计算节点选择<code>快照5.3.9</code></p>
+</blockquote>
+<h3 id="安装与配置"><a href="#安装与配置" class="headerlink" title="安装与配置"></a>安装与配置</h3><ol>
+<li><p>Keystone是运行在Web服务器上的Web应用，需要安装以下软件包：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># yum -y install openstack-keystone httpd mod_wsgi</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<ul>
+<li><p>在安装Keystone的过程中系统会自动创建名为<code>keystone</code>的用户和用户组，通过以下命令查看：</p>
+   <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># cat /etc/passwd |grep keystone     # 查看用户名</span>
+keystone:x:163:163:OpenStack Keystone Daemons:/var/lib/keystone:/sbin/nologin
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># cat /etc/group |grep keystone      # 查看用户组</span>
+keystone:x:163:<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+</li>
+<li><p>OpenStack Keystone作为OpenStack项目的身份认证和授权服务，需要存储大量的用户、角色、项目、域等身份信息以及相应的权限信息，因此需要为Keystone创建数据库。</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># mysql -uroot -p000000      # 用root用户登录数据库</span>
+Welcome to the MariaDB monitor.  Commands end with <span class="token punctuation">;</span> or <span class="token punctuation">\</span>g.
+Your MariaDB connection <span class="token function">id</span> is <span class="token number">8</span>
+Server version: <span class="token number">10.3</span>.20-MariaDB MariaDB Server
+
+Copyright <span class="token punctuation">(</span>c<span class="token punctuation">)</span> <span class="token number">2000</span>, <span class="token number">2018</span>, Oracle, MariaDB Corporation Ab and others.
+
+Type <span class="token string">'help;'</span> or <span class="token string">'\h'</span> <span class="token keyword">for</span> help. Type <span class="token string">'\c'</span> to <span class="token function">clear</span> the current input statement.
+
+MariaDB <span class="token punctuation">[</span><span class="token punctuation">(</span>none<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token operator">></span> CREATE DATABASE keystone<span class="token punctuation">;</span>     <span class="token comment"># 创建名为keystone的数据库</span>
+Query OK, <span class="token number">1</span> row affected <span class="token punctuation">(</span><span class="token number">0.000</span> sec<span class="token punctuation">)</span>MariaDB <span class="token punctuation">[</span><span class="token punctuation">(</span>none<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+ <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment">// 把数据库的所有表的权限授予本地登录的keystone用户，密码为000000</span>
+MariaDB <span class="token punctuation">[</span><span class="token punctuation">(</span>none<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token operator">></span> <span class="token keyword">GRANT</span> <span class="token keyword">ALL</span> <span class="token keyword">PRIVILEGES</span> <span class="token keyword">ON</span> keystone<span class="token punctuation">.</span><span class="token operator">*</span> <span class="token keyword">TO</span> <span class="token string">'keystone'</span><span class="token variable">@'localhost'</span> IDENTIFIED <span class="token keyword">BY</span> <span class="token string">'000000'</span><span class="token punctuation">;</span>
+Query OK<span class="token punctuation">,</span> <span class="token number">0</span> <span class="token keyword">rows</span> affected <span class="token punctuation">(</span><span class="token number">0.001</span> sec<span class="token punctuation">)</span>
+
+<span class="token comment">// 把数据库的所有表的权限授予远程登录的keystone用户，密码为000000</span>
+MariaDB <span class="token punctuation">[</span><span class="token punctuation">(</span>none<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token operator">></span> <span class="token keyword">GRANT</span> <span class="token keyword">ALL</span> <span class="token keyword">PRIVILEGES</span> <span class="token keyword">ON</span> keystone<span class="token punctuation">.</span><span class="token operator">*</span> <span class="token keyword">TO</span> <span class="token string">'keystone'</span><span class="token variable">@'%'</span> IDENTIFIED <span class="token keyword">BY</span> <span class="token string">'000000'</span><span class="token punctuation">;</span>
+Query OK<span class="token punctuation">,</span> <span class="token number">0</span> <span class="token keyword">rows</span> affected <span class="token punctuation">(</span><span class="token number">0.000</span> sec<span class="token punctuation">)</span>
+
+<span class="token comment">// 退出数据库</span>
+MariaDB <span class="token punctuation">[</span><span class="token punctuation">(</span>none<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token operator">></span> quit<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>修改Keystone配置文件关联数据库</p>
+<p> 打开<code>/etc/keystone/keystone.conf</code>后查找<code>[database]</code>字段 (600行)并修改连接主机<code>controller</code>的数据库<code>keystone</code>：</p>
+ <pre class="line-numbers language-text" data-language="text"><code class="language-text">connection = mysql+pymysql://keystone:000000@controller/keystone<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<ul>
+<li>配置令牌加密方式：查找[token]（2475行）并删除<code>provider = fernet</code>前的<code>#</code>注释符</li>
+</ul>
+</li>
+<li><p>初始化Keystone数据库</p>
+<ul>
+<li><p>同步数据库</p>
+  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 通过keystone用户执行数据库初始化命令</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># su keystone -s /bin/sh -c "keystone-manage db_sync"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+</li>
+<li><p>查看数据库是否同步，打印出数据表</p>
+  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># mysql -uroot -p000000</span>
+Welcome to the MariaDB monitor.  Commands end with <span class="token punctuation">;</span> or <span class="token punctuation">\</span>g.
+Your MariaDB connection <span class="token function">id</span> is <span class="token number">10</span>
+Server version: <span class="token number">10.3</span>.20-MariaDB MariaDB Server
+
+Copyright <span class="token punctuation">(</span>c<span class="token punctuation">)</span> <span class="token number">2000</span>, <span class="token number">2018</span>, Oracle, MariaDB Corporation Ab and others.
+
+Type <span class="token string">'help;'</span> or <span class="token string">'\h'</span> <span class="token keyword">for</span> help. Type <span class="token string">'\c'</span> to <span class="token function">clear</span> the current input statement.
+
+MariaDB <span class="token punctuation">[</span><span class="token punctuation">(</span>none<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token operator">></span> use keystone<span class="token punctuation">;</span>
+Reading table information <span class="token keyword">for</span> completion of table and <span class="token function">column</span> names
+You can turn off this feature to get a quicker startup with <span class="token parameter variable">-A</span>
+
+Database changed
+MariaDB <span class="token punctuation">[</span>keystone<span class="token punctuation">]</span><span class="token operator">></span> show tables<span class="token punctuation">;</span>        <span class="token comment"># 打印出数据表</span>
++------------------------------------+
+<span class="token operator">|</span> Tables_in_keystone                 <span class="token operator">|</span>
++------------------------------------+
+<span class="token operator">|</span> access_rule                        <span class="token operator">|</span>
+<span class="token operator">|</span> access_token                       <span class="token operator">|</span>
+<span class="token operator">|</span> application_credential             <span class="token operator">|</span>
+<span class="token operator">|</span> application_credential_access_rule <span class="token operator">|</span>
+<span class="token operator">|</span> application_credential_role        <span class="token operator">|</span>
+<span class="token operator">|</span> assignment                         <span class="token operator">|</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>作业1：完成数据库同步后显示数据表并截图</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="Keystone服务初始化"><a href="#Keystone服务初始化" class="headerlink" title="Keystone服务初始化"></a>Keystone服务初始化</h3><ol>
+<li><p>初始化fernet密钥库</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 生成用来加密解密令牌的fernet密钥</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone</span>
+<span class="token comment"># 生成用来加密解密用户凭证的fernet密钥</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># keystone-manage credential_setup --keystone-user keystone --keystone-group keystone</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>初始化admin用户身份认证信息</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># keystone-manage bootstrap --bootstrap-password 000000 --bootstrap-admin-url http://controller:5000/v3 --bootstrap-internal-url http://contoller:5000/v3 --bootstrap-public-url http://controller:5000/v3 --bootstrap-region-id RegionOne</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<blockquote>
+<p>此时keystone数据库内已经存放了admin用户登录所需要验证的信息。</p>
+</blockquote>
+</li>
+<li><p>配置web服务</p>
+<ul>
+<li><p>在Apache服务器的配置目录中生成<code>WSGI</code>的配置文件用来支持<code>WSGI</code></p>
+  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># ln -s /usr/share/keystone/wsgi-keystone.conf /etc/httpd/conf.d/</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>修改<code>/etc/httpd/conf/httpd.conf</code>文件95行为<code>ServerName controller</code>设置Apache服务的地址为控制节点主机名，重启服务、设置开机自启</p>
+  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller b<span class="token punctuation">]</span><span class="token comment"># systemctl enable httpd</span>
+Created symlink from /etc/systemd/system/multi-user.target.wants/httpd.service to /usr/lib/systemd/system/httpd.service.
+<span class="token punctuation">[</span>root@controller b<span class="token punctuation">]</span><span class="token comment"># systemctl restart httpd</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+</li>
+</ol>
+<h2 id="Keystone服务认证、身份管理"><a href="#Keystone服务认证、身份管理" class="headerlink" title="Keystone服务认证、身份管理"></a>Keystone服务认证、身份管理</h2><h3 id="通过OpenStack-管理命令进行身份管理"><a href="#通过OpenStack-管理命令进行身份管理" class="headerlink" title="通过OpenStack 管理命令进行身份管理"></a>通过OpenStack 管理命令进行身份管理</h3><ol>
+<li><p><code>vi admin-login</code>创建文件添加以下身份凭证：</p>
+ <pre class="line-numbers language-text" data-language="text"><code class="language-text">export OS_USERNAME=admin
+export OS_PASSWORD=000000
+export OS_PROJECT_NAME=admin
+export OS_USER_DOMAIN_NAME=Default
+export OS_PROJECT_DOMAIN_NAME=Default
+export OS_AUTH_URL=http://controller:5000/v3
+export OS_IDENTITY_API_VERSION=3
+export OS_IMAGE_API_VERSION=2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li><p>导入环境变量</p>
+  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># source admin-login </span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+</ul>
+</li>
+<li><p>通过管理命令创建项目：</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack project create --domain default project</span>
++-------------+----------------------------------+
+<span class="token operator">|</span> Field       <span class="token operator">|</span> Value                            <span class="token operator">|</span>
++-------------+----------------------------------+
+<span class="token operator">|</span> description <span class="token operator">|</span>                                  <span class="token operator">|</span>
+<span class="token operator">|</span> domain_id   <span class="token operator">|</span> default                          <span class="token operator">|</span>
+<span class="token operator">|</span> enabled     <span class="token operator">|</span> True                             <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token function">id</span>          <span class="token operator">|</span> 1ddf073425f44982b81884a6cd897616 <span class="token operator">|</span>
+<span class="token operator">|</span> is_domain   <span class="token operator">|</span> False                            <span class="token operator">|</span>
+<span class="token operator">|</span> name        <span class="token operator">|</span> project                          <span class="token operator">|</span>
+<span class="token operator">|</span> options     <span class="token operator">|</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>                               <span class="token operator">|</span>
+<span class="token operator">|</span> parent_id   <span class="token operator">|</span> default                          <span class="token operator">|</span>
+<span class="token operator">|</span> tags        <span class="token operator">|</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>                               <span class="token operator">|</span>
++-------------+----------------------------------+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>作业2：项目创建完成后截图</p>
+</blockquote>
+</li>
+<li><p>常用管理命令：</p>
+ <img src="https://vault.taojie.fun:28089/i/2023/09/16/2023-09-16-1694795373.png" alt="1694795372656.png" title="1694795372656.png" />
+
+ <img src="https://vault.taojie.fun:28089/i/2023/09/16/2023-09-16-1694795401.png" alt="1694795400751.png" title="1694795400751.png" /></li>
+</ol>
+<h3 id="通过API进行身份管理"><a href="#通过API进行身份管理" class="headerlink" title="通过API进行身份管理"></a>通过API进行身份管理</h3><p>OpenStack所提供的API允许开发人员通过编程方式与OpenStack的各种服务进行通信，以实现自动化、集成和定制化的功能。</p>
+<blockquote>
+<p>监控和报警： OpenStack API允许开发人员编写监控应用程序，以监测OpenStack环境的状态并实时响应，包括生成警报和报告。<br>数据分析和报告： 通过API，开发人员可以获取OpenStack环境中的数据，并进行分析和报告，以支持决策制定和优化资源分配。</p>
+</blockquote>
+<ol>
+<li><p>使用curl向openstack请求一个令牌：</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">curl</span> <span class="token parameter variable">-v</span> <span class="token parameter variable">-X</span> POST <span class="token variable">$OS_AUTH_URL</span>/auth/tokens <span class="token punctuation">\</span>
+ <span class="token parameter variable">-H</span> <span class="token string">"Content-Type: application/json"</span> <span class="token punctuation">\</span>
+ <span class="token parameter variable">-d</span> <span class="token string">'&#123;
+     "auth": &#123;
+         "identity": &#123;
+             "methods": ["password"],
+             "password": &#123;
+                 "user": &#123;
+                     "domain": &#123;"name": "'</span>"<span class="token variable">$OS_USER_DOMAIN_NAME</span><span class="token string">"'"</span><span class="token punctuation">&#125;</span>,
+                     <span class="token string">"name"</span><span class="token builtin class-name">:</span> <span class="token string">"'"</span><span class="token variable">$OS_USERNAME</span><span class="token string">"'"</span>,
+                     <span class="token string">"password"</span><span class="token builtin class-name">:</span> <span class="token string">"'"</span><span class="token variable">$OS_PASSWORD</span><span class="token string">"'"</span>
+                 <span class="token punctuation">&#125;</span>
+             <span class="token punctuation">&#125;</span>
+         <span class="token punctuation">&#125;</span>,
+         <span class="token string">"scope"</span><span class="token builtin class-name">:</span> <span class="token punctuation">&#123;</span>
+             <span class="token string">"project"</span><span class="token builtin class-name">:</span> <span class="token punctuation">&#123;</span>
+                 <span class="token string">"domain"</span><span class="token builtin class-name">:</span> <span class="token punctuation">&#123;</span><span class="token string">"name"</span><span class="token builtin class-name">:</span> <span class="token string">"'"</span><span class="token variable">$OS_PROJECT_DOMAIN_NAME</span><span class="token string">"'"</span><span class="token punctuation">&#125;</span>,
+                 <span class="token string">"name"</span><span class="token builtin class-name">:</span> <span class="token string">"'"</span><span class="token variable">$OS_PROJECT_NAME</span><span class="token string">"'"</span>
+             <span class="token punctuation">&#125;</span>
+         <span class="token punctuation">&#125;</span>
+     <span class="token punctuation">&#125;</span>
+ <span class="token punctuation">&#125;</span>' <span class="token punctuation">\</span>
+ <span class="token operator">|</span>python <span class="token parameter variable">-m</span> json.tool<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li><p>从返回的响应中提取字段<code>X-Subject-Token</code>的值即获取到的token</p>
+  <pre class="line-numbers language-text" data-language="text"><code class="language-text">* About to connect() to controller port 5000 (#0)
+*   Trying 192.168.10.10...
+* Connected to controller (192.168.10.10) port 5000 (#0)
+> POST /v3/auth/tokens?nocatalog HTTP/1.1
+> User-Agent: curl/7.29.0
+> Host: controller:5000
+> Accept: */*
+> Content-Type: application/json
+> Content-Length: 472
+>
+&#125; [data not shown]
+* upload completely sent off: 472 out of 472 bytes
+&lt; HTTP/1.1 201 CREATED
+&lt; Date: Fri, 15 Sep 2023 17:29:38 GMT
+&lt; Server: Apache/2.4.6 (CentOS) mod_wsgi/3.4 Python/2.7.5
+&lt; X-Subject-Token: gAAAAABlBJSCUlkAxmXcgaMCjAQznrea88WgOxL5VP8PifbX-Q-boOzZUVDb3sc0cTOVUegjeNSRKdii1ZtYwBDbZ1WRTTki_2dRlrE1d_D5erFMml-3YAY5BL2vBWXSimVAXIG9jUycTLkqbcavEf79i3Z0xfPHUOaxzC9eA5dvDbS1eRA_Y2c
+&lt; Vary: X-Auth-Token
+&lt; x-openstack-request-id: req-ecb79fdc-f4e7-4ca8-8c02-f2d69a28f453
+&lt; Content-Length: 648
+&lt; Content-Type: application/json
+&lt;
+&#123; [data not shown]
+* Connection #0 to host controller left intact<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+</li>
+<li><p>导出环境变量<code>OS_TOKEN</code>、通过API读取用户列表：</p>
+<ul>
+<li><p>将上一步提取的token导出环境变量，<code>每个人的token不一样，自行替换</code></p>
+  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># export OS_TOKEN=gAAAAABlBJSCUlkAxmXcgaMCjAQznrea88WgOxL5VP8PifbX-Q-boOzZUVDb3sc0cTOVUegjeNSRKdii1ZtYwBDbZ1WRTTki_2dRlrE1d_D5erFMml-3YAY5BL2vBWXSimVAXIG9jUycTLkqbcavEf79i3Z0xfPHUOaxzC9eA5dvDbS1eRA_Y2c</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>使用相关的API获取用户列表</p>
+  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># curl -s -X GET $OS_AUTH_URL/users -H "X-Auth-Token:$OS_TOKEN" -H "Content-Type: application/json" |python -m json.tool</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token string">"links"</span><span class="token builtin class-name">:</span> <span class="token punctuation">&#123;</span>
+        <span class="token string">"next"</span><span class="token builtin class-name">:</span> null,
+        <span class="token string">"previous"</span><span class="token builtin class-name">:</span> null,
+        <span class="token string">"self"</span><span class="token builtin class-name">:</span> <span class="token string">"http://controller:5000/v3/users"</span>
+    <span class="token punctuation">&#125;</span>,
+    <span class="token string">"users"</span><span class="token builtin class-name">:</span> <span class="token punctuation">[</span>
+        <span class="token punctuation">&#123;</span>
+            <span class="token string">"domain_id"</span><span class="token builtin class-name">:</span> <span class="token string">"default"</span>,
+            <span class="token string">"enabled"</span><span class="token builtin class-name">:</span> true,
+            <span class="token string">"id"</span><span class="token builtin class-name">:</span> <span class="token string">"d21e719687444563a40a2528eb22996b"</span>,
+            <span class="token string">"links"</span><span class="token builtin class-name">:</span> <span class="token punctuation">&#123;</span>
+                <span class="token string">"self"</span><span class="token builtin class-name">:</span> <span class="token string">"http://controller:5000/v3/users/d21e719687444563a40a2528eb22996b"</span>
+            <span class="token punctuation">&#125;</span>,
+            <span class="token string">"name"</span><span class="token builtin class-name">:</span> <span class="token string">"admin"</span>,
+            <span class="token string">"options"</span><span class="token builtin class-name">:</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>,
+            <span class="token string">"password_expires_at"</span><span class="token builtin class-name">:</span> null
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+<blockquote>
+<p>作业3：通过api获取用户列表后截图</p>
+</blockquote>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -3781,171 +4128,6 @@ User:man Shell:/usr/sbin/nologin
 User:lp Shell:/usr/sbin/nologin
 User:mail Shell:/usr/sbin/nologin
 User:news Shell:/usr/sbin/nologin<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/18/linux_shell/1.Shell%E5%88%9D%E8%AF%86%EF%BC%8C%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | ">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/04/18/linux_shell/1.Shell%E5%88%9D%E8%AF%86%EF%BC%8C%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8/" class="post-title-link" itemprop="url">Shell初始,编辑器使用</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-04-18 11:31:25" itemprop="dateCreated datePublished" datetime="2023-04-18T11:31:25+08:00">2023-04-18</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-09-03 13:17:06" itemprop="dateModified" datetime="2023-09-03T13:17:06+08:00">2023-09-03</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="什么是Shell"><a href="#什么是Shell" class="headerlink" title="什么是Shell"></a>什么是Shell</h2><p>现在人们使用的操作系统（Windows、Android、iOS等）都带有图形界面，简单直观，容易上手。然而早期的计算机并没有图形界面，人们只能使用烦琐的命令来控制计算机。其实，真正能够控制计算机硬件（CPU、内存、显示器）的只有操作系统内核（Kernel），图形界面和命令行都是架设在用户和内核之间的桥梁，是为了方便用户控制计算机而存在的。由于安全等原因，用户不能直接接触内核，因此需要在用户和内核之间增加“命令解释器”，既能简化用户的操作，又能保障内核的安全。在Linux下的命令解释器叫作“Shell”，它能让用户更加高效、安全、低成本地使用Linux内核。  </p>
-<p><img src="https://vault.taojie.fun:28089/i/2023/09/02/note1.Shell%E5%88%9D%E8%AF%86%EF%BC%8C%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8-2023-04-19-18-53-43.png" alt="1.Shell初识，编辑器使用-2023-04-19-18-53-43"></p>
-<h2 id="Shell的各种版本"><a href="#Shell的各种版本" class="headerlink" title="Shell的各种版本"></a>Shell的各种版本</h2><ol>
-<li>Bourne shell（sh）是Unix系统中最古老的shell，也是现在大多数shell的基础。它的命令行语法较为简单，缺乏一些高级特性，但是在大多数Unix系统中都内置了这个shell，因此可以保证可移植性。尽管Bourne shell已经被多种先进的shell所取代，但它作为shell编程的鼻祖，仍然具有重要的历史和学习价值。</li>
-<li>Bourne Again Shell （bash）是Linux操作系统所使用的Shell，它是Bourne Shell的扩展，简称bash。bash与Bourne Shell完全向下兼容，也就是说bash可以兼容相同版本的Bourne Shell。bash在Bourne Shell的基础上增加、增强了很多特性，所以它比Bourne Shell能力更强。</li>
-<li>zsh（Z shell）是Bourne shell（sh）的一个增强版本。与bash相比，zsh具有更好的命令补全功能、更好的主题和插件支持、更好的脚本语言、更好的历史命令管理和更好的可定制性。它还有许多其他功能，如自动提示，文件名扩展，别名扩展等。zsh是一种功能强大、易于使用和高度可定制的Shell，适用于任何需要使用命令行的用户。</li>
-</ol>
-<p><strong>练习</strong>：</p>
-<pre class="line-numbers language-bash" data-language="bash"><div class="caption"><span>查看Shell版本、更换默认Shell并生效设置</span></div><code class="language-bash"><span class="token comment">##查看当前Shell版本</span>
-<span class="token punctuation">[</span>centos@host1 ~<span class="token punctuation">]</span>$ <span class="token builtin class-name">echo</span> <span class="token environment constant">$SHELL</span>
-/bin/bash
-<span class="token comment">##查看系统当前可用Shell</span>
-<span class="token punctuation">[</span>centos@host1 ~<span class="token punctuation">]</span>$ <span class="token function">cat</span> /etc/shells
-/bin/sh
-/bin/bash
-/usr/bin/sh
-/usr/bin/bash
-<span class="token comment">##更换默认Shell</span>
-<span class="token punctuation">[</span>centos@host1 ~<span class="token punctuation">]</span>$ chsh <span class="token parameter variable">-s</span> /bin/sh
-Changing shell <span class="token keyword">for</span> root.
-Shell changed.
-<span class="token comment">##退出当前登录状态重新登录</span>
-<span class="token punctuation">[</span>centos@host1 ~<span class="token punctuation">]</span>$ <span class="token builtin class-name">logout</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="Shell的启动方式和提示符"><a href="#Shell的启动方式和提示符" class="headerlink" title="Shell的启动方式和提示符"></a>Shell的启动方式和提示符</h2><ol>
-<li><p>终端上启动<br> Shell会以交互模式启动，提示符会显示在屏幕上，等待用户输入命令。<br> 用户输入命令后，Shell会解释和执行这些命令，并将执行结果输出到终端上。<br> 在终端启动模式下，Shell会自动设置一些环境变量，如PATH等，以便用户可以方便地执行命令。</p>
-</li>
-<li><p>脚本启动<br> 脚本启动是将Shell命令写入一个脚本文件中，然后通过执行这个脚本文件来启动Shell。它的基本过程如下：<br> （1）创建一个包含Shell命令的脚本文件（通常以.sh作为扩展名）。<br> （2）将脚本文件保存到磁盘上，并赋予执行权限。<br> （3）在终端中输入脚本文件的路径，并按下回车键。<br> （4）Shell会读取脚本文件中的命令，并依次执行这些命令。<br> 脚本启动模式适用于需要重复执行的一系列命令，可以将这些命令写入脚本文件中，并通过脚本文件来执行这些命令。此外，脚本启动模式还支持各种Shell的内置命令和选项。</p>
-</li>
-<li><p>练习修改系统提示符: <code>vim ~/.bashrc</code> 中的PS1变量</p>
-</li>
-</ol>
-<p><img src="https://vault.taojie.fun:28089/i/2023/09/02/note1.Shell%E5%88%9D%E8%AF%86%EF%BC%8C%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8-2023-04-19-19-21-30.png" alt="1.Shell初识，编辑器使用-2023-04-19-19-21-30"></p>
-<h2 id="Linux的文件系统和权限信息"><a href="#Linux的文件系统和权限信息" class="headerlink" title="Linux的文件系统和权限信息"></a>Linux的文件系统和权限信息</h2><ul>
-<li>Linux和Windows文件目录的比较</li>
-<li>Linux根目录各子目录的作用</li>
-<li>遍历目录</li>
-</ul>
-<h3 id="文件权限"><a href="#文件权限" class="headerlink" title="文件权限"></a>文件权限</h3><p><img src="https://vault.taojie.fun:28089/i/2023/09/02/note1.Shell%E5%88%9D%E8%AF%86%EF%BC%8C%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8-2023-04-19-23-41-03.png" alt="1.Shell初识，编辑器使用-2023-04-19-23-41-03"></p>
-<ul>
-<li><p>Linux基本文件和目录命令使用综合练习</p>
-<ol>
-<li>新建一个名为<code>test</code>的目录，进入该目录并新建一个名为<code>file.txt</code>的文件。</li>
-<li>将<code>file.txt</code>复制到<code>test</code>目录下，并将其重命名为<code>file2.txt</code>。</li>
-<li>在当前目录下，新建一个名为<code>newdir</code>的目录。</li>
-<li>将<code>file2.txt</code>移动到<code>newdir</code>目录下。</li>
-<li>在当前目录下，使用<code>touch</code>命令创建一个名为<code>empty.txt</code>的空文件。</li>
-<li>在<code>newdir</code>目录下，使用<code>find</code>命令查找以<code>.txt</code>结尾的文件，并将结果输出到名为<code>result.txt</code>的文件中。</li>
-<li>在<code>newdir</code>目录下，使用<code>chmod</code>命令将<code>file2.txt</code>的所有用户的权限设置为可读可写可执行。</li>
-<li>在当前目录下，使用<code>mkdir</code>命令递归创建一个名为<code>parent/child/grandchild</code>的目录树。</li>
-</ol>
-<p>  答案：</p>
-  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#1</span>
-<span class="token function">mkdir</span> <span class="token builtin class-name">test</span>
-<span class="token builtin class-name">cd</span> <span class="token builtin class-name">test</span>
-<span class="token function">touch</span> file.txt
-
-<span class="token comment">#2</span>
-<span class="token function">cp</span> file.txt file2.txt
-
-<span class="token comment">#3</span>
-<span class="token function">mkdir</span> newdir
-
-<span class="token comment">#4</span>
-<span class="token function">mv</span> file2.txt newdir/
-
-<span class="token comment">#5</span>
-<span class="token function">touch</span> empty.txt
-
-<span class="token comment">#6</span>
-<span class="token builtin class-name">cd</span> newdir
-<span class="token function">find</span> <span class="token builtin class-name">.</span> <span class="token parameter variable">-name</span> <span class="token string">"*.txt"</span> <span class="token parameter variable">-type</span> f <span class="token operator">></span> result.txt
-
-<span class="token comment">#7</span>
-<span class="token function">chmod</span> <span class="token number">777</span> file2.txt
-
-<span class="token comment">#8</span>
-<span class="token function">mkdir</span> <span class="token parameter variable">-p</span> parent/child/grandchild
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
-</ul>
-<h2 id="VIM使用"><a href="#VIM使用" class="headerlink" title="VIM使用"></a>VIM使用</h2><ol>
-<li><p>学习平台：</p>
-<p> <a target="_blank" rel="noopener" href="https://yianwillis.github.io/vimcdoc/doc/intro.html#intro.txt">VIM官方文档</a></p>
-<p> <a target="_blank" rel="noopener" href="https://command-lab.com/cat-vim-ch-s/">VIM基础练习平台</a></p>
-<p> <a target="_blank" rel="noopener" href="https://github.com/MeiTianT/vim-galore-zh_cn#%E6%8C%89%E9%94%AE%E6%98%A0%E5%B0%84">VIM进阶</a></p>
-</li>
-<li><p>vim常用命令</p>
-<p> <img src="https://vault.taojie.fun:28089/i/2023/09/02/note1.Shell%E5%88%9D%E8%AF%86%EF%BC%8C%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8-2023-04-19-23-41-33.png" alt="1.Shell初识，编辑器使用-2023-04-19-23-41-33"></p>
-</li>
-</ol>
 
       
     </div>

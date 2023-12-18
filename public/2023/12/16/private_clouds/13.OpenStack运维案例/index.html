@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.17.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="案例一：开放镜像权限案例描述某OpenStack云平台有两个租户，A租户与B租户，分别属于两个部门，该公司对镜像的管理比较严格，镜像都由管理员进行上传和权限管理。 该公司有一个镜像，需要共享给A租户使用，对B租户不可见，实现这种方式最简单的方式，是由A租户中的用户自行上传镜像，这样A租户里面的用户可以看见该镜像，而B租户中的用户看不见。但是现在镜像不能由普通用户去上传，只能通过管理员进行操作。 解">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenStack运维案例">
+<meta property="og:url" content="http://example.com/2023/12/16/private_clouds/13.OpenStack%E8%BF%90%E7%BB%B4%E6%A1%88%E4%BE%8B/index.html">
+<meta property="og:site_name">
+<meta property="og:description" content="案例一：开放镜像权限案例描述某OpenStack云平台有两个租户，A租户与B租户，分别属于两个部门，该公司对镜像的管理比较严格，镜像都由管理员进行上传和权限管理。 该公司有一个镜像，需要共享给A租户使用，对B租户不可见，实现这种方式最简单的方式，是由A租户中的用户自行上传镜像，这样A租户里面的用户可以看见该镜像，而B租户中的用户看不见。但是现在镜像不能由普通用户去上传，只能通过管理员进行操作。 解">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/12/18/2023-12-18-1702856058.png">
+<meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/12/18/2023-12-18-1702856127.png">
+<meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/12/18/2023-12-18-1702856747.png">
+<meta property="article:published_time" content="2023-12-16T06:19:59.000Z">
+<meta property="article:modified_time" content="2023-12-18T02:39:47.001Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://vault.taojie.fun:28089/i/2023/12/18/2023-12-18-1702856058.png">
+
+
+<link rel="canonical" href="http://example.com/2023/12/16/private_clouds/13.OpenStack%E8%BF%90%E7%BB%B4%E6%A1%88%E4%BE%8B/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/12/16/private_clouds/13.OpenStack%E8%BF%90%E7%BB%B4%E6%A1%88%E4%BE%8B/","path":"2023/12/16/private_clouds/13.OpenStack运维案例/","title":"OpenStack运维案例"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>OpenStack运维案例 | </title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title"></p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B%E4%B8%80%EF%BC%9A%E5%BC%80%E6%94%BE%E9%95%9C%E5%83%8F%E6%9D%83%E9%99%90"><span class="nav-number">1.</span> <span class="nav-text">案例一：开放镜像权限</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.1.</span> <span class="nav-text">案例描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">1.2.</span> <span class="nav-text">解决方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B%E5%AE%9E%E6%96%BD"><span class="nav-number">1.3.</span> <span class="nav-text">案例实施</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B%E4%BA%8C%EF%BC%9A%E5%88%A9%E7%94%A8Heat%E7%BC%96%E6%8E%92wordpress"><span class="nav-number">2.</span> <span class="nav-text">案例二：利用Heat编排wordpress</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90"><span class="nav-number">2.1.</span> <span class="nav-text">代码分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A0%86%E6%A0%88%E5%88%9B%E5%BB%BA"><span class="nav-number">2.2.</span> <span class="nav-text">堆栈创建</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B%E4%B8%89%EF%BC%9A%E9%85%8D%E7%BD%AENFS%E4%BD%9C%E4%B8%BAglance%E5%90%8E%E7%AB%AF%E5%AD%98%E5%82%A8"><span class="nav-number">3.</span> <span class="nav-text">案例三：配置NFS作为glance后端存储</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name"></p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/12/16/private_clouds/13.OpenStack%E8%BF%90%E7%BB%B4%E6%A1%88%E4%BE%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="OpenStack运维案例 | ">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          OpenStack运维案例
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-12-16 14:19:59" itemprop="dateCreated datePublished" datetime="2023-12-16T14:19:59+08:00">2023-12-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-12-18 10:39:47" itemprop="dateModified" datetime="2023-12-18T10:39:47+08:00">2023-12-18</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="案例一：开放镜像权限"><a href="#案例一：开放镜像权限" class="headerlink" title="案例一：开放镜像权限"></a>案例一：开放镜像权限</h2><h3 id="案例描述"><a href="#案例描述" class="headerlink" title="案例描述"></a>案例描述</h3><p>某OpenStack云平台有两个租户，A租户与B租户，分别属于两个部门，该公司对镜像的管理比较严格，镜像都由管理员进行上传和权限管理。</p>
+<p>该公司有一个镜像，需要共享给A租户使用，对B租户不可见，实现这种方式最简单的方式，是由A租户中的用户自行上传镜像，这样A租户里面的用户可以看见该镜像，而B租户中的用户看不见。但是现在镜像不能由普通用户去上传，只能通过管理员进行操作。</p>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><p>通过管理员上传该镜像，并使用相关命令开放给A租户。</p>
+<h3 id="案例实施"><a href="#案例实施" class="headerlink" title="案例实施"></a>案例实施</h3><ol>
+<li><p>openstack Horizon登录，以及命令行环境下的认证。</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># source /etc/keystone/admin-openrc.sh</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>使用Horizon图形和命令行的方式分别创建项目projectA和projectB、用户userA和userB。</p>
+<p> Horizon图形创建项目：</p>
+ <img src="https://vault.taojie.fun:28089/i/2023/12/18/2023-12-18-1702856058.png" alt="1702856058602.png" title="1702856058602.png" />
+
+<p> Horizon图形创建用户：</p>
+ <img src="https://vault.taojie.fun:28089/i/2023/12/18/2023-12-18-1702856127.png" alt="1702856127136.png" title="1702856127136.png" />
+
+<p> OpenStack Cli工具创建项目：</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack project create --domain xiandian projectB</span>
++-------------+----------------------------------+
+<span class="token operator">|</span> Field       <span class="token operator">|</span> Value                            <span class="token operator">|</span>
++-------------+----------------------------------+
+<span class="token operator">|</span> description <span class="token operator">|</span>                                  <span class="token operator">|</span>
+<span class="token operator">|</span> domain_id   <span class="token operator">|</span> 9321f21a94ef4f85993e92a228892418 <span class="token operator">|</span>
+<span class="token operator">|</span> enabled     <span class="token operator">|</span> True                             <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token function">id</span>          <span class="token operator">|</span> 691c3f10dd3442d388b3a0c8c6d98ef9 <span class="token operator">|</span>
+<span class="token operator">|</span> is_domain   <span class="token operator">|</span> False                            <span class="token operator">|</span>
+<span class="token operator">|</span> name        <span class="token operator">|</span> projectB                         <span class="token operator">|</span>
+<span class="token operator">|</span> parent_id   <span class="token operator">|</span> 9321f21a94ef4f85993e92a228892418 <span class="token operator">|</span>
++-------------+----------------------------------+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p> OpenStack Cli工具创建用户：</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack user create --domain xiandian --project projectB --password 000000 userB</span>
++--------------------+----------------------------------+
+<span class="token operator">|</span> Field              <span class="token operator">|</span> Value                            <span class="token operator">|</span>
++--------------------+----------------------------------+
+<span class="token operator">|</span> default_project_id <span class="token operator">|</span> 691c3f10dd3442d388b3a0c8c6d98ef9 <span class="token operator">|</span>
+<span class="token operator">|</span> domain_id          <span class="token operator">|</span> 9321f21a94ef4f85993e92a228892418 <span class="token operator">|</span>
+<span class="token operator">|</span> enabled            <span class="token operator">|</span> True                             <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token function">id</span>                 <span class="token operator">|</span> fbe7fe015baa49fe9854c76f446be330 <span class="token operator">|</span>
+<span class="token operator">|</span> name               <span class="token operator">|</span> userB                            <span class="token operator">|</span>
++--------------------+----------------------------------+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p> OpenStack Cli工具授予用户角色：</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack role add --project projectB --user userB user</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p> 创建完成后通过图形界面验证，projectA项目下有成员userA。</p>
+ <img src="https://vault.taojie.fun:28089/i/2023/12/18/2023-12-18-1702856747.png" alt="1702856747284.png" title="1702856747284.png" />
+
+<p> 创建完成后通过命令行验证，projectB项目下有成员userB。</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack role assignment list --project projectB</span>
++----------------------------------+----------------------------------+-------+----------------------------------+--------+-----------+
+<span class="token operator">|</span> Role                             <span class="token operator">|</span> User                             <span class="token operator">|</span> Group <span class="token operator">|</span> Project                          <span class="token operator">|</span> Domain <span class="token operator">|</span> Inherited <span class="token operator">|</span>
++----------------------------------+----------------------------------+-------+----------------------------------+--------+-----------+
+<span class="token operator">|</span> 6280f11c992f4b94a9d04e349150a14f <span class="token operator">|</span> fbe7fe015baa49fe9854c76f446be330 <span class="token operator">|</span>       <span class="token operator">|</span> 691c3f10dd3442d388b3a0c8c6d98ef9 <span class="token operator">|</span>        <span class="token operator">|</span> False     <span class="token operator">|</span>
++----------------------------------+----------------------------------+-------+----------------------------------+--------+-----------+
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack user list</span>
++----------------------------------+-------------------+
+<span class="token operator">|</span> ID                               <span class="token operator">|</span> Name              <span class="token operator">|</span>
++----------------------------------+-------------------+
+<span class="token operator">|</span> 08e8c7f2ae044cda95935cf78d0e679c <span class="token operator">|</span> demo              <span class="token operator">|</span>
+<span class="token operator">|</span> 0befa70f767848e39df8224107b71858 <span class="token operator">|</span> admin             <span class="token operator">|</span>
+<span class="token operator">|</span> 0f980d5fefa6448a9c52f5c0ae5813a5 <span class="token operator">|</span> ceilometer        <span class="token operator">|</span>
+<span class="token operator">|</span> 1bd5ab1614274bf4bf62bd8bdfac32f2 <span class="token operator">|</span> nova              <span class="token operator">|</span>
+<span class="token operator">|</span> 25e931e21026434bb73f5ebd92646671 <span class="token operator">|</span> heat_domain_admin <span class="token operator">|</span>
+<span class="token operator">|</span> 461e8dbbbada466b8d6fe7998c28f7fd <span class="token operator">|</span> glance            <span class="token operator">|</span>
+<span class="token operator">|</span> 4c6eaa79772b4964abd69972531255a9 <span class="token operator">|</span> neutron           <span class="token operator">|</span>
+<span class="token operator">|</span> 6b7634fa0b9242599d1f349722f103bf <span class="token operator">|</span> heat              <span class="token operator">|</span>
+<span class="token operator">|</span> 7e0a30881708428a912fb28ad00e8eed <span class="token operator">|</span> userA             <span class="token operator">|</span>
+<span class="token operator">|</span> c701f9c0e49c4a5ab485328afff0ae1a <span class="token operator">|</span> aodh              <span class="token operator">|</span>
+<span class="token operator">|</span> c9670cb3d60349e69fc019360a61aef4 <span class="token operator">|</span> cinder            <span class="token operator">|</span>
+<span class="token operator">|</span> e57fa54fe8724ab89e619df0ee46153d <span class="token operator">|</span> swift             <span class="token operator">|</span>
+<span class="token operator">|</span> fbe7fe015baa49fe9854c76f446be330 <span class="token operator">|</span> userB             <span class="token operator">|</span>
++<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>Horizon图形中在管理员菜单中上传<code>两次</code>镜像cirros，分别设置镜像不同的公有属性。</p>
+</li>
+<li><p>此时的镜像不公开，无论是projectA和projectB下的用户都不能看到。</p>
+</li>
+<li><p>设置cirros镜像对projectA公开。</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack image add project cirros projectA</span>
++------------+--------------------------------------+
+<span class="token operator">|</span> Field      <span class="token operator">|</span> Value                                <span class="token operator">|</span>
++------------+--------------------------------------+
+<span class="token operator">|</span> created_at <span class="token operator">|</span> <span class="token number">2023</span>-12-18T07:55:27Z                 <span class="token operator">|</span>
+<span class="token operator">|</span> image_id   <span class="token operator">|</span> d09bd414-6f37-4531-966f-80d7493d1ae5 <span class="token operator">|</span>
+<span class="token operator">|</span> member_id  <span class="token operator">|</span> 2454a718118b4e208a1ab08e1fbd7650     <span class="token operator">|</span>
+<span class="token operator">|</span> schema     <span class="token operator">|</span> /v2/schemas/member                   <span class="token operator">|</span>
+<span class="token operator">|</span> status     <span class="token operator">|</span> pending                              <span class="token operator">|</span>
+<span class="token operator">|</span> updated_at <span class="token operator">|</span> <span class="token number">2023</span>-12-18T07:55:27Z                 <span class="token operator">|</span>
++------------+--------------------------------------+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>切换userA和userB查看各用户对不同镜像的可见性。</p>
+<blockquote>
+<p>作业1：查看用户userA在Horizon图形界面下的镜像列表。</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="案例二：利用Heat编排wordpress"><a href="#案例二：利用Heat编排wordpress" class="headerlink" title="案例二：利用Heat编排wordpress"></a>案例二：利用Heat编排wordpress</h2><h3 id="代码分析"><a href="#代码分析" class="headerlink" title="代码分析"></a>代码分析</h3><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">heat_template_version</span><span class="token punctuation">:</span> <span class="token datetime number">2013-05-23</span>
+
+<span class="token key atrule">description</span><span class="token punctuation">:</span> <span class="token punctuation">></span><span class="token scalar string">
+  Heat WordPress template to support F20, using only Heat OpenStack-native
+  resource types, and without the requirement for heat-cfntools in the image.
+  WordPress is web software you can use to create a beautiful website or blog.
+  This template installs a single-instance WordPress deployment using a local
+  MySQL database to store the data.  </span>
+
+<span class="token key atrule">parameters</span><span class="token punctuation">:</span>
+
+  <span class="token key atrule">key_name</span><span class="token punctuation">:</span>
+    <span class="token key atrule">type</span><span class="token punctuation">:</span> string
+    <span class="token key atrule">description</span><span class="token punctuation">:</span> Name of a KeyPair to enable SSH access to the instance
+  <span class="token key atrule">instance_type</span><span class="token punctuation">:</span>
+    <span class="token key atrule">type</span><span class="token punctuation">:</span> string
+    <span class="token key atrule">description</span><span class="token punctuation">:</span> Instance type for WordPress server
+    <span class="token key atrule">default</span><span class="token punctuation">:</span> m1.small
+  <span class="token key atrule">image_id</span><span class="token punctuation">:</span>
+    <span class="token key atrule">type</span><span class="token punctuation">:</span> string
+    <span class="token key atrule">description</span><span class="token punctuation">:</span> <span class="token punctuation">></span><span class="token scalar string">
+      Name or ID of the image to use for the WordPress server.
+      Recommended values are fedora-20.i386 or fedora-20.x86_64;
+      get them from http://cloud.fedoraproject.org/fedora-20.i386.qcow2
+      or http://cloud.fedoraproject.org/fedora-20.x86_64.qcow2 .      </span>
+    <span class="token key atrule">default</span><span class="token punctuation">:</span> fedora<span class="token punctuation">-</span>20.x86_64
+
+  <span class="token key atrule">db_name</span><span class="token punctuation">:</span>
+    <span class="token key atrule">type</span><span class="token punctuation">:</span> string
+    <span class="token key atrule">description</span><span class="token punctuation">:</span> WordPress database name
+    <span class="token key atrule">default</span><span class="token punctuation">:</span> wordpress
+    <span class="token key atrule">constraints</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token key atrule">length</span><span class="token punctuation">:</span> <span class="token punctuation">&#123;</span> <span class="token key atrule">min</span><span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token key atrule">max</span><span class="token punctuation">:</span> <span class="token number">64</span> <span class="token punctuation">&#125;</span>
+        <span class="token key atrule">description</span><span class="token punctuation">:</span> db_name must be between 1 and 64 characters
+      <span class="token punctuation">-</span> <span class="token key atrule">allowed_pattern</span><span class="token punctuation">:</span> <span class="token string">'[a-zA-Z][a-zA-Z0-9]*'</span>
+        <span class="token key atrule">description</span><span class="token punctuation">:</span> <span class="token punctuation">></span><span class="token scalar string">
+          db_name must begin with a letter and contain only alphanumeric
+          characters          </span>
+  <span class="token key atrule">db_username</span><span class="token punctuation">:</span>
+    <span class="token key atrule">type</span><span class="token punctuation">:</span> string
+    <span class="token key atrule">description</span><span class="token punctuation">:</span> The WordPress database admin account username
+    <span class="token key atrule">default</span><span class="token punctuation">:</span> admin
+    <span class="token key atrule">hidden</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+    <span class="token key atrule">constraints</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token key atrule">length</span><span class="token punctuation">:</span> <span class="token punctuation">&#123;</span> <span class="token key atrule">min</span><span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token key atrule">max</span><span class="token punctuation">:</span> <span class="token number">16</span> <span class="token punctuation">&#125;</span>
+        <span class="token key atrule">description</span><span class="token punctuation">:</span> db_username must be between 1 and 16 characters
+      <span class="token punctuation">-</span> <span class="token key atrule">allowed_pattern</span><span class="token punctuation">:</span> <span class="token string">'[a-zA-Z][a-zA-Z0-9]*'</span>
+        <span class="token key atrule">description</span><span class="token punctuation">:</span> <span class="token punctuation">></span><span class="token scalar string">
+          db_username must begin with a letter and contain only alphanumeric
+          characters          </span>
+  <span class="token key atrule">db_password</span><span class="token punctuation">:</span>
+    <span class="token key atrule">type</span><span class="token punctuation">:</span> string
+    <span class="token key atrule">description</span><span class="token punctuation">:</span> The WordPress database admin account password
+    <span class="token key atrule">default</span><span class="token punctuation">:</span> admin
+    <span class="token key atrule">hidden</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+    <span class="token key atrule">constraints</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token key atrule">length</span><span class="token punctuation">:</span> <span class="token punctuation">&#123;</span> <span class="token key atrule">min</span><span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token key atrule">max</span><span class="token punctuation">:</span> <span class="token number">41</span> <span class="token punctuation">&#125;</span>
+        <span class="token key atrule">description</span><span class="token punctuation">:</span> db_password must be between 1 and 41 characters
+      <span class="token punctuation">-</span> <span class="token key atrule">allowed_pattern</span><span class="token punctuation">:</span> <span class="token string">'[a-zA-Z0-9]*'</span>
+        <span class="token key atrule">description</span><span class="token punctuation">:</span> db_password must contain only alphanumeric characters
+  <span class="token key atrule">db_root_password</span><span class="token punctuation">:</span>
+    <span class="token key atrule">type</span><span class="token punctuation">:</span> string
+    <span class="token key atrule">description</span><span class="token punctuation">:</span> Root password for MySQL
+    <span class="token key atrule">default</span><span class="token punctuation">:</span> admin
+    <span class="token key atrule">hidden</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+    <span class="token key atrule">constraints</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token key atrule">length</span><span class="token punctuation">:</span> <span class="token punctuation">&#123;</span> <span class="token key atrule">min</span><span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token key atrule">max</span><span class="token punctuation">:</span> <span class="token number">41</span> <span class="token punctuation">&#125;</span>
+        <span class="token key atrule">description</span><span class="token punctuation">:</span> db_root_password must be between 1 and 41 characters
+      <span class="token punctuation">-</span> <span class="token key atrule">allowed_pattern</span><span class="token punctuation">:</span> <span class="token string">'[a-zA-Z0-9]*'</span>
+        <span class="token key atrule">description</span><span class="token punctuation">:</span> db_root_password must contain only alphanumeric characters
+
+<span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token key atrule">wordpress_instance</span><span class="token punctuation">:</span>
+    <span class="token key atrule">type</span><span class="token punctuation">:</span> OS<span class="token punctuation">:</span><span class="token punctuation">:</span>Nova<span class="token punctuation">:</span><span class="token punctuation">:</span>Server
+    <span class="token key atrule">properties</span><span class="token punctuation">:</span>
+      <span class="token key atrule">image</span><span class="token punctuation">:</span> <span class="token punctuation">&#123;</span> <span class="token key atrule">get_param</span><span class="token punctuation">:</span> image_id <span class="token punctuation">&#125;</span>
+      <span class="token key atrule">flavor</span><span class="token punctuation">:</span> <span class="token punctuation">&#123;</span> <span class="token key atrule">get_param</span><span class="token punctuation">:</span> instance_type <span class="token punctuation">&#125;</span>
+      <span class="token key atrule">key_name</span><span class="token punctuation">:</span> <span class="token punctuation">&#123;</span> <span class="token key atrule">get_param</span><span class="token punctuation">:</span> key_name <span class="token punctuation">&#125;</span>
+      <span class="token key atrule">user_data</span><span class="token punctuation">:</span>
+        <span class="token key atrule">str_replace</span><span class="token punctuation">:</span>
+          <span class="token key atrule">template</span><span class="token punctuation">:</span> <span class="token punctuation">|</span><span class="token scalar string">
+            #!/bin/bash -v</span>
+
+            yum <span class="token punctuation">-</span>y install mariadb mariadb<span class="token punctuation">-</span>server httpd wordpress
+            touch /var/log/mariadb/mariadb.log
+            chown mysql.mysql /var/log/mariadb/mariadb.log
+            systemctl start mariadb.service
+
+            <span class="token comment"># Setup MySQL root password and create a user</span>
+            mysqladmin <span class="token punctuation">-</span>u root password db_rootpassword
+            cat &lt;&lt; EOF <span class="token punctuation">|</span> mysql <span class="token punctuation">-</span>u root <span class="token punctuation">-</span><span class="token punctuation">-</span>password=db_rootpassword
+            CREATE DATABASE db_name;
+            GRANT ALL PRIVILEGES ON db_name.* TO "db_user"@"localhost"
+            IDENTIFIED BY "db_password";
+            FLUSH PRIVILEGES;
+            EXIT
+            EOF
+
+            sed <span class="token punctuation">-</span>i "/Deny from All/d" /etc/httpd/conf.d/wordpress.conf
+            sed <span class="token punctuation">-</span>i "s/Require local/Require all granted/" /etc/httpd/conf.d/wordpress.conf
+            sed <span class="token punctuation">-</span>i s/database_name_here/db_name/ /etc/wordpress/wp<span class="token punctuation">-</span>config.php
+            sed <span class="token punctuation">-</span>i s/username_here/db_user/ /etc/wordpress/wp<span class="token punctuation">-</span>config.php
+            sed <span class="token punctuation">-</span>i s/password_here/db_password/ /etc/wordpress/wp<span class="token punctuation">-</span>config.php
+
+            systemctl start httpd.service            
+          <span class="token key atrule">params</span><span class="token punctuation">:</span>
+            <span class="token key atrule">db_rootpassword</span><span class="token punctuation">:</span> <span class="token punctuation">&#123;</span> <span class="token key atrule">get_param</span><span class="token punctuation">:</span> db_root_password <span class="token punctuation">&#125;</span>
+            <span class="token key atrule">db_name</span><span class="token punctuation">:</span> <span class="token punctuation">&#123;</span> <span class="token key atrule">get_param</span><span class="token punctuation">:</span> db_name <span class="token punctuation">&#125;</span>
+            <span class="token key atrule">db_user</span><span class="token punctuation">:</span> <span class="token punctuation">&#123;</span> <span class="token key atrule">get_param</span><span class="token punctuation">:</span> db_username <span class="token punctuation">&#125;</span>
+            <span class="token key atrule">db_password</span><span class="token punctuation">:</span> <span class="token punctuation">&#123;</span> <span class="token key atrule">get_param</span><span class="token punctuation">:</span> db_password <span class="token punctuation">&#125;</span>
+
+<span class="token key atrule">outputs</span><span class="token punctuation">:</span>
+  <span class="token key atrule">WebsiteURL</span><span class="token punctuation">:</span>
+    <span class="token key atrule">description</span><span class="token punctuation">:</span> URL for Wordpress wiki
+    <span class="token key atrule">value</span><span class="token punctuation">:</span>
+      <span class="token key atrule">str_replace</span><span class="token punctuation">:</span>
+        <span class="token key atrule">template</span><span class="token punctuation">:</span> http<span class="token punctuation">:</span>//host/wordpress
+        <span class="token key atrule">params</span><span class="token punctuation">:</span>
+          <span class="token key atrule">host</span><span class="token punctuation">:</span> <span class="token punctuation">&#123;</span> <span class="token key atrule">get_attr</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>wordpress_instance<span class="token punctuation">,</span> first_address<span class="token punctuation">]</span> <span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="堆栈创建"><a href="#堆栈创建" class="headerlink" title="堆栈创建"></a>堆栈创建</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack stack create -t demo.yaml --parameter key_name=test_key --parameter instance_type=m1.small --parameter image_id=fe</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack stack event list demo-struct</span>
+<span class="token number">2023</span>-12-16 <span class="token number">20</span>:50:40 <span class="token punctuation">[</span>demo-struct<span class="token punctuation">]</span>: CREATE_IN_PROGRESS  Stack CREATE started
+<span class="token number">2023</span>-12-16 <span class="token number">20</span>:50:40 <span class="token punctuation">[</span>wordpress_instance<span class="token punctuation">]</span>: CREATE_IN_PROGRESS  state changed
+<span class="token number">2023</span>-12-16 <span class="token number">20</span>:50:47 <span class="token punctuation">[</span>wordpress_instance<span class="token punctuation">]</span>: CREATE_COMPLETE  state changed
+<span class="token number">2023</span>-12-16 <span class="token number">20</span>:50:47 <span class="token punctuation">[</span>demo-struct<span class="token punctuation">]</span>: CREATE_COMPLETE  Stack CREATE completed successfully
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack stack show demo-struct</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="案例三：配置NFS作为glance后端存储"><a href="#案例三：配置NFS作为glance后端存储" class="headerlink" title="案例三：配置NFS作为glance后端存储"></a>案例三：配置NFS作为glance后端存储</h2><ol>
+<li><p>glance默认是本地存储，路径<code>/var/lib/glance/images</code>，现在要把该路径设置为nfs的共享目录。</p>
+</li>
+<li><p>实验环境是nfs的服务端客户端为同一台主机，且已安装好nfs服务，下面对nfs进行配置。</p>
+</li>
+<li><p>在nfs服务端上的配置文件<code>/etc/exports</code>中插入以下代码：</p>
+ <pre class="line-numbers language-text" data-language="text"><code class="language-text">/mnt/test 192.168.100.0/24(rw,no_root_squash,no_all_squash,sync,anonuid=501,anongid=501)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p> 配置说明：</p>
+<p> &lt;目录路径&gt; &lt;可访问主机&gt;(选项)</p>
+<ul>
+<li><code>&lt;目录路径&gt;</code>：表示要共享的目录的路径。可以是绝对路径或相对路径。</li>
+<li><code>&lt;可访问主机&gt;</code>：表示允许访问该共享目录的主机或网络地址。可以是单个IP地址、IP地址范围、子网掩码或主机名。</li>
+<li><code>(选项)</code>：表示可选的共享选项，用于配置访问权限、权限验证等。</li>
+</ul>
+</li>
+<li><p>nfs服务重启、验证。</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># systemctl restart rpcbind</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># systemctl restart nfs</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># showmount -e 192.168.100.10</span>
+Export list <span class="token keyword">for</span> <span class="token number">192.168</span>.100.10:
+/mnt/test <span class="token number">192.168</span>.100.0/24<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>nfs客户端使用。</p>
+<p> 客户端软件包检查：</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># rpm -qa |grep nfs-utils</span>
+nfs-utils-1.3.0-0.21.el7_2.1.x86_64<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p> 目录挂载：</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># mount -t nfs 192.168.100.10:/mnt/test /var/lib/glance/images/</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># df -h</span>
+Filesystem                Size  Used Avail Use% Mounted on
+/dev/mapper/centos-root    35G   11G   25G  <span class="token number">32</span>% /
+devtmpfs                  <span class="token number">3</span>.9G     <span class="token number">0</span>  <span class="token number">3</span>.9G   <span class="token number">0</span>% /dev
+tmpfs                     <span class="token number">3</span>.9G  <span class="token number">4</span>.0K  <span class="token number">3</span>.9G   <span class="token number">1</span>% /dev/shm
+tmpfs                     <span class="token number">3</span>.9G  <span class="token number">8</span>.7M  <span class="token number">3</span>.9G   <span class="token number">1</span>% /run
+tmpfs                     <span class="token number">3</span>.9G     <span class="token number">0</span>  <span class="token number">3</span>.9G   <span class="token number">0</span>% /sys/fs/cgroup
+/dev/sda1                 197M  111M   87M  <span class="token number">57</span>% /boot
+/dev/loop0                <span class="token number">5</span>.0G   33M  <span class="token number">5</span>.0G   <span class="token number">1</span>% /swift/node
+tmpfs                     781M     <span class="token number">0</span>  781M   <span class="token number">0</span>% /run/user/0
+<span class="token number">192.168</span>.100.10:/mnt/test   35G   11G   25G  <span class="token number">32</span>% /var/lib/glance/images<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>权限配置。</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># cd /var/lib/glance</span>
+<span class="token punctuation">[</span>root@controller glance<span class="token punctuation">]</span><span class="token comment">#</span>
+<span class="token punctuation">[</span>root@controller glance<span class="token punctuation">]</span><span class="token comment"># chown glance:glance images</span>
+<span class="token punctuation">[</span>root@controller glance<span class="token punctuation">]</span><span class="token comment"># ll</span>
+total <span class="token number">0</span>
+drwxr-xr-x. <span class="token number">2</span> glance glance <span class="token number">6</span> Dec <span class="token number">18</span> 03:14 images<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>在Horizon图形中上传镜像，然后验证nfs共享目录的存储情况。</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller glance<span class="token punctuation">]</span><span class="token comment"># ll /mnt/test</span>
+total <span class="token number">12960</span>
+-rw-r-----. <span class="token number">1</span> glance glance <span class="token number">13267968</span> Dec <span class="token number">18</span> 03:20 505dfbda-f821-4762-954b-5cea3554291d<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>作业2：上传镜像后验证nfs共享目录的存储情况，截图上传。</p>
+</blockquote>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/12/09/private_clouds/12.OpenStack%E8%AE%A1%E9%87%8F%E6%9C%8D%E5%8A%A1/" rel="prev" title="OpenStack计量服务-Ceilometer">
+                  <i class="fa fa-chevron-left"></i> OpenStack计量服务-Ceilometer
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder"></span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
