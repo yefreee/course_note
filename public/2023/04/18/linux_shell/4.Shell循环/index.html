@@ -27,7 +27,7 @@
 <meta property="og:description" content="回顾上一章学习的结构化命令中的 if-then 和 case 语句，其中 if-then 语句是通过检查命令的执行结果或者表达式（文件比较、字符串比较、数值比较）的结果来控制脚本的执行流程。 在Shell脚本中，循环语句是一种重要的控制结构，用于多次执行同一段代码。Shell脚本中提供了多种循环语句，包括for、while、until三种。 for 循环结构for 循环是一种针对列表中每个元素执行">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-04-18T03:31:23.000Z">
-<meta property="article:modified_time" content="2023-09-03T05:17:06.119Z">
+<meta property="article:modified_time" content="2024-03-16T08:06:02.740Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -123,7 +123,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-count">31</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -187,7 +187,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-09-03 13:17:06" itemprop="dateModified" datetime="2023-09-03T13:17:06+08:00">2023-09-03</time>
+      <time title="修改时间：2024-03-16 16:06:02" itemprop="dateModified" datetime="2024-03-16T16:06:02+08:00">2024-03-16</time>
     </span>
 
   
@@ -214,7 +214,7 @@
 <span class="token keyword">for</span> <span class="token for-or-select variable">i</span> <span class="token keyword">in</span> <span class="token number">1</span> <span class="token number">2</span> <span class="token number">3</span> <span class="token number">4</span> <span class="token number">5</span>
 <span class="token keyword">do</span>
     <span class="token builtin class-name">echo</span> <span class="token string">"列表中的元素：<span class="token variable">$i</span>"</span>
-done,rk
+<span class="token keyword">done</span>
 
 <span class="token builtin class-name">echo</span> <span class="token string">"i = <span class="token variable">$i</span>"</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
@@ -295,22 +295,13 @@ i = 5<span aria-hidden="true" class="line-numbers-rows"><span></span><span></spa
 列表中的元素：6<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
 <li><p>通过命令读取</p>
+<p>  编辑以下脚本，在脚本中通过命令的方式获取for循环的列表。</p>
   <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
 
-<span class="token assign-left variable"><span class="token environment constant">IFS</span></span><span class="token operator">=</span><span class="token string">$'<span class="token entity" title="\n">\n</span>'</span>
-
-<span class="token function">cat</span> <span class="token operator">></span> test.sh <span class="token operator">&lt;&lt;</span><span class="token string">EOF
-1 2 3
-2
-3
-4
-5
-EOF</span>
-
-<span class="token keyword">for</span> <span class="token for-or-select variable">i</span> <span class="token keyword">in</span> <span class="token variable"><span class="token variable">`</span><span class="token function">cat</span> test.sh<span class="token variable">`</span></span>
+<span class="token keyword">for</span> <span class="token for-or-select variable">i</span> <span class="token keyword">in</span> <span class="token variable"><span class="token variable">`</span><span class="token function">ls</span> ~<span class="token variable">`</span></span>
 <span class="token keyword">do</span>
-    <span class="token builtin class-name">echo</span> <span class="token string">"列表中的元素：<span class="token variable">$i</span>"</span>
-<span class="token keyword">done</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token function">file</span> <span class="token variable">$i</span>
+<span class="token keyword">done</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
 <li><p>用通配符读取目录</p>
 <p>  在 Shell 编程中，通配符是一种用于匹配文件名或目录名的特殊字符。通配符可以帮助你快速地匹配一组文件或目录，从而方便地对它们进行操作。</p>
@@ -334,8 +325,8 @@ EOF</span>
 <li><p><code>[^abc].txt</code>：匹配除了文件名为 <code>a.txt</code>、<code>b.txt</code>、<code>c.txt</code> 以外的所有以 <code>.txt</code> 结尾的文件。</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
 
-<span class="token function">touch</span> ~/file<span class="token punctuation">&#123;</span><span class="token number">1</span><span class="token punctuation">..</span><span class="token number">2</span><span class="token punctuation">&#125;</span>
-<span class="token function">mkdir</span> ~/dir<span class="token punctuation">&#123;</span><span class="token number">1</span><span class="token punctuation">..</span><span class="token number">3</span><span class="token punctuation">&#125;</span>
+<span class="token function">touch</span> ~/file<span class="token punctuation">&#123;</span><span class="token number">1</span><span class="token punctuation">..</span><span class="token number">2</span><span class="token punctuation">&#125;</span> <span class="token operator">></span>/dev/null
+<span class="token function">mkdir</span> ~/dir<span class="token punctuation">&#123;</span><span class="token number">1</span><span class="token punctuation">..</span><span class="token number">3</span><span class="token punctuation">&#125;</span> <span class="token operator">></span>/dev/null
 
 <span class="token keyword">for</span> <span class="token for-or-select variable">file</span> <span class="token keyword">in</span> ~/*
 <span class="token keyword">do</span>
@@ -346,29 +337,20 @@ EOF</span>
     <span class="token keyword">then</span>
         <span class="token builtin class-name">echo</span> <span class="token string">"<span class="token variable">$file</span> is a file"</span>
     <span class="token keyword">fi</span>
-<span class="token keyword">done</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>练习：</p>
-<p>通过shell脚本实现批量主机检测</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
-<span class="token operator">></span>ip.txt
-
-<span class="token keyword">for</span> <span class="token for-or-select variable">i</span> <span class="token keyword">in</span> <span class="token punctuation">&#123;</span><span class="token number">2</span><span class="token punctuation">..</span><span class="token number">254</span><span class="token punctuation">&#125;</span>
-<span class="token keyword">do</span>
-    <span class="token punctuation">&#123;</span>
-    <span class="token assign-left variable">ip</span><span class="token operator">=</span><span class="token number">192.168</span>.13.<span class="token variable">$i</span>
-    <span class="token function">ping</span> <span class="token parameter variable">-c1</span> <span class="token parameter variable">-W1</span> <span class="token variable">$ip</span> <span class="token operator">&amp;></span>/dev/null
-    <span class="token keyword">if</span> <span class="token punctuation">[</span> <span class="token variable">$?</span> <span class="token parameter variable">-eq</span> <span class="token number">0</span> <span class="token punctuation">]</span>
-    <span class="token keyword">then</span>
-    <span class="token builtin class-name">echo</span> <span class="token string">"<span class="token variable">$ip</span>"</span> <span class="token operator">|</span><span class="token function">tee</span> <span class="token parameter variable">-a</span> ip.txt
-  <span class="token keyword">fi</span>
-  <span class="token punctuation">&#125;</span><span class="token operator">&amp;</span>
-<span class="token keyword">done</span>
-<span class="token function">wait</span>
-<span class="token builtin class-name">echo</span> <span class="token string">"finish..."</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<span class="token keyword">done</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 </ul>
 </li>
 </ul>
+<blockquote>
+<p>作业1：参考以下代码段，通过shell脚本统计&#x2F;var&#x2F;log目录下每个文件的行数。</p>
+</blockquote>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
+
+<span class="token comment">#通过命令赋值获取待统计的文件列表</span>
+<span class="token assign-left variable">file</span><span class="token operator">=</span><span class="token variable"><span class="token variable">`</span><span class="token function">ls</span> <span class="token parameter variable">-d</span> /var/log/*<span class="token variable">`</span></span>
+<span class="token comment">#使用wc命令统计文件行数</span>
+<span class="token function">wc</span> <span class="token parameter variable">-l</span> /var/log/*<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="while-循环结构"><a href="#while-循环结构" class="headerlink" title="while 循环结构"></a>while 循环结构</h2><p><code>while</code> 循环是一种基于条件判断的循环结构，当条件满足时就会一直执行循环体中的语句。其基本语法格式如下：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token keyword">while</span> <span class="token punctuation">[</span> 条件 <span class="token punctuation">]</span>
 <span class="token keyword">do</span>
@@ -496,7 +478,7 @@ EOF</span>
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2023</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

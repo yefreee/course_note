@@ -371,7 +371,7 @@ codeblock:
   copy_button:
     enable: true
     # Available values: default | flat | mac
-    style: 
+    style:
 
 back2top:
   enable: true
