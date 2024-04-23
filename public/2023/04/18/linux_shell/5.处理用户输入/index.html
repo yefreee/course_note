@@ -19,18 +19,18 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.17.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="bash shell提供了一些不同的方法从用户处获得数据，包括命令行参数、命令行选项、直接从键盘读取。  命令行参数读取参数在Shell脚本中，命令行参数可以通过特殊变量 $1、$2、$3 … **$n**来获取，其中 **$1表示第一个参数，$2表示第二个参数，以此类推，$n**表示第 n 个参数。 #!&#x2F;bin&#x2F;bash  echo &quot;第一个参数为：$1&quot; echo &quot;第二个参数为：$2&quot;">
+    <meta name="description" content="bash shell提供了一些不同的方法从用户处获得数据，包括命令行参数、命令行选项、直接从键盘读取。  命令行参数读取参数在Shell脚本中，命令行参数可以通过特殊变量 $1、$2、$3 … $n来获取，其中 $1表示第一个参数，$2表示第二个参数，以此类推，$n表示第 n 个参数。 #!&#x2F;bin&#x2F;bash  echo &quot;第一个参数为：$1&quot; echo &quot;第二个参数为：$2&quot; echo &quot;第三">
 <meta property="og:type" content="article">
 <meta property="og:title" content="处理用户输入">
 <meta property="og:url" content="http://example.com/2023/04/18/linux_shell/5.%E5%A4%84%E7%90%86%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5/index.html">
 <meta property="og:site_name">
-<meta property="og:description" content="bash shell提供了一些不同的方法从用户处获得数据，包括命令行参数、命令行选项、直接从键盘读取。  命令行参数读取参数在Shell脚本中，命令行参数可以通过特殊变量 $1、$2、$3 … **$n**来获取，其中 **$1表示第一个参数，$2表示第二个参数，以此类推，$n**表示第 n 个参数。 #!&#x2F;bin&#x2F;bash  echo &quot;第一个参数为：$1&quot; echo &quot;第二个参数为：$2&quot;">
+<meta property="og:description" content="bash shell提供了一些不同的方法从用户处获得数据，包括命令行参数、命令行选项、直接从键盘读取。  命令行参数读取参数在Shell脚本中，命令行参数可以通过特殊变量 $1、$2、$3 … $n来获取，其中 $1表示第一个参数，$2表示第二个参数，以此类推，$n表示第 n 个参数。 #!&#x2F;bin&#x2F;bash  echo &quot;第一个参数为：$1&quot; echo &quot;第二个参数为：$2&quot; echo &quot;第三">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/09/02/note5.%E5%A4%84%E7%90%86%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5-2023-06-16-21-20-42.png">
+<meta property="og:image" content="https://lsky.taojie.fun:52222/i/2023/09/02/note5.%E5%A4%84%E7%90%86%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5-2023-06-16-21-20-42.png">
 <meta property="article:published_time" content="2023-04-18T03:31:23.000Z">
-<meta property="article:modified_time" content="2024-03-16T08:06:02.700Z">
+<meta property="article:modified_time" content="2024-04-08T07:04:45.315Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://vault.taojie.fun:28089/i/2023/09/02/note5.%E5%A4%84%E7%90%86%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5-2023-06-16-21-20-42.png">
+<meta name="twitter:image" content="https://lsky.taojie.fun:52222/i/2023/09/02/note5.%E5%A4%84%E7%90%86%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5-2023-06-16-21-20-42.png">
 
 
 <link rel="canonical" href="http://example.com/2023/04/18/linux_shell/5.%E5%A4%84%E7%90%86%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5/">
@@ -125,7 +125,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-count">29</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -189,7 +189,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-03-16 16:06:02" itemprop="dateModified" datetime="2024-03-16T16:06:02+08:00">2024-03-16</time>
+      <time title="修改时间：2024-04-08 15:04:45" itemprop="dateModified" datetime="2024-04-08T15:04:45+08:00">2024-04-08</time>
     </span>
 
   
@@ -204,7 +204,7 @@
     <div class="post-body" itemprop="articleBody"><ul>
 <li>bash shell提供了一些不同的方法从用户处获得数据，包括命令行参数、命令行选项、直接从键盘读取。</li>
 </ul>
-<h2 id="命令行参数"><a href="#命令行参数" class="headerlink" title="命令行参数"></a>命令行参数</h2><h3 id="读取参数"><a href="#读取参数" class="headerlink" title="读取参数"></a>读取参数</h3><p>在Shell脚本中，命令行参数可以通过特殊变量 <strong><code>$1</code><strong>、</strong><code>$2</code><strong>、</strong><code>$3</code></strong> … **<code>$n</code>**来获取，其中 **<code>$1</code><strong>表示第一个参数，</strong><code>$2</code><strong>表示第二个参数，以此类推，</strong><code>$n</code>**表示第 n 个参数。</p>
+<h2 id="命令行参数"><a href="#命令行参数" class="headerlink" title="命令行参数"></a>命令行参数</h2><h3 id="读取参数"><a href="#读取参数" class="headerlink" title="读取参数"></a>读取参数</h3><p>在Shell脚本中，命令行参数可以通过特殊变量 <code>$1</code>、<code>$2</code>、<code>$3</code> … <code>$n</code>来获取，其中 <code>$1</code>表示第一个参数，<code>$2</code>表示第二个参数，以此类推，<code>$n</code>表示第 n 个参数。</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
 
 <span class="token builtin class-name">echo</span> <span class="token string">"第一个参数为：<span class="token variable">$1</span>"</span>
@@ -234,7 +234,7 @@
  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
 <span class="token comment"># handling lots of parameters</span>
 <span class="token comment">#</span>
-<span class="token assign-left variable">total</span><span class="token operator">=</span>$<span class="token punctuation">[</span> <span class="token variable">$&#123;10&#125;</span> * <span class="token variable">$&#123;11&#125;</span> <span class="token punctuation">]</span>
+<span class="token assign-left variable">total</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$((</span>$&#123;<span class="token number">10</span>&#125; <span class="token operator">*</span> $&#123;<span class="token number">11</span>&#125;<span class="token variable">))</span></span>
 <span class="token builtin class-name">echo</span> The tenth parameter is <span class="token variable">$&#123;10&#125;</span>
 <span class="token builtin class-name">echo</span> The eleventh parameter is <span class="token variable">$&#123;11&#125;</span>
 <span class="token builtin class-name">echo</span> The total is <span class="token variable">$total</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
@@ -264,6 +264,9 @@ The zero parameter is <span class="token builtin class-name">set</span> to: /hom
 <span class="token builtin class-name">echo</span> The zero parameter is <span class="token builtin class-name">set</span> to: <span class="token variable">$name</span>
 <span class="token comment">#</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<blockquote>
+<p>作业1：编写并运行以下脚本：</p>
+</blockquote>
 <p>基于脚本名实现不同功能的脚本：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
 <span class="token comment"># Testing a Multi-function script</span>
@@ -272,11 +275,11 @@ The zero parameter is <span class="token builtin class-name">set</span> to: /hom
 <span class="token comment">#</span>
 <span class="token keyword">if</span> <span class="token punctuation">[</span> <span class="token variable">$name</span> <span class="token operator">=</span> <span class="token string">"addem"</span> <span class="token punctuation">]</span>
 <span class="token keyword">then</span>
-<span class="token assign-left variable">total</span><span class="token operator">=</span>$<span class="token punctuation">[</span> <span class="token variable">$1</span> + <span class="token variable">$2</span> <span class="token punctuation">]</span>
+<span class="token assign-left variable">total</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$((</span>$<span class="token number">1</span> <span class="token operator">+</span> $<span class="token number">2</span><span class="token variable">))</span></span>
 <span class="token comment">#</span>
 <span class="token keyword">elif</span> <span class="token punctuation">[</span> <span class="token variable">$name</span> <span class="token operator">=</span> <span class="token string">"multem"</span> <span class="token punctuation">]</span>
 <span class="token keyword">then</span>
-<span class="token assign-left variable">total</span><span class="token operator">=</span>$<span class="token punctuation">[</span> <span class="token variable">$1</span> * <span class="token variable">$2</span> <span class="token punctuation">]</span>
+<span class="token assign-left variable">total</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$((</span>$<span class="token number">1</span> <span class="token operator">*</span> $<span class="token number">2</span><span class="token variable">))</span></span>
 <span class="token keyword">fi</span>
 <span class="token comment">#</span>
 <span class="token builtin class-name">echo</span>
@@ -330,7 +333,9 @@ There were <span class="token number">5</span> parameters supplied.
 ubuntu@sh:~$ <span class="token function">bash</span> temp.sh <span class="token string">"Hello world"</span>
 There were <span class="token number">1</span> parameters supplied.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>在使用参数前测试参数总数：</p>
+<blockquote>
+<p>作业2：在上文阶乘脚本的基础上完善以下功能<br>在使用参数前测试参数总数：</p>
+</blockquote>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
 
 <span class="token keyword">if</span> <span class="token punctuation">[</span> <span class="token variable">$#</span> <span class="token parameter variable">-ne</span> <span class="token number">1</span> <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
@@ -366,7 +371,7 @@ There were <span class="token number">1</span> parameters supplied.<span aria-hi
 <span class="token keyword">for</span> <span class="token for-or-select variable">param</span> <span class="token keyword">in</span> <span class="token string">"<span class="token variable">$*</span>"</span>
 <span class="token keyword">do</span>
 <span class="token builtin class-name">echo</span> <span class="token string">"\<span class="token variable">$*</span> Parameter #<span class="token variable">$count</span> = <span class="token variable">$param</span>"</span>
-<span class="token assign-left variable">count</span><span class="token operator">=</span>$<span class="token punctuation">[</span> <span class="token variable">$count</span> + <span class="token number">1</span> <span class="token punctuation">]</span>
+<span class="token assign-left variable">count</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$((</span>$count <span class="token operator">+</span> <span class="token number">1</span><span class="token variable">))</span></span>
 <span class="token keyword">done</span>
 <span class="token comment">#</span>
 <span class="token builtin class-name">echo</span>
@@ -375,17 +380,20 @@ There were <span class="token number">1</span> parameters supplied.<span aria-hi
 <span class="token keyword">for</span> <span class="token for-or-select variable">param</span> <span class="token keyword">in</span> <span class="token string">"<span class="token variable">$@</span>"</span>
 <span class="token keyword">do</span>
 <span class="token builtin class-name">echo</span> <span class="token string">"\<span class="token variable">$@</span> Parameter #<span class="token variable">$count</span> = <span class="token variable">$param</span>"</span>
-<span class="token assign-left variable">count</span><span class="token operator">=</span>$<span class="token punctuation">[</span> <span class="token variable">$count</span> + <span class="token number">1</span> <span class="token punctuation">]</span>
+<span class="token assign-left variable">count</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$((</span>$count <span class="token operator">+</span> <span class="token number">1</span><span class="token variable">))</span></span>
 <span class="token keyword">done</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="移动变量"><a href="#移动变量" class="headerlink" title="移动变量"></a>移动变量</h2><p>bash shell的<code>shift</code>命令能够用来操作命令行参数。在使用<code>shift</code>命令时，默认情况下它会将每个参数变量向左移动一个位置。所以，变量<code>$3</code>的值会移到$2中，变量<code>$2</code>的值会移到<code>$1</code>中，而变量<code>$1</code>的值则会被删除（注意，变量<code>$0</code>的值，也就是程序名，不会改变）。</p>
 <p>这是遍历命令行参数的另一个好方法，尤其是在你不知道到底有多少参数时。你可以只操作第一个参数，移动参数，然后继续操作第一个参数。</p>
+<blockquote>
+<p>作业1：编写并执行以下求和脚本：</p>
+</blockquote>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
 
 <span class="token keyword">while</span> <span class="token punctuation">[</span> <span class="token parameter variable">-n</span> <span class="token string">"<span class="token variable">$1</span>"</span> <span class="token punctuation">]</span>
 <span class="token keyword">do</span>
-                <span class="token assign-left variable">sum</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$((</span>$sum<span class="token operator">+</span>$<span class="token number">1</span><span class="token variable">))</span></span>
-                <span class="token builtin class-name">shift</span>
+    <span class="token assign-left variable">sum</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$((</span>sum <span class="token operator">+</span> $<span class="token number">1</span><span class="token variable">))</span></span>
+    <span class="token builtin class-name">shift</span>
 <span class="token keyword">done</span>
 
 <span class="token builtin class-name">echo</span> <span class="token assign-left variable">sum</span><span class="token operator">=</span><span class="token variable">$sum</span>
@@ -403,13 +411,13 @@ ubuntu@sh:~$ <span class="token function">bash</span> temp.sh <span class="token
 <span class="token builtin class-name">echo</span>
 <span class="token keyword">while</span> <span class="token punctuation">[</span> <span class="token parameter variable">-n</span> <span class="token string">"<span class="token variable">$1</span>"</span> <span class="token punctuation">]</span>
 <span class="token keyword">do</span>
-         <span class="token keyword">case</span> <span class="token string">"<span class="token variable">$1</span>"</span> <span class="token keyword">in</span>
-                                -a<span class="token punctuation">)</span> <span class="token builtin class-name">echo</span> <span class="token string">"Found the -a option"</span> <span class="token punctuation">;</span><span class="token punctuation">;</span>
-                                -b<span class="token punctuation">)</span> <span class="token builtin class-name">echo</span> <span class="token string">"Found the -b option"</span> <span class="token punctuation">;</span><span class="token punctuation">;</span>
-                                -c<span class="token punctuation">)</span> <span class="token builtin class-name">echo</span> <span class="token string">"Found the -c option"</span> <span class="token punctuation">;</span><span class="token punctuation">;</span>
-                                *<span class="token punctuation">)</span> <span class="token builtin class-name">echo</span> <span class="token string">"<span class="token variable">$1</span> is not an option"</span> <span class="token punctuation">;</span><span class="token punctuation">;</span>
-         <span class="token keyword">esac</span>
-         <span class="token builtin class-name">shift</span>
+    <span class="token keyword">case</span> <span class="token string">"<span class="token variable">$1</span>"</span> <span class="token keyword">in</span>
+        -a<span class="token punctuation">)</span> <span class="token builtin class-name">echo</span> <span class="token string">"Found the -a option"</span> <span class="token punctuation">;</span><span class="token punctuation">;</span>
+        -b<span class="token punctuation">)</span> <span class="token builtin class-name">echo</span> <span class="token string">"Found the -b option"</span> <span class="token punctuation">;</span><span class="token punctuation">;</span>
+        -c<span class="token punctuation">)</span> <span class="token builtin class-name">echo</span> <span class="token string">"Found the -c option"</span> <span class="token punctuation">;</span><span class="token punctuation">;</span>
+        *<span class="token punctuation">)</span> <span class="token builtin class-name">echo</span> <span class="token string">"<span class="token variable">$1</span> is not an option"</span> <span class="token punctuation">;</span><span class="token punctuation">;</span>
+    <span class="token keyword">esac</span>
+    <span class="token builtin class-name">shift</span>
 <span class="token keyword">done</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="分离参数和选项、处理带值选项"><a href="#分离参数和选项、处理带值选项" class="headerlink" title="分离参数和选项、处理带值选项"></a>分离参数和选项、处理带值选项</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
@@ -417,84 +425,90 @@ ubuntu@sh:~$ <span class="token function">bash</span> temp.sh <span class="token
 <span class="token builtin class-name">echo</span>
 <span class="token keyword">while</span> <span class="token punctuation">[</span> <span class="token parameter variable">-n</span> <span class="token string">"<span class="token variable">$1</span>"</span> <span class="token punctuation">]</span>
 <span class="token keyword">do</span>
-                <span class="token keyword">case</span> <span class="token string">"<span class="token variable">$1</span>"</span> <span class="token keyword">in</span>
-                                -a<span class="token punctuation">)</span> <span class="token builtin class-name">echo</span> <span class="token string">"Found the -a option"</span> <span class="token punctuation">;</span><span class="token punctuation">;</span>
-                                -b<span class="token punctuation">)</span> <span class="token builtin class-name">echo</span> <span class="token string">"Found the -b option"</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
-                                -c<span class="token punctuation">)</span> <span class="token builtin class-name">echo</span> <span class="token string">"Found the -c option"</span> 
-                   <span class="token assign-left variable">coption</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span>$2 * $3<span class="token variable">)</span></span>
-                   <span class="token builtin class-name">echo</span> <span class="token variable">$coption</span>
-                   <span class="token builtin class-name">shift</span>
-                   <span class="token builtin class-name">shift</span>
-                   <span class="token punctuation">;</span><span class="token punctuation">;</span>
-                                --<span class="token punctuation">)</span> <span class="token builtin class-name">shift</span>
-                                                <span class="token builtin class-name">break</span> <span class="token punctuation">;</span><span class="token punctuation">;</span>
-                                *<span class="token punctuation">)</span> <span class="token builtin class-name">echo</span> <span class="token string">"<span class="token variable">$1</span> is not an option"</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
-                <span class="token keyword">esac</span>
-                <span class="token builtin class-name">shift</span>
+    <span class="token keyword">case</span> <span class="token string">"<span class="token variable">$1</span>"</span> <span class="token keyword">in</span>
+        -a<span class="token punctuation">)</span> <span class="token builtin class-name">echo</span> <span class="token string">"Found the -a option"</span>
+            <span class="token punctuation">;</span><span class="token punctuation">;</span>
+        -b<span class="token punctuation">)</span> <span class="token builtin class-name">echo</span> <span class="token string">"Found the -b option"</span>
+            <span class="token punctuation">;</span><span class="token punctuation">;</span>
+        -c<span class="token punctuation">)</span> <span class="token builtin class-name">echo</span> <span class="token string">"Found the -c option"</span> 
+            <span class="token assign-left variable">coption</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$((</span>$<span class="token number">2</span> <span class="token operator">*</span> $<span class="token number">3</span><span class="token variable">))</span></span>
+            <span class="token builtin class-name">echo</span> <span class="token variable">$coption</span>
+            <span class="token builtin class-name">shift</span>
+            <span class="token builtin class-name">shift</span>
+            <span class="token punctuation">;</span><span class="token punctuation">;</span>
+        --<span class="token punctuation">)</span> <span class="token builtin class-name">shift</span>
+            <span class="token builtin class-name">break</span>
+            <span class="token punctuation">;</span><span class="token punctuation">;</span>
+        *<span class="token punctuation">)</span> <span class="token builtin class-name">echo</span> <span class="token string">"<span class="token variable">$1</span> is not an option"</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+    <span class="token keyword">esac</span>
+    <span class="token builtin class-name">shift</span>
 <span class="token keyword">done</span>
 <span class="token comment">#</span>
 <span class="token assign-left variable">count</span><span class="token operator">=</span><span class="token number">1</span>
 <span class="token keyword">for</span> <span class="token for-or-select variable">param</span> <span class="token keyword">in</span> <span class="token variable">$@</span>
 <span class="token keyword">do</span>
-                <span class="token builtin class-name">echo</span> <span class="token string">"Parameter #<span class="token variable">$count</span>: <span class="token variable">$param</span>"</span>
-                <span class="token assign-left variable">count</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$((</span> $count <span class="token operator">+</span> <span class="token number">1</span> <span class="token variable">))</span></span>
-<span class="token keyword">done</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token builtin class-name">echo</span> <span class="token string">"Parameter #<span class="token variable">$count</span>: <span class="token variable">$param</span>"</span>
+    <span class="token assign-left variable">count</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$((</span>$count <span class="token operator">+</span> <span class="token number">1</span><span class="token variable">))</span></span>
+<span class="token keyword">done</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="利用选项和参数实现阶乘和求和的计算工具"><a href="#利用选项和参数实现阶乘和求和的计算工具" class="headerlink" title="利用选项和参数实现阶乘和求和的计算工具"></a>利用选项和参数实现阶乘和求和的计算工具</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
+<h3 id="利用选项和参数实现阶乘和求和的计算工具"><a href="#利用选项和参数实现阶乘和求和的计算工具" class="headerlink" title="利用选项和参数实现阶乘和求和的计算工具"></a>利用选项和参数实现阶乘和求和的计算工具</h3><blockquote>
+<p>作业2：编写并执行以下脚本：</p>
+</blockquote>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
 
 <span class="token keyword">if</span> <span class="token punctuation">[</span> <span class="token variable">$#</span> <span class="token parameter variable">-eq</span> <span class="token number">0</span> <span class="token punctuation">]</span> <span class="token operator">||</span> <span class="token punctuation">[</span> <span class="token variable">$#</span> <span class="token parameter variable">-eq</span> <span class="token number">1</span> <span class="token punctuation">]</span>
 <span class="token keyword">then</span>
-                <span class="token builtin class-name">echo</span>
-                <span class="token builtin class-name">echo</span> <span class="token string">"sum and factorial tool"</span>
-                <span class="token builtin class-name">echo</span> <span class="token string">"Usage:"</span>
-                <span class="token builtin class-name">echo</span> <span class="token string">"          -a number ..."</span>
-                <span class="token builtin class-name">echo</span> <span class="token string">"          -f number"</span>
-                <span class="token builtin class-name">exit</span> <span class="token number">1</span>
+    <span class="token builtin class-name">echo</span>
+    <span class="token builtin class-name">echo</span> <span class="token string">"sum and factorial tool"</span>
+    <span class="token builtin class-name">echo</span> <span class="token string">"Usage:"</span>
+    <span class="token builtin class-name">echo</span> <span class="token string">"          -a number ..."</span>
+    <span class="token builtin class-name">echo</span> <span class="token string">"          -f number"</span>
+    <span class="token builtin class-name">exit</span> <span class="token number">1</span>
 <span class="token keyword">fi</span>
 
 <span class="token keyword">case</span> <span class="token string">"<span class="token variable">$1</span>"</span> <span class="token keyword">in</span>
-                -a<span class="token punctuation">)</span>
-                                <span class="token keyword">while</span> <span class="token punctuation">[</span> <span class="token parameter variable">-n</span> <span class="token string">"<span class="token variable">$2</span>"</span> <span class="token punctuation">]</span>
-                                <span class="token keyword">do</span>
-                                                <span class="token assign-left variable">sum</span><span class="token operator">=</span>$<span class="token punctuation">[</span><span class="token variable">$sum</span> + <span class="token variable">$2</span><span class="token punctuation">]</span>
-                                                <span class="token builtin class-name">shift</span>
-                                <span class="token keyword">done</span>
-                                <span class="token builtin class-name">echo</span> <span class="token string">"sum=<span class="token variable">$sum</span>"</span>
-                                <span class="token builtin class-name">exit</span> <span class="token number">0</span>
+    -a<span class="token punctuation">)</span>
+        <span class="token keyword">while</span> <span class="token punctuation">[</span> <span class="token parameter variable">-n</span> <span class="token string">"<span class="token variable">$2</span>"</span> <span class="token punctuation">]</span>
+        <span class="token keyword">do</span>
+                        <span class="token assign-left variable">sum</span><span class="token operator">=</span>$<span class="token punctuation">[</span><span class="token variable">$sum</span> + <span class="token variable">$2</span><span class="token punctuation">]</span>
+                        <span class="token builtin class-name">shift</span>
+        <span class="token keyword">done</span>
+        <span class="token builtin class-name">echo</span> <span class="token string">"sum=<span class="token variable">$sum</span>"</span>
+        <span class="token builtin class-name">exit</span> <span class="token number">0</span>
 <span class="token comment"># shift</span>
 <span class="token comment"># for i in $@</span>
 <span class="token comment"># do</span>
- <span class="token comment"># sum=$((sum + i))</span>
+<span class="token comment"># sum=$((sum + i))</span>
 <span class="token comment"># done</span>
 <span class="token comment"># exit 0</span>
-                                <span class="token punctuation">;</span><span class="token punctuation">;</span>
-                -f<span class="token punctuation">)</span>
-                                <span class="token keyword">if</span> <span class="token punctuation">[</span> <span class="token variable">$2</span> <span class="token parameter variable">-eq</span> <span class="token number">0</span> <span class="token punctuation">]</span>
-                                <span class="token keyword">then</span>
-                                                <span class="token builtin class-name">echo</span> <span class="token string">"fact=1"</span>
-                                                <span class="token builtin class-name">exit</span> <span class="token number">0</span>
-                                <span class="token keyword">fi</span>
-                                <span class="token assign-left variable">fact</span><span class="token operator">=</span><span class="token number">1</span>
-                                <span class="token keyword">for</span><span class="token variable"><span class="token punctuation">((</span>i<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span> i<span class="token operator">&lt;=</span>$<span class="token number">2</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">))</span></span>
-                                <span class="token keyword">do</span>
-                                                <span class="token assign-left variable">fact</span><span class="token operator">=</span>$<span class="token punctuation">[</span><span class="token variable">$fact</span> * <span class="token variable">$i</span><span class="token punctuation">]</span>
-                                <span class="token keyword">done</span>
-                                <span class="token builtin class-name">echo</span> <span class="token assign-left variable">fact</span><span class="token operator">=</span><span class="token variable">$fact</span>
-                                <span class="token builtin class-name">exit</span> <span class="token number">0</span>
-                                <span class="token punctuation">;</span><span class="token punctuation">;</span>
-                -h<span class="token punctuation">)</span>
-                                <span class="token punctuation">;</span><span class="token punctuation">;</span>
-                *<span class="token punctuation">)</span>
-                                <span class="token builtin class-name">echo</span>
-                                <span class="token builtin class-name">echo</span> <span class="token string">"sum and factorial tool"</span>
-                                <span class="token builtin class-name">echo</span> <span class="token string">"Usage:"</span>
-                                <span class="token builtin class-name">echo</span> <span class="token string">"          -a number ..."</span>
-                                <span class="token builtin class-name">echo</span> <span class="token string">"          -f number"</span>
-                                <span class="token punctuation">;</span><span class="token punctuation">;</span>
+        <span class="token punctuation">;</span><span class="token punctuation">;</span>
+    -f<span class="token punctuation">)</span>
+        <span class="token keyword">if</span> <span class="token punctuation">[</span> <span class="token variable">$2</span> <span class="token parameter variable">-eq</span> <span class="token number">0</span> <span class="token punctuation">]</span>
+        <span class="token keyword">then</span>
+                        <span class="token builtin class-name">echo</span> <span class="token string">"fact=1"</span>
+                        <span class="token builtin class-name">exit</span> <span class="token number">0</span>
+        <span class="token keyword">fi</span>
+        <span class="token assign-left variable">fact</span><span class="token operator">=</span><span class="token number">1</span>
+        <span class="token keyword">for</span><span class="token variable"><span class="token punctuation">((</span>i<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span> i<span class="token operator">&lt;=</span>$<span class="token number">2</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">))</span></span>
+        <span class="token keyword">do</span>
+                        <span class="token assign-left variable">fact</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$((</span>$fact <span class="token operator">*</span> $i<span class="token variable">))</span></span>
+        <span class="token keyword">done</span>
+        <span class="token builtin class-name">echo</span> <span class="token assign-left variable">fact</span><span class="token operator">=</span><span class="token variable">$fact</span>
+        <span class="token builtin class-name">exit</span> <span class="token number">0</span>
+        <span class="token punctuation">;</span><span class="token punctuation">;</span>
+    -h<span class="token punctuation">)</span>
+        <span class="token punctuation">;</span><span class="token punctuation">;</span>
+    *<span class="token punctuation">)</span>
+        <span class="token builtin class-name">echo</span>
+        <span class="token builtin class-name">echo</span> <span class="token string">"sum and factorial tool"</span>
+        <span class="token builtin class-name">echo</span> <span class="token string">"Usage:"</span>
+        <span class="token builtin class-name">echo</span> <span class="token string">"          -a number ..."</span>
+        <span class="token builtin class-name">echo</span> <span class="token string">"          -f number"</span>
+        <span class="token punctuation">;</span><span class="token punctuation">;</span>
 <span class="token keyword">esac</span>
 <span class="token builtin class-name">exit</span> <span class="token number">0</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="标准化选项"><a href="#标准化选项" class="headerlink" title="标准化选项"></a>标准化选项</h2><p><img src="https://vault.taojie.fun:28089/i/2023/09/02/note5.%E5%A4%84%E7%90%86%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5-2023-06-16-21-20-42.png" alt="5.处理用户输入-2023-06-16-21-20-42"></p>
+<h2 id="标准化选项"><a href="#标准化选项" class="headerlink" title="标准化选项"></a>标准化选项</h2><p><img src="https://lsky.taojie.fun:52222/i/2023/09/02/note5.%E5%A4%84%E7%90%86%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5-2023-06-16-21-20-42.png" alt="5.处理用户输入-2023-06-16-21-20-42"></p>
 
     </div>
 

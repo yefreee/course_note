@@ -118,7 +118,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-count">29</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -136,865 +136,6 @@
     </div>
 
     <div class="main-inner index posts-expand">
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/10/06/private_clouds/5.OpenStack%E9%95%9C%E5%83%8F%E5%88%B6%E4%BD%9C/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | ">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/10/06/private_clouds/5.OpenStack%E9%95%9C%E5%83%8F%E5%88%B6%E4%BD%9C/" class="post-title-link" itemprop="url">OpenStack镜像管理与制作（二）</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-10-06 11:00:09" itemprop="dateCreated datePublished" datetime="2023-10-06T11:00:09+08:00">2023-10-06</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-03-16 16:06:02" itemprop="dateModified" datetime="2024-03-16T16:06:02+08:00">2024-03-16</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="虚拟机镜像制作方法"><a href="#虚拟机镜像制作方法" class="headerlink" title="虚拟机镜像制作方法"></a>虚拟机镜像制作方法</h2><p>OpenStack平台所使用的镜像文件是一种虚拟机镜像，我们简称为镜像。而虚拟机镜像本质上是一个包含虚拟磁盘的单个文件，该虚拟磁盘上安装了可引导的操作系统。</p>
-<p>上一节课已经介绍了通过下载官方预制的虚拟机镜像，这种途径获取到的镜像文件大都默认禁用SSH密码身份验证，同时包含<code>cloud-init</code>来支持SSH密钥对和用户数据的注入。通过密钥实现登录之后可以做进一步的定制，最后通过创建快照重新生成新的虚拟机镜像。</p>
-<p>以上这种获取、修改、生成新的镜像的方法容易理解、实现过程简单，适用于需要进行轻度定制的场景。如果需要进行深度的定制或者需要定制特定平台的镜像文件时可以通过更多的途径制作镜像。</p>
-<p>其他制作虚拟机镜像的方法：</p>
-<ul>
-<li>通过工具（Guestfish,guestmount）修改虚拟机镜像</li>
-<li>通过工具（Diskimage-builder）创建虚拟机镜像</li>
-<li>手动创建虚拟机镜像</li>
-</ul>
-<h2 id="获取实验资源"><a href="#获取实验资源" class="headerlink" title="获取实验资源"></a>获取实验资源</h2><blockquote>
-<p>这一步从教师机获取实验所用的镜像。</p>
-</blockquote>
-<p>Windows + E打开文件资源管理器在搜索栏输入<code>\\192.168.3.47</code>打开后将文件<code>CentOS-7-x86_64-GenericCloud-2003.qcow2</code>拉取到Windows本地目录<code>D:\\镜像\</code>覆盖目录下的同名文件。</p>
-<img src="https://vault.taojie.fun:28089/i/2023/10/11/2023-10-11-1696954122.png" alt="1696954122919.png" title="1696954122919.png" />
-
-<h2 id="实验环境准备"><a href="#实验环境准备" class="headerlink" title="实验环境准备"></a>实验环境准备</h2><blockquote>
-<p>设置<code>控制节点</code>快照版本<code>5.3.8</code></p>
-</blockquote>
-<ul>
-<li><p>右键虚拟机<code>控制节点</code> -&gt; 设置 -&gt; 处理器，将<code>虚拟化引擎</code>里的勾全部取消，启动<code>控制节点</code>。</p>
-  <img src="https://vault.taojie.fun:28089/i/2023/10/11/2023-10-11-1696954933.png" alt="1696954933617.png" title="1696954933617.png" />
-</li>
-<li><p>使用WinSCP工具将需要定制的镜像上传到<code>控制节点</code>，将文件从左侧的windows本地拖动到右侧的虚拟机内部。</p>
-  <img src="https://vault.taojie.fun:28089/i/2023/10/11/2023-10-11-1696956085.png" alt="1696956085852.png" title="1696956085852.png" /></li>
-</ul>
-<h2 id="Guestfish使用"><a href="#Guestfish使用" class="headerlink" title="Guestfish使用"></a>Guestfish使用</h2><p>Guestfish是一个用于访问和修改虚拟机磁盘镜像的工具，它提供了一种交互式方式来浏览、修改虚拟机的文件系统。</p>
-<h3 id="Guestfish安装配置"><a href="#Guestfish安装配置" class="headerlink" title="Guestfish安装配置"></a>Guestfish安装配置</h3><ul>
-<li><p>Guestfish软件包安装</p>
-  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># yum -y install libguestfs-tools</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li><p>执行命令安装<code>libvirt</code>服务。</p>
-  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># yum -y install libvirt</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li><p>修改libvirt配置<code>vi /etc/libvirt/qemu.conf</code>。</p>
-  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># vi /etc/libvirt/qemu.conf</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-  <img src="https://vault.taojie.fun:28089/i/2023/10/10/2023-10-10-1696912516.png" alt="1696912515114.png" title="1696912515114.png" />
-</li>
-<li><p>启动libvirt服务。</p>
-  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># systemctl start libvirtd</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-</ul>
-<h3 id="镜像定制"><a href="#镜像定制" class="headerlink" title="镜像定制"></a>镜像定制</h3><blockquote>
-<p>定制内容是设置centos镜像的root和centos账户的直接登录、开启bash后利用字符打印一个图案。</p>
-</blockquote>
-<ol>
-<li><p>安装openssl，生成加密的字符串并<code>复制</code>用于设置root密码。</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># yum -y install openssl</span>
-<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openssl passwd -1 123123</span>
-<span class="token variable">$1</span><span class="token variable">$vNor7zoi</span><span class="token variable">$MrzvyJiIETqxfoO</span>.zxgIL0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>需要修改的虚拟机镜像文件名为<code>CentOS-7-x86_64-GenericCloud-2003.qcow2</code>，通过以下命令以root身份挂载为读写模式：</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># guestfish --rw -a CentOS-7-x86_64-GenericCloud-2003.qcow2</span>
-
-Welcome to Guestfish, the libguestfs filesystem interactive shell <span class="token keyword">for</span>
-editing virtual machine filesystems.
-
-Type: <span class="token string">'help'</span> <span class="token keyword">for</span> <span class="token builtin class-name">help</span> on commands
-<span class="token string">'man'</span> to <span class="token builtin class-name">read</span> the manual
-<span class="token string">'quit'</span> to quit the shell
-
-<span class="token operator">></span><span class="token operator">&lt;</span>fs<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<blockquote>
-<p>此时进入Guestfish的会话，提示符为<code>&gt;&lt;fs&gt;</code></p>
-</blockquote>
- <img src="https://vault.taojie.fun:28089/i/2023/10/11/2023-10-11-1696954607.png" alt="1696954607319.png" title="1696954607319.png" />
-</li>
-<li><p>首先在Guestfish提示符下使用<code>run</code>命令启动一个虚拟机才能执行其他操作，该虚拟机将用于执行所有文件操作。</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span><span class="token operator">&lt;</span>fs<span class="token operator">></span> run<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li><p>通过list-filesystems命令查看文件系统。</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span><span class="token operator">&lt;</span>fs<span class="token operator">></span> list-filesystems<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<blockquote>
-<p>作业1：上传显示的镜像分区信息。</p>
-</blockquote>
-</li>
-<li><p>挂载包含根目录的分区并修改文件<code>/etc/shadow</code>用来给root账户设置密码。</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span><span class="token operator">&lt;</span>fs<span class="token operator">></span> <span class="token function">mount</span> /dev/sda1 /<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span><span class="token operator">&lt;</span>fs<span class="token operator">></span> <span class="token function">vi</span> /etc/shadow<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<blockquote>
-<p>在文件的第一行的第一、二个冒号中间插入之前复制的所生成的root密码。</p>
-</blockquote>
- <img src="https://vault.taojie.fun:28089/i/2023/10/11/2023-10-11-1696956445.png" alt="1696956445209.png" title="1696956445209.png" />
-</li>
-<li><p>修改<code>/etc/cloud/cloud.cfg</code>文件。</p>
-<p> 在第58行下添加<code>plain_text_passwd: &#39;000000&#39;</code>字段用来给centos用户设置初始密码<code>000000</code>。</p>
- <img src="https://vault.taojie.fun:28089/i/2023/10/09/2023-10-09-1696817530.png" alt="1696817529748.png" title="1696817529748.png" />
-</li>
-<li><p>使用<code>vi</code>修改<code>/root/.bashrc</code>文件，设置bash自启动命令，添加以下命令到最后。</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">echo</span> <span class="token string">'....................................................................................................'</span>
-<span class="token builtin class-name">echo</span> <span class="token string">'....................................................................................................'</span>
-<span class="token builtin class-name">echo</span> <span class="token string">'....................................................................................................'</span>
-<span class="token builtin class-name">echo</span> <span class="token string">'..........................:*@@@@@@#=...........:-=====--:...........................................'</span>
-<span class="token builtin class-name">echo</span> <span class="token string">'........................:#@@@@@@@@@@@-.:+*#%%+-:.........:-+#*=......:+#%%#*:.......................'</span>
-<span class="token builtin class-name">echo</span> <span class="token string">'.......................:@@@@@@@@@@@@@@%-.......................:*%:+@@@@@@@@@@*.....................'</span>
-<span class="token builtin class-name">echo</span> <span class="token string">'.......................#@@@@@@@@@@@@@-..........  .................#@@@@@@@@@@@@=...................'</span>
-<span class="token builtin class-name">echo</span> <span class="token string">'......................=@@@@@@@@@@@-...................................%@@@@@@@@@@...................'</span>
-<span class="token builtin class-name">echo</span> <span class="token string">'......................=@@@@@@@@@%:.....................................%@@@@@@@@@:..................'</span>
-<span class="token builtin class-name">echo</span> <span class="token string">'........................%@@@@@@#.......................................-@@@@@@@@@...................'</span>
-<span class="token builtin class-name">echo</span> <span class="token string">'...............#@#.......*@@@@%.........................................-@@@@@@@+...................'</span>
-<span class="token builtin class-name">echo</span> <span class="token string">'........+@@+..#@@%........:*@@-..........................................=@@@@%-........+*:.........'</span>
-<span class="token builtin class-name">echo</span> <span class="token string">'........*@@%..%@@#..........:*............................................%#=:.........+@@%.........'</span>
-<span class="token builtin class-name">echo</span> <span class="token string">'........-@@@..@@@=..........*.............................................-+......#@@=.=@@%.........'</span>
-<span class="token builtin class-name">echo</span> <span class="token string">'.....=%%@@@@#*@@@..........*-..............................................#:.....#@@@%@@@%.........'</span>
-<span class="token builtin class-name">echo</span> <span class="token string">'....-@@@@@@@@@@@#.........=*...............................................++......=%@@@@@@@@@@=....'</span>
-<span class="token builtin class-name">echo</span> <span class="token string">'....-@@@@@@@@@@@@-........%:...............................................=*.......:@@@@@@@@@@@#...'</span>
-<span class="token builtin class-name">echo</span> <span class="token string">'.....@@@@@@@@@@@@........-*................................................:#........@@@@@@@@@@@@*..'</span>
-<span class="token builtin class-name">echo</span> <span class="token string">'.....#@@@@@@@@@@#......:%@=.................................................@*......:@@@@@@@@@@@@+..'</span>
-<span class="token builtin class-name">echo</span> <span class="token string">'......@@@@@@@@@@*.....#@@@:.................................................@@#......#@@@@@@@@@@-...'</span>
-<span class="token builtin class-name">echo</span> <span class="token string">'......@@@@@@@@@@%-...:@@@@+.................................................@@@%:......+@@@@@@@@-...'</span>
-<span class="token builtin class-name">echo</span> <span class="token string">'......*@@@@@@@@@@@*=.:@@@@%:................................................@@@@@......+@@@@@@@%:...'</span>
-<span class="token builtin class-name">echo</span> <span class="token string">'......-@@@@@@@@@@@@@@@@@@@@%:..............................................+@@@@@%.....=@@@@@@@%....'</span>
-<span class="token builtin class-name">echo</span> <span class="token string">'.......%@@@@@@@@@@@@@@@@@@@@@*............................................=@@@@@@@@@@@@@@@@@@@@#....'</span>
-<span class="token builtin class-name">echo</span> <span class="token string">'.......:@@@@@@@@@@@@@@@@@@@@@@@=........................................:#@@@@@@@@@@@@@@@@@@@@@#....'</span>
-<span class="token builtin class-name">echo</span> <span class="token string">'........+@@@@@@@@@@@@@@@@@@@@@@@@%-...................................:#@@@@@@@@@@@@@@@@@@@@@@@%....'</span>
-<span class="token builtin class-name">echo</span> <span class="token string">'.........%@@@@@@@@@@@@@@@@@@@@@@@@@@+.............................:=#@@@@@@@@@@@@@@@@@@@@@@@@@@=....'</span>
-<span class="token builtin class-name">echo</span> <span class="token string">'..........=@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*-:..................-+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@=.....'</span>
-<span class="token builtin class-name">echo</span> <span class="token string">'............=@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@####%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*.......'</span>
-<span class="token builtin class-name">echo</span> <span class="token string">'................:-=+##%%%%%%%%%%%%%%%%%%%%%%%%%@@@@@@@@@@%%%%%%%%%%%%%%@@@@@@@@@@@@@@@@%*=:.........'</span>
-<span class="token builtin class-name">echo</span> <span class="token string">'....................................................................................................'</span>
-<span class="token builtin class-name">echo</span> <span class="token string">'....................................................................................................'</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>卸载挂载点、退出guestfish视图</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span><span class="token operator">&lt;</span>fs<span class="token operator">></span> <span class="token function">umount</span> /
-<span class="token operator">></span><span class="token operator">&lt;</span>fs<span class="token operator">></span> <span class="token builtin class-name">exit</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
-</ol>
-<h3 id="验证定制结果"><a href="#验证定制结果" class="headerlink" title="验证定制结果"></a>验证定制结果</h3><ol>
-<li><p>通过WinSCP将修改好的<code>CentOS-7-x86_64-GenericCloud-2003.qcow2</code>传输回本地的Windows桌面。</p>
-</li>
-<li><p>关闭<code>控制节点</code>虚拟机、将<code>控制节点</code>设置为快照<code>项目12</code>、启动<code>控制节点</code>和<code>计算节点</code>，登录<code>192.168.10.20</code>控制台。</p>
-</li>
-<li><p>在镜像菜单上传上文修改好的镜像<code>CentOS-7-x86_64-GenericCloud-2003.qcow2</code>到OpenStack。</p>
-</li>
-<li><p>创建<code>网络</code>，<code>实例类型</code>，不会的参考前面的笔记。</p>
-</li>
-<li><p>创建Centos实例并使用root账户登录（密码是上文配置的123123）验证结果，应该会显示下图所示的屏保动画。</p>
- <img src="https://vault.taojie.fun:28089/i/2023/10/13/2023-10-13-1697171723.png" alt="1697171722897.png" title="1697171722897.png" /></li>
-</ol>
-<blockquote>
-<p>作业2:上传登录后的截图</p>
-</blockquote>
-<h2 id="Guestmount使用"><a href="#Guestmount使用" class="headerlink" title="Guestmount使用"></a>Guestmount使用</h2><p><code>Guestmount</code>是一个用于挂载虚拟机磁盘镜像的工具，它允许在宿主机上将虚拟机磁盘镜像挂载为宿主机文件系统的一部分，从而可以直接访问和修改虚拟机镜像中的文件。Guestmount可以在不启动虚拟机的情况下进行操作，提供了对镜像中文件的读写访问权限。通过Guestmount，可以像操作本地文件系统一样，使用标准的文件操作命令（例如cp、mv、rm 等）</p>
-<ul>
-<li><p>Guestmount用法示例</p>
-<ol>
-<li><p>假设需要修改的虚拟机镜像文件名为<code>centos63_desktop.img</code>，从该文件中挂载根分区到<code>/mnt</code>目录。</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># guestmount -a centos63_desktop.qcow2 -m /dev/vg_centosbase/lv_root --rw /mnt</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li><p>当预先不知道具体的挂载点时可以通过选项<code>-i</code>自动决定所用的挂载点。</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># guestmount -a centos63_desktop.qcow2 -i --rw /mnt</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li><p>修改完成后卸载挂载点。</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># umount /mnt</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-</ol>
-</li>
-</ul>
-<h2 id="Diskimage-builder使用"><a href="#Diskimage-builder使用" class="headerlink" title="Diskimage-builder使用"></a>Diskimage-builder使用</h2><p>Diskimage-builder（DIB）是一个用于创建定制化操作系统磁盘镜像的工具。它是一个开源项目，旨在帮助开发者和系统管理员构建适合特定用途的操作系统镜像，例如用于虚拟机、容器、云平台等环境。</p>
-<ol>
-<li><p>Diskimage-builder安装。</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># yum -y install diskimage-builder</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li><p>创建一个通用的Ubuntu虚拟磁盘镜像。</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># disk-image-create ubuntu vm</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li><p>还可以通过设置命令行选项或者环境变量实现其他镜像的构造。</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># disk-image-create -a armhf ubuntu vm</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li><p>除此之外还可以通过YAML文件描述需要构造的镜像。</p>
- <pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token comment"># 元素列表，表示构建镜像时要包含的元素</span>
-<span class="token key atrule">elements</span><span class="token punctuation">:</span>
-<span class="token punctuation">-</span> centos7<span class="token punctuation">-</span>minimal
-<span class="token punctuation">-</span> install<span class="token punctuation">-</span>packages
-
-<span class="token comment"># 镜像类型，指定生成的镜像格式</span>
-<span class="token key atrule">image_types</span><span class="token punctuation">:</span>
-<span class="token punctuation">-</span> qcow2
-<span class="token punctuation">-</span> raw
-
-<span class="token comment"># 操作系统发行版和版本</span>
-<span class="token key atrule">release</span><span class="token punctuation">:</span> centos7
-
-<span class="token comment"># 构建参数和配置</span>
-<span class="token key atrule">properties</span><span class="token punctuation">:</span>
-<span class="token comment"># 用户名和密码</span>
-<span class="token key atrule">user</span><span class="token punctuation">:</span> myuser
-<span class="token key atrule">password</span><span class="token punctuation">:</span> mypassword<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
-</ol>
-<h2 id="手动定制虚拟磁盘镜像"><a href="#手动定制虚拟磁盘镜像" class="headerlink" title="手动定制虚拟磁盘镜像"></a>手动定制虚拟磁盘镜像</h2><p>除了可以通过上述的工具在已有的虚拟磁盘文件的基础上进行修改以外还可以手动定制虚拟磁盘镜像，这个过程需要通过ISO CD文件安装操作系统后通过VNC远程安装windows-server虚拟机完成定制。主要分为以下几步：</p>
-<ol>
-<li><p>通过<code>kvm+qemu</code>方案安装操作系统虚拟机。</p>
-</li>
-<li><p>通过<code>vnc</code>连接虚拟机后实现进一步配置、定制。</p>
-</li>
-<li><p>上传定制好的系统镜像到OpenStack平台完成验证。</p>
-</li>
-</ol>
-<h3 id="作业与实验环境"><a href="#作业与实验环境" class="headerlink" title="作业与实验环境"></a>作业与实验环境</h3><blockquote>
-<p><a target="_blank" rel="noopener" href="https://wxstc.fanya.chaoxing.com/portal">超星网址</a><br>虚拟机使用<code>xnode1</code>，登录账户：root，密码：000000</p>
-</blockquote>
-<h3 id="系统资源准备"><a href="#系统资源准备" class="headerlink" title="系统资源准备"></a>系统资源准备</h3><ol>
-<li><p>在安装系统之前需要删除部分<code>C盘</code>内容，获取系统安装包、VirtIO驱动，参考第一节从共享文件中拉取文件到桌面上<code>cn_windows_server_2012_r2_with_update_x64_dvd_6052725.iso</code>、<code>virtio-win-0.1.185.iso</code>、<code>WinSCP.exe</code>。</p>
-</li>
-<li><p>打开虚拟机<code>xnode1</code>，使用vmware控制台登录。</p>
-</li>
-<li><p>修改网口配置文件<code>/etc/sysconfig/network-scripts/ifcfg-eno16777736</code>，设置DHCP，删除后面配置的静态IP。</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token assign-left variable">TYPE</span><span class="token operator">=</span>Ethernet
-<span class="token assign-left variable">BOOTPROTO</span><span class="token operator">=</span>dhcp      <span class="token comment"># dhcp设置</span>
-<span class="token assign-left variable">DEFROUTE</span><span class="token operator">=</span>yes
-<span class="token assign-left variable">PEERDNS</span><span class="token operator">=</span>yes
-<span class="token assign-left variable">PEERROUTES</span><span class="token operator">=</span>yes
-<span class="token assign-left variable">IPV4_FAILURE_FATAL</span><span class="token operator">=</span>no
-<span class="token assign-left variable">IPV6INIT</span><span class="token operator">=</span>yes
-<span class="token assign-left variable">IPV6_AUTOCONF</span><span class="token operator">=</span>yes
-<span class="token assign-left variable">IPV6_DEFROUTE</span><span class="token operator">=</span>yes
-<span class="token assign-left variable">IPV6_PEERDNS</span><span class="token operator">=</span>yes
-<span class="token assign-left variable">IPV6_PEERROUTES</span><span class="token operator">=</span>yes
-<span class="token assign-left variable">IPV6_FAILURE_FATAL</span><span class="token operator">=</span>no
-<span class="token assign-left variable">NAME</span><span class="token operator">=</span>eno16777736
-<span class="token assign-left variable">UUID</span><span class="token operator">=</span>0c189275-81a1-4c21-84b8-e72af745cb09
-<span class="token assign-left variable">DEVICE</span><span class="token operator">=</span>eno16777736
-<span class="token assign-left variable">ONBOOT</span><span class="token operator">=</span>yes<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>执行<code>ifdown &lt;网口名&gt;</code> + <code>ifup &lt;网口名&gt;</code>使配置生效。</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@xnode1 ~<span class="token punctuation">]</span><span class="token comment"># ifdown eno16777736</span>
-<span class="token punctuation">[</span>root@xnode1 ~<span class="token punctuation">]</span><span class="token comment"># ifup eno16777736</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-</li>
-<li><p>使用<code>ip addr</code>命令查看新的IP地址，ping下百度的域名检查外网连接状态。</p>
-</li>
-<li><p>安装虚拟化相关的软件包。</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># virt-install 是一个命令行工具，用于在虚拟化环境中创建和安装虚拟机</span>
-<span class="token punctuation">[</span>root@xnode1 ~<span class="token punctuation">]</span><span class="token comment"># yum install -y qemu-kvm libvirt virt-install</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-</li>
-<li><p>使用WinScp工具连接<code>xnode1</code>所分配的IP地址、登录会话将<code>cn_windows_server_2012_r2_with_update_x64_dvd_6052725.iso</code>、<code>virtio-win-0.1.185.iso</code>两个文件从windows本地上传到<code>xnode1</code>虚拟机内。</p>
-</li>
-<li><p>修改<code>/etc/libvirt/qemu.conf</code>，设置libvirt <code>root</code>权限和<code>VNC</code>远程虚拟机配置。</p>
- <img src="https://vault.taojie.fun:28089/i/2023/10/17/2023-10-17-1697515973.png" alt="1697515972974.png" title="1697515972974.png" />
-
- <img src="https://vault.taojie.fun:28089/i/2023/10/17/2023-10-17-1697515692.png" alt="1697515691473.png" title="1697515691473.png" />
-</li>
-<li><p>启动libvirt服务，关闭防火墙服务。</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@xnode1 ~<span class="token punctuation">]</span><span class="token comment"># systemctl disable firewalld</span>
-<span class="token punctuation">[</span>root@xnode1 ~<span class="token punctuation">]</span><span class="token comment"># systemctl stop firewalld</span>
-<span class="token punctuation">[</span>root@xnode1 ~<span class="token punctuation">]</span><span class="token comment"># systemctl enable libvirtd</span>
-<span class="token punctuation">[</span>root@xnode1 ~<span class="token punctuation">]</span><span class="token comment"># systemctl start libvirtd</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>创建大小为20G的qcow2格式的虚拟磁盘文件。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@xnode1 ~<span class="token punctuation">]</span><span class="token comment"># qemu-img create -f qcow2 ws2012.qcow2 20G</span>
-Formatting <span class="token string">'ws2012.qcow2'</span>, <span class="token assign-left variable">fmt</span><span class="token operator">=</span>qcow2 <span class="token assign-left variable">cluster_size</span><span class="token operator">=</span><span class="token number">65536</span> <span class="token assign-left variable">extended_l2</span><span class="token operator">=</span>off <span class="token assign-left variable">compression_type</span><span class="token operator">=</span>zlib <span class="token assign-left variable">size</span><span class="token operator">=</span><span class="token number">21474836480</span> <span class="token assign-left variable">lazy_refcounts</span><span class="token operator">=</span>off <span class="token assign-left variable">refcount_bits</span><span class="token operator">=</span><span class="token number">16</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
-</ol>
-<h3 id="windows-server系统安装"><a href="#windows-server系统安装" class="headerlink" title="windows-server系统安装"></a>windows-server系统安装</h3><ol>
-<li><p>执行virt-install命令启动Win-server操作系统。</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">virt-install <span class="token parameter variable">--connect</span> qemu:///system <span class="token punctuation">\</span>
-<span class="token parameter variable">--name</span> ws2012 <span class="token parameter variable">--ram</span> <span class="token number">2048</span> <span class="token parameter variable">--vcpus</span> <span class="token number">2</span> <span class="token punctuation">\</span>
-<span class="token parameter variable">--network</span> <span class="token assign-left variable">network</span><span class="token operator">=</span>default,model<span class="token operator">=</span>virtio <span class="token punctuation">\</span>
-<span class="token parameter variable">--disk</span> <span class="token assign-left variable">path</span><span class="token operator">=</span>ws2012.qcow2,format<span class="token operator">=</span>qcow2,device<span class="token operator">=</span>disk,bus<span class="token operator">=</span>virtio <span class="token punctuation">\</span>
-<span class="token parameter variable">--cdrom</span> cn_windows_server_2012_r2_with_update_x64_dvd_6052725.iso <span class="token punctuation">\</span>
-<span class="token parameter variable">--disk</span> <span class="token assign-left variable">path</span><span class="token operator">=</span>virtio-win-0.1.185.iso,device<span class="token operator">=</span>cdrom <span class="token punctuation">\</span>
-<span class="token parameter variable">--graphics</span> vnc,listen<span class="token operator">=</span><span class="token number">0.0</span>.0.0 --os-type windows --os-variant win2k12 <span class="token punctuation">\</span>
-<span class="token parameter variable">--boot</span> cdrom,menu<span class="token operator">=</span>on<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<ul>
-<li><p>其他虚拟机管理命令</p>
-<ol>
-<li><p>列出虚拟机：<code>virsh list --all</code></p>
-</li>
-<li><p>强制停止虚拟机：<code>virsh destroy &lt;虚拟机名字&gt;</code></p>
-</li>
-<li><p>删除虚拟机：<code>virsh undefine &lt;虚拟机名字&gt;</code></p>
-</li>
-<li><p>关闭虚拟机：<code>virsh shutdown &lt;虚拟机名字&gt;</code></p>
-</li>
-<li><p>重启虚拟机：<code>virsh reboot &lt;虚拟机名字&gt;</code></p>
-</li>
-</ol>
-</li>
-</ul>
-</li>
-<li><p>打开<code>RealNVC</code>工具，在地址栏输入虚拟机的<code>ip:&lt;端口&gt;</code>通过VNC远程登录启动的windows server虚拟机。</p>
- <img src="https://vault.taojie.fun:28089/i/2023/10/17/2023-10-17-1697516315.png" alt="1697516314212.png" title="1697516314212.png" />
-
- <img src="https://vault.taojie.fun:28089/i/2023/10/17/2023-10-17-1697517646.png" alt="1697517645685.png" title="1697517645685.png" />
-
-<blockquote>
-<p>作业3：在系统安装界面截图上传。</p>
-</blockquote>
-</li>
-<li><p>如果没有看到系统安装界面，在远程窗口中点击发送<code>ctrl+alt+delete</code>重启虚拟机，选择CD-ROM所在分区启动。</p>
- <img src="https://vault.taojie.fun:28089/i/2023/10/17/2023-10-17-1697517878.png" alt="1697517877178.png" title="1697517877178.png" />
-
-<blockquote>
-<p>系统密钥：NB4WH-BBBYV-3MPPC-9RCMV-46XCB<br>安装系统时选择第二个带GUI桌面的标准版，安装方式选择第二个。</p>
-</blockquote>
- <img src="https://vault.taojie.fun:28089/i/2023/10/17/2023-10-17-1697517975.png" alt="1697517974873.png" title="1697517974873.png" />
-
- <img src="https://vault.taojie.fun:28089/i/2023/10/17/2023-10-17-1697518046.png" alt="1697518045888.png" title="1697518045888.png" />
-</li>
-<li><p>选择<code>加载驱动程序</code>-&gt;<code>浏览</code>从以下路径加载scsi和网络驱动。</p>
-<blockquote>
-<p>D:\virtio-win-0.1.185\viostor\2k12r2\amd64<br>D:\virtio-win-0.1.185\NETKVM\2k12r2\amd64</p>
-</blockquote>
- <img src="https://vault.taojie.fun:28089/i/2023/10/08/2023-10-08-1696737650.png" alt="1696737648562.png" title="1696737648562.png" />
-</li>
-<li><p>选择<code>驱动器0</code>、点下一步安装系统等系统安装完成后重启。</p>
-</li>
-<li><p>如果没有看到系统安装界面，在远程窗口中点击发送<code>ctrl+alt+delete</code>重启虚拟机，选择<code>Virtio disk</code>所在分区启动。</p>
- <img src="https://vault.taojie.fun:28089/i/2023/10/17/2023-10-17-1697518237.png" alt="1697518236332.png" title="1697518236332.png" />
-</li>
-<li><p>进入系统后使用<code>win+x</code>进入系统-&gt;更改设置-&gt;远程，按下图配置允许远程登录。</p>
- <img src="https://vault.taojie.fun:28089/i/2023/10/16/2023-10-16-1697463773.png" alt="1697463771888.png" title="1697463771888.png" />
-
- <img src="https://vault.taojie.fun:28089/i/2023/10/08/2023-10-08-1696739234.png" alt="1696739233738.png" title="1696739233738.png" />
-</li>
-<li><p>回到windows虚拟机下载Cloudbase-Init并安装。</p>
-<p> 开始菜单打开IE浏览器，地址栏输入<code>https://cloudbase.it/downloads/CloudbaseInitSetup_1_1_2_x64.msi</code>下载软件后运行。</p>
-</li>
-<li><p>启动安装向导后设置初始化选项、完成安装。</p>
- <img src="https://vault.taojie.fun:28089/i/2023/10/08/2023-10-08-1696739848.png" alt="1696739847088.png" title="1696739847088.png" />
-
- <img src="https://vault.taojie.fun:28089/i/2023/10/08/2023-10-08-1696739861.png" alt="1696739859425.png" title="1696739859425.png" />
-
- <img src="https://vault.taojie.fun:28089/i/2023/10/08/2023-10-08-1696739904.png" alt="1696739903072.png" title="1696739903072.png" />
-
- <img src="https://vault.taojie.fun:28089/i/2023/10/08/2023-10-08-1696739923.png" alt="1696739922332.png" title="1696739922332.png" />
-</li>
-<li><p><code>xnode1</code>虚拟机查看<code>ws2012</code>的运行状态。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@xnode1 ~<span class="token punctuation">]</span><span class="token comment"># virsh list --all</span>
-Id    Name                           State
-----------------------------------------------------
--     ws2012                         shut off<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></li>
-</ol>
-<h3 id="验证windows-server定制结果"><a href="#验证windows-server定制结果" class="headerlink" title="验证windows-server定制结果"></a>验证windows-server定制结果</h3><ol>
-<li><p>将生成的<code>ws2012.qcow2</code>传到Windows本地桌面、然后关闭<code>xnode1</code>。</p>
-</li>
-<li><p>打开控制节点和计算节点，上传<code>ws2012.qcow2</code>镜像到OpenStack。</p>
-</li>
-<li><p>执行<code>source admin-login</code>命令行登录，在控制节点上执行以下命令创建虚拟网络、子网、实例类型。</p>
-<ol>
-<li><p>创建网络</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack network create --share --external --provider-network-type flat --provider-physical-network provider --project admin test_net</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li><p>创建子网</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack subnet create --network test_net --subnet-range 192.168.20.0/24 --gateway 192.168.20.2 --allocation-pool start=192.168.20.128,end=192.168.20.140 --dns-nameserver 114.114.114.114 test_subnet</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li><p>创建实例类型</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack flavor create --public test_flavor --id auto --ram 2048 --disk 20 --vcpus 2</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-</ol>
-</li>
-<li><p>登录图形界面创建实例查看控制台。</p>
-</li>
-</ol>
-<img src="https://vault.taojie.fun:28089/i/2023/10/17/2023-10-17-1697509897.png" alt="1697509896041.png" title="1697509896041.png" />
-
-<blockquote>
-<p>作业3：windows实例启动并登录后截图上传。</p>
-</blockquote>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/20/private_clouds/4.OpenStack%E9%95%9C%E5%83%8F%E7%AE%A1%E7%90%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | ">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/09/20/private_clouds/4.OpenStack%E9%95%9C%E5%83%8F%E7%AE%A1%E7%90%86/" class="post-title-link" itemprop="url">OpenStack镜像管理与制作（一）</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-09-20 20:00:51" itemprop="dateCreated datePublished" datetime="2023-09-20T20:00:51+08:00">2023-09-20</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-03-16 16:06:02" itemprop="dateModified" datetime="2024-03-16T16:06:02+08:00">2024-03-16</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Glance服务介绍"><a href="#Glance服务介绍" class="headerlink" title="Glance服务介绍"></a>Glance服务介绍</h2><p>Glance服务是OpenStack平台的镜像服务，它提供了管理虚拟机镜像的功能。</p>
-<p>在OpenStack Glance组件中，镜像（Image）是指虚拟机的模板，包含了预先配置的操作系统和应用程序。镜像是创建和部署虚拟机实例的基础。</p>
-<ul>
-<li><p>Glance主要特点和功能：</p>
-<ol>
-<li><p>镜像存储和管理：Glance提供了一个可靠的存储系统，用于持久化保存虚拟机镜像。它支持多种后端存储选项，如本地文件系统、分布式文件系统和对象存储。用户可以通过Glance API上传、删除、更新和查询镜像。</p>
-</li>
-<li><p>镜像加速和缓存：Glance支持镜像的加速和缓存，以提高虚拟机实例的启动速度和性能。通过将常用的镜像缓存在计算节点上，可以减少下载和传输时间。</p>
-</li>
-<li><p>镜像格式支持：Glance支持多种虚拟机镜像格式，包括常见的格式如QCOW2、VHD、VMDK和RAW等。这使得用户可以使用不同的镜像格式来满足其特定的需求。</p>
-</li>
-<li><p>元数据管理：Glance允许用户为每个镜像添加自定义元数据，包括镜像名称、描述、操作系统类型、版本等信息。这些元数据可以帮助用户更好地组织和搜索镜像库。</p>
-</li>
-<li><p>镜像共享：Glance支持镜像的共享功能，允许用户将自己的镜像分享给其他项目或用户。这样可以避免重复创建相同的镜像，提高资源的共享和重用。</p>
-</li>
-</ol>
-</li>
-</ul>
-<img src="https://vault.taojie.fun:28089/i/2023/09/20/2023-09-20-1695216464.png" alt="1695216462264.png" title="1695216462264.png" />
-
-<h3 id="Glance架构"><a href="#Glance架构" class="headerlink" title="Glance架构"></a>Glance架构</h3><img src="https://vault.taojie.fun:28089/i/2023/09/20/2023-09-20-1695214714.png" alt="1695214713001.png" title="1695214713001.png" />
-
-<ul>
-<li><p>Glance API：用户与 Glance 服务交互的接口，通过 RESTful API 提供了镜像管理的各种功能。用户可以通过 API 执行镜像的上传、下载、删除等操作。</p>
-</li>
-<li><p>Glance Registry：用于存储和管理镜像的元数据，如名称、格式、大小等。</p>
-</li>
-<li><p>Glance Store：Glance 的后端存储组件，负责实际的镜像文件的存储。它可以支持多种后端存储类型，如本地文件系统、Swift、Ceph、S3 等。根据配置，镜像可以存储在不同的后端存储中。</p>
-</li>
-<li><p>Database：数据库用于存储 Glance 服务的持久化数据，包括镜像的元数据、权限信息等。</p>
-</li>
-</ul>
-<h2 id="Glance服务安装"><a href="#Glance服务安装" class="headerlink" title="Glance服务安装"></a>Glance服务安装</h2><h3 id="作业与实验环境"><a href="#作业与实验环境" class="headerlink" title="作业与实验环境"></a>作业与实验环境</h3><blockquote>
-<p><a target="_blank" rel="noopener" href="https://wxstc.fanya.chaoxing.com/portal">超星网址</a><br><code>快照管理</code>：控制节点选择<code>快照项目6</code>，计算节点不需要设置</p>
-</blockquote>
-<h3 id="安装与配置"><a href="#安装与配置" class="headerlink" title="安装与配置"></a>安装与配置</h3><ol>
-<li><p>执行命令安装Glance软件包：</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># yum -y install openstack-glance</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p> 安装结束后能够通过以下命令查看系统中的同名用户和用户组表示Glance组件安装完成：</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># cat /etc/passwd |grep glance       # 1. 查看glance用户</span>
-glance:x:161:161:OpenStack Glance Daemons:/var/lib/glance:/sbin/nologin
-<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># cat /etc/group |grep glance        # 2. 查看glance用户组</span>
-glance:x:161:<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>创建数据库并授权：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 1. 进入数据库</span>
-<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># mysql -uroot -p000000</span>
-Welcome to the MariaDB monitor.  Commands end with <span class="token punctuation">;</span> or <span class="token punctuation">\</span>g.
-Your MariaDB connection <span class="token function">id</span> is <span class="token number">64</span>
-Server version: <span class="token number">10.3</span>.20-MariaDB MariaDB Server
-
-Copyright <span class="token punctuation">(</span>c<span class="token punctuation">)</span> <span class="token number">2000</span>, <span class="token number">2018</span>, Oracle, MariaDB Corporation Ab and others.
-
-Type <span class="token string">'help;'</span> or <span class="token string">'\h'</span> <span class="token keyword">for</span> help. Type <span class="token string">'\c'</span> to <span class="token function">clear</span> the current input statement.
-
-<span class="token comment"># 2. 创建glance数据库</span>
-MariaDB <span class="token punctuation">[</span><span class="token punctuation">(</span>none<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token operator">></span> CREATE DATABASE glance<span class="token punctuation">;</span>
-Query OK, <span class="token number">1</span> row affected <span class="token punctuation">(</span><span class="token number">0.000</span> sec<span class="token punctuation">)</span>
-
-<span class="token comment"># 3. 为glance数据库授予本地登录用户的权限</span>
-MariaDB <span class="token punctuation">[</span><span class="token punctuation">(</span>none<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token operator">></span> GRANT ALL PRIVILEGES ON glance.* TO <span class="token string">'glance'</span>@<span class="token string">'localhost'</span> IDENTIFIED BY <span class="token string">'000000'</span><span class="token punctuation">;</span>
-Query OK, <span class="token number">0</span> rows affected <span class="token punctuation">(</span><span class="token number">0.001</span> sec<span class="token punctuation">)</span>
-
-<span class="token comment"># 4. 为glance数据库授予远程登录用户的权限</span>
-MariaDB <span class="token punctuation">[</span><span class="token punctuation">(</span>none<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token operator">></span> GRANT ALL PRIVILEGES ON glance.* TO <span class="token string">'glance'</span>@<span class="token string">'%'</span> IDENTIFIED BY <span class="token string">'000000'</span><span class="token punctuation">;</span>
-Query OK, <span class="token number">0</span> rows affected <span class="token punctuation">(</span><span class="token number">0.000</span> sec<span class="token punctuation">)</span>
-<span class="token comment"># 5. 退出</span>
-MariaDB <span class="token punctuation">[</span><span class="token punctuation">(</span>none<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token operator">></span> quit<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>修改配置文件：</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 备份配置文件</span>
-<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># cp /etc/glance/glance-api.conf /etc/glance/glance-api.bak</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 删除配置文件中的空行和注释行</span>
-<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># grep -Ev '^$|#' /etc/glance/glance-api.bak > /etc/glance/glance-api.conf</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p> 打开配置文件依次编辑以下字段：</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 数据库地址</span>
-<span class="token punctuation">[</span>database<span class="token punctuation">]</span>
-connection <span class="token operator">=</span> mysql+pymysql://glance:000000@controller/glance<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 身份凭证配置</span>
-<span class="token punctuation">[</span>keystone_authtoken<span class="token punctuation">]</span>
-auth_url <span class="token operator">=</span> http://controller:5000
-memcached_servers <span class="token operator">=</span> controller:11211
-auth_type <span class="token operator">=</span> password
-username <span class="token operator">=</span> glance
-password <span class="token operator">=</span> 000000
-project_name <span class="token operator">=</span> project
-user_domain_name <span class="token operator">=</span> Default
-project_domain_name <span class="token operator">=</span> Default<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 身份凭证配置</span>
-<span class="token punctuation">[</span>paste_deploy<span class="token punctuation">]</span>
-flavor <span class="token operator">=</span> keystone<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 后端存储配置</span>
-<span class="token punctuation">[</span>glance_store<span class="token punctuation">]</span>
-stores <span class="token operator">=</span> <span class="token function">file</span>
-default_store <span class="token operator">=</span> <span class="token function">file</span>
-filesystem_store_datadir <span class="token operator">=</span> /var/lib/glance/images/<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>初始化Glance数据库</p>
-<ul>
-<li><p>数据库同步</p>
-  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># su glance -s /bin/sh -c "glance-manage db_sync"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li><p>查看同步后的数据表</p>
-  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># mysql -uroot -p000000      # 1. 数据库登录</span>
-Welcome to the MariaDB monitor.  Commands end with <span class="token punctuation">;</span> or <span class="token punctuation">\</span>g.
-Your MariaDB connection <span class="token function">id</span> is <span class="token number">270</span>
-Server version: <span class="token number">10.3</span>.20-MariaDB MariaDB Server
-
-Copyright <span class="token punctuation">(</span>c<span class="token punctuation">)</span> <span class="token number">2000</span>, <span class="token number">2018</span>, Oracle, MariaDB Corporation Ab and others.
-
-Type <span class="token string">'help;'</span> or <span class="token string">'\h'</span> <span class="token keyword">for</span> help. Type <span class="token string">'\c'</span> to <span class="token function">clear</span> the current input statement.
-
-MariaDB <span class="token punctuation">[</span><span class="token punctuation">(</span>none<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token operator">></span> use glance<span class="token punctuation">;</span>                   <span class="token comment"># 2. 进入glance数据库</span>
-Reading table information <span class="token keyword">for</span> completion of table and <span class="token function">column</span> names
-You can turn off this feature to get a quicker startup with <span class="token parameter variable">-A</span>
-
-Database changed
-MariaDB <span class="token punctuation">[</span>glance<span class="token punctuation">]</span><span class="token operator">></span> show tables<span class="token punctuation">;</span>                  <span class="token comment"># 3. 显示数据表</span>
-+----------------------------------+
-<span class="token operator">|</span> Tables_in_glance                 <span class="token operator">|</span>
-+----------------------------------+
-<span class="token operator">|</span> alembic_version                  <span class="token operator">|</span>
-<span class="token operator">|</span> image_locations                  <span class="token operator">|</span>
-<span class="token operator">|</span> image_members                    <span class="token operator">|</span>
-<span class="token operator">|</span> image_properties                 <span class="token operator">|</span>
-<span class="token operator">|</span> image_tags                       <span class="token operator">|</span>
-<span class="token operator">|</span> images                           <span class="token operator">|</span>
-<span class="token operator">|</span> metadef_namespace_resource_types <span class="token operator">|</span>
-<span class="token operator">|</span> metadef_namespaces               <span class="token operator">|</span>
-<span class="token operator">|</span> metadef_objects                  <span class="token operator">|</span>
-<span class="token operator">|</span> metadef_properties               <span class="token operator">|</span>
-<span class="token operator">|</span> metadef_resource_types           <span class="token operator">|</span>
-<span class="token operator">|</span> metadef_tags                     <span class="token operator">|</span>
-<span class="token operator">|</span> migrate_version                  <span class="token operator">|</span>
-<span class="token operator">|</span> task_info                        <span class="token operator">|</span>
-<span class="token operator">|</span> tasks                            <span class="token operator">|</span>
-+----------------------------------+
-<span class="token number">15</span> rows <span class="token keyword">in</span> <span class="token builtin class-name">set</span> <span class="token punctuation">(</span><span class="token number">0.000</span> sec<span class="token punctuation">)</span>
-MariaDB <span class="token punctuation">[</span>glance<span class="token punctuation">]</span><span class="token operator">></span> quit                          <span class="token comment"># 4. 退出</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
-</ul>
-<blockquote>
-<p>作业1：显示数据表后后截图上传</p>
-</blockquote>
-</li>
-</ol>
-<h3 id="Glance初始化"><a href="#Glance初始化" class="headerlink" title="Glance初始化"></a>Glance初始化</h3><ol>
-<li><p>创建Glance用户、分配角色</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 1. 利用环境变量登录</span>
-<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># source admin-login</span>
-<span class="token comment"># 2. 创建用户</span>
-<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack user create --domain default --password 000000 glance</span>
-+---------------------+----------------------------------+
-<span class="token operator">|</span> Field               <span class="token operator">|</span> Value                            <span class="token operator">|</span>
-+---------------------+----------------------------------+
-<span class="token operator">|</span> domain_id           <span class="token operator">|</span> default                          <span class="token operator">|</span>
-<span class="token operator">|</span> enabled             <span class="token operator">|</span> True                             <span class="token operator">|</span>
-<span class="token operator">|</span> <span class="token function">id</span>                  <span class="token operator">|</span> 504c914efe01478a9da5968a88dad987 <span class="token operator">|</span>
-
-<span class="token operator">|</span> options             <span class="token operator">|</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>                               <span class="token operator">|</span>
-<span class="token operator">|</span> password_expires_at <span class="token operator">|</span> None                             <span class="token operator">|</span>
-+---------------------+----------------------------------+
-<span class="token comment"># 3. 添加角色</span>
-<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack role add --project project --user glance admin</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>创建服务和端点</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 1. 创建服务</span>
-<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack service create --name glance image</span>
-+---------+----------------------------------+
-<span class="token operator">|</span> Field   <span class="token operator">|</span> Value                            <span class="token operator">|</span>
-+---------+----------------------------------+
-<span class="token operator">|</span> enabled <span class="token operator">|</span> True                             <span class="token operator">|</span>
-<span class="token operator">|</span> <span class="token function">id</span>      <span class="token operator">|</span> da84735108944b6690cbcf9fab56f5fd <span class="token operator">|</span>
-<span class="token operator">|</span> name    <span class="token operator">|</span> glance                           <span class="token operator">|</span>
-<span class="token operator">|</span> <span class="token builtin class-name">type</span>    <span class="token operator">|</span> image                            <span class="token operator">|</span>
-+---------+----------------------------------+
-<span class="token comment"># 2. 创建公共用户使用的端点</span>
-<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack endpoint create --region RegionOne glance public http://controller:9292</span>
-+--------------+----------------------------------+
-<span class="token operator">|</span> Field        <span class="token operator">|</span> Value                            <span class="token operator">|</span>
-+--------------+----------------------------------+
-<span class="token operator">|</span> enabled      <span class="token operator">|</span> True                             <span class="token operator">|</span>
-<span class="token operator">|</span> <span class="token function">id</span>           <span class="token operator">|</span> a344eb651ebc41f7ae2b1b74b3e8fda3 <span class="token operator">|</span>
-<span class="token operator">|</span> interface    <span class="token operator">|</span> public                           <span class="token operator">|</span>
-<span class="token operator">|</span> region       <span class="token operator">|</span> RegionOne                        <span class="token operator">|</span>
-<span class="token operator">|</span> region_id    <span class="token operator">|</span> RegionOne                        <span class="token operator">|</span>
-<span class="token operator">|</span> service_id   <span class="token operator">|</span> da84735108944b6690cbcf9fab56f5fd <span class="token operator">|</span>
-<span class="token operator">|</span> service_name <span class="token operator">|</span> glance                           <span class="token operator">|</span>
-<span class="token operator">|</span> service_type <span class="token operator">|</span> image                            <span class="token operator">|</span>
-<span class="token operator">|</span> url          <span class="token operator">|</span> http://controller:9292           <span class="token operator">|</span>
-+--------------+----------------------------------+
-<span class="token comment"># 3. 创建内部组件用户使用的端点</span>
-<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack endpoint create --region RegionOne glance internal http://controller:9292</span>
-+--------------+----------------------------------+
-<span class="token operator">|</span> Field        <span class="token operator">|</span> Value                            <span class="token operator">|</span>
-+--------------+----------------------------------+
-<span class="token operator">|</span> enabled      <span class="token operator">|</span> True                             <span class="token operator">|</span>
-<span class="token operator">|</span> <span class="token function">id</span>           <span class="token operator">|</span> f1b7a33ab36047209e0130debf4dc500 <span class="token operator">|</span>
-<span class="token operator">|</span> interface    <span class="token operator">|</span> internal                         <span class="token operator">|</span>
-<span class="token operator">|</span> region       <span class="token operator">|</span> RegionOne                        <span class="token operator">|</span>
-<span class="token operator">|</span> region_id    <span class="token operator">|</span> RegionOne                        <span class="token operator">|</span>
-<span class="token operator">|</span> service_id   <span class="token operator">|</span> da84735108944b6690cbcf9fab56f5fd <span class="token operator">|</span>
-<span class="token operator">|</span> service_name <span class="token operator">|</span> glance                           <span class="token operator">|</span>
-<span class="token operator">|</span> service_type <span class="token operator">|</span> image                            <span class="token operator">|</span>
-<span class="token operator">|</span> url          <span class="token operator">|</span> http://controller:9292           <span class="token operator">|</span>
-+--------------+----------------------------------+
-<span class="token comment"># 4. 创建admin用户使用的端点</span>
-<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack endpoint create --region RegionOne glance admin http://controller:9292</span>
-+--------------+----------------------------------+
-<span class="token operator">|</span> Field        <span class="token operator">|</span> Value                            <span class="token operator">|</span>
-+--------------+----------------------------------+
-<span class="token operator">|</span> enabled      <span class="token operator">|</span> True                             <span class="token operator">|</span>
-<span class="token operator">|</span> <span class="token function">id</span>           <span class="token operator">|</span> c176c6ff1caa4eba9083105bd2b41261 <span class="token operator">|</span>
-<span class="token operator">|</span> interface    <span class="token operator">|</span> admin                            <span class="token operator">|</span>
-<span class="token operator">|</span> region       <span class="token operator">|</span> RegionOne                        <span class="token operator">|</span>
-<span class="token operator">|</span> region_id    <span class="token operator">|</span> RegionOne                        <span class="token operator">|</span>
-<span class="token operator">|</span> service_id   <span class="token operator">|</span> da84735108944b6690cbcf9fab56f5fd <span class="token operator">|</span>
-<span class="token operator">|</span> service_name <span class="token operator">|</span> glance                           <span class="token operator">|</span>
-<span class="token operator">|</span> service_type <span class="token operator">|</span> image                            <span class="token operator">|</span>
-<span class="token operator">|</span> url          <span class="token operator">|</span> http://controller:9292           <span class="token operator">|</span>
-+--------------+----------------------------------+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>启动Glance服务并验证</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 1. 设置开机自启</span>
-<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># systemctl enable openstack-glance-api</span>
-Created symlink from /etc/systemd/system/multi-user.target.wants/openstack-glance-api.service to /usr/lib/systemd/system/openstack-glance-api.service.
-<span class="token comment"># 2. 启动服务</span>
-<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># systemctl start openstack-glance-api</span>
-<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment">#</span>
-<span class="token comment"># 3. 查看服务状态</span>
-<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># systemctl status openstack-glance-api</span>
-● openstack-glance-api.service - OpenStack Image Service <span class="token punctuation">(</span>code-named Glance<span class="token punctuation">)</span> API server
-Loaded: loaded <span class="token punctuation">(</span>/usr/lib/systemd/system/openstack-glance-api.service<span class="token punctuation">;</span> enabled<span class="token punctuation">;</span> vendor preset: disabled<span class="token punctuation">)</span>
-Active: active <span class="token punctuation">(</span>running<span class="token punctuation">)</span> since Wed <span class="token number">2023</span>-09-20 <span class="token number">11</span>:18:59 EDT<span class="token punctuation">;</span> 13s ago
-Main PID: <span class="token number">5068</span> <span class="token punctuation">(</span>glance-api<span class="token punctuation">)</span>
-CGroup: /system.slice/openstack-glance-api.service
-        ├─5068 /usr/bin/python2 /usr/bin/glance-api
-        ├─5080 /usr/bin/python2 /usr/bin/glance-api
-        └─5081 /usr/bin/python2 /usr/bin/glance-api
-
-Sep <span class="token number">20</span> <span class="token number">11</span>:18:59 controller systemd<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>: Started OpenStack Image Service <span class="token punctuation">(</span>code-named Glance<span class="token punctuation">)</span> API server.
-Sep <span class="token number">20</span> <span class="token number">11</span>:18:59 controller glance-api<span class="token punctuation">[</span><span class="token number">5068</span><span class="token punctuation">]</span>: /usr/lib/python2.7/site-packages/paste/deploy/loadwsgi.py:22: PkgRe<span class="token punctuation">..</span>.tely.
-Sep <span class="token number">20</span> <span class="token number">11</span>:18:59 controller glance-api<span class="token punctuation">[</span><span class="token number">5068</span><span class="token punctuation">]</span>: <span class="token builtin class-name">return</span> pkg_resources.EntryPoint.parse<span class="token punctuation">(</span><span class="token string">"x="</span> + s<span class="token punctuation">)</span>.load<span class="token punctuation">(</span>False<span class="token punctuation">)</span>
-Hint: Some lines were ellipsized, use <span class="token parameter variable">-l</span> to show <span class="token keyword">in</span> full.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>创建镜像</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 1. 获取镜像文件到本地</span>
-<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># curl -O http://download.cirros-cloud.net/0.5.1/cirros-0.5.1-x86_64-disk.img</span>
-% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                Dload  Upload   Total   Spent    Left  Speed
-<span class="token number">100</span>   <span class="token number">273</span>  <span class="token number">100</span>   <span class="token number">273</span>    <span class="token number">0</span>     <span class="token number">0</span>     <span class="token number">40</span>      <span class="token number">0</span>  <span class="token number">0</span>:00:06  <span class="token number">0</span>:00:06 --:--:--    <span class="token number">65</span>
-<span class="token comment"># 2. 创建镜像</span>
-<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack image create --file cirros-0.5.1-x86_64-disk.img --disk-format raw --container-format bare --public cirros</span>
-<span class="token comment"># 3. 查看镜像列表</span>
-<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack image list</span>
-+--------------------------------------+--------+--------+
-<span class="token operator">|</span> ID                                   <span class="token operator">|</span> Name   <span class="token operator">|</span> Status <span class="token operator">|</span>
-+--------------------------------------+--------+--------+G
-<span class="token operator">|</span> cfd3a7d5-3339-4d11-8c18-18c6d703c03b <span class="token operator">|</span> cirros <span class="token operator">|</span> active <span class="token operator">|</span>
-+--------------------------------------+--------+--------+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<blockquote>
-<p>作业2：显示镜像列表后截图上传</p>
-</blockquote>
-</li>
-</ol>
-<h2 id="基于预制镜像定制OpenStack镜像"><a href="#基于预制镜像定制OpenStack镜像" class="headerlink" title="基于预制镜像定制OpenStack镜像"></a>基于预制镜像定制OpenStack镜像</h2><h3 id="实验环境"><a href="#实验环境" class="headerlink" title="实验环境"></a>实验环境</h3><blockquote>
-<p>控制节点和计算节点都是<code>快照项目12</code></p>
-</blockquote>
-<h3 id="Centos镜像创建"><a href="#Centos镜像创建" class="headerlink" title="Centos镜像创建"></a>Centos镜像创建</h3><ol>
-<li><p>设置虚拟机和宿主机共享</p>
-<ul>
-<li><p>控制节点关机状态右键-&gt;设置，选择选项-&gt;共享文件夹-&gt;总是启用并添加本地D盘内的镜像文件所在目录</p>
-  <img src="https://vault.taojie.fun:28089/i/2023/09/21/2023-09-21-1695229069.png" alt="1695229067851.png" title="1695229067851.png" />
-</li>
-<li><p>安装vm-tools并挂载设备</p>
-  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># yum -y install open-vm-tools</span>
-<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># vmhgfs-fuse .host:/ /mnt/hgfs -o subtype=vmhgfs-fuse,allow_other</span>
-<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># file /mnt/hgfs/镜像/CentOS-7-x86_64-GenericCloud-2003.qcow2</span>
-/mnt/hgfs/镜像/CentOS-7-x86_64-GenericCloud-2003.qcow2: QEMU QCOW Image <span class="token punctuation">(</span>v3<span class="token punctuation">)</span>, <span class="token number">8589934592</span> bytes<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></li>
-</ul>
-</li>
-<li><p>创建镜像</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack image create --disk-format qcow2 --container-format bare   --public --file /mnt/hgfs/镜像/CentOS-7-x86_64-GenericCloud-2003.qcow2 centos7</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-</ol>
-<h3 id="创建虚拟机实例"><a href="#创建虚拟机实例" class="headerlink" title="创建虚拟机实例"></a>创建虚拟机实例</h3><ol>
-<li><p>通过浏览器<code>192.168.10.20</code>访问Horizon服务的界面，设置域名<code>Default</code>、用户名<code>admin</code>、密码<code>000000</code>登录。</p>
-</li>
-<li><p>创建实例类型、网络。</p>
-<blockquote>
-<p>创建<code>实例类型</code>和<code>网络</code>时设置项目为admin，否则没有权限。可参考<a target="_blank" rel="noopener" href="https://abc.taojie.fun/2023/09/08/private_clouds/2.openstack%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/#%E5%88%9B%E5%BB%BA%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%9E%E4%BE%8B">创建虚拟机实例</a>创建网络。</p>
-</blockquote>
- <img src="https://vault.taojie.fun:28089/i/2023/09/21/2023-09-21-1695230412.png" alt="1695230410573.png" title="1695230410573.png" />
-</li>
-<li><p>设置<code>配置</code>菜单后完成实例创建：</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
-<span class="token function">passwd</span> centos<span class="token operator">&lt;&lt;</span><span class="token string">EOF
-000000
-000000
-EOF</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<blockquote>
-<p>这里配置的脚本用来在实例启动时设置centos账户的密码，否则不能登录控制台</p>
-</blockquote>
- <img src="https://vault.taojie.fun:28089/i/2023/09/21/2023-09-21-1695233149.png" alt="1695233147185.png" title="1695233147185.png" /></li>
-</ol>
-<h3 id="定制镜像"><a href="#定制镜像" class="headerlink" title="定制镜像"></a>定制镜像</h3><ol>
-<li><p>在实例控制台中完成配置：</p>
-<blockquote>
-<p>使用账号：centos；密码：000000登录控制台</p>
-</blockquote>
-<ol>
-<li><p><code>sudo su</code>命令切换root用户</p>
-</li>
-<li><p><code>passwd root</code>命令设置密码000000</p>
-</li>
-<li><p>编辑文件<code>/etc/cloud/cloud.cfg</code>修改第四行为<code>disable_root:0</code></p>
-</li>
-<li><p>重启实例使用root用户登录。</p>
-</li>
-</ol>
-</li>
-<li><p>创建快照后基于新的快照创建实例，验证root用户直接登录控制台</p>
- <img src="https://vault.taojie.fun:28089/i/2023/09/21/2023-09-21-1695235685.png" alt="1695235684061.png" title="1695235684061.png" />
-
- <img src="https://vault.taojie.fun:28089/i/2023/09/21/2023-09-21-1695235198.png" alt="1695235196457.png" title="1695235196457.png" />
-
- <img src="https://vault.taojie.fun:28089/i/2023/09/21/2023-09-21-1695235388.png" alt="1695235386127.png" title="1695235386127.png" />
-
-<blockquote>
-<p>作业3：登录控制台后截图上传</p>
-</blockquote>
-</li>
-<li><p>实例快照转换成镜像</p>
- <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 1. 查看镜像列表获取ID</span>
-<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack image list</span>
-+--------------------------------------+-------------+--------+
-<span class="token operator">|</span> ID                                   <span class="token operator">|</span> Name        <span class="token operator">|</span> Status <span class="token operator">|</span>
-+--------------------------------------+-------------+--------+
-<span class="token operator">|</span> 87b290e8-57c9-4c27-bb77-9d312c6d96c2 <span class="token operator">|</span> centos7     <span class="token operator">|</span> active <span class="token operator">|</span>
-<span class="token operator">|</span> 26b59df3-4fbe-4368-abd9-a5e5b58efe50 <span class="token operator">|</span> centos_test <span class="token operator">|</span> active <span class="token operator">|</span>
-<span class="token operator">|</span> 3a211d53-30e2-4d42-a7cf-ee55786b176a <span class="token operator">|</span> cirros      <span class="token operator">|</span> active <span class="token operator">|</span>
-+--------------------------------------+-------------+--------+
-<span class="token comment"># 2. 将本地快照文件转换成镜像</span>
-<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack image create centos_test_image --file /var/lib/glance/images/26b59df3-4fbe-4368-abd9-a5e5b58efe50  --disk-format qcow2 --container-format bare</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
 
     
 
@@ -1040,7 +181,7 @@ EOF</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-03-16 16:06:02" itemprop="dateModified" datetime="2024-03-16T16:06:02+08:00">2024-03-16</time>
+      <time title="修改时间：2024-04-07 14:04:50" itemprop="dateModified" datetime="2024-04-07T14:04:50+08:00">2024-04-07</time>
     </span>
 
   
@@ -1078,9 +219,9 @@ EOF</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span>
 <li><p>Token（令牌）： 令牌是用于身份认证和授权的临时凭证。用户经过身份认证后，会获得一个令牌，该令牌允许他们在一定时间内访问特定资源。</p>
 </li>
 </ol>
-<h3 id="Keystone的层次结构"><a href="#Keystone的层次结构" class="headerlink" title="Keystone的层次结构"></a>Keystone的层次结构</h3><img src="https://vault.taojie.fun:28089/i/2023/09/15/2023-09-15-1694788656.png" alt="4324542b834a4aecb25d739fac41150e (1).png" title="4324542b834a4aecb25d739fac41150e (1).png" />
+<h3 id="Keystone的层次结构"><a href="#Keystone的层次结构" class="headerlink" title="Keystone的层次结构"></a>Keystone的层次结构</h3><img src="https://lsky.taojie.fun:52222/i/2023/09/15/2023-09-15-1694788656.png" alt="4324542b834a4aecb25d739fac41150e (1).png" title="4324542b834a4aecb25d739fac41150e (1).png" />
 
-<h3 id="Keystone的认证流程"><a href="#Keystone的认证流程" class="headerlink" title="Keystone的认证流程"></a>Keystone的认证流程</h3><img src="https://vault.taojie.fun:28089/i/2023/09/15/2023-09-15-1694789109.png" alt="1694789108795.png" title="1694789108795.png" />
+<h3 id="Keystone的认证流程"><a href="#Keystone的认证流程" class="headerlink" title="Keystone的认证流程"></a>Keystone的认证流程</h3><img src="https://lsky.taojie.fun:52222/i/2023/09/15/2023-09-15-1694789109.png" alt="1694789108795.png" title="1694789108795.png" />
 
 <h2 id="Keystone服务安装"><a href="#Keystone服务安装" class="headerlink" title="Keystone服务安装"></a>Keystone服务安装</h2><h3 id="作业与实验环境"><a href="#作业与实验环境" class="headerlink" title="作业与实验环境"></a>作业与实验环境</h3><blockquote>
 <p><a target="_blank" rel="noopener" href="https://wxstc.fanya.chaoxing.com/portal">超星网址</a><br><code>快照管理</code>：控制节点选择<code>快照5.3.13</code>，计算节点选择<code>快照5.3.9</code></p>
@@ -1231,9 +372,9 @@ export OS_IMAGE_API_VERSION=2<span aria-hidden="true" class="line-numbers-rows">
 </blockquote>
 </li>
 <li><p>常用管理命令：</p>
- <img src="https://vault.taojie.fun:28089/i/2023/09/16/2023-09-16-1694795373.png" alt="1694795372656.png" title="1694795372656.png" />
+ <img src="https://lsky.taojie.fun:52222/i/2023/09/16/2023-09-16-1694795373.png" alt="1694795372656.png" title="1694795372656.png" />
 
- <img src="https://vault.taojie.fun:28089/i/2023/09/16/2023-09-16-1694795401.png" alt="1694795400751.png" title="1694795400751.png" /></li>
+ <img src="https://lsky.taojie.fun:52222/i/2023/09/16/2023-09-16-1694795401.png" alt="1694795400751.png" title="1694795400751.png" /></li>
 </ol>
 <h3 id="通过API进行身份管理"><a href="#通过API进行身份管理" class="headerlink" title="通过API进行身份管理"></a>通过API进行身份管理</h3><p>OpenStack所提供的API允许开发人员通过编程方式与OpenStack的各种服务进行通信，以实现自动化、集成和定制化的功能。</p>
 <blockquote>
@@ -1387,7 +528,7 @@ export OS_IMAGE_API_VERSION=2<span aria-hidden="true" class="line-numbers-rows">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-03-16 16:06:02" itemprop="dateModified" datetime="2024-03-16T16:06:02+08:00">2024-03-16</time>
+      <time title="修改时间：2024-04-07 14:04:50" itemprop="dateModified" datetime="2024-04-07T14:04:50+08:00">2024-04-07</time>
     </span>
 
   
@@ -1417,7 +558,7 @@ export OS_IMAGE_API_VERSION=2<span aria-hidden="true" class="line-numbers-rows">
 </li>
 </ul>
 <h2 id="访问OpenStack主界面"><a href="#访问OpenStack主界面" class="headerlink" title="访问OpenStack主界面"></a>访问OpenStack主界面</h2><p>Horizon安装在计算节点上，可以通过浏览器<code>192.168.10.20</code>访问Horizon服务的界面，设置域名<code>Default</code>、用户名<code>admin</code>、密码<code>000000</code>完成登录。登录成功界面如下：</p>
-<p><img src="https://vault.taojie.fun:28089/i/2023/09/10/2023-09-10-1694326793.png" alt="1694326791438.png"></p>
+<p><img src="https://lsky.taojie.fun:52222/i/2023/09/10/2023-09-10-1694326793.png" alt="1694326791438.png"></p>
 <blockquote>
 <p>通过单击右上角<code>admin</code>用户名弹出用户菜单-&gt;设置，修改语言、时区设置。</p>
 </blockquote>
@@ -1446,16 +587,16 @@ export OS_IMAGE_API_VERSION=2<span aria-hidden="true" class="line-numbers-rows">
 <h3 id="创建虚拟机实例"><a href="#创建虚拟机实例" class="headerlink" title="创建虚拟机实例"></a>创建虚拟机实例</h3><ol>
 <li><p>创建项目</p>
 <p>进入身份管理-&gt;项目面板，创建新项目<code>test_project</code></p>
-<p> <img src="https://vault.taojie.fun:28089/i/2023/09/10/2023-09-10-1694328081.png" alt="1694328079544.png"></p>
+<p> <img src="https://lsky.taojie.fun:52222/i/2023/09/10/2023-09-10-1694328081.png" alt="1694328079544.png"></p>
 </li>
 <li><p>创建用户</p>
 <p> 进入身份管理-&gt;用户面板，创建新用户<code>test_user</code>，设置密码<code>000000</code>并选择主项目<code>test_project</code></p>
- <img src="https://vault.taojie.fun:28089/i/2023/09/10/2023-09-10-1694328368.png">
+ <img src="https://lsky.taojie.fun:52222/i/2023/09/10/2023-09-10-1694328368.png">
 </li>
 <li><p>创建镜像</p>
 <p> 先从网络中下载<a target="_blank" rel="noopener" href="https://download.fedoraproject.org/pub/fedora/linux/releases/38/Cloud/x86_64/images/Fedora-Cloud-Base-38-1.6.x86_64.qcow2">Fedora适用于Openstack的Cloud Base镜像</a>到本地  </p>
 <p> 进入管理员-&gt;计算-&gt;镜像-&gt;创建镜像，镜像源-&gt;浏览选择刚才下载好的镜像文件，镜像格式<code>qcow2</code>，</p>
-<img src="https://vault.taojie.fun:28089/i/2023/09/18/2023-09-18-1695013528.png" alt="1695013525543.png" title="1695013525543.png" />
+<img src="https://lsky.taojie.fun:52222/i/2023/09/18/2023-09-18-1695013528.png" alt="1695013525543.png" title="1695013525543.png" />
 
 <blockquote>
 <p>作业1：镜像创建完成，截图镜像列列表上传。</p>
@@ -1463,33 +604,33 @@ export OS_IMAGE_API_VERSION=2<span aria-hidden="true" class="line-numbers-rows">
 </li>
 <li><p>创建实例类型</p>
 <p> 进入管理员-&gt;计算-&gt;实例类型，右上角创建实例类型，并且设置实例类型的使用权，选择项目<code>test_project</code>。</p>
- <img src="https://vault.taojie.fun:28089/i/2023/09/15/2023-09-15-1694785336.png" alt="1694785335731.png" title="1694785335731.png" />
+ <img src="https://lsky.taojie.fun:52222/i/2023/09/15/2023-09-15-1694785336.png" alt="1694785335731.png" title="1694785335731.png" />
 
- <img src="https://vault.taojie.fun:28089/i/2023/09/18/2023-09-18-1695013697.png" alt="1695013694529.png" title="1695013694529.png" />
+ <img src="https://lsky.taojie.fun:52222/i/2023/09/18/2023-09-18-1695013697.png" alt="1695013694529.png" title="1695013694529.png" />
 </li>
 <li><p>创建网络</p>
 <ul>
 <li><p>进入管理员-&gt;网络-&gt;网络，右上角创建网络，按下图配置：</p>
-  <img src="https://vault.taojie.fun:28089/i/2023/09/13/2023-09-13-1694604373.png" alt="1694604372183.png" title="1694604372183.png" />
+  <img src="https://lsky.taojie.fun:52222/i/2023/09/13/2023-09-13-1694604373.png" alt="1694604372183.png" title="1694604372183.png" />
 </li>
 <li><p>继续配置子网选项后下一步完成创建：</p>
-  <img src="https://vault.taojie.fun:28089/i/2023/09/13/2023-09-13-1694604448.png" alt="1694604447868.png" title="1694604447868.png" /></li>
+  <img src="https://lsky.taojie.fun:52222/i/2023/09/13/2023-09-13-1694604448.png" alt="1694604447868.png" title="1694604447868.png" /></li>
 </ul>
 </li>
 <li><p><code>退出当前的admin用户，使用刚才创建的test_user用户登录</code>，侧边栏选择项目-&gt;计算-&gt;实例-&gt;创建实例，<code>详情</code>标签设置实例名称<code>test_instance</code></p>
 <ul>
 <li><p><code>源</code>标签选择源<code>Image</code>、卷大小<code>1GB</code>、在列表中选择镜像<code>cirros</code></p>
-  <img src="https://vault.taojie.fun:28089/i/2023/09/11/2023-09-11-1694392927.png" alt="1694392926393.png" title="1694392926393.png" />
+  <img src="https://lsky.taojie.fun:52222/i/2023/09/11/2023-09-11-1694392927.png" alt="1694392926393.png" title="1694392926393.png" />
 </li>
 <li><p><code>实例类型</code>标签选择之前创建的实例类型<code>small</code>，左下角选择创建实例。</p>
-  <img src="https://vault.taojie.fun:28089/i/2023/09/11/2023-09-11-1694393572.png" alt="1694393570624.png" title="1694393570624.png" />
+  <img src="https://lsky.taojie.fun:52222/i/2023/09/11/2023-09-11-1694393572.png" alt="1694393570624.png" title="1694393570624.png" />
 
 <blockquote>
 <p>作业2：使用<code>cirros</code>或者<code>fedora</code>实例创建完成，在实例列表页面登录实例的控制台截图上传。</p>
 </blockquote>
-  <img src="https://vault.taojie.fun:28089/i/2023/09/15/2023-09-15-1694785678.png" alt="1694785677644.png" title="1694785677644.png" />
+  <img src="https://lsky.taojie.fun:52222/i/2023/09/15/2023-09-15-1694785678.png" alt="1694785677644.png" title="1694785677644.png" />
 
-  <img src="https://vault.taojie.fun:28089/i/2023/09/15/2023-09-15-1694785802.png" alt="1694785801589.png" title="1694785801589.png" /></li>
+  <img src="https://lsky.taojie.fun:52222/i/2023/09/15/2023-09-15-1694785802.png" alt="1694785801589.png" title="1694785801589.png" /></li>
 </ul>
 </li>
 </ol>
@@ -1555,7 +696,7 @@ export OS_IMAGE_API_VERSION=2<span aria-hidden="true" class="line-numbers-rows">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-03-16 16:06:02" itemprop="dateModified" datetime="2024-03-16T16:06:02+08:00">2024-03-16</time>
+      <time title="修改时间：2024-04-07 14:04:50" itemprop="dateModified" datetime="2024-04-07T14:04:50+08:00">2024-04-07</time>
     </span>
 
   
@@ -1571,7 +712,7 @@ export OS_IMAGE_API_VERSION=2<span aria-hidden="true" class="line-numbers-rows">
           <blockquote>
 <p><a target="_blank" rel="noopener" href="https://wxstc.fanya.chaoxing.com/portal">超星网址</a></p>
 </blockquote>
-<h2 id="传统的计算模式"><a href="#传统的计算模式" class="headerlink" title="传统的计算模式"></a>传统的计算模式</h2><h3 id="计算机系统结构"><a href="#计算机系统结构" class="headerlink" title="计算机系统结构"></a>计算机系统结构</h3><p><img src="https://vault.taojie.fun:28089/i/2023/09/02/note1.%E5%88%9D%E8%AF%86%E4%BA%91%E8%AE%A1%E7%AE%97%E4%B8%8EOpenstack-2023-08-25-22-09-05.png" alt="1.初识云计算与Openstack-2023-08-25-22-09-05"></p>
+<h2 id="传统的计算模式"><a href="#传统的计算模式" class="headerlink" title="传统的计算模式"></a>传统的计算模式</h2><h3 id="计算机系统结构"><a href="#计算机系统结构" class="headerlink" title="计算机系统结构"></a>计算机系统结构</h3><p><img src="https://lsky.taojie.fun:52222/i/2023/09/02/note1.%E5%88%9D%E8%AF%86%E4%BA%91%E8%AE%A1%E7%AE%97%E4%B8%8EOpenstack-2023-08-25-22-09-05.png" alt="1.初识云计算与Openstack-2023-08-25-22-09-05"></p>
 <p>传统的计算模式是指企业或个人在自己的本地环境中构建、管理和维护硬件设备、操作系统和应用程序，以满足其计算和存储需求。</p>
 <blockquote>
 <p>对于个人用户的场景：需要搭建服务或者使用Linux系统环境时，我们往往需要在本地计算机上搭建虚拟机或者单独购买一套硬件来实现。<br>对于企业用户的场景：需要对内向员工提供项目管理等等办公服务、对外向用户提供web服务，数据库服务等等，同样需要在企业内部通过搭建数据中心来实现。</p>
@@ -1587,7 +728,7 @@ export OS_IMAGE_API_VERSION=2<span aria-hidden="true" class="line-numbers-rows">
 <p>和传统模式特点比较</p>
 </blockquote>
 <p><strong>资源池化：</strong> 传统的虚拟化技术是将单个服务器硬件虚拟成多个虚拟机，其目的也是在于提高服务器资源的利用率。但是，由于单个服务器的CPU、内存、硬盘资源颗粒度较小，因此在虚拟化应用中，经常出现资源配置空洞，要么是CPU核数没有分配完，要么是内存没有分配完，更多的情况是硬盘容量存在大量空闲。而服务器资源池化可以更好的解决上述问题。</p>
-<p><img src="https://vault.taojie.fun:28089/i/2023/09/02/note1.%E5%88%9D%E8%AF%86%E4%BA%91%E8%AE%A1%E7%AE%97%E4%B8%8EOpenstack-2023-08-26-14-41-36.jpg" alt="1.初识云计算与Openstack-2023-08-26-14-41-36"></p>
+<p><img src="https://lsky.taojie.fun:52222/i/2023/09/02/note1.%E5%88%9D%E8%AF%86%E4%BA%91%E8%AE%A1%E7%AE%97%E4%B8%8EOpenstack-2023-08-26-14-41-36.jpg" alt="1.初识云计算与Openstack-2023-08-26-14-41-36"></p>
 <h2 id="云计算的特点"><a href="#云计算的特点" class="headerlink" title="云计算的特点"></a>云计算的特点</h2><ol>
 <li>资源池化：云计算中的资源（如计算能力、存储、网络等）被集中管理并池化，供多个用户共享。这种资源的共享和动态分配提高了资源的利用率。</li>
 <li>按需分配： 用户可以根据自己的需求，自主地获取和配置计算资源，无需人工干预。这种自服务模式使用户能够快速获取所需资源，提高了效率。</li>
@@ -1605,8 +746,8 @@ export OS_IMAGE_API_VERSION=2<span aria-hidden="true" class="line-numbers-rows">
 <li><p>混合云：混合云结合了公有云和私有云的特点，允许数据和应用在这两者之间流动。组织可以在私有云中部署敏感数据或关键业务应用，同时利用公有云的弹性来处理突发业务需求。混合云模型可以最大程度地平衡安全性、灵活性和成本效益。</p>
 </li>
 </ol>
-<p><img src="https://vault.taojie.fun:28089/i/2023/09/02/note1.%E5%88%9D%E8%AF%86%E4%BA%91%E8%AE%A1%E7%AE%97%E4%B8%8EOpenstack-2023-08-26-20-09-02.png" alt="1.初识云计算与Openstack-2023-08-26-20-09-02"></p>
-<h3 id="按服务类型分类"><a href="#按服务类型分类" class="headerlink" title="按服务类型分类"></a>按服务类型分类</h3><p><img src="https://vault.taojie.fun:28089/i/2023/09/02/note1.%E5%88%9D%E8%AF%86%E4%BA%91%E8%AE%A1%E7%AE%97%E4%B8%8EOpenstack-2023-08-26-20-00-39.jpg" alt="1.初识云计算与Openstack-2023-08-26-20-00-39"></p>
+<p><img src="https://lsky.taojie.fun:52222/i/2023/09/02/note1.%E5%88%9D%E8%AF%86%E4%BA%91%E8%AE%A1%E7%AE%97%E4%B8%8EOpenstack-2023-08-26-20-09-02.png" alt="1.初识云计算与Openstack-2023-08-26-20-09-02"></p>
+<h3 id="按服务类型分类"><a href="#按服务类型分类" class="headerlink" title="按服务类型分类"></a>按服务类型分类</h3><p><img src="https://lsky.taojie.fun:52222/i/2023/09/02/note1.%E5%88%9D%E8%AF%86%E4%BA%91%E8%AE%A1%E7%AE%97%E4%B8%8EOpenstack-2023-08-26-20-00-39.jpg" alt="1.初识云计算与Openstack-2023-08-26-20-00-39"></p>
 <ol>
 <li><p>IaaS（Infrastructure as a Service–基础架构即服务）：<br>IaaS提供了基础的计算、存储和网络资源，用户可以在这些资源上构建和管理自己的应用环境。它为用户提供了虚拟化的计算资源，包括虚拟机、存储和网络连接。用户可以根据需要自主配置和管理操作系统、应用程序和数据。</p>
 <blockquote>
@@ -1617,7 +758,7 @@ export OS_IMAGE_API_VERSION=2<span aria-hidden="true" class="line-numbers-rows">
 <blockquote>
 <p>阿里云的EDAS</p>
 </blockquote>
-<p><img src="https://vault.taojie.fun:28089/i/2023/09/02/note1.%E5%88%9D%E8%AF%86%E4%BA%91%E8%AE%A1%E7%AE%97%E4%B8%8EOpenstack-2023-08-26-16-31-49.png" alt="1.初识云计算与Openstack-2023-08-26-16-31-49"></p>
+<p><img src="https://lsky.taojie.fun:52222/i/2023/09/02/note1.%E5%88%9D%E8%AF%86%E4%BA%91%E8%AE%A1%E7%AE%97%E4%B8%8EOpenstack-2023-08-26-16-31-49.png" alt="1.初识云计算与Openstack-2023-08-26-16-31-49"></p>
 </li>
 <li><p>SaaS（Software as a Service–软件即服务）：<br>SaaS提供完整的应用程序，用户通过互联网访问这些应用程序，无需安装和维护。SaaS应用程序由云服务提供商托管和维护，用户只需要通过浏览器或移动应用访问应用功能。</p>
 <blockquote>
@@ -1625,14 +766,14 @@ export OS_IMAGE_API_VERSION=2<span aria-hidden="true" class="line-numbers-rows">
 </blockquote>
 </li>
 </ol>
-<p><img src="https://vault.taojie.fun:28089/i/2023/09/02/note1.%E5%88%9D%E8%AF%86%E4%BA%91%E8%AE%A1%E7%AE%97%E4%B8%8EOpenstack-2023-08-26-16-32-26.png" alt="1.初识云计算与Openstack-2023-08-26-16-32-26"></p>
+<p><img src="https://lsky.taojie.fun:52222/i/2023/09/02/note1.%E5%88%9D%E8%AF%86%E4%BA%91%E8%AE%A1%E7%AE%97%E4%B8%8EOpenstack-2023-08-26-16-32-26.png" alt="1.初识云计算与Openstack-2023-08-26-16-32-26"></p>
 <h2 id="OpenStack介绍"><a href="#OpenStack介绍" class="headerlink" title="OpenStack介绍"></a>OpenStack介绍</h2><p>OpenStack是一个自由、开源的云计算平台。它主要作为基础设施即服务（IaaS）部署在公有云和私有云中，提供虚拟服务器和其他资源给用户使用。该软件平台由相互关联的组件组成，控制着整个数据中心内不同的厂商的处理器、存储和网络资源的硬件池。用户可以通过基于网络的仪表盘、命令行工具或RESTful网络服务来管理。</p>
 <p>OpenStack始于2010年，是Rackspace和美国国家航空航天局的合作项目。截至2012年，它由2012年9月成立的非营利组织OpenStack基金会管理，旨在促进OpenStack软件及其社区。到2018年，已经有500多家公司加入了该项目。在2020年，该基金会宣布它将在2021年更名为Open Infrastructure Foundation（开放基础设施基金会）。</p>
 <h3 id="适用范围"><a href="#适用范围" class="headerlink" title="适用范围"></a>适用范围</h3><p>OpenStack是基础设施即服务（IaaS）软件，让任何人都可以自行建立和提供云计算服务。</p>
 <p>此外，OpenStack也用作建立防火墙内的“私有云”（Private Cloud），提供机构或企业内各部门共享资源。</p>
 <h3 id="发展历程"><a href="#发展历程" class="headerlink" title="发展历程"></a>发展历程</h3><p>OpenStack每半年会发布一个版本，版本从字母A开始向后按顺序的命名；OpenStack社区为了方便描述，因此他们为每一个字母来进行投票，来选出一个单词。</p>
-<p><img src="https://vault.taojie.fun:28089/i/2023/09/02/note1.%E5%88%9D%E8%AF%86%E4%BA%91%E8%AE%A1%E7%AE%97%E4%B8%8EOpenstack-2023-08-26-20-34-27.png" alt="1.初识云计算与Openstack-2023-08-26-20-34-27"></p>
-<h3 id="OpenStack架构"><a href="#OpenStack架构" class="headerlink" title="OpenStack架构"></a>OpenStack架构</h3><p><img src="https://vault.taojie.fun:28089/i/2023/09/02/note1.%E5%88%9D%E8%AF%86%E4%BA%91%E8%AE%A1%E7%AE%97%E4%B8%8EOpenstack-2023-08-26-21-59-40.png" alt="1.初识云计算与Openstack-2023-08-26-21-59-40"></p>
+<p><img src="https://lsky.taojie.fun:52222/i/2023/09/02/note1.%E5%88%9D%E8%AF%86%E4%BA%91%E8%AE%A1%E7%AE%97%E4%B8%8EOpenstack-2023-08-26-20-34-27.png" alt="1.初识云计算与Openstack-2023-08-26-20-34-27"></p>
+<h3 id="OpenStack架构"><a href="#OpenStack架构" class="headerlink" title="OpenStack架构"></a>OpenStack架构</h3><p><img src="https://lsky.taojie.fun:52222/i/2023/09/02/note1.%E5%88%9D%E8%AF%86%E4%BA%91%E8%AE%A1%E7%AE%97%E4%B8%8EOpenstack-2023-08-26-21-59-40.png" alt="1.初识云计算与Openstack-2023-08-26-21-59-40"></p>
 <h4 id="核心组件"><a href="#核心组件" class="headerlink" title="核心组件"></a>核心组件</h4><ol>
 <li>Keystone： 身份认证服务，用于管理用户、项目和角色，并提供认证和授权功能。</li>
 <li>Nova： 计算服务，用于创建和管理虚拟机实例，提供计算资源。</li>
@@ -1646,7 +787,7 @@ export OS_IMAGE_API_VERSION=2<span aria-hidden="true" class="line-numbers-rows">
 <li>Swift： 对象存储服务，用于存储非结构化数据，如文件、图像和视频等。</li>
 <li>Horizon： Web 控制台，提供用户界面，用于管理和监控 OpenStack 系统。</li>
 </ol>
-<p><img src="https://vault.taojie.fun:28089/i/2023/09/02/note1.%E5%88%9D%E8%AF%86%E4%BA%91%E8%AE%A1%E7%AE%97%E4%B8%8EOpenstack-2023-08-26-21-11-14.png" alt="1.初识云计算与Openstack-2023-08-26-21-11-14"></p>
+<p><img src="https://lsky.taojie.fun:52222/i/2023/09/02/note1.%E5%88%9D%E8%AF%86%E4%BA%91%E8%AE%A1%E7%AE%97%E4%B8%8EOpenstack-2023-08-26-21-11-14.png" alt="1.初识云计算与Openstack-2023-08-26-21-11-14"></p>
 <blockquote>
 <p>OpenStack本身是一个分布式系统，不但各个服务可以分布部署，服务中的组件也可以分布部署。<br>这种分布式特性让OpenStack具备极大的灵活性、伸缩性和高可用性。</p>
 </blockquote>
@@ -1661,7 +802,7 @@ export OS_IMAGE_API_VERSION=2<span aria-hidden="true" class="line-numbers-rows">
 <blockquote>
 <p>这种配置适用于非常基本的测试、学习或演示用途，但在生产环境中，为了实现更高的性能、可用性和容错性，通常会使用更多的节点和组件。</p>
 </blockquote>
-<p><img src="https://vault.taojie.fun:28089/i/2023/09/02/note1.%E5%88%9D%E8%AF%86%E4%BA%91%E8%AE%A1%E7%AE%97%E4%B8%8EOpenstack-2023-08-26-22-58-14.png" alt="1.初识云计算与Openstack-2023-08-26-22-58-14"></p>
+<p><img src="https://lsky.taojie.fun:52222/i/2023/09/02/note1.%E5%88%9D%E8%AF%86%E4%BA%91%E8%AE%A1%E7%AE%97%E4%B8%8EOpenstack-2023-08-26-22-58-14.png" alt="1.初识云计算与Openstack-2023-08-26-22-58-14"></p>
 <h2 id="使用packstack部署OpenStack平台"><a href="#使用packstack部署OpenStack平台" class="headerlink" title="使用packstack部署OpenStack平台"></a>使用packstack部署OpenStack平台</h2><h3 id="资源清单"><a href="#资源清单" class="headerlink" title="资源清单"></a>资源清单</h3><table>
 <thead>
 <tr>
@@ -1701,7 +842,7 @@ export OS_IMAGE_API_VERSION=2<span aria-hidden="true" class="line-numbers-rows">
 <blockquote>
 <p>这一步创建好的系统ROOT账户密码<code>000000</code></p>
 </blockquote>
-<p><img src="https://vault.taojie.fun:28089/i/2023/09/02/note1.%E5%88%9D%E8%AF%86%E4%BA%91%E8%AE%A1%E7%AE%97%E4%B8%8EOpenstack-2023-08-27-20-43-21.png" alt="1.初识云计算与Openstack-2023-08-27-20-43-21"></p>
+<p><img src="https://lsky.taojie.fun:52222/i/2023/09/02/note1.%E5%88%9D%E8%AF%86%E4%BA%91%E8%AE%A1%E7%AE%97%E4%B8%8EOpenstack-2023-08-27-20-43-21.png" alt="1.初识云计算与Openstack-2023-08-27-20-43-21"></p>
 </li>
 <li><p>计算节点虚拟机环境准备</p>
 <p>先关闭<code>控制节点</code>虚拟机，在虚拟机列表中右键名为<code>计算节点</code>的虚拟机-&gt;移除，右键<code>控制节点</code>虚拟机-&gt;管理-&gt;克隆，按照向导提示完成虚拟机克隆，克隆自虚拟机中的当前状态，克隆方法选择<code>完整克隆</code>，虚拟机名称设置为<code>计算节点</code>。</p>
@@ -1720,7 +861,7 @@ export OS_IMAGE_API_VERSION=2<span aria-hidden="true" class="line-numbers-rows">
 </li>
 <li><p>仅主机模式</p>
 <p>编辑-&gt;虚拟网络编辑器，右下角更改设置，按照<a href="#%E8%8A%82%E7%82%B9%E8%A7%84%E5%88%92">节点规划</a>将<code>仅主机模式</code>和<code>NAT模式</code>配置为如下图。其中<code>仅主机模式</code>的子网地址为<code>192.168.10.0</code>，<code>NAT模式</code>的子网地址为<code>192.168.20.0</code>。</p>
-<p><img src="https://vault.taojie.fun:28089/i/2023/09/02/note1.%E5%88%9D%E8%AF%86%E4%BA%91%E8%AE%A1%E7%AE%97%E4%B8%8EOpenstack-2023-08-29-14-43-53.png" alt="1.初识云计算与Openstack-2023-08-29-14-43-53"></p>
+<p><img src="https://lsky.taojie.fun:52222/i/2023/09/02/note1.%E5%88%9D%E8%AF%86%E4%BA%91%E8%AE%A1%E7%AE%97%E4%B8%8EOpenstack-2023-08-29-14-43-53.png" alt="1.初识云计算与Openstack-2023-08-29-14-43-53"></p>
 </li>
 </ol>
 </li>
@@ -1874,7 +1015,7 @@ PING www.a.shifen.com <span class="token punctuation">(</span><span class="token
 <li><p>这一步是加载<a href="#%E8%B5%84%E6%BA%90%E6%B8%85%E5%8D%95">资源清单</a>中列出的两个镜像源文件到虚拟机<code>控制节点</code>中。</p>
 <ul>
 <li><p>右键虚拟机<code>控制节点</code>-&gt;设置-&gt;选择已有的CD&#x2F;DVD驱动器-&gt;浏览，选择本地的<code>openStack-train.iso</code>文件后完成镜像的加载，同时勾选已连接。</p>
-<p> <img src="https://vault.taojie.fun:28089/i/2023/09/02/note1.%E5%88%9D%E8%AF%86%E4%BA%91%E8%AE%A1%E7%AE%97%E4%B8%8EOpenstack-2023-08-28-20-13-50.png" alt="1.初识云计算与Openstack-2023-08-28-20-13-50"></p>
+<p> <img src="https://lsky.taojie.fun:52222/i/2023/09/02/note1.%E5%88%9D%E8%AF%86%E4%BA%91%E8%AE%A1%E7%AE%97%E4%B8%8EOpenstack-2023-08-28-20-13-50.png" alt="1.初识云计算与Openstack-2023-08-28-20-13-50"></p>
 </li>
 </ul>
 </li>
@@ -2148,7 +1289,7 @@ repolist: <span class="token number">17,906</span><span aria-hidden="true" class
  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">packstack --answer-file<span class="token operator">=</span>openstack.txt<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p> packstack运行结束后如下图</p>
-<p> <img src="https://vault.taojie.fun:28089/i/2023/09/02/note1.%E5%88%9D%E8%AF%86%E4%BA%91%E8%AE%A1%E7%AE%97%E4%B8%8EOpenstack-2023-08-31-01-28-23.png" alt="1.初识云计算与Openstack-2023-08-31-01-28-23"></p>
+<p> <img src="https://lsky.taojie.fun:52222/i/2023/09/02/note1.%E5%88%9D%E8%AF%86%E4%BA%91%E8%AE%A1%E7%AE%97%E4%B8%8EOpenstack-2023-08-31-01-28-23.png" alt="1.初识云计算与Openstack-2023-08-31-01-28-23"></p>
 </li>
 <li><p>登录OpenStack平台</p>
 <p> 接下来可以通过预先配置的网址<a target="_blank" rel="noopener" href="http://192.168.10.10/dashboard">http://192.168.10.10/dashboard</a>访问OpenStack平台</p>
@@ -2220,7 +1361,7 @@ repolist: <span class="token number">17,906</span><span aria-hidden="true" class
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-03-16 16:06:02" itemprop="dateModified" datetime="2024-03-16T16:06:02+08:00">2024-03-16</time>
+      <time title="修改时间：2024-04-07 14:04:50" itemprop="dateModified" datetime="2024-04-07T14:04:50+08:00">2024-04-07</time>
     </span>
 
   
@@ -2268,7 +1409,7 @@ repolist: <span class="token number">17,906</span><span aria-hidden="true" class
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 </ul>
-<h3 id="一维数组的引用"><a href="#一维数组的引用" class="headerlink" title="一维数组的引用"></a>一维数组的引用</h3><p><img src="https://vault.taojie.fun:28089/i/2023/09/02/note4.%E7%AC%AC%E5%9B%9B%E5%91%A8-2023-06-24-00-05-18.png" alt="4.第四周-2023-06-24-00-05-18"></p>
+<h3 id="一维数组的引用"><a href="#一维数组的引用" class="headerlink" title="一维数组的引用"></a>一维数组的引用</h3><p><img src="https://lsky.taojie.fun:52222/i/2023/09/02/note4.%E7%AC%AC%E5%9B%9B%E5%91%A8-2023-06-24-00-05-18.png" alt="4.第四周-2023-06-24-00-05-18"></p>
 <p>创建test.c文件，编辑以下代码：</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
 
@@ -2286,7 +1427,7 @@ repolist: <span class="token number">17,906</span><span aria-hidden="true" class
 <h2 id="二维数组"><a href="#二维数组" class="headerlink" title="二维数组"></a>二维数组</h2><p>二维数组是由多个一维数组组成的数据结构，在C语言中可以使用以下方式进行定义和初始化：</p>
 <pre class="line-numbers language-text" data-language="text"><code class="language-text">数据类型 数组名[行数][列数];<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://vault.taojie.fun:28089/i/2023/09/02/note4.%E7%AC%AC%E5%9B%9B%E5%91%A8-2023-06-24-00-40-55.png" alt="4.第四周-2023-06-24-00-40-55"></p>
+<p><img src="https://lsky.taojie.fun:52222/i/2023/09/02/note4.%E7%AC%AC%E5%9B%9B%E5%91%A8-2023-06-24-00-40-55.png" alt="4.第四周-2023-06-24-00-40-55"></p>
 <p>创建test.c文件，编辑以下代码：</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
 
@@ -2583,7 +1724,7 @@ repolist: <span class="token number">17,906</span><span aria-hidden="true" class
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-03-16 16:06:02" itemprop="dateModified" datetime="2024-03-16T16:06:02+08:00">2024-03-16</time>
+      <time title="修改时间：2024-04-07 14:04:50" itemprop="dateModified" datetime="2024-04-07T14:04:50+08:00">2024-04-07</time>
     </span>
 
   
@@ -3052,7 +2193,7 @@ Count: 2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-03-16 16:06:02" itemprop="dateModified" datetime="2024-03-16T16:06:02+08:00">2024-03-16</time>
+      <time title="修改时间：2024-04-07 14:04:50" itemprop="dateModified" datetime="2024-04-07T14:04:50+08:00">2024-04-07</time>
     </span>
 
   
@@ -3471,7 +2612,7 @@ send <span class="token string">"mypassword<span class="token entity" title="\r"
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-03-16 16:06:02" itemprop="dateModified" datetime="2024-03-16T16:06:02+08:00">2024-03-16</time>
+      <time title="修改时间：2024-04-07 14:04:50" itemprop="dateModified" datetime="2024-04-07T14:04:50+08:00">2024-04-07</time>
     </span>
 
   
@@ -3617,13 +2758,13 @@ COMMAND:所执行的指令<span aria-hidden="true" class="line-numbers-rows"><sp
 <p>condition可以判断三种条件：</p>
 <ol>
 <li><p>文件比较</p>
-<p> <img src="https://vault.taojie.fun:28089/i/2023/09/02/note3.Shell%E6%9D%A1%E4%BB%B6%E6%B5%8B%E8%AF%95-2023-06-16-20-43-25.png" alt="3.Shell条件测试-2023-06-16-20-43-25"></p>
+<p> <img src="https://lsky.taojie.fun:52222/i/2023/09/02/note3.Shell%E6%9D%A1%E4%BB%B6%E6%B5%8B%E8%AF%95-2023-06-16-20-43-25.png" alt="3.Shell条件测试-2023-06-16-20-43-25"></p>
 </li>
 <li><p>字符串比较</p>
-<p> <img src="https://vault.taojie.fun:28089/i/2023/09/02/note3.Shell%E6%9D%A1%E4%BB%B6%E6%B5%8B%E8%AF%95-2023-06-16-20-46-41.png" alt="3.Shell条件测试-2023-06-16-20-46-41"></p>
+<p> <img src="https://lsky.taojie.fun:52222/i/2023/09/02/note3.Shell%E6%9D%A1%E4%BB%B6%E6%B5%8B%E8%AF%95-2023-06-16-20-46-41.png" alt="3.Shell条件测试-2023-06-16-20-46-41"></p>
 </li>
 <li><p>数值比较</p>
-<p> <img src="https://vault.taojie.fun:28089/i/2023/09/02/note3.Shell%E6%9D%A1%E4%BB%B6%E6%B5%8B%E8%AF%95-2023-06-16-21-06-44.png" alt="3.Shell条件测试-2023-06-16-21-06-44"></p>
+<p> <img src="https://lsky.taojie.fun:52222/i/2023/09/02/note3.Shell%E6%9D%A1%E4%BB%B6%E6%B5%8B%E8%AF%95-2023-06-16-21-06-44.png" alt="3.Shell条件测试-2023-06-16-21-06-44"></p>
 </li>
 </ol>
 <ul>
@@ -3935,7 +3076,7 @@ Hello <span class="token number">95</span><span aria-hidden="true" class="line-n
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-03-16 16:06:02" itemprop="dateModified" datetime="2024-03-16T16:06:02+08:00">2024-03-16</time>
+      <time title="修改时间：2024-04-07 14:04:50" itemprop="dateModified" datetime="2024-04-07T14:04:50+08:00">2024-04-07</time>
     </span>
 
   
@@ -4177,9 +3318,9 @@ Hello <span class="token number">95</span><span aria-hidden="true" class="line-n
 <li><p>其他运算符：还有一些其他类型的运算符，如指针运算符、sizeof运算符、类型转换运算符等。</p>
 </li>
 </ol>
-<h3 id="运算符优先级"><a href="#运算符优先级" class="headerlink" title="运算符优先级"></a>运算符优先级</h3><p><img src="https://vault.taojie.fun:28089/i/2023/09/02/note1.%E7%AC%AC%E4%B8%80%E5%91%A8-2023-06-09-11-36-00.png" alt="1.第一周-2023-06-09-11-36-00"></p>
-<p><img src="https://vault.taojie.fun:28089/i/2023/09/02/note1.%E7%AC%AC%E4%B8%80%E5%91%A8-2023-06-09-11-36-08.png" alt="1.第一周-2023-06-09-11-36-08"></p>
-<p><img src="https://vault.taojie.fun:28089/i/2023/09/02/note1.%E7%AC%AC%E4%B8%80%E5%91%A8-2023-06-09-11-36-21.png" alt="1.第一周-2023-06-09-11-36-21"></p>
+<h3 id="运算符优先级"><a href="#运算符优先级" class="headerlink" title="运算符优先级"></a>运算符优先级</h3><p><img src="https://lsky.taojie.fun:52222/i/2023/09/02/note1.%E7%AC%AC%E4%B8%80%E5%91%A8-2023-06-09-11-36-00.png" alt="1.第一周-2023-06-09-11-36-00"></p>
+<p><img src="https://lsky.taojie.fun:52222/i/2023/09/02/note1.%E7%AC%AC%E4%B8%80%E5%91%A8-2023-06-09-11-36-08.png" alt="1.第一周-2023-06-09-11-36-08"></p>
+<p><img src="https://lsky.taojie.fun:52222/i/2023/09/02/note1.%E7%AC%AC%E4%B8%80%E5%91%A8-2023-06-09-11-36-21.png" alt="1.第一周-2023-06-09-11-36-21"></p>
 <h3 id="运算符优先级示例代码"><a href="#运算符优先级示例代码" class="headerlink" title="运算符优先级示例代码"></a>运算符优先级示例代码</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
 
 <span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -4294,8 +3435,719 @@ x<span class="token operator">++</span><span class="token punctuation">;</span><
 
 
 
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/06/09/c_program/1.%E7%AC%AC%E4%B8%80%E5%91%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/06/09/c_program/1.%E7%AC%AC%E4%B8%80%E5%91%A8/" class="post-title-link" itemprop="url">第一周</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-06-09 11:31:25" itemprop="dateCreated datePublished" datetime="2023-06-09T11:31:25+08:00">2023-06-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-04-07 14:04:50" itemprop="dateModified" datetime="2024-04-07T14:04:50+08:00">2024-04-07</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="名词解释"><a href="#名词解释" class="headerlink" title="名词解释"></a>名词解释</h2><ol>
+<li><p>高级语言、低级语言、机器语言</p>
+<ol>
+<li>高级语言（High-Level Language）：<br> 高级语言是一种相对抽象和易于理解的编程语言，其目的是提供更高层次的抽象和功能，使程序员能够更容易地编写复杂的程序。高级语言使用人类可读的语法和结构，使用更高级别的概念和抽象，使得程序的编写更容易、更快速。高级语言通常需要通过编译或解释器转换为机器语言才能在计算机上执行。常见的高级语言包括C、C++、Java、Python和JavaScript等。</li>
+<li>低级语言（Low-Level Language）：<br> 低级语言是与计算机硬件更接近的编程语言，它使用更接近机器语言的语法和结构。低级语言通常直接操作计算机的底层硬件和资源，提供了对硬件细节的更多控制。低级语言可以更高效地利用计算机的资源，但编写和理解低级语言程序相对更困难。汇编语言和机器语言都属于低级语言。</li>
+<li>机器语言（Machine Language）：<br> 机器语言是计算机硬件直接能理解和执行的语言。它由二进制位组成，表示计算机指令和数据。机器语言是计算机可以直接执行的最底层的语言。每个计算机的机器语言是特定于该计算机体系结构的。编写机器语言程序需要对机器指令和二进制表示有深入的了解。由于机器语言的复杂性和难以理解，通常使用高级语言来编写程序，然后通过编译器或解释器将其转换为机器语言。</li>
+</ol>
+</li>
+<li><p>解释型语言和编译型语</p>
+<p> <img src="https://lsky.taojie.fun:52222/i/2023/09/02/note1.%E7%AC%AC%E4%B8%80%E5%91%A8-2023-06-09-10-53-51.png" alt="1.第一周-2023-06-09-10-53-51"></p>
+<p> Python 如此设计的原因在于将程序的执行与底层硬件进一步地分离，无需担心程序的编译、汇编以及链接过程，使得 Python 程序相较于 C 程序而言更加易于移植。</p>
+</li>
+<li><p>C语言源代码到可执行文件的过程</p>
+<ol>
+<li>C源代码：<br> 程序员使用C语言编写源代码，源代码以<code>.c</code>为扩展名。源代码包含了程序的逻辑和功能的定义。</li>
+<li>预处理：<br> 在编译之前，C预处理器会处理源代码。预处理器执行宏展开、条件编译等操作，生成经过预处理的源代码。</li>
+<li>编译：<br> 经过预处理的源代码会被编译器翻译成汇编代码。编译器将C源代码转换为汇编语言表示，生成汇编代码文件（<code>.s</code>文件）。</li>
+<li>汇编：<br> 汇编器将汇编代码转换为机器码指令。它将汇编代码文件翻译成机器可执行的指令，并生成目标文件（<code>.o</code>文件）。</li>
+<li>链接：<br> 链接器将目标文件与其他必要的库文件进行链接，生成最终的可执行文件。链接器解析目标文件中的符号引用，并将其与库函数和其他目标文件中的符号定义进行关联。链接器生成一个包含所有必要信息的可执行文件。</li>
+<li>可执行文件：<br> 最终的可执行文件是操作系统可以直接执行的二进制文件。它包含了程序的机器码指令、数据和其他必要的信息。可执行文件可以通过命令行或操作系统的运行环境来执行。</li>
+</ol>
+</li>
+<li><p>静态语言和动态语言</p>
+<ol>
+<li><p>静态语言（Static Language）：<br> 静态语言是在编译时进行类型检查的语言。在静态语言中，变量的类型在编译时确定，并且编译器会对类型进行检查。在编译过程中，变量的类型和使用方法需要在代码中明确声明和定义。静态语言的编译器会检查变量的类型是否与其使用方式相匹配，以避免类型错误。常见的静态语言包括C、C++、Java等。</p>
+<p> 优点：</p>
+<ol>
+<li>更早地发现类型错误，提前检测潜在的编程错误。</li>
+<li>在编译时进行类型检查，提高代码的稳定性和可靠性。</li>
+<li>性能较好，由于类型已经确定，编译器可以进行更多的优化。</li>
+</ol>
+<p> 缺点：</p>
+<ol>
+<li>代码相对冗长，需要显式声明和定义类型。</li>
+<li>编译时间较长，需要进行较多的类型检查和编译过程。</li>
+</ol>
+</li>
+<li><p>动态语言（Dynamic Language）：<br> 动态语言是在运行时进行类型检查的语言。在动态语言中，变量的类型可以根据其赋值进行推断，并且可以在运行时动态地改变变量的类型。动态语言的编译器或解释器在运行时进行类型检查和解析。常见的动态语言包括Python、JavaScript、Ruby等。</p>
+<p> 优点：</p>
+<ol>
+<li>灵活性高，可以在运行时动态地改变变量的类型和行为。</li>
+<li>代码相对简洁，无需显式声明和定义类型，灵活性提高了开发效率。</li>
+</ol>
+<p> 缺点：</p>
+<ol>
+<li>需要在运行时进行类型检查和解析，性能可能相对较低。</li>
+<li>容易出现运行时类型错误，只能在运行时才能发现。</li>
+</ol>
+</li>
+</ol>
+<p> 需要注意的是，静态语言和动态语言并非绝对的对立关系，很多语言在某些方面可以具备静态语言和动态语言的特性。例如，Java是静态语言，但具备一些动态语言的特性，如反射和动态代理。同样，Python是动态语言，但也可以通过类型注解等方式实现静态类型检查。</p>
+</li>
+</ol>
+<h2 id="C语言开发环境"><a href="#C语言开发环境" class="headerlink" title="C语言开发环境"></a>C语言开发环境</h2><ol>
+<li><p>在线运行平台（一键运行）：</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://www.nhooo.com/tool/c/">https://www.nhooo.com/tool/c/</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.bejson.com/runcode/c740/">https://www.bejson.com/runcode/c740/</a></li>
+</ol>
+</li>
+<li><p>IDE（集成开发环境）：</p>
+<ol>
+<li><p>Visual Studio（一站式安装，一键编译运行）</p>
+<p> <a target="_blank" rel="noopener" href="https://visualstudio.microsoft.com/zh-hans/">Visual Studio下载地址</a>，<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/71110525">中文安装教程</a></p>
+</li>
+<li><p>VSCode + mingw（配置灵活且繁琐，一键编译运行）</p>
+<p> <a target="_blank" rel="noopener" href="https://code.visualstudio.com/download">VSCode下载地址</a>，<a target="_blank" rel="noopener" href="https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win64/Personal%20Builds/mingw-builds/8.1.0/threads-win32/seh/x86_64-8.1.0-release-win32-seh-rt_v6-rev0.7z">mingw压缩包地址</a>，<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/354400717">vscode和mingw安装教程</a></p>
+</li>
+</ol>
+</li>
+<li><p>Linux环境（vim+gcc）</p>
+<p> 编译命令<code>gcc -o 目标文件名 源文件</code></p>
+<p> 例：<code>gcc -o test test.c</code> 将名为<code>test.c</code>的源文件编译成名为<code>test</code>的目标文件</p>
+</li>
+</ol>
+<h2 id="C语言程序的结构"><a href="#C语言程序的结构" class="headerlink" title="C语言程序的结构"></a>C语言程序的结构</h2><ul>
+<li><p>简单的C程序实例</p>
+  <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token comment">/* 定义一个名为num的变量 */</span>
+    <span class="token keyword">int</span> num<span class="token punctuation">;</span>
+    <span class="token comment">/* 为num赋一个值 */</span>
+    num <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+
+    <span class="token comment">/* 使用printf()函数 */</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"I am a simple "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"computer.\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"My favorite number is %d because it is first.\n"</span><span class="token punctuation">,</span> num<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+<ol>
+<li><p><code>#include</code>指令和头文件</p>
+<p> <code>#include</code>这行代码是一条C预处理器指令。通常，C编译器在编译前会对源代码做一些准备工作，即预处理。</p>
+<p> <code>#include &lt;stdio.h&gt;</code>的作用相当于把<code>stdio.h</code>文件中的所有内容都输入该行所在的位置。实际上，这是一种“拷贝-粘贴”的操作。</p>
+</li>
+<li><p><code>main()</code>函数</p>
+<p> C程序从<code>main()</code>函数开始执行。除了<code>main()</code>函数，你可以任意命名其他函数，而且main()函数必须是开始的函数。<code>int</code>是main()函数的返回类型。这表明main()函数返回的值是整数。返回到哪里？返回给操作系统通常，函数名后面的圆括号中包含一些传入函数的信息。该例中没有传递任何信息。因此，圆括号内是单词<code>void</code> 。</p>
+ <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">//错误的main函数定义1</span>
+<span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token comment">//错误的main函数定义2</span>
+<span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token comment">//正确的main函数定义1</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+
+<span class="token comment">//正确的main函数定义2</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p> <code>int main(int argc, char *argv[])</code> 是C语言中常见的<code>main</code>函数的定义方式，它用于接收命令行参数。</p>
+<p> 参数解释：</p>
+<ul>
+<li><code>int argc</code>：表示命令行参数的数量（Argument Count）。</li>
+<li><code>char *argv[]</code>：表示命令行参数的数组（Argument Vector），是一个指针数组，每个指针指向一个以null结尾的字符串，即命令行参数的值。</li>
+</ul>
+<p> 使用这种方式定义的<code>main</code>函数可以接收命令行传递的参数，如下所示：</p>
+ <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"argc: %d\n"</span><span class="token punctuation">,</span> argc<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> argc<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"argv[%d]: %s\n"</span><span class="token punctuation">,</span> i<span class="token punctuation">,</span> argv<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p> 运行该程序并传递参数，例如：</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">./program arg1 arg2 arg3<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p> 程序运行结果会输出命令行参数的数量以及每个参数的值，如：</p>
+ <pre class="line-numbers language-text" data-language="text"><code class="language-text">argc: 4
+argv[0]: ./program
+argv[1]: arg1
+argv[2]: arg2
+argv[3]: arg3<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>注释</p>
+<p> 在程序中，被两个<code>/* */</code>符号括起来的部分是程序的注释。写注释能让他人（包括自己）更容易明白你所写的程序。C 语言注释的好处之一是，可将注释放在任意的地方，甚至是与要解释的内容在同一行。较长的注释可单独放一行或多行。所有的注释都会被编译器忽略。</p>
+ <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">/* 这是一条C注释。 */</span>
+<span class="token comment">/* 这也是一条注释，
+被分成两行。*/</span>
+<span class="token comment">/*
+也可以这样写注释。
+*/</span>
+<span class="token comment">/* 这条注释无效，因为缺少了结束标记。
+
+// 这种注释只能写成一行</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>花括号、函数体和块</p>
+<p> 花括号把main()函数括起来。一般而言，所有的C函数都使用<code>花括号</code>标记<code>函数体的开始和结束</code>。这是规定，不能省略。只有花括号（{}）能起这种作用，圆括号（()）和方括号（[]）都不行。花括号还可用于把函数中的多条语句<code>合并</code>为一个<code>单元或块</code>。</p>
+</li>
+<li><p>声明（declaration）</p>
+<p> 声明是C语言最重要的特性之一。在该例中，声明完成了两件事。其一，在函数中有一个名为<br> num的变量（<code>variable</code>）。其二，<code>int</code>表明<code>num</code>是一个<code>整数</code>（即，没有小数点或小数部分的数）。<code>int</code>是一种数据类型。编译器使用这些信息为<code>num</code>变量在内存中分配存储空间。</p>
+</li>
+<li><p>赋值</p>
+<p> 赋值是C语言的基本操作之一。该行代码的意思是“把值1赋给变量num”。在执行int num;声明时，编译器在计算机内存中为变量num预留了空间，然后在执行这行赋值表达式语句时，把值储存在之前预留的位置。可以给num赋不同的值，这就是num之所以被称为变量（variable）的原因。</p>
+</li>
+<li><p><code>printf()</code>函数</p>
+<p> 示例代码中有3行代码都使用了C语言的一个标准函数：<code>printf()</code>。圆括号表明printf是一个函数名。圆括号中的内容是从main()函数传递给printf()函数的信息。例如，上面的第1行把<code>I am a simple</code>传递给printf()函数。该信息被称为参数。</p>
+<p> 换行符是一个转义序列（escape sequence）。转义序列用于代表难以表示或无法输入的字符。如，\t代表Tab键，\b代表Backspace键（退格键）。每个转义序列都以反斜杠字符（\）开始</p>
+</li>
+<li><p><code>return</code>语句</p>
+<p> return语句是示例程序中的最后一条语句。<code>int main(void)</code>中的int表明main()函数应返回一个<code>整数</code>。C标准要求main()这样做。有返回值的C函数要有return语句。该语句以return关键字开始，后面是待返回的值，并以分号结尾。如果遗漏 main()函数中的 return 语句，程序在运行至最外面的右花括号（}）时会返回0。因此，可以省略main()函数末尾的return语句。但是，不要在其他有返回值的函数中漏掉它。</p>
+</li>
+</ol>
+<h2 id="C语言源程序的书写格式"><a href="#C语言源程序的书写格式" class="headerlink" title="C语言源程序的书写格式"></a>C语言源程序的书写格式</h2><ol>
+<li><p>缩进：使用适当的缩进来表示代码块的层次结构，常见的缩进为4个空格或一个制表符（Tab）。</p>
+</li>
+<li><p>大括号：对于控制结构、函数等代码块，使用大括号将其括起来，以表示代码块的开始和结束。</p>
+ <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">if</span> <span class="token punctuation">(</span>condition<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// 代码块</span>
+    <span class="token comment">// ...</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>空格：在运算符、逗号、分号等符号周围添加适当的空格，以提高代码的可读性。</p>
+ <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> sum <span class="token operator">=</span> a <span class="token operator">+</span> b<span class="token punctuation">;</span>
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d "</span><span class="token punctuation">,</span> i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>注释：使用注释来解释代码的功能、目的、算法等，以增加代码的可读性和可维护性。</p>
+ <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">// 计算两个数的和</span>
+<span class="token keyword">int</span> sum <span class="token operator">=</span> a <span class="token operator">+</span> b<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+</li>
+<li><p>命名规范：使用有意义的变量名、函数名和常量名，遵循命名规范，以提高代码的可读性和可维护性。</p>
+ <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> numberOfStudents <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">printMessage</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// 函数体</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>换行：在较长的语句中，适当地进行换行，以保持代码的可读性。</p>
+ <pre class="line-numbers language-c" data-language="c"><code class="language-c">longResult <span class="token operator">=</span> <span class="token punctuation">(</span>longValue1 <span class="token operator">+</span> longValue2 <span class="token operator">+</span> longValue3<span class="token punctuation">)</span> <span class="token operator">/</span>
+             <span class="token punctuation">(</span>longValue4 <span class="token operator">-</span> longValue5<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
+</ol>
+<h2 id="C语言数据类型"><a href="#C语言数据类型" class="headerlink" title="C语言数据类型"></a>C语言数据类型</h2><ol>
+<li><p>整型（Integer）：</p>
+<ul>
+<li><code>int</code>：表示整数类型。通常占用4个字节。</li>
+<li><code>short</code>：表示短整数类型。通常占用2个字节。</li>
+<li><code>long</code>：表示长整数类型。通常占用4个或8个字节，取决于编译器和操作系统。</li>
+</ul>
+<p> 示例代码：</p>
+ <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> num1 <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+<span class="token keyword">short</span> num2 <span class="token operator">=</span> <span class="token number">20</span><span class="token punctuation">;</span>
+<span class="token keyword">long</span> num3 <span class="token operator">=</span> <span class="token number">30L</span><span class="token punctuation">;</span>  <span class="token comment">// 后缀L表示长整数类型</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>浮点型（Floating-point）：</p>
+<ul>
+<li><code>float</code>：表示单精度浮点数类型。通常占用4个字节。</li>
+<li><code>double</code>：表示双精度浮点数类型。通常占用8个字节。</li>
+</ul>
+<p> 示例代码：</p>
+ <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">float</span> num1 <span class="token operator">=</span> <span class="token number">3.14f</span><span class="token punctuation">;</span>  <span class="token comment">// 后缀f表示单精度浮点数类型</span>
+<span class="token keyword">double</span> num2 <span class="token operator">=</span> <span class="token number">2.71828</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+</li>
+<li><p>字符型（Character）：</p>
+<ul>
+<li><code>char</code>：表示字符类型。通常占用1个字节。</li>
+</ul>
+<p> 示例代码：</p>
+ <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">char</span> ch1 <span class="token operator">=</span> <span class="token char">'A'</span><span class="token punctuation">;</span>
+<span class="token keyword">char</span> ch2 <span class="token operator">=</span> <span class="token char">'B'</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+</li>
+<li><p>布尔型（Boolean）：</p>
+<ul>
+<li><code>bool</code>：表示布尔类型，只能取<code>true</code>（非零值）或<code>false</code>（零值）。</li>
+</ul>
+<p> 示例代码：</p>
+ <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdbool.h></span>  <span class="token comment">// 需要包含stdbool.h头文件</span></span>
+
+bool flag1 <span class="token operator">=</span> true<span class="token punctuation">;</span>
+bool flag2 <span class="token operator">=</span> false<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ol>
+<h3 id="数据类型示例代码"><a href="#数据类型示例代码" class="headerlink" title="数据类型示例代码"></a>数据类型示例代码</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdbool.h></span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// 整型示例</span>
+    <span class="token keyword">int</span> num1 <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"整数num1 = %d，整型大小: %u 字节\n"</span><span class="token punctuation">,</span> num1<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>num1<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">short</span> num2 <span class="token operator">=</span> <span class="token number">20</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"短整数num2 = %hd，短整数大小: %u 字节\n"</span><span class="token punctuation">,</span> num2<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>num2<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">long</span> num3 <span class="token operator">=</span> <span class="token number">30L</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"长整数num3 = %ld，长整数大小: %u 字节\n"</span><span class="token punctuation">,</span> num3<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>num3<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 浮点型示例</span>
+    <span class="token keyword">float</span> num4 <span class="token operator">=</span> <span class="token number">3.14f</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"单精度浮点数num4 = %f，单精度浮点数大小: %u 字节\n"</span><span class="token punctuation">,</span> num4<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>num4<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">double</span> num5 <span class="token operator">=</span> <span class="token number">2.71828</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"双精度浮点数num5 = %lf，双精度浮点数大小: %u 字节\n"</span><span class="token punctuation">,</span> num5<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>num5<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 字符型示例</span>
+    <span class="token keyword">char</span> ch1 <span class="token operator">=</span> <span class="token char">'A'</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"字符ch1 = %c，字符大小: %u 字节\n"</span><span class="token punctuation">,</span> ch1<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>ch1<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">char</span> ch2 <span class="token operator">=</span> <span class="token number">66</span><span class="token punctuation">;</span>  <span class="token comment">// ASCII码值</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"字符ch2 = %c，字符大小: %u 字节\n"</span><span class="token punctuation">,</span> ch2<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>ch2<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 布尔型示例</span>
+    bool flag1 <span class="token operator">=</span> true<span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"布尔数flag1 = %d，布尔值大小: %u 字节\n"</span><span class="token punctuation">,</span> flag1<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>flag1<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    bool flag2 <span class="token operator">=</span> false<span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"布尔数flag2 = %d，布尔值大小: %u 字节\n"</span><span class="token punctuation">,</span> flag2<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>flag2<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="C语言的运算符"><a href="#C语言的运算符" class="headerlink" title="C语言的运算符"></a>C语言的运算符</h2><p>C语言中有多种类型的运算符，用于执行各种算术、逻辑和位操作。以下是C语言中常见的运算符类型：</p>
+<ol>
+<li>算术运算符：用于执行基本的算术操作，如加法、减法、乘法、除法、取模等。<ul>
+<li><code>+</code>：加法运算</li>
+<li><code>-</code>：减法运算</li>
+<li>*：乘法运算</li>
+<li><code>/</code>：除法运算</li>
+<li><code>%</code>：取模（取余）运算</li>
+</ul>
+</li>
+<li>关系运算符：用于比较两个值之间的关系，返回一个布尔值（1表示真，0表示假）。<ul>
+<li><code>==</code>：等于</li>
+<li><code>!=</code>：不等于</li>
+<li><code>&lt;</code>：小于</li>
+<li><code>&gt;</code>：大于</li>
+<li><code>&lt;=</code>：小于等于</li>
+<li><code>&gt;=</code>：大于等于</li>
+</ul>
+</li>
+<li>逻辑运算符：用于执行逻辑操作，对布尔值进行组合和求反。<ul>
+<li><code>&amp;&amp;</code>：逻辑与（与）</li>
+<li><code>||</code>：逻辑或（或）</li>
+<li><code>!</code>：逻辑非（非）</li>
+</ul>
+</li>
+<li>位运算符：用于对二进制数据的位进行操作。<ul>
+<li><code>&amp;</code>：按位与</li>
+<li><code>|</code>：按位或</li>
+<li><code>^</code>：按位异或</li>
+<li><code>~</code>：按位取反</li>
+<li><code>&lt;&lt;</code>：左移</li>
+<li><code>&gt;&gt;</code>：右移</li>
+</ul>
+</li>
+<li>赋值运算符：用于给变量赋值。<ul>
+<li><code>=</code>：简单赋值</li>
+<li><code>+=</code>：加法赋值</li>
+<li><code>=</code>：减法赋值</li>
+<li><code>=</code>：乘法赋值</li>
+<li><code>/=</code>：除法赋值</li>
+<li><code>%=</code>：取模赋值</li>
+<li><code>&lt;&lt;=</code>：左移赋值</li>
+<li><code>&gt;&gt;=</code>：右移赋值</li>
+<li><code>&amp;=</code>：按位与赋值</li>
+<li><code>|=</code>：按位或赋值</li>
+<li><code>^=</code>：按位异或赋值</li>
+</ul>
+</li>
+<li>自增和自减运算符：用于对变量进行递增或递减操作。<ul>
+<li><code>++</code>：自增</li>
+<li><code>-</code>：自减</li>
+</ul>
+</li>
+<li>条件运算符：用于根据条件选择不同的值。<ul>
+<li><code>? :</code>：条件表达式，也称为三元运算符。</li>
+</ul>
+</li>
+<li>其他运算符：还有一些其他类型的运算符，如指针运算符、sizeof运算符、类型转换运算符等。</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/23/linux_shell/10.%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7awk/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/04/23/linux_shell/10.%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7awk/" class="post-title-link" itemprop="url">文本处理工具awk</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-04-23 13:26:57" itemprop="dateCreated datePublished" datetime="2023-04-23T13:26:57+08:00">2023-04-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-04-07 14:04:50" itemprop="dateModified" datetime="2024-04-07T14:04:50+08:00">2024-04-07</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="awk简介"><a href="#awk简介" class="headerlink" title="awk简介"></a>awk简介</h2><p>awk是一种用于处理文本数据的工具，可以从文本文件或者标准输入、一个或多个文件中提取和处理数据。<br>awk以逐行扫描方式处理数据，从第一行到最后一行以查找匹配某个特定模式的文本行，并且对这些文本行执行指定动作。</p>
+<h2 id="awk版本"><a href="#awk版本" class="headerlink" title="awk版本"></a>awk版本</h2><p>awk有众多版本包括传统awk、新版awk、gawk等，其中gawk是GNU组织开发的版本，也是目前最流行和最广泛使用的awk版本。gawk在传统awk和nawk的基础上添加了许多新功能和改进，例如更丰富的正则表达式支持、高级的数学和字符串处理函数、用户自定义函数等。gawk通常作为<code>/bin/gawk</code>或<code>/usr/bin/gawk</code>提供，是GNU工具集中的一部分，可以在多个平台上使用。<br>不同的awk可能在语法、功能和性能方面略有不同，在使用awk时应注意选择合适的版本，根据具体需求和系统环境来决定使用哪个版本。</p>
+<h2 id="awk格式"><a href="#awk格式" class="headerlink" title="awk格式"></a>awk格式</h2><p>awk基本格式如下：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">awk 'pattern &#123; action &#125;' file
+awk '&#123; action &#125;' file
+awk 'pattern' file<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li><code>pattern</code>: 可以是一个正则表达式，也可以是一个字符串或数字，用于匹配文本中的某个字段或整行</li>
+<li><code>action</code>: 是在匹配到的文本上执行的操作，可以是一个或多个命令，多个命令之间用换行或分号 <code>;</code> 分隔</li>
+<li><code>file</code>: 是输入文件的名称，没有<code>file</code>参数时从标准输入读取数据</li>
+</ul>
+<p>在awk命令中，<code>pattern</code>和<code>action</code>之间通过大括号 <code>&#123;&#125;</code> 进行分隔，<code>pattern</code>用于匹配文本行，当匹配成功时，对应的<code>action</code>将被执行。</p>
+<p>awk还支持在处理数据前和处理数据后运行命令，完整格式如下：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">awk 'BEGIN &#123;command&#125; pattern &#123; action &#125; END &#123;command&#125;' file<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">echo</span> <span class="token string">"10 20 30 40 50"</span> <span class="token operator">|</span> <span class="token function">awk</span> <span class="token string">'BEGIN &#123;sum = 0; print "sum:", sum&#125; &#123;sum += $1&#125; END &#123;print "Sum:", sum&#125;'</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="https://lsky.taojie.fun:52222/i/2023/09/02/note10.text-processing-tools-awk-2023-04-24-09-42-32.png" alt="10.text-processing-tools-awk-2023-04-24-09-42-32"></p>
+<h2 id="从标准输入读取数据"><a href="#从标准输入读取数据" class="headerlink" title="从标准输入读取数据"></a>从标准输入读取数据</h2><h3 id="从命令行读取数据"><a href="#从命令行读取数据" class="headerlink" title="从命令行读取数据"></a>从命令行读取数据</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> <span class="token string">'&#123;print "Hello World"&#125;'</span>
+<span class="token builtin class-name">test</span>
+Hello World
+abc
+Hello World<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>以上awk命令没有指定<code>file</code>参数，awk不会直接给出运行结果，它会等待标准输入的数据，当用户输入字符后awk会执行相应的命令并产生输出。如果要终止awk程序需要使用<code>Ctrl+D</code>产生一个EOF字符，此时会返回到命令行下。</p>
+<h3 id="通过管道符号从命令读取数据"><a href="#通过管道符号从命令读取数据" class="headerlink" title="通过管道符号从命令读取数据"></a>通过管道符号从命令读取数据</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@6e455ed15da7:~$ <span class="token function">ps</span> -aux<span class="token operator">|</span><span class="token function">awk</span> <span class="token string">'/bash/'</span>
+root           <span class="token number">1</span>  <span class="token number">0.0</span>  <span class="token number">0.0</span>  <span class="token number">18228</span>  <span class="token number">3012</span> pts/0    Ss+  Apr22   <span class="token number">0</span>:00 /bin/bash
+root          <span class="token number">11</span>  <span class="token number">0.0</span>  <span class="token number">0.0</span>  <span class="token number">18232</span>  <span class="token number">3240</span> pts/1    Ss   <span class="token number">13</span>:36   <span class="token number">0</span>:00 /bin/bash
+ubuntu       <span class="token number">269</span>  <span class="token number">0.0</span>  <span class="token number">0.0</span>  <span class="token number">18228</span>  <span class="token number">3144</span> pts/1    S    <span class="token number">13</span>:39   <span class="token number">0</span>:00 <span class="token function">bash</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>以上awk命令通过管道符号<code>|</code>从前面一个命令的输出结果从读取数据进行处理。</p>
+<h2 id="从文件中读取数据和命令"><a href="#从文件中读取数据和命令" class="headerlink" title="从文件中读取数据和命令"></a>从文件中读取数据和命令</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> <span class="token string">'/Alice/'</span> example.txt
+Alice,25,Female,New York
+ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> <span class="token string">'/Male/'</span> example.txt
+Bob,30,Male,Los Angeles
+Charlie,22,Male,Chicago
+David,35,Male,Houston<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>以上awk命令指定了<code>file</code>参数，awk会从文件中以行为单位读取数据并且使用<code>pattern</code>所表示的匹配模式进行数据匹配，由于没有指定<code>action</code>参数，awk将匹配到的数据直接输出到标准输出。</p>
+<p>awk和sed一样可以从文件中读取命令：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">awk</span> <span class="token parameter variable">-f</span> script_file.awk example.txt<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="awk工作原理"><a href="#awk工作原理" class="headerlink" title="awk工作原理"></a>awk工作原理</h2><ol>
+<li>awk对文件或者标准输入的内容一次只处理一行，将获取到的这一行数据赋给变量$0</li>
+<li>这一行的内容按awk内部变量FS定义的分隔符（缺省为空格，包括制表符tab）分解成多个字段，每一个字段存储在从$1开始的变量中。</li>
+</ol>
+<p>以以下数据为例：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">Name Age Gender City
+Alice 25 Female New York
+Bob 30 Male Los Angeles
+Charlie 22 Male Chicago
+David 35 Male Houston
+Eve 28 Female Miami<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>以下awk命令的运行结果：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> <span class="token string">'&#123;print $1,$3&#125;'</span> example.txt
+Name Gender
+Alice Female
+Bob Male
+Charlie Male
+David Male
+Eve Female<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ol>
+<li>awk首先将第一行数据存放在变量$0中进行处理。</li>
+<li>将<code>$0</code>中的数据以空格为分隔符（内部变量<code>FS</code>所定义）进行分解，分别存放在从<code>$1</code>开始的内部变量中。</li>
+<li>在输出结果的每一行中第一个字段是存放在<code>$1</code>中的数据，第二个字段是存放在<code>$3</code>中的数据。</li>
+<li>awk命令中的逗号映射为一个内部变量-输出字段分隔符<code>OFS</code>（默认为空格）两个字段之间由空格间隔。</li>
+<li>处理完一行数据后读取下一行数据到<code>$0</code>中进行处理直到所以数据处理完毕。</li>
+</ol>
+<h2 id="格式化输出"><a href="#格式化输出" class="headerlink" title="格式化输出"></a>格式化输出</h2><h3 id="print函数"><a href="#print函数" class="headerlink" title="print函数"></a>print函数</h3><p>print函数用于打印不需要特别编排格式的简单输出。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> <span class="token string">'&#123;print "Name:" $1 "Age:" $2&#125;'</span> example.txt
+Name:NameAge:Age
+Name:AliceAge:25
+Name:BobAge:30
+Name:CharlieAge:22
+Name:DavidAge:35
+Name:EveAge:28
+ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> <span class="token string">'&#123;print "Name:" $1, "Age:" $2&#125;'</span> example.txt
+Name:Name Age:Age
+Name:Alice Age:25
+Name:Bob Age:30
+Name:Charlie Age:22
+Name:David Age:35
+Name:Eve Age:28<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>逗号<code>,</code>表示内部变量<code>OFS</code>（用来表示输出字段的分隔符，默认为空格）。<br>print还支持以下转义序列：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">\b：退格符（ASCII 008）
+\t：制表符（ASCII 009）
+\n：换行符（ASCII 010）
+\f：换页符（ASCII 012）
+\r：回车符（ASCII 013）<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>print中使用转义序列进行数据输出：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> <span class="token string">'&#123;print "Name:" $1 "\tAge:" $2&#125;'</span> example.txt
+Name:Name       Age:Age
+Name:Alice      Age:25
+Name:Bob        Age:30
+Name:Charlie    Age:22
+Name:David      Age:35
+Name:Eve        Age:28<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="printf函数"><a href="#printf函数" class="headerlink" title="printf函数"></a>printf函数</h3><p><code>printf</code>函数能够进行更加精细的格式化输出，用法和C语言中<code>printf</code>函数的用法一样。语句中包含一个加引号的控制串，控制串中包含若干格式说明和修饰符。控制串后面跟一个逗号，之后是一列由逗号分隔的表达式。<code>printf</code>会根据控制串来编排表达式的格式。<br><code>printf</code>和<code>print</code>不同的是printf在行尾不会自动换行，如果要换行必须使用转义字符<code>\n</code></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> <span class="token string">'&#123;printf "[Name:%-10s]\tAge:%s", $1, $2&#125;'</span> example.txt
+<span class="token punctuation">[</span>Name:Name      <span class="token punctuation">]</span>       Age:Age<span class="token punctuation">[</span>Name:Alice     <span class="token punctuation">]</span>        Age:25<span class="token punctuation">[</span>Name:Bob       <span class="token punctuation">]</span> Age:30<span class="token punctuation">[</span>Name:Charlie   <span class="token punctuation">]</span>      Age:22<span class="token punctuation">[</span>Name:David     <span class="token punctuation">]</span> Age:35<span class="token punctuation">[</span>Name:Eve       <span class="token punctuation">]</span> Age:28ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> <span class="token string">'&#123;printf "[Name:%-10s]\tAge:%s\n", $1, $2&#125;'</span> example.txt
+<span class="token punctuation">[</span>Name:Name      <span class="token punctuation">]</span>       Age:Age
+<span class="token punctuation">[</span>Name:Alice     <span class="token punctuation">]</span>       Age:25
+<span class="token punctuation">[</span>Name:Bob       <span class="token punctuation">]</span>       Age:30
+<span class="token punctuation">[</span>Name:Charlie   <span class="token punctuation">]</span>       Age:22
+<span class="token punctuation">[</span>Name:David     <span class="token punctuation">]</span>       Age:35
+<span class="token punctuation">[</span>Name:Eve       <span class="token punctuation">]</span>       Age:28<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="记录与字段"><a href="#记录与字段" class="headerlink" title="记录与字段"></a>记录与字段</h2><h3 id="记录"><a href="#记录" class="headerlink" title="记录"></a>记录</h3><p>在awk中每一行数据称为一条记录，以换行符结束。</p>
+<ul>
+<li>记录分隔符：默认情况下，输入和输出记录的分隔符都是回车符，分别保存在内部变量<code>ORS</code>和<code>RS</code>中。</li>
+<li>变量<code>$0</code>表示当前整条记录，变量NR表示当前记录的记录号，每处理一条记录，NR值加一。</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> <span class="token string">'&#123;print NR,$0&#125;'</span> example.txt
+<span class="token number">1</span> Name Age Gender City
+<span class="token number">2</span> Alice <span class="token number">25</span> Female New York
+<span class="token number">3</span> Bob <span class="token number">30</span> Male Los Angeles
+<span class="token number">4</span> Charlie <span class="token number">22</span> Male Chicago
+<span class="token number">5</span> David <span class="token number">35</span> Male Houston
+<span class="token number">6</span> Eve <span class="token number">28</span> Female Miami<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="字段"><a href="#字段" class="headerlink" title="字段"></a>字段</h3><p>每一条记录都是由称为字段的词组成，默认情况下字段之间用空白符（空格或者制表符）分隔。<code>NF</code>变量保存每个记录的字段数量。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> <span class="token string">'&#123;print NF,$0&#125;'</span> example.txt
+<span class="token number">4</span> Name Age Gender City
+<span class="token number">5</span> Alice <span class="token number">25</span> Female New York
+<span class="token number">5</span> Bob <span class="token number">30</span> Male Los Angeles
+<span class="token number">4</span> Charlie <span class="token number">22</span> Male Chicago
+<span class="token number">4</span> David <span class="token number">35</span> Male Houston
+<span class="token number">4</span> Eve <span class="token number">28</span> Female Miami<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="字段分隔符"><a href="#字段分隔符" class="headerlink" title="字段分隔符"></a>字段分隔符</h3><p>字段分隔符由内部变量<code>FS</code>保存，可以在命令中通过<code>-F</code>选项修改<code>FS</code>的值。<br>先使用<code>sed</code>命令将<code>example.txt</code>文件中的空格替换为逗号：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@6e455ed15da7:~$ <span class="token function">sed</span> <span class="token parameter variable">-i</span> <span class="token string">'s/ /,/g'</span> example.txt
+ubuntu@6e455ed15da7:~$ <span class="token function">cat</span> example.txt
+Name,Age,Gender,City
+Alice,25,Female,New,York
+Bob,30,Male,Los,Angeles
+Charlie,22,Male,Chicago
+David,35,Male,Houston
+Eve,28,Female,Miami<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然后使用awk并通过<code>-F</code>选项替换分隔符进行输出：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> <span class="token string">'&#123;print "Name:" $1, "Age:" $2&#125;'</span> example.txt
+Name:Name,Age,Gender,City Age:
+Name:Alice,25,Female,New,York Age:
+Name:Bob,30,Male,Los,Angeles Age:
+Name:Charlie,22,Male,Chicago Age:
+Name:David,35,Male,Houston Age:
+Name:Eve,28,Female,Miami Age:
+ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> -F, <span class="token string">'&#123;print "Name:" $1, "Age:" $2&#125;'</span> example.txt
+Name:Name Age:Age
+Name:Alice Age:25
+Name:Bob Age:30
+Name:Charlie Age:22
+Name:David Age:35
+Name:Eve Age:28<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="匹配模式与正则表达式"><a href="#匹配模式与正则表达式" class="headerlink" title="匹配模式与正则表达式"></a>匹配模式与正则表达式</h2><h3 id="匹配模式"><a href="#匹配模式" class="headerlink" title="匹配模式"></a>匹配模式</h3><p>awk中的模式可以是一个正则表达式或者用来判定条件真伪的表达式。</p>
+<p>使用<code>Alice</code>进行数据匹配：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@6e455ed15da7:~$ <span class="token function">cat</span> example.txt
+Name Age Gender City
+Alice <span class="token number">25</span> Female New York
+Bob <span class="token number">30</span> Male Los Angeles
+Charlie <span class="token number">22</span> Male Chicago
+David <span class="token number">35</span> Male Houston
+Eve <span class="token number">28</span> Female Miami
+ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> <span class="token string">'/Alice/'</span> example.txt
+Alice <span class="token number">25</span> Female New York<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>使用条件表达式进行数据匹配：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@6e455ed15da7:~$ <span class="token function">cat</span> example.txt
+Name Age Gender City
+Alice <span class="token number">25</span> Female New York
+Bob <span class="token number">30</span> Male Los Angeles
+Charlie <span class="token number">22</span> Male Chicago
+David <span class="token number">35</span> Male Houston
+Eve <span class="token number">28</span> Female Miami
+ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> <span class="token string">'$2 &lt; 25'</span> example.txt
+Charlie <span class="token number">22</span> Male Chicago<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="正则表达式模式与操作"><a href="#正则表达式模式与操作" class="headerlink" title="正则表达式模式与操作"></a>正则表达式模式与操作</h3><p>使用正则表达式模式<code>Alice</code>进行数据匹配，然后通过<code>print</code>函数进行格式化输出：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> <span class="token string">'/Alice/&#123;print "Name:" $1&#125;'</span> example.txt
+Name:Alice
+ubuntu@6e455ed15da7:~$ <span class="token function">cat</span> example.txt
+Name Age Gender City
+Alice <span class="token number">25</span> Female New York
+Bob <span class="token number">30</span> Male Los Angeles
+Charlie <span class="token number">22</span> Male Chicago
+David <span class="token number">35</span> Male Houston
+Eve <span class="token number">28</span> Female Miami
+ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> <span class="token string">'/Alice/&#123;print "Name:" $1&#125;'</span> example.txt
+Name:Alice<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>格式化输出<code>example.txt</code>文件中所有以大写字母<code>A-C</code>开头的行：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@6e455ed15da7:~$ <span class="token function">cat</span> example.txt
+Name Age Gender City
+Alice <span class="token number">25</span> Female New York
+Bob <span class="token number">30</span> Male Los Angeles
+Charlie <span class="token number">22</span> Male Chicago
+David <span class="token number">35</span> Male Houston
+Eve <span class="token number">28</span> Female Miami
+ubuntu@6e455ed15da7:~$ <span class="token function">awk</span> <span class="token string">'/^[A-C]+.*/&#123;print "Name:" $1&#125;'</span> example.txt
+Name:Alice
+Name:Bob
+Name:Charlie<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h2><h3 id="显示系统下各用户所使用的shell"><a href="#显示系统下各用户所使用的shell" class="headerlink" title="显示系统下各用户所使用的shell"></a>显示系统下各用户所使用的shell</h3><p>查看当前<code>/etc/passwd</code>格式：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ubuntu@6e455ed15da7:~$ <span class="token function">cat</span> /etc/passwd<span class="token operator">|</span><span class="token function">head</span>
+root:x:0:0:root:/root:/bin/bash<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>使用awk显示各用户使用的shell:</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">User:root Shell:/bin/bash
+User:daemon Shell:/usr/sbin/nologin
+User:bin Shell:/usr/sbin/nologin
+User:sys Shell:/usr/sbin/nologin
+User:sync Shell:/bin/sync
+User:games Shell:/usr/sbin/nologin
+User:man Shell:/usr/sbin/nologin
+User:lp Shell:/usr/sbin/nologin
+User:mail Shell:/usr/sbin/nologin
+User:news Shell:/usr/sbin/nologin<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/source/index.md/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/source/index.md/">1</a><span class="page-number current">2</span><a class="page-number" href="/source/index.md/page/3/">3</a><a class="page-number" href="/source/index.md/page/4/">4</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/source/index.md/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/source/index.md/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/source/index.md/">1</a><span class="page-number current">2</span><a class="page-number" href="/source/index.md/page/3/">3</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/source/index.md/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>

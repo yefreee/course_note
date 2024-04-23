@@ -26,19 +26,19 @@
 <meta property="og:site_name">
 <meta property="og:description" content="Ceilometer(计量服务)简介Ceilometer属于OpenStack项目中的一个组件，是在Telemetry服务基础上发展而来，主要用作收集、监控和处理OpenStack资源的指标数据。它可以收集虚拟机、卷、网络等资源的性能指标，如CPU利用率、内存使用量、网络流量等。这些指标数据可以用于监控和分析OpenStack环境的性能、资源利用情况以及故障排除。 Ceilometer通过与Ope">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/12/11/2023-12-11-1702252909.png">
-<meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/12/10/2023-12-10-1702200511.png">
-<meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/12/11/2023-12-11-1702253165.png">
-<meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/12/10/2023-12-10-1702204525.png">
-<meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/12/10/2023-12-10-1702204499.png">
-<meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/12/11/2023-12-11-1702252965.png">
-<meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/12/11/2023-12-11-1702252414.png">
-<meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/12/03/2023-12-03-1701610473.png">
-<meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/12/04/2023-12-04-1701650466.png">
+<meta property="og:image" content="https://lsky.taojie.fun:52222/i/2023/12/11/2023-12-11-1702252909.png">
+<meta property="og:image" content="https://lsky.taojie.fun:52222/i/2023/12/10/2023-12-10-1702200511.png">
+<meta property="og:image" content="https://lsky.taojie.fun:52222/i/2023/12/11/2023-12-11-1702253165.png">
+<meta property="og:image" content="https://lsky.taojie.fun:52222/i/2023/12/10/2023-12-10-1702204525.png">
+<meta property="og:image" content="https://lsky.taojie.fun:52222/i/2023/12/10/2023-12-10-1702204499.png">
+<meta property="og:image" content="https://lsky.taojie.fun:52222/i/2023/12/11/2023-12-11-1702252965.png">
+<meta property="og:image" content="https://lsky.taojie.fun:52222/i/2023/12/11/2023-12-11-1702252414.png">
+<meta property="og:image" content="https://lsky.taojie.fun:52222/i/2023/12/03/2023-12-03-1701610473.png">
+<meta property="og:image" content="https://lsky.taojie.fun:52222/i/2023/12/04/2023-12-04-1701650466.png">
 <meta property="article:published_time" content="2023-12-09T05:35:01.000Z">
-<meta property="article:modified_time" content="2024-03-16T08:06:02.810Z">
+<meta property="article:modified_time" content="2024-04-07T06:04:50.837Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://vault.taojie.fun:28089/i/2023/12/11/2023-12-11-1702252909.png">
+<meta name="twitter:image" content="https://lsky.taojie.fun:52222/i/2023/12/11/2023-12-11-1702252909.png">
 
 
 <link rel="canonical" href="http://example.com/2023/12/09/private_clouds/12.OpenStack%E8%AE%A1%E9%87%8F%E6%9C%8D%E5%8A%A1/">
@@ -133,7 +133,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-count">29</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -197,7 +197,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-03-16 16:06:02" itemprop="dateModified" datetime="2024-03-16T16:06:02+08:00">2024-03-16</time>
+      <time title="修改时间：2024-04-07 14:04:50" itemprop="dateModified" datetime="2024-04-07T14:04:50+08:00">2024-04-07</time>
     </span>
 
   
@@ -212,11 +212,11 @@
     <div class="post-body" itemprop="articleBody"><h2 id="Ceilometer-计量服务-简介"><a href="#Ceilometer-计量服务-简介" class="headerlink" title="Ceilometer(计量服务)简介"></a>Ceilometer(计量服务)简介</h2><p>Ceilometer属于OpenStack项目中的一个组件，是在Telemetry服务基础上发展而来，主要用作收集、监控和处理OpenStack资源的指标数据。它可以收集虚拟机、卷、网络等资源的性能指标，如CPU利用率、内存使用量、网络流量等。这些指标数据可以用于监控和分析OpenStack环境的性能、资源利用情况以及故障排除。</p>
 <p>Ceilometer通过与OpenStack其他组件集成，如Nova（计算服务）、Cinder（块存储服务）、Neutron（网络服务）等，能够获取各个组件的指标数据，并将其存储在数据库中供后续查询和分析。</p>
 <p>Ceilometer还提供了报警和事件处理机制，可以根据设定的阈值或规则触发报警并采取相应的操作。这样，管理员可以根据指标数据的变化情况及时采取措施，维护和优化OpenStack环境。</p>
-<h3 id="Ceilometer架构"><a href="#Ceilometer架构" class="headerlink" title="Ceilometer架构"></a>Ceilometer架构</h3><img src="https://vault.taojie.fun:28089/i/2023/12/11/2023-12-11-1702252909.png" alt="1702252910007.png" title="1702252910007.png" />
+<h3 id="Ceilometer架构"><a href="#Ceilometer架构" class="headerlink" title="Ceilometer架构"></a>Ceilometer架构</h3><img src="https://lsky.taojie.fun:52222/i/2023/12/11/2023-12-11-1702252909.png" alt="1702252910007.png" title="1702252910007.png" />
 
-<img src="https://vault.taojie.fun:28089/i/2023/12/10/2023-12-10-1702200511.png" alt="1702200509691.png" title="1702200509691.png" />
+<img src="https://lsky.taojie.fun:52222/i/2023/12/10/2023-12-10-1702200511.png" alt="1702200509691.png" title="1702200509691.png" />
 
-<h3 id="数据采集"><a href="#数据采集" class="headerlink" title="数据采集"></a>数据采集</h3><img src="https://vault.taojie.fun:28089/i/2023/12/11/2023-12-11-1702253165.png" alt="1702253165613.png" title="1702253165613.png" />
+<h3 id="数据采集"><a href="#数据采集" class="headerlink" title="数据采集"></a>数据采集</h3><img src="https://lsky.taojie.fun:52222/i/2023/12/11/2023-12-11-1702253165.png" alt="1702253165613.png" title="1702253165613.png" />
 
 <p>Ceilometer有两个核心服务，也是它采集数据的两种方式：</p>
 <ol>
@@ -227,10 +227,10 @@
 <li><p>Central agent （ceilometer-agent-central）运行在 management server 上，以轮询的方式通过调用 OpenStack 各个组件（包括 Nova、Cinder、Glance、Neutron、Swift 等）的 API 收集资源使用统计数据。</p>
 </li>
 </ol>
- <img src="https://vault.taojie.fun:28089/i/2023/12/10/2023-12-10-1702204525.png" alt="1702204523484.png" title="1702204523484.png" />
+ <img src="https://lsky.taojie.fun:52222/i/2023/12/10/2023-12-10-1702204525.png" alt="1702204523484.png" title="1702204523484.png" />
 </li>
 <li><p>notification agent: 运行在一个或者多个management server上的数据收集程序，监听消息队列上的通知，将他们转换成时间和样本、应用管道操作。核心是通知守护进程（agent-notification），它监视消息队列中其他 OpenStack 组件（例如 Nova、Glance、Cinder、Neutron、Swift、Keystone 和 Heat）发送的数据以及 Ceilometer 内部通信。</p>
- <img src="https://vault.taojie.fun:28089/i/2023/12/10/2023-12-10-1702204499.png" alt="1702204497853.png" title="1702204497853.png" /></li>
+ <img src="https://lsky.taojie.fun:52222/i/2023/12/10/2023-12-10-1702204499.png" alt="1702204497853.png" title="1702204497853.png" /></li>
 </ol>
 <p>对于采集的数据类型也有两种：</p>
 <ol>
@@ -240,7 +240,7 @@
 </li>
 </ol>
 <h3 id="数据处理"><a href="#数据处理" class="headerlink" title="数据处理"></a>数据处理</h3><p>Pipelines是Ceilometer中数据处理的机制，描述了一组<code>sources</code>（数据来源）和<code>sinks</code>（数据分发）之间的关系，Metes 数据依次经过（零个或者多个） Transformer 和 （一个或者多个）Publisher 处理，最后达到（一个或者多个）Receiver。其中Recivers 包括 Ceilometer Collector 和 外部系统。</p>
-<img src="https://vault.taojie.fun:28089/i/2023/12/11/2023-12-11-1702252965.png" alt="1702252966065.png" title="1702252966065.png" />
+<img src="https://lsky.taojie.fun:52222/i/2023/12/11/2023-12-11-1702252965.png" alt="1702252966065.png" title="1702252966065.png" />
 
 <p>对于采集到的数据Ceilometer可以通过多个pipelines以多个形式进行发布，该功能由<code>notification agents</code>完成。</p>
 <p>以下是常见的可以用来发布数据的方式：</p>
@@ -257,17 +257,17 @@
 <blockquote>
 <p>Gnocchi是一个开源的时间序列数据库项目，专门用于存储和分析大规模的时间序列数据。它最初作为OpenStack项目的一部分，用于存储和查询Ceilometer（Telemetry）收集的指标数据，但现在已经成为一个独立的项目，可以与多个数据源和应用程序集成。</p>
 </blockquote>
-<h3 id="Ceilometer命令"><a href="#Ceilometer命令" class="headerlink" title="Ceilometer命令"></a>Ceilometer命令</h3><img src="https://vault.taojie.fun:28089/i/2023/12/11/2023-12-11-1702252414.png" alt="1702252415032.png" title="1702252415032.png" />
+<h3 id="Ceilometer命令"><a href="#Ceilometer命令" class="headerlink" title="Ceilometer命令"></a>Ceilometer命令</h3><img src="https://lsky.taojie.fun:52222/i/2023/12/11/2023-12-11-1702252414.png" alt="1702252415032.png" title="1702252415032.png" />
 
 <h2 id="Ceilometer实验"><a href="#Ceilometer实验" class="headerlink" title="Ceilometer实验"></a>Ceilometer实验</h2><h3 id="作业与实验环境"><a href="#作业与实验环境" class="headerlink" title="作业与实验环境"></a>作业与实验环境</h3><blockquote>
 <p><a target="_blank" rel="noopener" href="https://wxstc.fanya.chaoxing.com/portal">超星网址</a><br>虚拟机<code>openstack-allinone</code>，账户<code>root</code>，密码<code>000000</code></p>
 </blockquote>
 <ol>
 <li><p>VmWare需要修改网络设置，在编辑-&gt;虚拟网络编辑器中将Vmnet1网卡的子网由原来的<code>192.168.10.0</code>改为<code>192.168.100.0</code>。</p>
- <img src="https://vault.taojie.fun:28089/i/2023/12/03/2023-12-03-1701610473.png" alt="1701610472777.png" title="1701610472777.png" />
+ <img src="https://lsky.taojie.fun:52222/i/2023/12/03/2023-12-03-1701610473.png" alt="1701610472777.png" title="1701610472777.png" />
 </li>
 <li><p>后续实验需要启动实例，Horizon登录地址<code>192.168.100.10/dashboard</code>，使用域<code>xiandian</code>、用户名<code>admin</code>、密码<code>000000</code>登录之后<code>上传</code>本地<code>D盘</code>的cirros镜像到OpenStack平台。</p>
- <img src="https://vault.taojie.fun:28089/i/2023/12/04/2023-12-04-1701650466.png" alt="1701650465473.png" title="1701650465473.png" />
+ <img src="https://lsky.taojie.fun:52222/i/2023/12/04/2023-12-04-1701650466.png" alt="1701650465473.png" title="1701650465473.png" />
 </li>
 <li><p>执行脚本完成身份认证。</p>
  <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># source /etc/keystone/admin-openrc.sh</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>

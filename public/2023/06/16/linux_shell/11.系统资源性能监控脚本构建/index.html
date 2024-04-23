@@ -26,13 +26,13 @@
 <meta property="og:site_name">
 <meta property="og:description" content="常见的系统性能分析工具 为什么利用Shell脚本进行系统资源性能分析 在系统性能分析中，我们需要收集大量的数据并进行分析，而手动操作比较繁琐且容易出错，而且不易重复。使用shell脚本可以自动化执行这些操作，提高效率和准确性。 由于shell脚本的灵活性和可编程性，可以根据不同需求和环境对脚本进行维护和扩展，实现各种不同的性能分析操作，可以大大提高工作效率和准确性。    vmstatvmstat">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/09/02/note3.Shell%E6%9D%A1%E4%BB%B6%E6%B5%8B%E8%AF%95-2023-06-16-20-43-25.png">
-<meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/09/02/note3.Shell%E6%9D%A1%E4%BB%B6%E6%B5%8B%E8%AF%95-2023-06-16-20-46-41.png">
-<meta property="og:image" content="https://vault.taojie.fun:28089/i/2023/09/02/note3.Shell%E6%9D%A1%E4%BB%B6%E6%B5%8B%E8%AF%95-2023-06-16-21-06-44.png">
+<meta property="og:image" content="https://lsky.taojie.fun:52222/i/2023/09/02/note3.Shell%E6%9D%A1%E4%BB%B6%E6%B5%8B%E8%AF%95-2023-06-16-20-43-25.png">
+<meta property="og:image" content="https://lsky.taojie.fun:52222/i/2023/09/02/note3.Shell%E6%9D%A1%E4%BB%B6%E6%B5%8B%E8%AF%95-2023-06-16-20-46-41.png">
+<meta property="og:image" content="https://lsky.taojie.fun:52222/i/2023/09/02/note3.Shell%E6%9D%A1%E4%BB%B6%E6%B5%8B%E8%AF%95-2023-06-16-21-06-44.png">
 <meta property="article:published_time" content="2023-06-16T13:35:08.000Z">
-<meta property="article:modified_time" content="2024-03-16T08:06:02.710Z">
+<meta property="article:modified_time" content="2024-04-07T06:04:50.777Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://vault.taojie.fun:28089/i/2023/09/02/note3.Shell%E6%9D%A1%E4%BB%B6%E6%B5%8B%E8%AF%95-2023-06-16-20-43-25.png">
+<meta name="twitter:image" content="https://lsky.taojie.fun:52222/i/2023/09/02/note3.Shell%E6%9D%A1%E4%BB%B6%E6%B5%8B%E8%AF%95-2023-06-16-20-43-25.png">
 
 
 <link rel="canonical" href="http://example.com/2023/06/16/linux_shell/11.%E7%B3%BB%E7%BB%9F%E8%B5%84%E6%BA%90%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7%E8%84%9A%E6%9C%AC%E6%9E%84%E5%BB%BA/">
@@ -127,7 +127,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-count">29</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -191,7 +191,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-03-16 16:06:02" itemprop="dateModified" datetime="2024-03-16T16:06:02+08:00">2024-03-16</time>
+      <time title="修改时间：2024-04-07 14:04:50" itemprop="dateModified" datetime="2024-04-07T14:04:50+08:00">2024-04-07</time>
     </span>
 
   
@@ -336,13 +336,13 @@ COMMAND:所执行的指令<span aria-hidden="true" class="line-numbers-rows"><sp
 <p>condition可以判断三种条件：</p>
 <ol>
 <li><p>文件比较</p>
-<p> <img src="https://vault.taojie.fun:28089/i/2023/09/02/note3.Shell%E6%9D%A1%E4%BB%B6%E6%B5%8B%E8%AF%95-2023-06-16-20-43-25.png" alt="3.Shell条件测试-2023-06-16-20-43-25"></p>
+<p> <img src="https://lsky.taojie.fun:52222/i/2023/09/02/note3.Shell%E6%9D%A1%E4%BB%B6%E6%B5%8B%E8%AF%95-2023-06-16-20-43-25.png" alt="3.Shell条件测试-2023-06-16-20-43-25"></p>
 </li>
 <li><p>字符串比较</p>
-<p> <img src="https://vault.taojie.fun:28089/i/2023/09/02/note3.Shell%E6%9D%A1%E4%BB%B6%E6%B5%8B%E8%AF%95-2023-06-16-20-46-41.png" alt="3.Shell条件测试-2023-06-16-20-46-41"></p>
+<p> <img src="https://lsky.taojie.fun:52222/i/2023/09/02/note3.Shell%E6%9D%A1%E4%BB%B6%E6%B5%8B%E8%AF%95-2023-06-16-20-46-41.png" alt="3.Shell条件测试-2023-06-16-20-46-41"></p>
 </li>
 <li><p>数值比较</p>
-<p> <img src="https://vault.taojie.fun:28089/i/2023/09/02/note3.Shell%E6%9D%A1%E4%BB%B6%E6%B5%8B%E8%AF%95-2023-06-16-21-06-44.png" alt="3.Shell条件测试-2023-06-16-21-06-44"></p>
+<p> <img src="https://lsky.taojie.fun:52222/i/2023/09/02/note3.Shell%E6%9D%A1%E4%BB%B6%E6%B5%8B%E8%AF%95-2023-06-16-21-06-44.png" alt="3.Shell条件测试-2023-06-16-21-06-44"></p>
 </li>
 </ol>
 <ul>

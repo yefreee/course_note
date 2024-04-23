@@ -20,15 +20,3 @@ tags:
 1. {% post_link linux_shell/11.系统资源性能监控脚本构建 %}  
 1. {% post_link linux_shell/12.项目实战集 %}  
 
-## c语言程序设计转本-16课时
-
-1. {% post_link c_program/1.第一周 %}
-1. {% post_link c_program/2.第二周 %}
-1. {% post_link c_program/3.第三周 %}
-1. {% post_link c_program/4.第四周 %}
-
--->
-
-## 私有云服务架构与运维-64课时
-
-1. {% post_link private_clouds/1.初识云计算与OpenStack %} 
