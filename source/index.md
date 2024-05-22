@@ -16,3 +16,4 @@ tags:
 1. {% post_link linux_shell/7.Shell函数 %}
 1. {% post_link linux_shell/8.正则表达式 %}  
 1. {% post_link linux_shell/9.流编辑器sed %}
+1. {% post_link linux_shell/10.文本处理工具awk %}  
