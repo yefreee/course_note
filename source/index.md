@@ -18,3 +18,4 @@ tags:
 1. {% post_link linux_shell/9.流编辑器sed %}
 1. {% post_link linux_shell/10.文本处理工具awk %}  
 1. {% post_link linux_shell/11.系统资源性能监控脚本构建 %}  
+1. {% post_link linux_shell/12.项目实战集 %}  
