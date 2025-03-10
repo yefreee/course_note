@@ -10,4 +10,5 @@ tags:
 1. {% post_link linux_shell/1.Shell初识、编辑器的使用 %}  
 1. {% post_link linux_shell/2.构建基本脚本 %}  
 1. {% post_link linux_shell/3.Shell条件测试 %}  
+1. {% post_link linux_shell/4.Shell循环 %}  
 
