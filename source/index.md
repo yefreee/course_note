@@ -11,4 +11,5 @@ tags:
 1. {% post_link linux_shell/2.构建基本脚本 %}  
 1. {% post_link linux_shell/3.Shell条件测试 %}  
 1. {% post_link linux_shell/4.Shell循环 %}  
+1. {% post_link linux_shell/5.处理用户输入 %}  
 
