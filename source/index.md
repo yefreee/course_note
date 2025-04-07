@@ -14,4 +14,5 @@ tags:
 1. {% post_link linux_shell/5.处理用户输入 %}  
 1. {% post_link linux_shell/6.使用重定向呈现数据 %}  
 1. {% post_link linux_shell/7.Shell函数 %}  
+1. {% post_link linux_shell/8.正则表达式 %}  
 
