@@ -6,5 +6,6 @@ node_modules/
 .deploy*/
 _multiconfig.yml
 source/_posts/.obsidian/
+source/_posts/private_clouds/todo.md
 .obsidian
 .ssh
