@@ -27,3 +27,5 @@
    3. 2501：glance定制结束
 6. 第六周
    1. 3+3-2:glance disk-imagebuilder结束
+7. 第七周
+   1. 3+3-2:glance结束
