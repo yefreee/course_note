@@ -12,3 +12,4 @@ tags:
 1. {% post_link private_clouds/3.OpenStack身份管理 %}
 1. {% post_link private_clouds/4.OpenStack镜像管理 %}
 1. {% post_link private_clouds/5.OpenStack镜像制作 %}
+1. {% post_link private_clouds/6.OpenStack实例管理（一） %}
