@@ -19,4 +19,4 @@ tags:
 
 ## 云运维实训
 
-1. {% post_link cloud_training/SkyWalking应用部署案例 %}
+1. {% post_link cloud_training/SkyWalking应用部署 %}

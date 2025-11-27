@@ -1,24 +1,24 @@
 ---
-title: SkyWalking 分布式链路追踪部署实验指导书
+title: SkyWalking 应用部署
 date: 
 tags:
 ---
 
-## 1. 实验简介与理论基础
+## 实验简介与理论基础
 
-### 1.1 实验背景
+### 实验背景
 
 在微服务架构中，一个用户请求往往需要经过多个服务节点（如：前端 -> 网关 -> 业务服务 -> 数据库）。如果系统出现故障或响应变慢，传统的日志排查非常困难。
 **SkyWalking** 是一个国产开源的 APM（应用性能管理）系统，它可以像“X光”一样扫描整个系统，生成调用链路图，帮助开发者快速定位性能瓶颈。
 
-### 1.2 实验架构组件
+### 实验架构组件
 
 * **SkyWalking Agent (探针)**: 安装在应用服务器（Mall）上，自动收集程序的运行数据，发送给 OAP。
 * **SkyWalking OAP (分析服务)**: 接收探针数据，进行聚合分析（生成拓扑图、计算耗时）。
 * **Elasticsearch (存储服务)**: OAP 分析后的数据需要持久化存储，ES 是其首选的高性能数据库。
 * **SkyWalking UI (可视化界面)**: 网页控制台，展示监控结果。
 
-### 1.3 节点规划
+### 节点规划
 
 | IP地址 | 主机名 | 角色 | 部署组件 |
 | :--- | :--- | :--- | :--- |
@@ -27,11 +27,11 @@ tags:
 
 ---
 
-## 2. 部署 SkyWalking 服务端 (Node-1)
+## 部署 SkyWalking 服务端 (Node-1)
 
 **⚠️ 注意：** 本章所有命令均在 **172.128.11.32** 节点执行。
 
-### 2.1 基础环境准备
+### 基础环境准备
 
 **1. 修改主机名**
 为了方便集群管理和日志识别,首先修改主机名。
@@ -77,7 +77,7 @@ export PATH=$PATH:${JAVA_HOME}/bin
 java version "1.8.0_144" ...
 ```
 
-### 2.2 部署 Elasticsearch 7.17.0 (存储层)
+### 部署 Elasticsearch 7.17.0 (存储层)
 
 **1. 解压与目录创建**
 
@@ -175,7 +175,7 @@ vm.max_map_count=262144
 # 看到 tcp6 :::9200 LISTEN 则成功
 ```
 
-### 2.3 部署 SkyWalking OAP 服务 (分析层)
+### 部署 SkyWalking OAP 服务 (分析层)
 
 **1. 解压安装包**
 
@@ -196,17 +196,17 @@ vm.max_map_count=262144
 
 ```yaml
 cluster:
-  # 集群选择器: standalone=单机模式(不做集群), cluster=集群模式
-  selector: ${SW_CLUSTER:standalone}
+    # 集群选择器: standalone=单机模式(不做集群), cluster=集群模式
+    selector: ${SW_CLUSTER:standalone}
 
 storage:
-  # 存储选择器: 指定使用 elasticsearch7 作为持久化存储
-  selector: ${SW_STORAGE:elasticsearch7}
-  elasticsearch7:
-    # 命名空间: 用于在同一个 ES 中隔离不同环境的数据(如 dev/prod),空字符串表示不使用命名空间
-    nameSpace: ${SW_NAMESPACE:""}
-    # ES 集群节点地址: 格式为 IP:端口, 多个节点用逗号分隔
-    clusterNodes: ${SW_STORAGE_ES_CLUSTER_NODES:172.128.11.32:9200}
+    # 存储选择器: 指定使用 elasticsearch7 作为持久化存储
+    selector: ${SW_STORAGE:elasticsearch7}
+    elasticsearch7:
+        # 命名空间: 用于在同一个 ES 中隔离不同环境的数据(如 dev/prod),空字符串表示不使用命名空间
+        nameSpace: ${SW_NAMESPACE:""}
+        # ES 集群节点地址: 格式为 IP:端口, 多个节点用逗号分隔
+        clusterNodes: ${SW_STORAGE_ES_CLUSTER_NODES:172.128.11.32:9200}
 ```
 
 **3. 启动 OAP**
@@ -223,7 +223,7 @@ SkyWalking OAP started successfully!
 [root@node-1 ~]# netstat -ntpl | grep -E '11800|12800'
 ```
 
-### 2.4 部署 SkyWalking UI 服务 (展现层)
+### 部署 SkyWalking UI 服务 (展现层)
 
 **1. 修改 UI 端口**
 默认端口是 8080，极易与 Tomcat 或 Nginx 冲突，我们将其改为 8888。
@@ -234,7 +234,7 @@ SkyWalking OAP started successfully!
 
 ```yaml
 server:
-  port: 8888
+    port: 8888
 ```
 
 **2. 启动 UI**
@@ -249,11 +249,11 @@ SkyWalking Web Application started successfully!
 
 ---
 
-## 3. 部署应用商城服务 (Mall Node)
+## 部署应用商城服务 (Mall Node)
 
 **⚠️ 注意：** 本章所有命令均在 **172.128.11.42** 节点执行。
 
-### 3.1 基础环境准备
+### 基础环境准备
 
 **1. 修改主机名与 Hosts**
 
@@ -304,7 +304,7 @@ enabled=1                                                 # 是否启用该源: 
 [root@mall ~]# yum install -y java-1.8.0-openjdk java-1.8.0-openjdk-devel redis nginx mariadb mariadb-server
 ```
 
-### 3.2 部署中间件
+### 部署中间件
 
 **1. 部署 ZooKeeper (分布式协调)**
 Kafka 依赖 ZK 运行。
@@ -395,7 +395,7 @@ exit;
 [root@mall ~]# systemctl start redis
 ```
 
-### 3.3 部署前端 Nginx
+### 部署前端 Nginx
 
 **1. 部署静态资源**
 
@@ -415,24 +415,24 @@ exit;
 
 ```nginx
 server {
-    listen       80;                        # 监听 80 端口(HTTP 默认端口)
-    server_name  localhost;                 # 服务器名称
-    location / {                            # 根路径匹配
-        root   /usr/share/nginx/html;       # 静态文件根目录
-        index  index.html index.htm;        # 默认首页文件
-    }
-    # 转发到用户服务: 所有 /user 开头的请求转发到本机 8082 端口(用户微服务)
-    location /user {
-        proxy_pass http://127.0.0.1:8082;
-    }
-    # 转发到商品服务: 所有 /shopping 开头的请求转发到 8081 端口(商品微服务)
-    location /shopping {
-        proxy_pass http://127.0.0.1:8081;
-    }
-    # 转发到收银台服务: 所有 /cashier 开头的请求转发到 8083 端口(支付微服务)
-    location /cashier {
-        proxy_pass http://127.0.0.1:8083;
-    }
+        listen       80;                        # 监听 80 端口(HTTP 默认端口)
+        server_name  localhost;                 # 服务器名称
+        location / {                            # 根路径匹配
+                root   /usr/share/nginx/html;       # 静态文件根目录
+                index  index.html index.htm;        # 默认首页文件
+        }
+        # 转发到用户服务: 所有 /user 开头的请求转发到本机 8082 端口(用户微服务)
+        location /user {
+                proxy_pass http://127.0.0.1:8082;
+        }
+        # 转发到商品服务: 所有 /shopping 开头的请求转发到 8081 端口(商品微服务)
+        location /shopping {
+                proxy_pass http://127.0.0.1:8081;
+        }
+        # 转发到收银台服务: 所有 /cashier 开头的请求转发到 8083 端口(支付微服务)
+        location /cashier {
+                proxy_pass http://127.0.0.1:8083;
+        }
 }
 ```
 
@@ -445,7 +445,7 @@ server {
 [root@mall ~]# systemctl restart nginx
 ```
 
-### 3.4 部署 SkyWalking Agent 并启动应用 (核心步骤)
+### 部署 SkyWalking Agent 并启动应用 (核心步骤)
 
 **1. 获取 Agent 包**
 Agent 不需要安装,只需要把文件放到服务器上。我们直接从 node-1 节点复制过来。
@@ -528,9 +528,9 @@ collector.backend_service=${SW_AGENT_COLLECTOR_BACKEND_SERVICES:172.128.11.32:11
 
 ---
 
-## 4. 实验验证
+## 实验验证
 
-### 4.1 产生业务流量
+### 产生业务流量
 
 SkyWalking 是被动监控系统，**没有访问就没有数据**。
 
@@ -539,18 +539,18 @@ SkyWalking 是被动监控系统，**没有访问就没有数据**。
 3. **购物**：点击首页商品 -> 点击“现在购买” -> 提交订单。
 4. 多操作几次，确保产生足够的调用链数据。
 
-### 4.2 查看监控效果
+### 查看监控效果
 
 1. 浏览器访问 SkyWalking UI：`http://172.128.11.32:8888`。
 2. 点击右上角 **“Auto”** 开启自动刷新。
 3. **Dashboard (仪表盘)**：查看 Service 列表，应包含 `shopping-provider` 等4个服务。
 4. **Topology (拓扑图)**：这是最酷的功能。点击顶部菜单 "Topology"，你可以看到一个完整的调用关系图：
-    * 用户 -> Nginx -> `gpmall-user` -> `user-provider` -> MySQL
-    * 这种可视化的链路图能帮你瞬间看懂系统架构。
+        *用户 -> Nginx -> `gpmall-user` -> `user-provider` -> MySQL
+        * 这种可视化的链路图能帮你瞬间看懂系统架构。
 
 ---
 
-## 5. 常见问题排查 (Troubleshooting)
+## 常见问题排查 (Troubleshooting)
 
 **Q1: SkyWalking UI 只有界面，没有数据？**
 
