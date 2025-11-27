@@ -25,7 +25,9 @@ tags:
 | **172.128.11.32** | **node-1** | SkyWalking 服务端 | Elasticsearch + OAP Server + Web UI |
 | **172.128.11.42** | **mall** | 应用商城节点 | Nginx + Java应用(4个) + MySQL + Redis + Kafka + ZK + **Agent探针** |
 
----
+## 实验环境配置要求
+
+使用 CentOS 7.9 镜像创建两台主机，主机配置为 4VCPU/8GB 内存/100GB 硬盘。
 
 ## 部署 SkyWalking 服务端 (Node-1)
 

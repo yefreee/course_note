@@ -19,4 +19,6 @@ tags:
 
 ## 云运维实训
 
+1. {% post_link cloud_training/Minio存储应用部署 %}
+1. {% post_link cloud_training/Redis集群部署与优化 %}
 1. {% post_link cloud_training/SkyWalking应用部署 %}
