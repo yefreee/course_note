@@ -16,3 +16,7 @@ tags:
 1. {% post_link private_clouds/7.OpenStack实例管理（二） %}
 1. {% post_link private_clouds/8.OpenStack虚拟网络 %}
 1. {% post_link private_clouds/9.OpenStack存储管理-Cinder %}
+
+## 云运维实训
+
+1. {% post_link cloud_training/SkyWalking应用部署案例 %}
