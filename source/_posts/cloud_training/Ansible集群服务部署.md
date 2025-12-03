@@ -6,7 +6,16 @@ tags:
 
 ## 实验简介与理论基础
 
-本案例通过Ansible在三个节点上部署ELK集群日志分析系统，分别部署Kibana、Logstash和Elasticsearch服务。本实验指导书将详细讲解部署步骤，并标注新手容易出错的地方。
+### 实验背景
+
+日志是定位问题与审计合规的关键数据。通过 ELK（Elasticsearch、Logstash、Kibana）可以实现日志的集中采集、存储、检索与可视化分析。本实验将使用 Ansible 一次性在三台业务节点上部署 ELK 集群，实现日志从系统文件汇聚至 Elasticsearch，并在 Kibana 中展示。
+
+### 实验目标
+
+1. 搭建 3 节点 Elasticsearch 集群（1 主控节点 + 2 数据节点）。
+2. 在 node1 部署 Kibana，node2 部署 Logstash，形成采集-存储-展示链路。
+3. 使用 Ansible 编排整个安装与配置流程，支持一键部署与回放。
+4. 完成基础验证：集群健康、Kibana 页面访问、Logstash 采集系统日志。
 
 ---
 
@@ -49,6 +58,19 @@ tags:
    - 通过中间件（如Redis）避免日志丢失。
 
 ---
+
+**💡 理论加油站（建议先看再做）**
+
+- 集群角色：
+  - master 节点：负责选主与集群元数据管理，稳定性要求高，通常不存储业务数据（node.master: true，node.data: false）。
+  - data 节点：负责数据存储与查询计算（node.master: false，node.data: true）。
+- 分片与副本：
+  - 分片（shard）水平拆分索引以提升并发与容量；副本（replica）提供高可用与读扩展。
+- 端口约定：
+  - Elasticsearch HTTP 端口 9200；节点间通信默认 9300。
+  - Kibana 默认 5601；Logstash 可按 pipeline 配置监听不同输入。
+- 发现机制：
+  - 本实验使用单播发现（unicast），通过主机名或 IP 指定集群成员列表。
 
 ### ELK 部署步骤
 
@@ -111,7 +133,7 @@ tags:
 [root@ansible ~]# mv /etc/yum.repos.d/* /media/  # 备份原有源
 ```
 
-Create `/etc/yum.repos.d/local.repo` with the following content:
+在 `/etc/yum.repos.d/local.repo` 创建如下内容：
 
 ```ini
 [ansible]
@@ -158,7 +180,7 @@ enabled=1
 [root@ansible ~]# mkdir -p /opt/centos
 [root@ansible ~]# mount /root/CentOS-7-x86_64-DVD-2009.iso /opt/centos/
 
-# 更新 Yum 源配置
+# 更新 Yum 源配置（增加挂载的本地 ISO 源，便于离线安装 Java 等依赖）
 ```
 
 ```ini
@@ -183,7 +205,7 @@ enabled=1
 # 创建 FTP 源配置文件（在 /root）
 ```
 
-Create `ftp.repo` in `/root` with the following content:
+在 `/root` 下创建 `ftp.repo`，写入：
 
 ```ini
 [centos]
@@ -196,6 +218,7 @@ enabled=1
 **⚠️注意：**
 
 - 确保防火墙关闭，否则节点可能无法访问FTP服务。
+- 安装 Elasticsearch 6.x 需要 Java 8（本实验通过本地 ISO 源与 FTP 分发到各节点）。
 
 #### 生成Elasticsearch配置文件
 
@@ -209,18 +232,18 @@ enabled=1
 [root@ansible ~]# cp /etc/elasticsearch/elasticsearch.yml /root/example/elk1.yml
 ```
 
-Update `/root/example/elk1.yml` with the following content:
+将 `/root/example/elk1.yml` 调整为如下：
 
 ```yaml
-cluster.name: ELK
-node.name: node1
-node.master: true
-node.data: false
-path.data: /var/lib/elasticsearch
-path.logs: /var/log/elasticsearch
-network.host: 172.128.11.217
-http.port: 9200
-discovery.zen.ping.unicast.hosts: ["node1", "node2", "node3"]
+cluster.name: ELK                    # 集群名称，需在所有节点保持一致
+node.name: node1                     # 节点名称，建议与主机名一致
+node.master: true                    # 是否参与主控选举（true 表示可成为 master）
+node.data: false                     # 是否存储数据（master 节点通常不存数据）
+path.data: /var/lib/elasticsearch    # 数据目录
+path.logs: /var/log/elasticsearch    # 日志目录
+network.host: 172.128.11.217         # 本机绑定 IP（不要填 0.0.0.0）
+http.port: 9200                      # HTTP API 端口
+discovery.zen.ping.unicast.hosts: ["node1", "node2", "node3"]  # 单播发现列表
 ```
 
 ```bash
@@ -233,13 +256,13 @@ discovery.zen.ping.unicast.hosts: ["node1", "node2", "node3"]
 [root@ansible ~/example]# sed -i 's/172.128.11.217/172.128.11.170/g' elk2.yml
 ```
 
-The content of `/root/example/elk2.yml` after modifications:
+`/root/example/elk2.yml` 修改后应为：
 
 ```yaml
 cluster.name: ELK
 node.name: node2
-node.master: false
-node.data: true
+node.master: false                  # 数据节点不参与 master 选举
+node.data: true                     # 启用数据存储与计算
 path.data: /var/lib/elasticsearch
 path.logs: /var/log/elasticsearch
 network.host: 172.128.11.170
@@ -256,7 +279,7 @@ discovery.zen.ping.unicast.hosts: ["node1", "node2", "node3"]
 [root@ansible ~/example]# sed -i 's/172.128.11.217/172.128.11.248/g' elk3.yml
 ```
 
-The content of `/root/example/elk3.yml` after modifications:
+`/root/example/elk3.yml` 修改后应为：
 
 ```yaml
 cluster.name: ELK
@@ -279,12 +302,12 @@ discovery.zen.ping.unicast.hosts: ["node1", "node2", "node3"]
 [root@ansible ~]# cd /root/example
 ```
 
-Create `/root/example/kibana.yml` with the following content:
+在 `/root/example/kibana.yml` 写入：
 
 ```yaml
-server.port: 5601
-server.host: "172.128.11.217"
-elasticsearch.url: "http://172.128.11.217:9200"
+server.port: 5601                         # Kibana Web 控制台端口
+server.host: "172.128.11.217"            # 绑定的访问 IP（与部署节点一致）
+elasticsearch.url: "http://172.128.11.217:9200"  # 关联的 Elasticsearch 地址
 ```
 
 #### 生成Logstash配置文件
@@ -296,34 +319,39 @@ elasticsearch.url: "http://172.128.11.217:9200"
 [root@ansible ~]# cd /root/example
 ```
 
-Create `/root/example/logstash.yml` with the following content:
+在 `/root/example/logstash.yml` 写入：
 
 ```yaml
-http.host: "172.128.11.170"
+http.host: "172.128.11.170"     # Logstash HTTP 监听地址（管理接口）
 ```
 
-Create `/root/example/syslog.conf` with the following content:
+在 `/root/example/syslog.conf` 写入：
 
 ```ruby
 input {
   file {
-    path => "/var/log/messages"
-    type => "systemlog"
-    start_position => "beginning"
-    stat_interval => "3"
+    path => "/var/log/messages"   # 采集系统日志
+    type => "systemlog"            # 打上类型标签，便于后续分流
+    start_position => "beginning"  # 第一次启动从头读取
+    stat_interval => "3"           # 每 3 秒检查文件变化
   }
 }
 output {
   if [type] == "systemlog" {
     elasticsearch {
-      hosts => ["172.128.11.217:9200"]
-      index => "system-log-%{+YYYY.MM.dd}"
+      hosts => ["172.128.11.217:9200"]  # 指向 node1 的 ES
+      index => "system-log-%{+YYYY.MM.dd}" # 按日期滚动索引
     }
   }
 }
 ```
 
 #### 编写Ansible剧本
+
+```bash
+# 编写剧本文件cscc_install.yaml
+[root@ansible ~]# vi cscc_install.yaml
+```
 
 ```yaml
 # cscc_install.yaml
@@ -335,15 +363,15 @@ output {
     - name: 配置FTP源
       copy: src=ftp.repo dest=/etc/yum.repos.d/
     - name: 安装Java
-      shell: yum -y install java-1.8.0-*
+      shell: yum -y install java-1.8.0-*   # ES 6.x 依赖 Java 8
     - name: 安装Elasticsearch
-      shell: rpm -ivh /root/elasticsearch-6.0.0.rpm
+      shell: rpm -ivh /root/elasticsearch-6.0.0.rpm  # 先在 ansible 节点解包以生成模板
 
 - hosts: node1
   remote_user: root
   tasks:
     - name: 配置Elasticsearch
-      copy: src=elk1.yml dest=/etc/elasticsearch/elasticsearch.yml
+      copy: src=elk1.yml dest=/etc/elasticsearch/elasticsearch.yml  # 推送 master 配置
     - name: 重载系统服务
       shell: systemctl daemon-reload
     - name: 启动Elasticsearch
@@ -351,7 +379,7 @@ output {
     - name: 安装Kibana
       shell: rpm -ivh /root/kibana-6.0.0-x86_64.rpm
     - name: 配置Kibana
-      template: src=kibana.yml dest=/etc/kibana/kibana.yml
+      template: src=kibana.yml dest=/etc/kibana/kibana.yml  # 关联到本机 ES
     - name: 启动Kibana
       shell: systemctl start kibana && systemctl enable kibana
 
@@ -367,9 +395,9 @@ output {
     - name: 安装Logstash
       shell: rpm -ivh /root/logstash-6.0.0.rpm
     - name: 配置Logstash
-      copy: src=logstash.yml dest=/etc/logstash/logstash.yml
+      copy: src=logstash.yml dest=/etc/logstash/logstash.yml   # 设置管理接口监听地址
     - name: 配置日志收集
-      copy: src=syslog.conf dest=/etc/logstash/conf.d/syslog.conf
+      copy: src=syslog.conf dest=/etc/logstash/conf.d/syslog.conf  # 采集 /var/log/messages
 
 - hosts: node3
   remote_user: root
@@ -395,12 +423,31 @@ output {
 - 首次执行可能因网络或依赖问题失败，可尝试分阶段执行剧本。
 - 若节点服务启动失败，检查日志：`journalctl -u elasticsearch`。
 
-**访问Kibana界面：**  
-浏览器打开 <http://172.128.11.217:5601/，若出现Kibana界面则部署成功。>
+**验证关键点：**
+
+- 集群健康：
+
+```bash
+curl http://172.128.11.217:9200/_cluster/health?pretty
+```
+
+状态为 `green`/`yellow` 表示集群正常（单副本可能为 yellow）。
+
+- 访问 Kibana：
+
+浏览器打开 <http://172.128.11.217:5601> 能看到登录/首页即为成功。
+
+- Logstash 采集：
+
+```bash
+tail -f /var/log/elasticsearch/*.log
+```
+
+观察到新索引按天生成（如 `system-log-YYYY.MM.dd`）。
 
 ---
 
-## 常见问题及解决方法
+## 常见问题排查（Troubleshooting）
 
 1. **Ansible连接失败**  
    - 检查免密登录配置：`ssh node1` 是否无需密码。
@@ -410,10 +457,25 @@ output {
    - 检查Java是否安装：`java -version`。
    - 查看日志：`tail -f /var/log/elasticsearch/elk.log`。
 
+- 端口冲突：`ss -tunlp | grep -E "9200|9300"`。
+- 虚拟内存不足（vm.max_map_count）：按需执行 `sysctl -w vm.max_map_count=262144` 并写入 `/etc/sysctl.conf` 持久化。
+
 3. **Kibana无法访问**  
    - 确认node1的5601端口开放：`netstat -tunlp | grep 5601`。
    - 检查Kibana配置中Elasticsearch地址是否正确。
 
+- 浏览器缓存或代理导致异常，尝试隐身模式或更换浏览器。
+
 4. **Logstash日志收集失败**  
    - 确认`/var/log/messages`文件存在且可读。
    - 测试Logstash配置：`/usr/share/logstash/bin/logstash -f /etc/logstash/conf.d/syslog.conf --config.test_and_exit`。
+
+- 查看运行日志：`journalctl -u logstash -f`，关注插件加载与 ES 连接报错。
+
+---
+
+**附加建议**
+
+- 生产建议将 master 与 data 角色分离，master 至少 3 台以保证选主高可用。
+- 为 ES 配置合理的 JVM 内存（如 `-Xms -Xmx`），并避免与系统总内存竞争。
+- 禁止在生产环境关闭安全机制（SELinux/防火墙）；本实验为教学环境，便于快速体验。
