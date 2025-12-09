@@ -16,11 +16,12 @@ tags:
 1. {% post_link private_clouds/7.OpenStack实例管理（二） %}
 1. {% post_link private_clouds/8.OpenStack虚拟网络 %}
 1. {% post_link private_clouds/9.OpenStack存储管理-Cinder %}
+1. {% post_link private_clouds/10.OpenStack存储管理-Swift %}
 
 ## 云运维实训
 
 1. {% post_link cloud_training/Minio存储应用部署 %}
 1. {% post_link cloud_training/Redis集群部署与优化 %}
-1. {% post_link cloud_training/JumperServer堡垒机应用部署 %}
+1. {% post_link cloud_training/JumperServer堡垒机应用部署%}
 1. {% post_link cloud_training/Ansible集群服务部署 %}
 1. {% post_link cloud_training/SkyWalking应用部署 %}
