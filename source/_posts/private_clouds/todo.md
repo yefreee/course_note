@@ -2,6 +2,7 @@
 
 ## 现有问题
 
+- [ ] 国内源`curl -o /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-7.repo`
 - [ ] 镜像部分，下载慢的问题，可以提前准备好镜像文件
 - [ ] heat自动编排时 allinone的环境，controller ping不通实例的ip，可能和allineone采用的是gre网络有关。
 - [ ] 12,13内容偏少。
@@ -46,3 +47,9 @@
     1. 3+3-2: cinder结束
     2. 中职：实训
     3. 2501：neutron结束
+12. 第十二周：
+    1. 3+3-2：实训
+    2. 中职：nova2结束
+    3. 2501：cinder结束
+13. 第十三周：
+    1. 3+3-2：
