@@ -18,6 +18,7 @@ tags:
 1. {% post_link private_clouds/9.OpenStack存储管理-Cinder %}
 1. {% post_link private_clouds/10.OpenStack存储管理-Swift %}
 1. {% post_link private_clouds/11.OpenStack编排服务 %}
+1. {% post_link private_clouds/12.OpenStack计量服务 %}
 
 ## 云运维实训
 
