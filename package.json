@@ -28,6 +28,8 @@
     "hexo-server": "^3.0.0",
     "hexo-theme-landscape": "^1.0.0",
     "hexo-theme-next": "^8.17.0",
+    "prismjs": "^1.29.0",
+    "prism-themes": "^1.9.0",
     "util": "^0.12.5"
   }
 }
