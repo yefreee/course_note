@@ -43,11 +43,15 @@ tags:
 
 为了区分服务器角色，首先修改主机名。
 
+{% nocopy %}
+
 ```bash
 [root@localhost ~]# hostnamectl set-hostname jumpserver
 [root@localhost ~]# bash
 [root@jumpserver ~]# 
 ```
+
+{% endnocopy %}
 
 > **💡 解释**：执行 `bash` 是为了重新加载 Shell 环境，让新的主机名立即显示在提示符中。
 
@@ -55,31 +59,36 @@ tags:
 
 为了防止实验过程中端口被拦截，暂时关闭防火墙和 SELinux（生产不建议）。
 
+{% nocopy %}
+
 ```bash
 # 1. 关闭防火墙
 [root@jumpserver ~]# systemctl stop firewalld
 [root@jumpserver ~]# systemctl disable firewalld
 [root@jumpserver ~]# iptables -F  # 清空 iptables 规则
-
 # 2. 关闭 SELinux
 [root@jumpserver ~]# setenforce 0
 [root@jumpserver ~]# sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
 ```
 
+{% endnocopy %}
+
 ### 配置本地 YUM 源（离线仓库）
 
 假设提供的安装包 `jumpserver.tar.gz` 已经上传至 `/root` 目录，该安装包内含离线 YUM 仓库。
 
+{% nocopy %}
+
 ```bash
 # 解压安装包到 /opt 目录
 [root@jumpserver ~]# tar -zxvf jumpserver.tar.gz -C /opt/
-
 # 备份原有 repo 文件
 [root@jumpserver ~]# mv /etc/yum.repos.d/* /media/
-
 # 创建本地 repo 文件
 [root@jumpserver ~]# vi /etc/yum.repos.d/jumpserver.repo
 ```
+
+{% endnocopy %}
 
 写入以下内容：
 
@@ -93,10 +102,14 @@ enabled=1
 
 验证源是否生效：
 
+{% nocopy %}
+
 ```bash
 [root@jumpserver ~]# yum repolist
 # 看到 jumpserver 源且状态数字非 0 即为成功
 ```
+
+{% endnocopy %}
 
 ---
 
@@ -104,31 +117,36 @@ enabled=1
 
 ### 安装 Python 依赖
 
+{% nocopy %}
+
 ```bash
 [root@jumpserver ~]# yum install python2 -y
 ```
+
+{% endnocopy %}
 
 ### 安装与配置 Docker（离线二进制）
 
 本案例使用离线二进制方式安装 Docker（与在线 `yum install docker` 不同）。
 
+{% nocopy %}
+
 ```bash
 # 1. 复制 Docker 二进制文件到系统路径
 [root@jumpserver ~]# cp -rf /opt/docker/* /usr/bin/
 [root@jumpserver ~]# chmod 775 /usr/bin/docker*
-
 # 2. 配置 Docker 系统服务
 [root@jumpserver ~]# cp -rf /opt/docker.service /etc/systemd/system/
 [root@jumpserver ~]# chmod 755 /etc/systemd/system/docker.service
-
 # 3. 启动 Docker 并设置开机自启
 [root@jumpserver ~]# systemctl daemon-reload
 [root@jumpserver ~]# systemctl enable docker --now
-
 # 4. 验证安装
 [root@jumpserver ~]# docker --version
 [root@jumpserver ~]# docker-compose --version
 ```
+
+{% endnocopy %}
 
 > **💡 提示**：如果 `docker-compose --version` 无法输出版本，请确认 `docker-compose` 可执行文件已包含在 `/usr/bin/`，并具备执行权限。
 
@@ -140,26 +158,35 @@ enabled=1
 
 Jumpserver 由多个组件（Redis、MySQL、Nginx、Core、Koko、Lion 等）组成，需要先导入容器镜像。
 
+{% nocopy %}
+
 ```bash
 [root@jumpserver ~]# cd /opt/images/
 [root@jumpserver images]# sh load.sh
 ```
 
+{% endnocopy %}
+
 > **⏳ 等待**：导入过程可能需要几分钟，请耐心等待所有镜像加载完成。
 
 ### 准备配置文件与数据目录
 
+{% nocopy %}
+
 ```bash
 # 创建数据持久化目录
 [root@jumpserver images]# mkdir -p /opt/jumpserver/{core,koko,lion,mysql,nginx,redis}
-
 # 复制配置文件
 [root@jumpserver images]# cp -rf /opt/config /opt/jumpserver/
 ```
 
+{% endnocopy %}
+
 ### 使用 Compose 启动服务
 
 通过 Docker Compose 编排启动所有容器。
+
+{% nocopy %}
 
 ```bash
 [root@jumpserver images]# cd /opt/compose/
@@ -168,6 +195,8 @@ Jumpserver 由多个组件（Redis、MySQL、Nginx、Core、Koko、Lion 等）�
 # 执行启动脚本
 [root@jumpserver compose]# sh up.sh
 ```
+
+{% endnocopy %}
 
 **观察输出**：看到一列绿色的 `Creating ... done` 表示容器启动成功。
 
@@ -181,9 +210,13 @@ Jumpserver 由多个组件（Redis、MySQL、Nginx、Core、Koko、Lion 等）�
 
 **快速验证容器状态**：
 
+{% nocopy %}
+
 ```bash
 docker ps -a
 ```
+
+{% endnocopy %}
 
 ---
 

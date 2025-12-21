@@ -89,22 +89,24 @@ Redis Sentinel 是 Redis 的高可用性解决方案：
 
 **1. 修改主机名**
 
+{% nocopy %}
+
 ```bash
 # redis1 节点
 [root@localhost ~]# hostnamectl set-hostname redis1
 [root@localhost ~]# bash
 [root@redis1 ~]#
-
 # redis2 节点
 [root@localhost ~]# hostnamectl set-hostname redis2
 [root@localhost ~]# bash
 [root@redis2 ~]#
-
 # redis3 节点
 [root@localhost ~]# hostnamectl set-hostname redis3
 [root@localhost ~]# bash
 [root@redis3 ~]#
 ```
+
+{% endnocopy %}
 
 > **💡 解释**：`bash` 命令用于重新加载 Shell 环境，使新主机名立即在命令提示符中生效。修改主机名后需要重新连接 SSH 会话。
 
@@ -112,13 +114,13 @@ Redis Sentinel 是 Redis 的高可用性解决方案：
 
 假设已将 `redis-3.2.12.tar.gz` 上传到三台服务器的 `/root` 目录。
 
+{% nocopy %}
+
 ```bash
 # 解压 Redis YUM 源到 /opt 目录
 [root@redis1 ~]# tar -xf redis-3.2.12.tar.gz -C /opt/
-
 # 备份原有 YUM 源配置
 [root@redis1 ~]# mv /etc/yum.repos.d/* /media/
-
 # 创建本地 Redis YUM 源配置文件
 [root@redis1 ~]# cat << EOF > /etc/yum.repos.d/redis.repo
 [redis]
@@ -127,14 +129,14 @@ baseurl=file:///opt/redis
 gpgcheck=0
 enabled=1
 EOF
-
 [root@redis1 ~]# yum clean all && yum repolist
-
 # 安装 Redis 服务并启动（三台虚拟机操作一致，以 redis1 主机为例）
 [root@redis1 ~]# yum install -y redis
 [root@redis1 ~]# systemctl start redis
 [root@redis1 ~]# systemctl enable redis
 ```
+
+{% endnocopy %}
 
 ### Redis 主从配置
 
@@ -142,104 +144,97 @@ EOF
 
 ```ini
 # /etc/redis.conf
-
 # 第一处修改
 # bind 127.0.0.1                     # 注释掉
-
 # 第二处修改
 protected-mode no                    # 将 yes 修改为 no，外部网络可以访问
-
 # 第三处修改
 daemonize yes                        # 将 no 修改为 yes，开启守护进程
-
 # 第四处修改
 requirepass "123456"                 # 添加设置访问密码
-
 # 第五处修改
 masterauth "123456"                  # 设定主库密码与当前库密码同步
-
 # 第六处修改
 appendonly yes                       # 打开 AOF 持久化支持
 ```
+
+{% nocopy %}
 
 ```bash
 [root@redis1 ~]# systemctl restart redis
 ```
 
+{% endnocopy %}
+
 #### redis2 节点配置
 
 ```ini
 # /etc/redis.conf
-
 # 第一处修改
 # bind 127.0.0.1                     # 注释掉
-
 # 第二处修改
 protected-mode no                    # 将 yes 修改为 no，外部网络可以访问
-
 # 第三处修改
 daemonize yes                        # 将 no 修改为 yes，开启守护进程
-
 # 第四处修改
 # requirepass foobared               # 找到该行
 requirepass "123456"                 # 添加设置访问密码
-
 # 第五处修改
 # slaveof <masterip> <masterport>    # 找到该行
 slaveof 192.168.200.21 6379          # 添加主节点 IP 与端口
-
 # 第六处修改
 # masterauth <master-password>       # 找到该行
 masterauth "123456"                  # 添加主节点密码
-
 # 第七处修改
 appendonly yes                       # 打开 AOF 持久化支持
 ```
+
+{% nocopy %}
 
 ```bash
 [root@redis2 ~]# systemctl restart redis
 ```
 
+{% endnocopy %}
+
 #### redis3 节点配置
 
 ```ini
 # /etc/redis.conf
-
 # 第一处修改
 # bind 127.0.0.1                     # 注释掉
-
 # 第二处修改
 protected-mode no                    # 将 yes 修改为 no，外部网络可以访问
-
 # 第三处修改
 daemonize yes                        # 将 no 修改为 yes，开启守护进程
-
 # 第四处修改
 # requirepass foobared               # 找到该行
 requirepass "123456"                 # 添加设置访问密码
-
 # 第五处修改
 # slaveof <masterip> <masterport>    # 找到该行
 slaveof 192.168.200.21 6379          # 添加主节点 IP 与端口
-
 # 第六处修改
 # masterauth <master-password>       # 找到该行
 masterauth "123456"                  # 添加主节点密码
-
 # 第七处修改
 appendonly yes                       # 打开 AOF 持久化支持
 ```
+
+{% nocopy %}
 
 ```bash
 [root@redis3 ~]# systemctl restart redis
 ```
 
+{% endnocopy %}
+
 ### 集群信息查询
+
+{% nocopy %}
 
 ```bash
 # redis1 主节点
 [root@redis1 ~]# redis-cli -h 192.168.200.21 -p 6379 -a 123456 info replication
-
 # Replication
 role:master
 connected_slaves:2
@@ -250,10 +245,8 @@ repl_backlog_active:1
 repl_backlog_size:1048576
 repl_backlog_first_byte_offset:2
 repl_backlog_histlen:9382
-
 # redis2 从节点
 [root@redis2 ~]# redis-cli -h 192.168.200.22 -p 6379 -a 123456 info replication
-
 # Replication
 role:slave
 master_host:192.168.200.21
@@ -270,10 +263,8 @@ repl_backlog_active:0
 repl_backlog_size:1048576
 repl_backlog_first_byte_offset:0
 repl_backlog_histlen:0
-
 # redis3 从节点
 [root@redis3 ~]# redis-cli -h 192.168.200.23 -p 6379 -a 123456 info replication
-
 # Replication
 role:slave
 master_host:192.168.200.21
@@ -292,6 +283,8 @@ repl_backlog_first_byte_offset:0
 repl_backlog_histlen:0
 ```
 
+{% endnocopy %}
+
 ---
 
 ## Redis 哨兵模式配置
@@ -300,17 +293,11 @@ repl_backlog_histlen:0
 
 ```ini
 # /etc/redis-sentinel.conf
-
 protected-mode no
-
 sentinel monitor mymaster 192.168.200.21 6379 2
-
 sentinel down-after-milliseconds mymaster 5000
-
 sentinel failover-timeout mymaster 15000
-
 sentinel parallel-syncs mymaster 2
-
 sentinel auth-pass mymaster 123456
 ```
 
@@ -320,20 +307,25 @@ sentinel auth-pass mymaster 123456
 
 ### 启动哨兵服务
 
+{% nocopy %}
+
 ```bash
 # 所有节点启动哨兵
 systemctl restart redis-sentinel
 systemctl enable redis-sentinel
 ```
 
+{% endnocopy %}
+
 ---
 
 ## 哨兵模式信息查看
 
+{% nocopy %}
+
 ```bash
 # redis1 节点
 [root@redis1 ~]# redis-cli -h 192.168.200.21 -p 26379 INFO Sentinel
-
 # Sentinel
 sentinel_masters:1
 sentinel_tilt:0
@@ -341,10 +333,8 @@ sentinel_running_scripts:0
 sentinel_scripts_queue_length:0
 sentinel_simulate_failure_flags:0
 master0:name=mymaster,status=ok,address=192.168.200.21:6379,slaves=2,sentinels=3
-
 # redis2 节点
 [root@redis2 ~]# redis-cli -h 192.168.200.22 -p 26379 INFO Sentinel
-
 # Sentinel
 sentinel_masters:1
 sentinel_tilt:0
@@ -352,10 +342,8 @@ sentinel_running_scripts:0
 sentinel_scripts_queue_length:0
 sentinel_simulate_failure_flags:0
 master0:name=mymaster,status=ok,address=192.168.200.21:6379,slaves=2,sentinels=3
-
 # redis3 节点
 [root@redis3 ~]# redis-cli -h 192.168.200.23 -p 26379 INFO Sentinel
-
 # Sentinel
 sentinel_masters:1
 sentinel_tilt:0
@@ -364,6 +352,8 @@ sentinel_scripts_queue_length:0
 sentinel_simulate_failure_flags:0
 master0:name=mymaster,status=ok,address=192.168.200.21:6379,slaves=2,sentinels=3
 ```
+
+{% endnocopy %}
 
 ---
 
@@ -371,13 +361,13 @@ master0:name=mymaster,status=ok,address=192.168.200.21:6379,slaves=2,sentinels=3
 
 ### 主节点故障转移测试
 
+{% nocopy %}
+
 ```bash
 # redis1 节点，手动停止服务
 [root@redis1 ~]# systemctl stop redis
-
 # 切换到 redis2 节点，查看主从信息
 [root@redis2 ~]# redis-cli -h 192.168.200.22 -p 6379 -a 123456 info replication
-
 # Replication
 role:slave
 master_host:192.168.200.23
@@ -394,10 +384,8 @@ repl_backlog_active:0
 repl_backlog_size:1048576
 repl_backlog_first_byte_offset:0
 repl_backlog_histlen:0
-
 # redis3 节点，查看主从信息
 [root@redis3 ~]# redis-cli -h 192.168.200.23 -p 6379 -a 123456 info replication
-
 # Replication
 role:master
 connected_slaves:1
@@ -409,13 +397,16 @@ repl_backlog_first_byte_offset:2
 repl_backlog_histlen:7460
 ```
 
+{% endnocopy %}
+
 ### 主节点恢复
+
+{% nocopy %}
 
 ```bash
 [root@redis1 ~]# systemctl restart redis
 [root@redis1 ~]# systemctl restart redis-sentinel
 [root@redis1 ~]# redis-cli -h 192.168.200.21 -p 6379 -a 123456 info replication
-
 # Replication
 role:slave
 master_host:192.168.200.23
@@ -433,5 +424,7 @@ repl_backlog_size:1048576
 repl_backlog_first_byte_offset:0
 repl_backlog_histlen:0
 ```
+
+{% endnocopy %}
 
 Redis 哨兵模式的验证成功。

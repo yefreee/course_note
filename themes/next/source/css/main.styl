@@ -61,3 +61,12 @@ for $inject_style in hexo-config('injects.style')
   font-size: 0.95em;
   font-family: Lato, 'PingFang SC', 'Microsoft YaHei', sans-serif;
 }
+
+// 针对代码块（code block）的字体大小调节
+.highlight, pre {
+  font-size: 18px; // 在这里修改你想要的尺寸，例如 14px 或 0.9em
+  
+  code {
+    font-size: 18px; // 确保内部 code 标签也同步缩放
+  }
+}

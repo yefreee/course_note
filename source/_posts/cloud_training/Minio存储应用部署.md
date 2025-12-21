@@ -56,18 +56,26 @@ tags:
 
 ### 关闭防火墙
 
+{% nocopy %}
+
 ```bash
 [root@minio ~]# systemctl stop firewalld
 [root@minio ~]# systemctl disable firewalld
 ```
 
+{% endnocopy %}
+
 ### 创建数据存储目录
 
 MinIO 需要一个专门的目录来存放上传的文件。
 
+{% nocopy %}
+
 ```bash
 [root@minio ~]# mkdir -p /opt/data/minio
 ```
+
+{% endnocopy %}
 
 * `/opt/data/minio`: 这是我们将要在启动命令中指定的**数据存储区**。
 
@@ -83,40 +91,44 @@ MinIO 需要一个专门的目录来存放上传的文件。
 
 **1. 检查文件**
 
+{% nocopy %}
+
 ```bash
 [root@minio ~]# cd /root
 [root@minio ~]# ll
-
 # 此时应该能看到 minio 文件，但权限可能是 -rw-r--r-- (不可执行)
-
 -rw-r--r--. 1 root root 94375936 May  9 03:26 minio
 ```
+
+{% endnocopy %}
 
 **2. 赋予执行权限**
 Linux 系统中，必须显式给予文件"执行"权限，它才能像程序一样运行。
 
+{% nocopy %}
+
 ```bash
-
 # 赋予执行权限: +x 表示添加执行(execute)权限
-
 [root@minio ~]# chmod +x minio
 [root@minio ~]# ll
-
 # 此时文件名通常变绿，权限变为 -rwxr-xr-x
-
 -rwxr-xr-x. 1 root root 94375936 May  9 03:26 minio
 ```
+
+{% endnocopy %}
 
 ### 临时启动 MinIO
 
 使用命令行直接启动 MinIO Server，并将 `/opt/data/minio` 指定为数据盘。
 
+{% nocopy %}
+
 ```bash
-
 # 启动 MinIO 服务: server 子命令启动服务器模式, 参数指定数据存储目录
-
 [root@minio ~]# ./minio server /opt/data/minio/
 ```
+
+{% endnocopy %}
 
 **观察启动日志（不要按 Ctrl+C）：**
 当看到以下信息时，说明启动成功：
@@ -125,7 +137,6 @@ Linux 系统中，必须显式给予文件"执行"权限，它才能像程序一
 API: <http://172.128.11.63:9000>  <http://127.0.0.1:9000>
 RootUser: minioadmin
 RootPass: minioadmin
-
 Console: <http://172.128.11.63:37172> ...
 WARNING: Console endpoint is listening on a dynamic port...
 ```
@@ -159,26 +170,28 @@ WARNING: Console endpoint is listening on a dynamic port...
 
 **1. 创建程序存放目录**
 
+{% nocopy %}
+
 ```bash
-
 # 创建 MinIO 程序存放目录
-
 [root@minio ~]# mkdir -p /data/minio_data/
 ```
+
+{% endnocopy %}
 
 **2. 移动程序文件**
 将刚才在 root 目录下的 `minio` 程序移动到新目录。
 
+{% nocopy %}
+
 ```bash
-
 # 复制 MinIO 程序文件到指定目录
-
 [root@minio ~]# cp /root/minio /data/minio_data/
 [root@minio ~]# ll /data/minio_data/
-
 # 确保有 minio 文件且有执行权限
-
 ```
+
+{% endnocopy %}
 
 ### 编写启动脚本
 
@@ -186,29 +199,37 @@ WARNING: Console endpoint is listening on a dynamic port...
 
 **1. 创建脚本文件**
 
+{% nocopy %}
+
 ```bash
 [root@minio ~]# cd /data/minio_data/
 [root@minio minio_data]# vi run.sh
 ```
 
+{% endnocopy %}
+
 **2. 写入以下内容**
+
+{% nocopy %}
 
 ```bash
 # !/bin/bash
-
 # 启动 minio，指定数据目录为 /opt/data/minio
-
 /data/minio_data/minio server /opt/data/minio
 ```
 
+{% endnocopy %}
+
 **3. 赋予脚本执行权限**
 
+{% nocopy %}
+
 ```bash
-
 # 赋予脚本所有权限: 777 表示所有用户都有读、写、执行权限(rwxrwxrwx)
-
 [root@minio minio_data]# chmod 777 run.sh
 ```
+
+{% endnocopy %}
 
 ### 编写 Systemd 服务文件
 
@@ -216,9 +237,13 @@ Linux 的 Systemd 是管理系统服务的标准方式。
 
 **1. 创建 service 文件**
 
+{% nocopy %}
+
 ```bash
 [root@minio minio_data]# vi /usr/lib/systemd/system/minio.service
 ```
+
+{% endnocopy %}
 
 **2. 写入以下内容**
 
@@ -226,22 +251,14 @@ Linux 的 Systemd 是管理系统服务的标准方式。
 [Unit]
 Description=Minio service
 Documentation=<https://docs.minio.io/>
-
 [Service]
-
 # 工作目录：程序所在的文件夹
-
 WorkingDirectory=/data/minio_data
-
 # 启动命令：指向我们刚才写的脚本
-
 ExecStart=/data/minio_data/run.sh
-
 # 故障重启机制：如果非正常退出，5秒后自动重启
-
 Restart=on-failure
 RestartSec=5
-
 [Install]
 WantedBy=multi-user.target
 ```
@@ -250,21 +267,25 @@ WantedBy=multi-user.target
 
 **1. 启动 MinIO 服务**
 
+{% nocopy %}
+
 ```bash
-
 # 启动 MinIO 服务
-
 [root@minio minio_data]# systemctl start minio
 ```
 
+{% endnocopy %}
+
 **2. 查看服务状态**
 
+{% nocopy %}
+
 ```bash
-
 # 查看服务运行状态
-
 [root@minio minio_data]# systemctl status minio
 ```
+
+{% endnocopy %}
 
 **验证关键点**：
 
@@ -273,15 +294,15 @@ WantedBy=multi-user.target
 
 **3. 设置开机自启**
 
+{% nocopy %}
+
 ```bash
-
 # 设置 MinIO 服务开机自启
-
 [root@minio minio_data]# systemctl enable minio
-
 # 输出 Created symlink ... 表示设置成功
-
 ```
+
+{% endnocopy %}
 
 ---
 

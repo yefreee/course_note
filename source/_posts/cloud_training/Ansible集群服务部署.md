@@ -78,10 +78,16 @@ tags:
 
 **操作节点：ansible**
 
+{% nocopy %}
+
 ```bash
 # 添加主机名映射
 [root@ansible ~]#  vi /etc/hosts
 ```
+
+{% endnocopy %}
+
+{% nocopy %}
 
 ```bash
 172.128.11.162 ansible
@@ -90,22 +96,26 @@ tags:
 172.128.11.248 node3
 ```
 
+{% endnocopy %}
+
+{% nocopy %}
+
 ```bash
 # 配置免密登录（所有节点密码为000000）
 [root@ansible ~]# ssh-keygen -t rsa -N "" -f /root/.ssh/id_rsa
 [root@ansible ~]# ssh-copy-id root@172.128.11.217
 [root@ansible ~]# ssh-copy-id root@172.128.11.170
 [root@ansible ~]# ssh-copy-id root@172.128.11.248
-
 # 复制hosts文件到其他节点（从 ansible 节点 /root）
 [root@ansible ~]# scp /etc/hosts root@172.128.11.217:/etc/
 [root@ansible ~]# scp /etc/hosts root@172.128.11.170:/etc/
 [root@ansible ~]# scp /etc/hosts root@172.128.11.248:/etc/
-
 # 关闭防火墙和 Selinux（在各节点上执行）
 [root@ansible ~]# systemctl stop firewalld
 [root@ansible ~]# setenforce 0
 ```
+
+{% endnocopy %}
 
 **⚠️注意：**
 
@@ -116,22 +126,24 @@ tags:
 
 **操作节点：ansible**
 
+{% nocopy %}
+
 ```bash
 # 在 ansible 节点 /root
 [root@ansible ~]# ls /root
 # 应包含：elasticsearch-6.0.0.rpm、kibana-6.0.0-x86_64.rpm、logstash-6.0.0.rpm、ansible.tar.gz
-
 # 分发软件包（从 ansible 推送到各节点）
 [root@ansible ~]# scp elasticsearch-6.0.0.rpm root@172.128.11.217:/root/
 [root@ansible ~]# scp elasticsearch-6.0.0.rpm root@172.128.11.170:/root/
 [root@ansible ~]# scp elasticsearch-6.0.0.rpm root@172.128.11.248:/root/
 [root@ansible ~]# scp kibana-6.0.0-x86_64.rpm root@172.128.11.217:/root/
 [root@ansible ~]# scp logstash-6.0.0.rpm root@172.128.11.170:/root/
-
 # 配置本地 Yum 源（在 ansible 节点 /root）
 [root@ansible ~]# tar -zxvf ansible.tar.gz -C /opt/
 [root@ansible ~]# mv /etc/yum.repos.d/* /media/  # 备份原有源
 ```
+
+{% endnocopy %}
 
 在 `/etc/yum.repos.d/local.repo` 创建如下内容：
 
@@ -143,15 +155,21 @@ gpgcheck=0
 enabled=1
 ```
 
+{% nocopy %}
+
 ```bash
 [root@ansible ~]# yum -y install ansible
 ```
+
+{% endnocopy %}
 
 **⚠️注意：**
 
 - 若`/etc/yum.repos.d/`目录下有其他源文件，需先备份或移除，避免冲突。
 
 #### 配置Ansible主机清单
+
+{% nocopy %}
 
 ```bash
 # 在 ansible 节点创建示例目录并进入
@@ -160,28 +178,31 @@ enabled=1
 [root@ansible ~/example]# 
 ```
 
+{% endnocopy %}
+
 将 `/etc/ansible/hosts` 更新为：
 
 ```ini
 [node1]
 172.128.11.217
-
 [node2]
 172.128.11.170
-
 [node3]
 172.128.11.248
 ```
 
 #### 配置 FTP 服务用于 Java 安装
 
+{% nocopy %}
+
 ```bash
 # 在 ansible 节点以 root 执行
 [root@ansible ~]# mkdir -p /opt/centos
 [root@ansible ~]# mount /root/CentOS-7-x86_64-DVD-2009.iso /opt/centos/
-
 # 更新 Yum 源配置（增加挂载的本地 ISO 源，便于离线安装 Java 等依赖）
 ```
+
+{% endnocopy %}
 
 ```ini
 [ansible]
@@ -196,14 +217,17 @@ gpgcheck=0
 enabled=1
 ```
 
+{% nocopy %}
+
 ```bash
 # 安装并配置 VSFTPD
 [root@ansible ~]# yum install -y vsftpd
 [root@ansible ~]# sed -i 's#^#anon_root=/opt#g' /etc/vsftpd/vsftpd.conf
 [root@ansible ~]# systemctl restart vsftpd
-
 # 创建 FTP 源配置文件（在 /root）
 ```
+
+{% endnocopy %}
 
 在 `/root` 下创建 `ftp.repo`，写入：
 
@@ -224,13 +248,16 @@ enabled=1
 
 **操作节点：ansible**
 
+{% nocopy %}
+
 ```bash
 # 在 ansible 节点生成 Elasticsearch 配置
 [root@ansible ~]# rpm -ivh /root/elasticsearch-6.0.0.rpm
-
 # 生成 node1 配置（拷贝到 /root/example）
 [root@ansible ~]# cp /etc/elasticsearch/elasticsearch.yml /root/example/elk1.yml
 ```
+
+{% endnocopy %}
 
 将 `/root/example/elk1.yml` 调整为如下：
 
@@ -246,6 +273,8 @@ http.port: 9200                      # HTTP API 端口
 discovery.zen.ping.unicast.hosts: ["node1", "node2", "node3"]  # 单播发现列表
 ```
 
+{% nocopy %}
+
 ```bash
 # 生成 node2 配置（在 /root/example）
 [root@ansible ~]# cd /root/example
@@ -255,6 +284,8 @@ discovery.zen.ping.unicast.hosts: ["node1", "node2", "node3"]  # 单播发现列
 [root@ansible ~/example]# sed -i 's/node.data: false/node.data: true/g' elk2.yml
 [root@ansible ~/example]# sed -i 's/172.128.11.217/172.128.11.170/g' elk2.yml
 ```
+
+{% endnocopy %}
 
 `/root/example/elk2.yml` 修改后应为：
 
@@ -270,6 +301,8 @@ http.port: 9200
 discovery.zen.ping.unicast.hosts: ["node1", "node2", "node3"]
 ```
 
+{% nocopy %}
+
 ```bash
 # 生成 node3 配置
 [root@ansible ~/example]# cp elk1.yml elk3.yml
@@ -278,6 +311,8 @@ discovery.zen.ping.unicast.hosts: ["node1", "node2", "node3"]
 [root@ansible ~/example]# sed -i 's/node.data: false/node.data: true/g' elk3.yml
 [root@ansible ~/example]# sed -i 's/172.128.11.217/172.128.11.248/g' elk3.yml
 ```
+
+{% endnocopy %}
 
 `/root/example/elk3.yml` 修改后应为：
 
@@ -295,12 +330,16 @@ discovery.zen.ping.unicast.hosts: ["node1", "node2", "node3"]
 
 #### 生成Kibana配置文件
 
+{% nocopy %}
+
 ```bash
 # 在 ansible 节点安装并生成 Kibana 配置
 [root@ansible ~]# rpm -ivh /root/kibana-6.0.0-x86_64.rpm
 [root@ansible ~]# cp /etc/kibana/kibana.yml /root/example/
 [root@ansible ~]# cd /root/example
 ```
+
+{% endnocopy %}
 
 在 `/root/example/kibana.yml` 写入：
 
@@ -312,12 +351,16 @@ elasticsearch.url: "http://172.128.11.217:9200"  # 关联的 Elasticsearch 地�
 
 #### 生成Logstash配置文件
 
+{% nocopy %}
+
 ```bash
 # 在 ansible 节点安装并生成 Logstash 配置
 [root@ansible ~]# rpm -ivh /root/logstash-6.0.0.rpm
 [root@ansible ~]# cp /etc/logstash/logstash.yml /root/example/
 [root@ansible ~]# cd /root/example
 ```
+
+{% endnocopy %}
 
 在 `/root/example/logstash.yml` 写入：
 
@@ -348,10 +391,14 @@ output {
 
 #### 编写Ansible剧本
 
+{% nocopy %}
+
 ```bash
 # 编写剧本文件cscc_install.yaml
 [root@ansible ~]# vi cscc_install.yaml
 ```
+
+{% endnocopy %}
 
 ```yaml
 # cscc_install.yaml
@@ -366,7 +413,6 @@ output {
       shell: yum -y install java-1.8.0-*   # ES 6.x 依赖 Java 8
     - name: 安装Elasticsearch
       shell: rpm -ivh /root/elasticsearch-6.0.0.rpm  # 先在 ansible 节点解包以生成模板
-
 - hosts: node1
   remote_user: root
   tasks:
@@ -382,7 +428,6 @@ output {
       template: src=kibana.yml dest=/etc/kibana/kibana.yml  # 关联到本机 ES
     - name: 启动Kibana
       shell: systemctl start kibana && systemctl enable kibana
-
 - hosts: node2
   remote_user: root
   tasks:
@@ -398,7 +443,6 @@ output {
       copy: src=logstash.yml dest=/etc/logstash/logstash.yml   # 设置管理接口监听地址
     - name: 配置日志收集
       copy: src=syslog.conf dest=/etc/logstash/conf.d/syslog.conf  # 采集 /var/log/messages
-
 - hosts: node3
   remote_user: root
   tasks:
@@ -412,11 +456,15 @@ output {
 
 #### 执行剧本并验证
 
+{% nocopy %}
+
 ```bash
 # 在 ansible 节点执行剧本
 [root@ansible ~]# cd /root/example
 [root@ansible ~/example]# ansible-playbook cscc_install.yaml
 ```
+
+{% endnocopy %}
 
 **⚠️注意：**
 
@@ -427,9 +475,13 @@ output {
 
 - 集群健康：
 
+{% nocopy %}
+
 ```bash
 curl http://172.128.11.217:9200/_cluster/health?pretty
 ```
+
+{% endnocopy %}
 
 状态为 `green`/`yellow` 表示集群正常（单副本可能为 yellow）。
 
@@ -439,9 +491,13 @@ curl http://172.128.11.217:9200/_cluster/health?pretty
 
 - Logstash 采集：
 
+{% nocopy %}
+
 ```bash
 tail -f /var/log/elasticsearch/*.log
 ```
+
+{% endnocopy %}
 
 观察到新索引按天生成（如 `system-log-YYYY.MM.dd`）。
 

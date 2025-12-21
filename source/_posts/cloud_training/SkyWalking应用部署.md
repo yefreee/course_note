@@ -38,6 +38,8 @@ tags:
 **1. 修改主机名**
 为了方便集群管理和日志识别,首先修改主机名。
 
+{% nocopy %}
+
 ```bash
 # 设置永久主机名为 node-1
 [root@localhost ~]# hostnamectl set-hostname node-1
@@ -46,21 +48,28 @@ tags:
 [root@node-1 ~]# 
 ```
 
+{% endnocopy %}
+
 > **💡 解释**：`bash` 命令用于重新加载 Shell 环境，使主机名修改立即在提示符中显示。
 
 **2. 安装 JDK 1.8**
 SkyWalking 和 Elasticsearch 均依赖 Java 环境。
 
+{% nocopy %}
+
 ```bash
 # 假设安装包已上传至 /root 目录
 [root@node-1 ~]# cd /root
 [root@node-1 ~]# tar -zxvf jdk-8u144-linux-x64.tar.gz -C /usr/local/
-
 # 配置环境变量
 [root@node-1 ~]# vi /etc/profile
 ```
 
+{% endnocopy %}
+
 在文件末尾添加以下内容：
+
+{% nocopy %}
 
 ```bash
 # 设置 JAVA_HOME 环境变量,指向 JDK 安装目录
@@ -71,7 +80,11 @@ export CLASSPATH=.:${JAVA_HOME}/jre/lib/rt.jar:${JAVA_HOME}/lib/dt.jar:${JAVA_HO
 export PATH=$PATH:${JAVA_HOME}/bin
 ```
 
+{% endnocopy %}
+
 使其生效并验证：
+
+{% nocopy %}
 
 ```bash
 [root@node-1 ~]# source /etc/profile
@@ -79,9 +92,13 @@ export PATH=$PATH:${JAVA_HOME}/bin
 java version "1.8.0_144" ...
 ```
 
+{% endnocopy %}
+
 ### 部署 Elasticsearch 7.17.0 (存储层)
 
 **1. 解压与目录创建**
+
+{% nocopy %}
 
 ```bash
 # 解压 Elasticsearch 安装包到 /opt 目录
@@ -92,8 +109,12 @@ java version "1.8.0_144" ...
 [root@node-1 elasticsearch-7.17.0]# mkdir data
 ```
 
+{% endnocopy %}
+
 **2. 创建专用用户**
 > **💡 理论加油站**：Elasticsearch 默认禁止使用 `root` 用户启动。这是因为 ES 拥有强大的脚本执行能力，如果被黑客攻破且是 root 权限，会对服务器造成毁灭性打击。因此必须创建普通用户。
+
+{% nocopy %}
 
 ```bash
 # 创建名为 elsearch 的用户组
@@ -104,11 +125,17 @@ java version "1.8.0_144" ...
 [root@node-1 elasticsearch-7.17.0]# chown -R elsearch:elsearch /opt/elasticsearch-7.17.0
 ```
 
+{% endnocopy %}
+
 **3. 修改配置文件**
+
+{% nocopy %}
 
 ```bash
 [root@node-1 elasticsearch-7.17.0]# vi config/elasticsearch.yml
 ```
+
+{% endnocopy %}
 
 **添加/修改内容如下（注意冒号后必须有一个空格）：**
 
@@ -119,7 +146,6 @@ path.data: /opt/elasticsearch-7.17.0/data # 数据存储路径
 path.logs: /opt/elasticsearch-7.17.0/logs # 日志路径
 network.host: 0.0.0.0                     # 允许任何IP访问（不仅是本地）
 cluster.initial_master_nodes: ["node-1"]  # 初始化时的主要节点
-
 # 允许跨域（便于后续安装可视化插件调试）
 http.cors.enabled: true
 http.cors.allow-origin: "*"
@@ -128,6 +154,8 @@ http.cors.allow-headers: Authorization,X-Requested-With,Content-Length,Content-T
 
 **4. 修改系统内核参数**
 > **💡 理论加油站**：Elasticsearch 基于 Lucene，大量使用 `mmap` 技术来映射文件到内存。Linux 默认的内存映射数量限制（vm.max_map_count）太小，会导致 ES 启动失败。同时 ES 会打开大量文件，需要增加文件句柄限制。
+
+{% nocopy %}
 
 ```bash
 # 1. 修改文件句柄限制
@@ -138,21 +166,23 @@ http.cors.allow-headers: Authorization,X-Requested-With,Content-Length,Content-T
 # nofile: 最大打开文件数  65536: 允许同时打开 65536 个文件
 * hard    nofile           65536
 * soft    nofile           65536
-
 # 2. 修改虚拟内存限制
 [root@node-1 ~]# vi /etc/sysctl.conf
 # 添加：
 # vm.max_map_count: 限制进程可拥有的虚拟内存区域(VMA)数量
 # 262144: ES 推荐值,确保有足够的内存映射区域用于索引文件
 vm.max_map_count=262144
-
 # 3. 使参数立即生效 (-p 表示从配置文件重新加载内核参数)
 [root@node-1 ~]# sysctl -p
 ```
 
+{% endnocopy %}
+
 **⚠️ 提示**：建议执行完上述步骤后，执行 `reboot` 重启服务器以确保所有系统限制彻底生效。
 
 **5. 启动 Elasticsearch**
+
+{% nocopy %}
 
 ```bash
 [root@node-1 ~]# cd /opt/elasticsearch-7.17.0/
@@ -164,11 +194,15 @@ vm.max_map_count=262144
 [elsearch@node-1 elasticsearch-7.17.0]$ exit
 ```
 
+{% endnocopy %}
+
 * `su elsearch`: 切换到普通用户 elsearch,因为 ES 禁止 root 启动。
 * `-d`: Daemon(守护进程)模式,在后台运行不阻塞终端。
 * `exit`: 退出当前用户 shell,返回到 root 用户。
 
 **验证**：
+
+{% nocopy %}
 
 ```bash
 # 检查端口 9200 是否正在监听
@@ -177,9 +211,13 @@ vm.max_map_count=262144
 # 看到 tcp6 :::9200 LISTEN 则成功
 ```
 
+{% endnocopy %}
+
 ### 部署 SkyWalking OAP 服务 (分析层)
 
 **1. 解压安装包**
+
+{% nocopy %}
 
 ```bash
 [root@node-1 ~]# cd /root
@@ -187,12 +225,18 @@ vm.max_map_count=262144
 [root@node-1 ~]# cd /opt/apache-skywalking-apm-bin-es7/
 ```
 
+{% endnocopy %}
+
 **2. 配置 OAP 连接 ES**
 我们需要告诉 OAP 服务，数据不要存内存，而是存到刚才搭建的 ES 里。
+
+{% nocopy %}
 
 ```bash
 [root@node-1 apache-skywalking-apm-bin-es7]# vi config/application.yml
 ```
+
+{% endnocopy %}
 
 找到 `storage:` 模块,修改如下：
 
@@ -200,7 +244,6 @@ vm.max_map_count=262144
 cluster:
     # 集群选择器: standalone=单机模式(不做集群), cluster=集群模式
     selector: ${SW_CLUSTER:standalone}
-
 storage:
     # 存储选择器: 指定使用 elasticsearch7 作为持久化存储
     selector: ${SW_STORAGE:elasticsearch7}
@@ -213,26 +256,38 @@ storage:
 
 **3. 启动 OAP**
 
+{% nocopy %}
+
 ```bash
 [root@node-1 apache-skywalking-apm-bin-es7]# ./bin/oapService.sh
 SkyWalking OAP started successfully!
 ```
 
+{% endnocopy %}
+
 **验证**：
 检查端口 `11800` (gRPC，用于接收探针数据) 和 `12800` (HTTP，用于UI查询)。
+
+{% nocopy %}
 
 ```bash
 [root@node-1 ~]# netstat -ntpl | grep -E '11800|12800'
 ```
+
+{% endnocopy %}
 
 ### 部署 SkyWalking UI 服务 (展现层)
 
 **1. 修改 UI 端口**
 默认端口是 8080，极易与 Tomcat 或 Nginx 冲突，我们将其改为 8888。
 
+{% nocopy %}
+
 ```bash
 [root@node-1 apache-skywalking-apm-bin-es7]# vi webapp/webapp.yml
 ```
+
+{% endnocopy %}
 
 ```yaml
 server:
@@ -241,10 +296,14 @@ server:
 
 **2. 启动 UI**
 
+{% nocopy %}
+
 ```bash
 [root@node-1 apache-skywalking-apm-bin-es7]# ./bin/webappService.sh
 SkyWalking Web Application started successfully!
 ```
+
+{% endnocopy %}
 
 **验证**：
 浏览器访问 `http://172.128.11.32:8888`。此时页面为空白，因为还没有应用接入。
@@ -259,11 +318,15 @@ SkyWalking Web Application started successfully!
 
 **1. 修改主机名与 Hosts**
 
+{% nocopy %}
+
 ```bash
 [root@localhost ~]# hostnamectl set-hostname mall
 [root@localhost ~]# bash
 [root@mall ~]# vi /etc/hosts
 ```
+
+{% endnocopy %}
 
 > **💡 技巧**：在 hosts 文件中做域名映射，可以让应用程序代码中写死的域名（如 mysql.mall）正确指向本地 IP，避免修改源码。
 
@@ -280,12 +343,16 @@ SkyWalking Web Application started successfully!
 
 **2. 配置本地 Yum 源**
 
+{% nocopy %}
+
 ```bash
 [root@mall ~]# mv /etc/yum.repos.d/* /media/ # 备份原有源
 [root@mall ~]# mkdir -p /root/gpmall
 [root@mall ~]# tar -zxvf gpmall-single.tar.gz -C /root/gpmall
 [root@mall ~]# vi /etc/yum.repos.d/local.repo
 ```
+
+{% endnocopy %}
 
 写入内容：
 
@@ -299,6 +366,8 @@ enabled=1                                                 # 是否启用该源: 
 
 **3. 安装基础软件**
 
+{% nocopy %}
+
 ```bash
 # 清理 yum 缓存并重建索引: clean all=清除所有缓存, makecache=生成新缓存
 [root@mall ~]# yum clean all && yum makecache
@@ -306,10 +375,14 @@ enabled=1                                                 # 是否启用该源: 
 [root@mall ~]# yum install -y java-1.8.0-openjdk java-1.8.0-openjdk-devel redis nginx mariadb mariadb-server
 ```
 
+{% endnocopy %}
+
 ### 部署中间件
 
 **1. 部署 ZooKeeper (分布式协调)**
 Kafka 依赖 ZK 运行。
+
+{% nocopy %}
 
 ```bash
 [root@mall ~]# cd /root/gpmall-single
@@ -323,7 +396,11 @@ Kafka 依赖 ZK 运行。
 [root@mall bin]# ./zkServer.sh start
 ```
 
+{% endnocopy %}
+
 **2. 部署 Kafka (消息队列)**
+
+{% nocopy %}
 
 ```bash
 [root@mall bin]# cd /root/gpmall-single
@@ -333,20 +410,24 @@ Kafka 依赖 ZK 运行。
 [root@mall bin]# ./kafka-server-start.sh -daemon ../config/server.properties
 ```
 
+{% endnocopy %}
+
 **3. 初始化数据库 MariaDB**
+
+{% nocopy %}
 
 ```bash
 # 启动 MariaDB 数据库服务
 [root@mall ~]# systemctl start mariadb
 # 设置开机自启动
 [root@mall ~]# systemctl enable mariadb
-
 # 使用 mysqladmin 工具设置 root 用户密码: -u 指定用户名, password 子命令设置密码
 [root@mall ~]# mysqladmin -uroot password 123456
-
 # 配置编码 (避免中文乱码)
 [root@mall ~]# vi /etc/my.cnf
 ```
+
+{% endnocopy %}
 
 添加`[mysqld]`,在 `[mysqld]` 下方添加：
 
@@ -365,10 +446,14 @@ skip-character-set-client-handshake
 
 重启数据库并导入数据：
 
+{% nocopy %}
+
 ```bash
 [root@mall ~]# systemctl restart mariadb
 [root@mall ~]# mysql -uroot -p123456
 ```
+
+{% endnocopy %}
 
 在 `MariaDB [(none)]>` 提示符下执行 SQL：
 
@@ -389,6 +474,8 @@ exit;
 
 **4. 启动 Redis**
 
+{% nocopy %}
+
 ```bash
 [root@mall ~]# vi /etc/redis.conf
 # 1. 注释掉 bind 127.0.0.1 (前面加#): 默认只允许本地访问,注释后允许外部访问
@@ -397,9 +484,13 @@ exit;
 [root@mall ~]# systemctl start redis
 ```
 
+{% endnocopy %}
+
 ### 部署前端 Nginx
 
 **1. 部署静态资源**
+
+{% nocopy %}
 
 ```bash
 # 清空 Nginx 默认网站目录: -r 递归删除, -f 强制删除不提示
@@ -408,12 +499,18 @@ exit;
 [root@mall ~]# cp -rvf /root/gpmall/gpmall-single/dist/* /usr/share/nginx/html/
 ```
 
+{% endnocopy %}
+
 **2. 配置反向代理**
 > **💡 理论加油站**：浏览器访问的是 80 端口，Nginx 负责根据路径（如 `/user`）将请求转发给后端不同的 Java 服务端口（如 8082）。
+
+{% nocopy %}
 
 ```bash
 [root@mall ~]# vi /etc/nginx/conf.d/default.conf
 ```
+
+{% endnocopy %}
 
 ```nginx
 server {
@@ -440,6 +537,8 @@ server {
 
 **3. 解决 SELinux 权限并启动**
 
+{% nocopy %}
+
 ```bash
 # 永久允许 Nginx(httpd) 发起网络连接(反向代理需要): -P 永久生效, 1 表示开启
 [root@mall ~]# setsebool -P httpd_can_network_connect 1
@@ -447,10 +546,14 @@ server {
 [root@mall ~]# systemctl restart nginx
 ```
 
+{% endnocopy %}
+
 ### 部署 SkyWalking Agent 并启动应用 (核心步骤)
 
 **1. 获取 Agent 包**
 Agent 不需要安装,只需要把文件放到服务器上。我们直接从 node-1 节点复制过来。
+
+{% nocopy %}
 
 ```bash
 # 使用 scp 从远程服务器复制文件: -r 递归复制整个目录
@@ -459,18 +562,23 @@ Agent 不需要安装,只需要把文件放到服务器上。我们直接从 nod
 # 输入 node-1 的 root 密码
 ```
 
+{% endnocopy %}
+
 **2. 配置 Agent 全局信息**
+
+{% nocopy %}
 
 ```bash
 [root@mall ~]# vi /root/agent/config/agent.config
 ```
+
+{% endnocopy %}
 
 修改以下关键项：
 
 ```properties
 # 1. 探针名称
 agent.service_name=${SW_AGENT_NAME:my-application}
-
 # 2. OAP 后端收集器地址: 探针将数据发送到此地址，11800 是 OAP 的 gRPC 接收端口
 collector.backend_service=${SW_AGENT_COLLECTOR_BACKEND_SERVICES:172.128.11.32:11800}
 ```
@@ -482,13 +590,19 @@ collector.backend_service=${SW_AGENT_COLLECTOR_BACKEND_SERVICES:172.128.11.32:11
 > * `-javaagent:/xxx/skywalking-agent.jar`: 指定探针路径。
 > * `-Dskywalking.agent.service_name=xxx`: **非常重要**，为当前微服务起一个在监控大屏上显示的名字。
 
+{% nocopy %}
+
 ```bash
 [root@mall ~]# cd /root/gpmall/gpmall-single
 ```
 
+{% endnocopy %}
+
 **依次执行以下 4 条命令（建议复制粘贴）：**
 
 **① 启动 Shopping Provider (商品服务)**
+
+{% nocopy %}
 
 ```bash
 # nohup: 忽略挂断信号,即使终端关闭进程也继续运行,输出会重定向到 nohup.out
@@ -501,7 +615,11 @@ collector.backend_service=${SW_AGENT_COLLECTOR_BACKEND_SERVICES:172.128.11.32:11
 -jar shopping-provider-0.0.1-SNAPSHOT.jar &
 ```
 
+{% endnocopy %}
+
 **② 启动 User Provider (用户服务)**
+
+{% nocopy %}
 
 ```bash
 # 启动用户服务提供者,指定服务名为 user-provider
@@ -510,7 +628,11 @@ collector.backend_service=${SW_AGENT_COLLECTOR_BACKEND_SERVICES:172.128.11.32:11
 -jar user-provider-0.0.1-SNAPSHOT.jar &
 ```
 
+{% endnocopy %}
+
 **③ 启动 Gpmall Shopping (商城Web层)**
+
+{% nocopy %}
 
 ```bash
 # 启动商城 Web 应用,负责处理前端商品相关请求
@@ -519,7 +641,11 @@ collector.backend_service=${SW_AGENT_COLLECTOR_BACKEND_SERVICES:172.128.11.32:11
 -jar gpmall-shopping-0.0.1-SNAPSHOT.jar &
 ```
 
+{% endnocopy %}
+
 **④ 启动 Gpmall User (用户Web层)**
+
+{% nocopy %}
 
 ```bash
 # 启动用户 Web 应用,负责处理前端用户相关请求
@@ -527,6 +653,8 @@ collector.backend_service=${SW_AGENT_COLLECTOR_BACKEND_SERVICES:172.128.11.32:11
 -Dskywalking.agent.service_name=gpmall-user \
 -jar gpmall-user-0.0.1-SNAPSHOT.jar &
 ```
+
+{% endnocopy %}
 
 ---
 
