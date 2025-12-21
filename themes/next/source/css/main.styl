@@ -51,8 +51,8 @@ for $inject_style in hexo-config('injects.style')
   background-size: contain
 }
 
-// 针对Code代码标签的美化
-code {
+// 针对行内代码标签的美化 (排除代码块内的 code)
+:not(pre) > code {
   padding: 2px 4px;
   word-wrap: break-word;
   color: #fc6423;
