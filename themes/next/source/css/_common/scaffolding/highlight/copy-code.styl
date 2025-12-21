@@ -64,7 +64,10 @@ if (hexo-config('codeblock.copy_button.style') == 'mac') {
   .copy-btn {
     display: none !important;
   }
-  .highlight {
+  .highlight, pre {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
     user-select: none;
   }
 }
