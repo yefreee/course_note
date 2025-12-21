@@ -73,6 +73,11 @@ figure.highlight {
   // Reduce DOM reflow with wrapTableWithBox
   overflow: auto;
   position: relative;
+  // Disable text selection to prevent copying code blocks
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 
   pre {
     border: 0;
@@ -110,6 +115,11 @@ figure.highlight {
   .code pre {
     padding-left: 10px;
     width: 100%;
+    // Disable text selection to prevent copying code blocks
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
   }
 
   // See https://github.com/next-theme/hexo-theme-next/discussions/410
@@ -137,6 +147,11 @@ pre {
   overflow: auto;
   padding: 10px;
   position: relative;
+  // Disable text selection to prevent copying code blocks
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 
   code {
     background: none;
