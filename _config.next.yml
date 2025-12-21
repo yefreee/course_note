@@ -369,7 +369,7 @@ codeblock:
     dark: prism-lucario
   # Add copy button on codeblock
   copy_button:
-    enable: true
+    enable: false
     # Available values: default | flat | mac
     style:
 
