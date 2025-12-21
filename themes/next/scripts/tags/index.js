@@ -48,6 +48,10 @@ const pdf = require('./pdf')(hexo);
 
 hexo.extend.tag.register('pdf', pdf);
 
+const nocopy = require('./nocopy');
+
+hexo.extend.tag.register('nocopy', nocopy, true);
+
 const postTabs = require('./tabs')(hexo);
 
 hexo.extend.tag.register('tabs', postTabs, true);
