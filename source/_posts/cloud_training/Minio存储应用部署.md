@@ -42,11 +42,13 @@ tags:
 
 为了在网络中清晰标识服务器身份，首先修改主机名。
 
+<div class="nocopy">
 ```bash
 [root@localhost ~]# hostnamectl set-hostname minio
 [root@localhost ~]# bash
 [root@minio ~]#
 ```
+</div>
 
 > **💡 解释**：`bash` 命令用于重新加载 Shell 环境，让新的主机名 `minio` 立即显示在命令行提示符中。
 
