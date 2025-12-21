@@ -1,5 +1,5 @@
 'use strict';
 
-module.exports = function (args, content) {
-    return '<div class="nocopy">\n\n' + content + '\n\n</div>';
+module.exports = ctx => function (args, content) {
+    return `<div class="nocopy">${ctx.render.renderSync({ text: content, engine: 'markdown' })}</div>`;
 };

@@ -48,7 +48,7 @@ const pdf = require('./pdf')(hexo);
 
 hexo.extend.tag.register('pdf', pdf);
 
-const nocopy = require('./nocopy');
+const nocopy = require('./nocopy')(hexo);
 
 hexo.extend.tag.register('nocopy', nocopy, true);
 
