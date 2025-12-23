@@ -215,7 +215,7 @@ enabled=1
 [root@ansible ~]# systemctl restart vsftpd
 ```
 
-在 `/root` 下创建 `ftp.repo`，写入：
+在 `/root/example` 下创建 `ftp.repo`，写入：
 
 ```ini
 [centos]
@@ -379,8 +379,9 @@ output {
 {% nocopy %}
 
 ```bash
-# 编写剧本文件cscc_install.yaml
-[root@ansible ~]# vi cscc_install.yaml
+# 在example目录下编写剧本文件cscc_install.yaml
+[root@ansible ~]# cd example
+[root@ansible example]# vi cscc_install.yaml
 ```
 
 {% endnocopy %}
