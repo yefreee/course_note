@@ -66,9 +66,14 @@ tags:
 [root@jumpserver ~]# systemctl stop firewalld
 [root@jumpserver ~]# systemctl disable firewalld
 [root@jumpserver ~]# iptables -F  # 清空 iptables 规则
-# 2. 关闭 SELinux
+# 2. 临时关闭 SELinux
 [root@jumpserver ~]# setenforce 0
-[root@jumpserver ~]# sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
+```
+
+```bash
+# 修改/etc/selinux/config永久关闭SELinux
+# 原文 SELINUX=enforcing
+SELINUX=disabled
 ```
 
 {% endnocopy %}
@@ -92,6 +97,8 @@ tags:
 
 写入以下内容：
 
+{% nocopy %}
+
 ```ini
 [jumpserver]
 name=jumpserver
@@ -99,6 +106,8 @@ baseurl=file:///opt/jumpserver-repo
 gpgcheck=0
 enabled=1
 ```
+
+{% endnocopy %}
 
 验证源是否生效：
 

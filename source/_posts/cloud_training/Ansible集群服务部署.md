@@ -27,10 +27,10 @@ tags:
 
 | IP             | 主机名   | 节点                 |
 |----------------|----------|----------------------|
-| 172.128.11.162 | ansible  | Ansible节点          |
-| 172.128.11.217 | node1    | Elasticsearch/Kibana |
-| 172.128.11.170 | node2    | Elasticsearch/Logstash|
-| 172.128.11.248 | node3    | Elasticsearch        |
+| 172.128.11.160 | ansible  | Ansible节点          |
+| 172.128.11.161 | node1    | Elasticsearch/Kibana |
+| 172.128.11.162 | node2    | Elasticsearch/Logstash|
+| 172.128.11.163 | node3    | Elasticsearch        |
 
 ### 基础准备
 
@@ -38,7 +38,7 @@ tags:
 - 所有节点需保持网络互通，且时间同步。
 
 ---
-**⚠️ 注意：** 本章除特别说明外，所有命令均在 172.128.11.162（ansible）节点执行。
+**⚠️ 注意：** 本章除特别说明外，所有命令均在 172.128.11.160（ansible）节点执行。
 
 ## 实验实施
 
@@ -83,17 +83,10 @@ tags:
 ```bash
 # 添加主机名映射
 [root@ansible ~]#  vi /etc/hosts
-```
-
-{% endnocopy %}
-
-{% nocopy %}
-
-```bash
-172.128.11.162 ansible
-172.128.11.217 node1
-172.128.11.170 node2
-172.128.11.248 node3
+172.128.11.160 ansible
+172.128.11.161 node1
+172.128.11.162 node2
+172.128.11.163 node3
 ```
 
 {% endnocopy %}
@@ -103,13 +96,13 @@ tags:
 ```bash
 # 配置免密登录（所有节点密码为000000）
 [root@ansible ~]# ssh-keygen -t rsa -N "" -f /root/.ssh/id_rsa
-[root@ansible ~]# ssh-copy-id root@172.128.11.217
-[root@ansible ~]# ssh-copy-id root@172.128.11.170
-[root@ansible ~]# ssh-copy-id root@172.128.11.248
+[root@ansible ~]# ssh-copy-id root@172.128.11.161
+[root@ansible ~]# ssh-copy-id root@172.128.11.162
+[root@ansible ~]# ssh-copy-id root@172.128.11.163
 # 复制hosts文件到其他节点（从 ansible 节点 /root）
-[root@ansible ~]# scp /etc/hosts root@172.128.11.217:/etc/
-[root@ansible ~]# scp /etc/hosts root@172.128.11.170:/etc/
-[root@ansible ~]# scp /etc/hosts root@172.128.11.248:/etc/
+[root@ansible ~]# scp /etc/hosts root@172.128.11.161:/etc/
+[root@ansible ~]# scp /etc/hosts root@172.128.11.162:/etc/
+[root@ansible ~]# scp /etc/hosts root@172.128.11.163:/etc/
 # 关闭防火墙和 Selinux（在各节点上执行）
 [root@ansible ~]# systemctl stop firewalld
 [root@ansible ~]# setenforce 0
@@ -129,15 +122,15 @@ tags:
 {% nocopy %}
 
 ```bash
-# 在 ansible 节点 /root
+# 在 ansible 节点
 [root@ansible ~]# ls /root
 # 应包含：elasticsearch-6.0.0.rpm、kibana-6.0.0-x86_64.rpm、logstash-6.0.0.rpm、ansible.tar.gz
 # 分发软件包（从 ansible 推送到各节点）
-[root@ansible ~]# scp elasticsearch-6.0.0.rpm root@172.128.11.217:/root/
-[root@ansible ~]# scp elasticsearch-6.0.0.rpm root@172.128.11.170:/root/
-[root@ansible ~]# scp elasticsearch-6.0.0.rpm root@172.128.11.248:/root/
-[root@ansible ~]# scp kibana-6.0.0-x86_64.rpm root@172.128.11.217:/root/
-[root@ansible ~]# scp logstash-6.0.0.rpm root@172.128.11.170:/root/
+[root@ansible ~]# scp elasticsearch-6.0.0.rpm root@172.128.11.161:/root/
+[root@ansible ~]# scp elasticsearch-6.0.0.rpm root@172.128.11.162:/root/
+[root@ansible ~]# scp elasticsearch-6.0.0.rpm root@172.128.11.163:/root/
+[root@ansible ~]# scp kibana-6.0.0-x86_64.rpm root@172.128.11.161:/root/
+[root@ansible ~]# scp logstash-6.0.0.rpm root@172.128.11.162:/root/
 # 配置本地 Yum 源（在 ansible 节点 /root）
 [root@ansible ~]# tar -zxvf ansible.tar.gz -C /opt/
 [root@ansible ~]# mv /etc/yum.repos.d/* /media/  # 备份原有源
@@ -147,6 +140,8 @@ tags:
 
 在 `/etc/yum.repos.d/local.repo` 创建如下内容：
 
+{% nocopy %}
+
 ```ini
 [ansible]
 name=ansible
@@ -154,8 +149,6 @@ baseurl=file:///opt/ansible
 gpgcheck=0
 enabled=1
 ```
-
-{% nocopy %}
 
 ```bash
 [root@ansible ~]# yum -y install ansible
@@ -184,11 +177,11 @@ enabled=1
 
 ```ini
 [node1]
-172.128.11.217
+172.128.11.161
 [node2]
-172.128.11.170
+172.128.11.162
 [node3]
-172.128.11.248
+172.128.11.163
 ```
 
 #### 配置 FTP 服务用于 Java 安装
@@ -201,8 +194,6 @@ enabled=1
 [root@ansible ~]# mount /root/CentOS-7-x86_64-DVD-2009.iso /opt/centos/
 # 更新 Yum 源配置（增加挂载的本地 ISO 源，便于离线安装 Java 等依赖）
 ```
-
-{% endnocopy %}
 
 ```ini
 [ansible]
@@ -217,27 +208,24 @@ gpgcheck=0
 enabled=1
 ```
 
-{% nocopy %}
-
 ```bash
 # 安装并配置 VSFTPD
 [root@ansible ~]# yum install -y vsftpd
-[root@ansible ~]# sed -i 's#^#anon_root=/opt#g' /etc/vsftpd/vsftpd.conf
+[root@ansible ~]# echo "anon_root=/opt" >> /etc/vsftpd/vsftpd.conf
 [root@ansible ~]# systemctl restart vsftpd
-# 创建 FTP 源配置文件（在 /root）
 ```
-
-{% endnocopy %}
 
 在 `/root` 下创建 `ftp.repo`，写入：
 
 ```ini
 [centos]
 name=centos
-baseurl=ftp://172.128.11.162/centos/
+baseurl=ftp://172.128.11.160/centos/
 gpgcheck=0
 enabled=1
 ```
+
+{% endnocopy %}
 
 **⚠️注意：**
 
@@ -261,17 +249,22 @@ enabled=1
 
 将 `/root/example/elk1.yml` 调整为如下：
 
+{% nocopy %}
+
 ```yaml
+# 原文 #cluster.name: my-application
 cluster.name: ELK                    # 集群名称，需在所有节点保持一致
+# 原文 #node.name: node-1
 node.name: node1                     # 节点名称，建议与主机名一致
-node.master: true                    # 是否参与主控选举（true 表示可成为 master）
-node.data: false                     # 是否存储数据（master 节点通常不存数据）
-path.data: /var/lib/elasticsearch    # 数据目录
-path.logs: /var/log/elasticsearch    # 日志目录
-network.host: 172.128.11.217         # 本机绑定 IP（不要填 0.0.0.0）
+# 原文 #network.host: 192.168.0.1
+network.host: 172.128.11.161         # 本机绑定 IP（不要填 0.0.0.0）
+# 原文 #http.port 9200
 http.port: 9200                      # HTTP API 端口
+# 原文 #discovery.zen.ping.unicast.hosts: ["host1", "host2"]
 discovery.zen.ping.unicast.hosts: ["node1", "node2", "node3"]  # 单播发现列表
 ```
+
+{% endnocopy %}
 
 {% nocopy %}
 
@@ -280,25 +273,16 @@ discovery.zen.ping.unicast.hosts: ["node1", "node2", "node3"]  # 单播发现列
 [root@ansible ~]# cd /root/example
 [root@ansible ~/example]# cp elk1.yml elk2.yml
 [root@ansible ~/example]# sed -i 's/node.name: node1/node.name: node2/g' elk2.yml
-[root@ansible ~/example]# sed -i 's/node.master: true/node.master: false/g' elk2.yml
-[root@ansible ~/example]# sed -i 's/node.data: false/node.data: true/g' elk2.yml
-[root@ansible ~/example]# sed -i 's/172.128.11.217/172.128.11.170/g' elk2.yml
+[root@ansible ~/example]# sed -i 's/172.128.11.161/172.128.11.162/g' elk2.yml
 ```
 
 {% endnocopy %}
 
-`/root/example/elk2.yml` 修改后应为：
+核对`/root/example/elk2.yml` 修改后应为：
 
 ```yaml
-cluster.name: ELK
 node.name: node2
-node.master: false                  # 数据节点不参与 master 选举
-node.data: true                     # 启用数据存储与计算
-path.data: /var/lib/elasticsearch
-path.logs: /var/log/elasticsearch
-network.host: 172.128.11.170
-http.port: 9200
-discovery.zen.ping.unicast.hosts: ["node1", "node2", "node3"]
+network.host: 172.128.11.162
 ```
 
 {% nocopy %}
@@ -307,26 +291,21 @@ discovery.zen.ping.unicast.hosts: ["node1", "node2", "node3"]
 # 生成 node3 配置
 [root@ansible ~/example]# cp elk1.yml elk3.yml
 [root@ansible ~/example]# sed -i 's/node.name: node1/node.name: node3/g' elk3.yml
-[root@ansible ~/example]# sed -i 's/node.master: true/node.master: false/g' elk3.yml
-[root@ansible ~/example]# sed -i 's/node.data: false/node.data: true/g' elk3.yml
-[root@ansible ~/example]# sed -i 's/172.128.11.217/172.128.11.248/g' elk3.yml
+[root@ansible ~/example]# sed -i 's/172.128.11.161/172.128.11.163/g' elk3.yml
 ```
 
 {% endnocopy %}
 
-`/root/example/elk3.yml` 修改后应为：
+核对`/root/example/elk3.yml` 修改后应为：
+
+{% nocopy %}
 
 ```yaml
-cluster.name: ELK
 node.name: node3
-node.master: false
-node.data: true
-path.data: /var/lib/elasticsearch
-path.logs: /var/log/elasticsearch
-network.host: 172.128.11.248
-http.port: 9200
-discovery.zen.ping.unicast.hosts: ["node1", "node2", "node3"]
+network.host: 172.128.11.163
 ```
+
+{% endnocopy %}
 
 #### 生成Kibana配置文件
 
@@ -341,12 +320,15 @@ discovery.zen.ping.unicast.hosts: ["node1", "node2", "node3"]
 
 {% endnocopy %}
 
-在 `/root/example/kibana.yml` 写入：
+修改 `/root/example/kibana.yml` ：
 
 ```yaml
+# 原文 #server.port: 5601
 server.port: 5601                         # Kibana Web 控制台端口
-server.host: "172.128.11.217"            # 绑定的访问 IP（与部署节点一致）
-elasticsearch.url: "http://172.128.11.217:9200"  # 关联的 Elasticsearch 地址
+# 原文 #server.host: "localhost"
+server.host: "172.128.11.161"            # 绑定的访问 IP（与部署节点一致）
+# 原文 #elasticsearch.url: "http://localhost:9200"
+elasticsearch.url: "http://172.128.11.161:9200"  # 关联的 Elasticsearch 地址
 ```
 
 #### 生成Logstash配置文件
@@ -362,13 +344,16 @@ elasticsearch.url: "http://172.128.11.217:9200"  # 关联的 Elasticsearch 地�
 
 {% endnocopy %}
 
-在 `/root/example/logstash.yml` 写入：
+修改 `/root/example/logstash.yml`：
 
 ```yaml
-http.host: "172.128.11.170"     # Logstash HTTP 监听地址（管理接口）
+# 原文 # http.host: "127.0.0.1"
+http.host: "172.128.11.162"     # Logstash HTTP 监听地址（管理接口）
 ```
 
 在 `/root/example/syslog.conf` 写入：
+
+> 这段可复制
 
 ```ruby
 input {
@@ -382,7 +367,7 @@ input {
 output {
   if [type] == "systemlog" {
     elasticsearch {
-      hosts => ["172.128.11.217:9200"]  # 指向 node1 的 ES
+      hosts => ["172.128.11.161:9200"]  # 指向 node1 的 ES
       index => "system-log-%{+YYYY.MM.dd}" # 按日期滚动索引
     }
   }
@@ -399,6 +384,8 @@ output {
 ```
 
 {% endnocopy %}
+
+> 这段可复制
 
 ```yaml
 # cscc_install.yaml
@@ -478,7 +465,7 @@ output {
 {% nocopy %}
 
 ```bash
-curl http://172.128.11.217:9200/_cluster/health?pretty
+curl http://172.128.11.161:9200/_cluster/health?pretty
 ```
 
 {% endnocopy %}
@@ -487,7 +474,7 @@ curl http://172.128.11.217:9200/_cluster/health?pretty
 
 - 访问 Kibana：
 
-浏览器打开 <http://172.128.11.217:5601> 能看到登录/首页即为成功。
+浏览器打开 <http://172.128.11.161:5601> 能看到登录/首页即为成功。
 
 - Logstash 采集：
 
@@ -516,13 +503,13 @@ tail -f /var/log/elasticsearch/*.log
 - 端口冲突：`ss -tunlp | grep -E "9200|9300"`。
 - 虚拟内存不足（vm.max_map_count）：按需执行 `sysctl -w vm.max_map_count=262144` 并写入 `/etc/sysctl.conf` 持久化。
 
-3. **Kibana无法访问**  
+1. **Kibana无法访问**  
    - 确认node1的5601端口开放：`netstat -tunlp | grep 5601`。
    - 检查Kibana配置中Elasticsearch地址是否正确。
 
 - 浏览器缓存或代理导致异常，尝试隐身模式或更换浏览器。
 
-4. **Logstash日志收集失败**  
+1. **Logstash日志收集失败**  
    - 确认`/var/log/messages`文件存在且可读。
    - 测试Logstash配置：`/usr/share/logstash/bin/logstash -f /etc/logstash/conf.d/syslog.conf --config.test_and_exit`。
 

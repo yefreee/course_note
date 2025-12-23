@@ -467,7 +467,7 @@ create database gpmall;
 -- 切换到 gpmall 数据库
 use gpmall;
 -- 导入 SQL 脚本文件(包含表结构和初始数据)
-source /root/gpmall/gpmall/gpmall.sql
+source /root/gpmall/gpmall-single/gpmall.sql
 -- 退出 MySQL 客户端
 exit;
 ```
@@ -514,24 +514,24 @@ exit;
 
 ```nginx
 server {
-        listen       80;                        # 监听 80 端口(HTTP 默认端口)
-        server_name  localhost;                 # 服务器名称
-        location / {                            # 根路径匹配
-                root   /usr/share/nginx/html;       # 静态文件根目录
-                index  index.html index.htm;        # 默认首页文件
-        }
-        # 转发到用户服务: 所有 /user 开头的请求转发到本机 8082 端口(用户微服务)
-        location /user {
-                proxy_pass http://127.0.0.1:8082;
-        }
-        # 转发到商品服务: 所有 /shopping 开头的请求转发到 8081 端口(商品微服务)
-        location /shopping {
-                proxy_pass http://127.0.0.1:8081;
-        }
-        # 转发到收银台服务: 所有 /cashier 开头的请求转发到 8083 端口(支付微服务)
-        location /cashier {
-                proxy_pass http://127.0.0.1:8083;
-        }
+    listen       80;                        # 监听 80 端口(HTTP 默认端口)
+    server_name  localhost;                 # 服务器名称
+    location / {                            # 根路径匹配
+        root   /usr/share/nginx/html;       # 静态文件根目录
+        index  index.html index.htm;        # 默认首页文件
+    }
+    # 转发到用户服务: 所有 /user 开头的请求转发到本机 8082 端口(用户微服务)
+    location /user {
+        proxy_pass http://127.0.0.1:8082;
+    }
+    # 转发到商品服务: 所有 /shopping 开头的请求转发到 8081 端口(商品微服务)
+    location /shopping {
+        proxy_pass http://127.0.0.1:8081;
+    }
+    # 转发到收银台服务: 所有 /cashier 开头的请求转发到 8083 端口(支付微服务)
+    location /cashier {
+        proxy_pass http://127.0.0.1:8083;
+    }
 }
 ```
 

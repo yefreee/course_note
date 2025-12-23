@@ -152,7 +152,6 @@ WARNING: Console endpoint is listening on a dynamic port...
 1. 打开浏览器，访问 `<http://172.128.11.63:9000`。>
 2. 页面会自动跳转到一个登录界面。
 3. 输入账号 `minioadmin`，密码 `minioadmin` 进行登录。
-4. 如果能看到红色的 MinIO 界面，说明环境正常。
 
 **停止服务：**
 回到终端，按 `Ctrl + C` 终止当前进程。
@@ -208,12 +207,12 @@ WARNING: Console endpoint is listening on a dynamic port...
 
 {% endnocopy %}
 
-**2. 写入以下内容**
+**2. 写入以下内容，其中第一行`#!/bin/bash`必须写入**
 
 {% nocopy %}
 
 ```bash
-# !/bin/bash
+#!/bin/bash
 # 启动 minio，指定数据目录为 /opt/data/minio
 /data/minio_data/minio server /opt/data/minio
 ```

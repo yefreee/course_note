@@ -144,17 +144,17 @@ EOF
 
 ```ini
 # /etc/redis.conf
-# 第一处修改
-# bind 127.0.0.1                     # 注释掉
-# 第二处修改
+# 第一处修改 原文 bind 127.0.0.1
+# bind 127.0.0.1                     # 加上井号注释掉该行
+# 第二处修改 原文 protected-mode yes
 protected-mode no                    # 将 yes 修改为 no，外部网络可以访问
-# 第三处修改
+# 第三处修改 原文 daemonize no
 daemonize yes                        # 将 no 修改为 yes，开启守护进程
-# 第四处修改
-requirepass "123456"                 # 添加设置访问密码
-# 第五处修改
+# 第四处修改 原文 # requirepass foobared
+requirepass "123456"                 # 设置访问密码
+# 第五处修改 原文 # masterauth <master-password>
 masterauth "123456"                  # 设定主库密码与当前库密码同步
-# 第六处修改
+# 第六处修改 原文 appendonly no
 appendonly yes                       # 打开 AOF 持久化支持
 ```
 
@@ -171,21 +171,18 @@ appendonly yes                       # 打开 AOF 持久化支持
 ```ini
 # /etc/redis.conf
 # 第一处修改
-# bind 127.0.0.1                     # 注释掉
-# 第二处修改
+# bind 127.0.0.1                     # 加上井号注释掉该行
+# 第二处修改 原文 protected-mode yes
 protected-mode no                    # 将 yes 修改为 no，外部网络可以访问
-# 第三处修改
+# 第三处修改 原文 daemonize no
 daemonize yes                        # 将 no 修改为 yes，开启守护进程
-# 第四处修改
-# requirepass foobared               # 找到该行
-requirepass "123456"                 # 添加设置访问密码
-# 第五处修改
-# slaveof <masterip> <masterport>    # 找到该行
+# 第四处修改 原文 # requirepass foobared
+requirepass "123456"                 # 设置访问密码
+# 第五处修改 原文 # slaveof <masterip> <masterport>
 slaveof 192.168.200.21 6379          # 添加主节点 IP 与端口
-# 第六处修改
-# masterauth <master-password>       # 找到该行
+# 第六处修改 原文 # masterauth <master-password>
 masterauth "123456"                  # 添加主节点密码
-# 第七处修改
+# 第七处修改 原文 # appendonly no
 appendonly yes                       # 打开 AOF 持久化支持
 ```
 
@@ -199,30 +196,12 @@ appendonly yes                       # 打开 AOF 持久化支持
 
 #### redis3 节点配置
 
-```ini
-# /etc/redis.conf
-# 第一处修改
-# bind 127.0.0.1                     # 注释掉
-# 第二处修改
-protected-mode no                    # 将 yes 修改为 no，外部网络可以访问
-# 第三处修改
-daemonize yes                        # 将 no 修改为 yes，开启守护进程
-# 第四处修改
-# requirepass foobared               # 找到该行
-requirepass "123456"                 # 添加设置访问密码
-# 第五处修改
-# slaveof <masterip> <masterport>    # 找到该行
-slaveof 192.168.200.21 6379          # 添加主节点 IP 与端口
-# 第六处修改
-# masterauth <master-password>       # 找到该行
-masterauth "123456"                  # 添加主节点密码
-# 第七处修改
-appendonly yes                       # 打开 AOF 持久化支持
-```
-
 {% nocopy %}
 
 ```bash
+[root@redis3 ~]# scp root@192.168.200.22:/etc/redis.conf /etc/redis.conf
+# 接着输入yes和密码000000，这一步将上面在redis2上配置好的redis.conf直接推送到当前的redis3
+# 然后重启redis服务
 [root@redis3 ~]# systemctl restart redis
 ```
 
@@ -291,19 +270,40 @@ repl_backlog_histlen:0
 
 ### redis1 节点哨兵配置
 
+{% nocopy %}
+
 ```ini
 # /etc/redis-sentinel.conf
-protected-mode no
-sentinel monitor mymaster 192.168.200.21 6379 2
-sentinel down-after-milliseconds mymaster 5000
-sentinel failover-timeout mymaster 15000
-sentinel parallel-syncs mymaster 2
-sentinel auth-pass mymaster 123456
+# 第一处修改 原文 # protected-mode no
+protected-mode no                    # 将井号删除，允许外部网络访问
+# 第二处修改 原文 sentinel monitor mymaster 127.0.0.1 6379 2
+sentinel monitor mymaster 192.168.200.21 6379 2  # 监控主节点，quorum 为 2
+# 第三处修改 原文 sentinel down-after-milliseconds mymaster 30000
+sentinel down-after-milliseconds mymaster 5000   # 主节点无响应超时时间为 5000ms
+# 第四处修改 原文 sentinel failover-timeout mymaster 180000
+sentinel failover-timeout mymaster 15000         # 故障转移超时时间为 15000ms
+# 第五处修改 原文 sentinel parallel-syncs mymaster 1
+sentinel parallel-syncs mymaster 2               # 故障转移后并行同步从节点数为 2
+# 第六处修改 原文 # sentinel auth-pass mymaster MySUPER--secret-0123passw0rd
+sentinel auth-pass mymaster 123456               # 连接主节点的认证密码
 ```
+
+{% endnocopy %}
 
 ### redis2、redis3 节点哨兵配置
 
-内容与 redis1 主节点的 `/etc/redis-sentinel.conf` 配置文件一致。
+内容与 redis1 主节点的 `/etc/redis-sentinel.conf` 配置文件一致，可以用scp命令从redis1上复制到redis2和redis3
+
+{% nocopy %}
+
+```bash
+# 依次输入密码000000
+# 用scp命令将redis-sentinel.conf从redis1上复制到redis2和redis3
+[root@redis1 ~]# scp /etc/redis-sentinel.conf root@192.168.200.22:/etc/redis-sentinel.conf
+[root@redis1 ~]# scp /etc/redis-sentinel.conf root@192.168.200.23:/etc/redis-sentinel.conf
+```
+
+{% endnocopy %}
 
 ### 启动哨兵服务
 
