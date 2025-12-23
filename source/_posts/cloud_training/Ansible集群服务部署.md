@@ -381,7 +381,7 @@ output {
 ```bash
 # 在example目录下编写剧本文件cscc_install.yaml
 [root@ansible ~]# cd example
-[root@ansible example]# vi cscc_install.yaml
+[root@ansible ~/example]# vi cscc_install.yaml
 ```
 
 {% endnocopy %}
