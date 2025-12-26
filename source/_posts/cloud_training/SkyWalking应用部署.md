@@ -602,8 +602,6 @@ collector.backend_service=${SW_AGENT_COLLECTOR_BACKEND_SERVICES:172.128.11.32:11
 
 **① 启动 Shopping Provider (商品服务)**
 
-{% nocopy %}
-
 ```bash
 # nohup: 忽略挂断信号,即使终端关闭进程也继续运行,输出会重定向到 nohup.out
 # -javaagent: JVM 启动参数,在应用启动前加载 SkyWalking 探针 jar 包
@@ -615,11 +613,7 @@ collector.backend_service=${SW_AGENT_COLLECTOR_BACKEND_SERVICES:172.128.11.32:11
 -jar shopping-provider-0.0.1-SNAPSHOT.jar &
 ```
 
-{% endnocopy %}
-
 **② 启动 User Provider (用户服务)**
-
-{% nocopy %}
 
 ```bash
 # 启动用户服务提供者,指定服务名为 user-provider
@@ -628,11 +622,7 @@ collector.backend_service=${SW_AGENT_COLLECTOR_BACKEND_SERVICES:172.128.11.32:11
 -jar user-provider-0.0.1-SNAPSHOT.jar &
 ```
 
-{% endnocopy %}
-
 **③ 启动 Gpmall Shopping (商城Web层)**
-
-{% nocopy %}
 
 ```bash
 # 启动商城 Web 应用,负责处理前端商品相关请求
@@ -641,11 +631,7 @@ collector.backend_service=${SW_AGENT_COLLECTOR_BACKEND_SERVICES:172.128.11.32:11
 -jar gpmall-shopping-0.0.1-SNAPSHOT.jar &
 ```
 
-{% endnocopy %}
-
 **④ 启动 Gpmall User (用户Web层)**
-
-{% nocopy %}
 
 ```bash
 # 启动用户 Web 应用,负责处理前端用户相关请求
@@ -653,8 +639,6 @@ collector.backend_service=${SW_AGENT_COLLECTOR_BACKEND_SERVICES:172.128.11.32:11
 -Dskywalking.agent.service_name=gpmall-user \
 -jar gpmall-user-0.0.1-SNAPSHOT.jar &
 ```
-
-{% endnocopy %}
 
 ---
 
