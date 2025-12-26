@@ -207,7 +207,7 @@ vm.max_map_count=262144
 ```bash
 # 检查端口 9200 是否正在监听
 # -n: 以数字形式显示地址和端口  -t: 显示 TCP 连接  -p: 显示进程信息  -l: 仅显示监听状态的套接字
-[root@node-1 ~]# netstat -ntpl | grep 9200
+[root@node-1 ~]# ss -ntpl | grep 9200
 # 看到 tcp6 :::9200 LISTEN 则成功
 ```
 
@@ -271,7 +271,7 @@ SkyWalking OAP started successfully!
 {% nocopy %}
 
 ```bash
-[root@node-1 ~]# netstat -ntpl | grep -E '11800|12800'
+[root@node-1 ~]# ss -ntpl | grep -E '11800|12800'
 ```
 
 {% endnocopy %}
@@ -385,7 +385,7 @@ Kafka 依赖 ZK 运行。
 {% nocopy %}
 
 ```bash
-[root@mall ~]# cd /root/gpmall-single
+[root@mall ~]# cd /root/gpmall/gpmall-single
 # 解压 ZooKeeper 安装包
 [root@mall gpmall-single]# tar -zxvf zookeeper-3.4.14.tar.gz
 [root@mall gpmall-single]# cd zookeeper-3.4.14/conf/
@@ -403,7 +403,7 @@ Kafka 依赖 ZK 运行。
 {% nocopy %}
 
 ```bash
-[root@mall bin]# cd /root/gpmall-single
+[root@mall bin]# cd /root/gpmall/gpmall-single
 [root@mall gpmall-single]# tar -zxvf kafka_2.11-1.1.1.tgz
 [root@mall gpmall-single]# cd kafka_2.11-1.1.1/bin/
 # -daemon 表示后台启动
