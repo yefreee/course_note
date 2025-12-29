@@ -24,3 +24,4 @@ tags:
 
 1. {% post_link cloud_training/容器化部署ERP %}
 1. {% post_link cloud_training/容器化部署Explorer %}
+1. {% post_link cloud_training/k8s集群部署与运维 %}
