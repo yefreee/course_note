@@ -308,6 +308,8 @@ CMD ["nginx","-g","daemon off;"]
 
 ##### 编写 docker-compose.yaml
 
+{% nocopy %}
+
 ```yaml
 # 创建Docker Compose编排文件
 version: '3.2' # Compose文件版本
@@ -362,6 +364,8 @@ services:
       - redis
       - mysql
 ```
+
+{% endnocopy %}
 
 ##### 部署服务
 
