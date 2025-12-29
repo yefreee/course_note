@@ -247,6 +247,7 @@ cluster:
 storage:
     # 存储选择器: 指定使用 elasticsearch7 作为持久化存储
     selector: ${SW_STORAGE:elasticsearch7}
+    # 注意：这行配置在108行!!!
     elasticsearch7:
         # 命名空间: 用于在同一个 ES 中隔离不同环境的数据(如 dev/prod),空字符串表示不使用命名空间
         nameSpace: ${SW_NAMESPACE:""}
