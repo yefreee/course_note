@@ -23,3 +23,4 @@ tags:
 ## 云运维实训
 
 1. {% post_link cloud_training/容器化部署ERP %}
+1. {% post_link cloud_training/容器化部署Explorer %}

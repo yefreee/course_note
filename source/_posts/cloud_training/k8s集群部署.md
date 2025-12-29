@@ -42,7 +42,73 @@ Kubernetes（简称 K8s）是一个开源的容器编排引擎，用于自动部
 
 在开始安装 K8s 组件前，必须确保所有节点的基础环境配置一致。
 
-1. **修改主机名与Hosts映射**
+1. 在`master`节点中修改IP地址为`192.168.88.100`：
+
+   ```shell
+   vi /etc/sysconfig/network-scripts/ifcfg-ens33
+   ```
+
+   编辑文件如下：
+
+   ```shell
+   TYPE=Ethernet
+   PROXY_METHOD=none
+   BROWSER_ONLY=no
+   BOOTPROTO=static        # 1. 配置静态分配ip
+   DEFROUTE=yes
+   IPV4_FAILURE_FATAL=no
+   IPV6INIT=yes
+   IPV6_AUTOCONF=yes
+   IPV6_DEFROUTE=yes
+   IPV6_FAILURE_FATAL=no
+   IPV6_ADDR_GEN_MODE=stable-privacy
+   NAME=ens33
+   UUID=266c663e-d288-4d54-b100-00741dda6c70
+   DEVICE=ens33
+   ONBOOT=yes              # 2. 配置开机激活网卡
+   IPADDR=192.168.88.100   # 3. 配置ip地址
+   NETMASK=255.255.255.0   # 4. 配置子网掩码
+   ```
+
+   ```bash
+   # 重启网络后使用SecureCRT连接远程环境
+   [root@localhost ~]# systemctl restart network
+   ```
+
+2. 用同样的方法修改`node`节点的IP地址为`192.168.88.101`：
+
+   ```shell
+   vi /etc/sysconfig/network-scripts/ifcfg-ens33
+   ```
+
+   编辑文件如下：
+
+   ```shell
+   TYPE=Ethernet
+   PROXY_METHOD=none
+   BROWSER_ONLY=no
+   BOOTPROTO=static        # 1. 配置静态分配ip
+   DEFROUTE=yes
+   IPV4_FAILURE_FATAL=no
+   IPV6INIT=yes
+   IPV6_AUTOCONF=yes
+   IPV6_DEFROUTE=yes
+   IPV6_FAILURE_FATAL=no
+   IPV6_ADDR_GEN_MODE=stable-privacy
+   NAME=ens33
+   UUID=266c663e-d288-4d54-b100-00741dda6c70
+   DEVICE=ens33
+   ONBOOT=yes              # 2. 配置开机激活网卡
+   IPADDR=192.168.88.101   # 3. 配置ip地址
+   NETMASK=255.255.255.0   # 4. 配置子网掩码
+   ```
+
+   ```bash
+   # 重启网络后使用SecureCRT连接远程环境
+   [root@localhost ~]# systemctl restart network
+   ```
+
+3. **修改主机名与Hosts映射**
 
     所有节点都需要配置主机名解析，确保节点间可以通过名称通信。
 
@@ -52,12 +118,14 @@ Kubernetes（简称 K8s）是一个开源的容器编排引擎，用于自动部
     ```bash
     # 设置 Master 节点的主机名
     [root@localhost ~]# hostnamectl set-hostname master
+    [root@localhost ~]# exec bash
     
     # 在 hosts 文件中添加集群节点的 IP 与主机名映射
-    [root@master ~]# cat >> /etc/hosts <<EOF
-    10.18.4.10 master
-    10.18.4.11 node
-    EOF
+    [root@master ~]# vi /etc/hosts
+    127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+    ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+    192.168.88.100 master
+    192.168.88.101 node
     ```
 
     {% endnocopy %}
@@ -68,17 +136,19 @@ Kubernetes（简称 K8s）是一个开源的容器编排引擎，用于自动部
     ```bash
     # 设置 Node 节点的主机名
     [root@localhost ~]# hostnamectl set-hostname node
+    [root@localhost ~]# exec bash
     
     # 在 hosts 文件中添加集群节点的 IP 与主机名映射
-    [root@node ~]# cat >> /etc/hosts <<EOF
-    10.18.4.10 master
-    10.18.4.11 node
-    EOF
+    [root@node ~]# vi /etc/hosts
+    127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+    ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+    192.168.88.100 master
+    192.168.88.101 node
     ```
 
     {% endnocopy %}
 
-2. **关闭防火墙与SELinux**
+4. **关闭防火墙与SELinux**
 
     为了避免网络规则冲突，需在**所有节点**执行以下操作：
 
@@ -100,16 +170,17 @@ Kubernetes（简称 K8s）是一个开源的容器编排引擎，用于自动部
 
     {% endnocopy %}
 
-3. **配置本地 Yum 源**
+5. **配置本地 Yum 源**
 
-    实验环境使用本地 ISO 镜像作为 Yum 源。将 `Chinaskill_Cloud_PaaS.iso` 上传至 **Master 节点**。
+    实验环境使用本地 ISO 镜像作为 Yum 源。将 `Chinaskill_Cloud_PaaS.iso`和`CentOS-7-x86_64-DVD-2009.iso` 上传至 **Master 节点**。
 
     **Master 节点配置（作为源服务器）：**
     {% nocopy %}
 
     ```bash
-    # 挂载 ISO 镜像到 /mnt
+    # 挂载 ISO 镜像到 /mnt和/media
     [root@master ~]# mount -o loop chinaskills_cloud_paas.iso /mnt/
+    [root@master ~]# mount -o loop CentOS-7-x86_64-DVD-2009.iso /media/
     # 将镜像内容复制到本地目录 /opt
     [root@master ~]# cp -rfv /mnt/* /opt/
     # 卸载镜像
@@ -118,13 +189,17 @@ Kubernetes（简称 K8s）是一个开源的容器编排引擎，用于自动部
     # 备份系统自带的 Yum 源配置文件
     [root@master ~]# mv /etc/yum.repos.d/CentOS-* /home
     # 创建指向本地目录的 Yum 源配置文件
-    [root@master ~]# cat << EOF >/etc/yum.repos.d/local.repo
+    [root@master ~]# vi /etc/yum.repos.d/local.repo
+    [centos]
+    name=k8s
+    baseurl=file:///opt/kubernetes-repo
+    gpgcheck=0
+    enabled=1
     [k8s]
     name=k8s
     baseurl=file:///opt/kubernetes-repo
     gpgcheck=0
     enabled=1
-    EOF
     
     # 安装 FTP 服务以便为其他节点提供 Yum 源
     [root@master ~]# yum install -y vsftpd
