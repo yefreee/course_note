@@ -251,6 +251,8 @@ Harbor 用于存储我们后续所需的 K8s 系统镜像。
 1. **运行harbor部署脚本**
 
     ```bash
+    # 如果前面重启过虚拟机，要重新挂载 ISO 镜像再执行脚本
+    [root@master ~]# mount -o loop CentOS-7-x86_64-DVD-2009.iso /media/
     [root@master ~]# cd /opt
     [root@master opt]# ./k8s_harbor_install.sh
     ```
@@ -291,6 +293,8 @@ Harbor 用于存储我们后续所需的 K8s 系统镜像。
 1. **运行master节点部署脚本**
 
     ```bash
+    # 如果前面重启过虚拟机，要重新挂载 ISO 镜像
+    [root@master ~]# mount -o loop CentOS-7-x86_64-DVD-2009.iso /media/
     [root@master ~]# cd /opt
     [root@master opt]# ./k8s_master_install.sh
     ```
@@ -558,7 +562,7 @@ Harbor 用于存储我们后续所需的 K8s 系统镜像。
     * 重新创建两个deployment:
 
         ```bash
-        [root@master ~]# kubectl apply -f mysq-persistent.yaml
+        [root@master ~]# kubectl apply -f mysql-persistent.yaml
         deployment.apps/mysql created
         [root@master ~]# kubectl apply -f wordpress-persistent.yaml
         deployment.apps/wordpress created
@@ -691,3 +695,13 @@ spec:
 * **Readiness Probe**：实现了“**故障隔离**”。当一个 Pod 出问题时，迅速将其从服务列表中剔除，由另一个 Pod 顶上。
 * **Liveness Probe**：实现了“**自我修复**”。通过重启容器，配合 `postStart` 或镜像初始环境，让 Pod 回到健康状态。
 * **非持久化路径的意义**：在实验中，使用非持久化路径（如 `/tmp`）可以确保重启后的容器是“干净”的，从而能够真正演示出从故障到自动恢复的完整闭环。
+
+## 常见问题排查
+
+1. 虚拟机重新过后，需要重建harbor，然后访问harbor首页验证能否正常启动：
+
+    ```bash
+    [root@master ~]# cd /opt/harbor/harbor
+    [root@master ~]# docker-compose down
+    [root@master ~]# docker-compose up -d 
+    ```
