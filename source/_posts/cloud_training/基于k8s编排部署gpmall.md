@@ -315,6 +315,35 @@ ZooKeeper 用于管理 Kafka 集群，Kafka 用于消息队列。
 
 编写并构建 `Dockerfile-nginx`：
 
+```bash
+[root@master gpmall]# cat Dockerfile-nginx
+FROM centos:centos7.5.1804
+MAINTAINER Chinaskill
+
+# 配置yum源
+ADD gpmall.tar /opt
+RUN rm -rfv /etc/yum.repos.d/*
+ADD local.repo /etc/yum.repos.d/
+
+RUN yum install -y cmake pcre pcre-devel openssl openssl-devel zlib-devel gcc gcc-c++ net-tools
+# 安装JDK
+RUN yum install -y java-1.8.0-openjdk java-1.8.0-openjdk-devel
+
+RUN yum install nginx -y
+RUN rm -rf /usr/share/nginx/html/*
+ADD dist.tar /usr/share/nginx/html/
+COPY default.conf /etc/nginx/conf.d/
+COPY gpmall-shopping-0.0.1-SNAPSHOT.jar /root
+COPY gpmall-user-0.0.1-SNAPSHOT.jar /root
+COPY shopping-provider-0.0.1-SNAPSHOT.jar /root
+COPY user-provider-0.0.1-SNAPSHOT.jar /root
+COPY front-start.sh /root
+RUN chmod +x /root/front-start.sh
+
+EXPOSE 80 443
+CMD nginx -g "daemon off;"
+```
+
 {% nocopy %}
 
 ```bash
