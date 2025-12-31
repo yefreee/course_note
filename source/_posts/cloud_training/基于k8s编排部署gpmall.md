@@ -55,8 +55,6 @@ GPMall 商城是一个典型的微服务架构应用，本实验为了简化教�
 ```bash
 [root@master ~]# tar -zxvf GPMall.tar.gz
 [root@master ~]# cd gpmall/
-[root@master gpmall]# ls
-dist.tar  Dockerfile-kafka  Dockerfile-mariadb  Dockerfile-nginx  Dockerfile-redis  Dockerfile-zookeeper ...
 ```
 
 {% endnocopy %}
@@ -186,12 +184,41 @@ ZooKeeper 用于管理 Kafka 集群，Kafka 用于消息队列。
 
 1. **构建 ZooKeeper 镜像**
 
+    ```bash
+    # 编辑 Dockerfile (略，主要涉及 JDK 安装和 ZK 解压配置)
+    [root@master gpmall]# cat Dockerfile-zookeeper
+    FROM centos:centos7.5.1804
+    MAINTAINER Chinaskill
+
+    # 配置yum源
+    ADD gpmall.tar /opt
+    RUN rm -rfv /etc/yum.repos.d/*
+    ADD local.repo /etc/yum.repos.d/
+
+    # 安装JDK
+    RUN yum install -y java-1.8.0-openjdk java-1.8.0-openjdk-devel
+
+    ENV work_path /usr/local
+
+    WORKDIR $work_path
+
+    # 安装ZooKeeper
+    ADD zookeeper-3.4.14.tar.gz /usr/local
+    ENV ZOOKEEPER_HOME /usr/local/zookeeper-3.4.14
+
+    # PATH
+    ENV PATH $PATH:$JAVA_HOME/bin:$JRE_HOME/bin:$ZOOKEEPER_HOME/bin
+    RUN cp $ZOOKEEPER_HOME/conf/zoo_sample.cfg $ZOOKEEPER_HOME/conf/zoo.cfg
+
+    EXPOSE 2181
+
+    # 设置开机自启
+    CMD $ZOOKEEPER_HOME/bin/zkServer.sh start-foreground
+    ```
+
     {% nocopy %}
 
     ```bash
-    # 查看 Dockerfile (略，主要涉及 JDK 安装和 ZK 解压配置)
-    [root@master gpmall]# cat Dockerfile-zookeeper
-    
     # 构建镜像
     [root@master gpmall]# docker build -t gpmall-zookeeper:v1.0 -f Dockerfile-zookeeper .
     ```
@@ -200,7 +227,37 @@ ZooKeeper 用于管理 Kafka 集群，Kafka 用于消息队列。
 
 2. **构建 Kafka 镜像**
 
-    Kafka 的 Dockerfile 中包含了一个启动脚本，用于动态替换配置文件中的 Zookeeper 连接地址。
+    ```bash
+    # 编辑 Dockerfile
+    [root@master gpmall]# cat Dockerfile-kafka
+    FROM centos:centos7.5.1804
+    MAINTAINER Chinaskill
+
+    # 配置yum源
+    ADD gpmall.tar /opt
+    RUN rm -rfv /etc/yum.repos.d/*
+    ADD local.repo /etc/yum.repos.d/
+
+    # 安装JDK
+    RUN yum install -y java-1.8.0-openjdk java-1.8.0-openjdk-devel
+
+    # 安装Kafka
+    RUN mkdir /opt/kafka
+    ADD kafka_2.11-1.1.1.tgz /opt/kafka
+    RUN sed -i 's/num.partitions.*$/num.partitions=3/g' /opt/kafka/kafka_2.11-1.1.1/config/server.properties
+
+    RUN echo "source /root/.bash_profile" > /opt/kafka/start.sh &&\
+        echo "cd /opt/kafka/kafka_2.11-1.1.1" >> /opt/kafka/start.sh &&\
+        echo "sed -i 's%zookeeper.connect=.*$%zookeeper.connect=zookeeper.mall:2181%g' /opt/kafka/kafka_2.11-1.1.1/config/server.properties" >> /opt/kafka/start.sh &&\
+        echo "bin/kafka-server-start.sh config/server.properties" >> /opt/kafka/start.sh &&\
+        chmod a+x /opt/kafka/start.sh
+
+    EXPOSE 9092
+
+    ENTRYPOINT ["sh", "/opt/kafka/start.sh"]
+    ```
+
+    > Kafka 的 Dockerfile 中包含了一个启动脚本，用于动态替换配置文件中的 Zookeeper 连接地址。
 
     {% nocopy %}
 
