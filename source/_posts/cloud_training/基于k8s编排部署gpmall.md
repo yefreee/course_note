@@ -1,5 +1,5 @@
 ---
-title: Kubernetes应用容器化部署
+title: 基于k8s编排部署gpmall
 date:  2023-12-02 14:20:00
 tags:
 ---
@@ -32,10 +32,9 @@ GPMall 商城是一个典型的微服务架构应用，本实验为了简化教�
 
 | 节点角色 | 主机名 | IP地址 | 说明 |
 | :--- | :--- | :--- | :--- |
-| **Master Node** | master | 10.24.2.156 | K8s 控制节点，兼 Harbor 仓库 |
-| **Worker Node** | node | 10.24.2.157 | K8s 工作节点 |
+| **Master Node** | master | 10.24.2.156 | K8s 控制节点，兼 工作节点 |
 
-> **注意**：本试验可使用k8sallinone的环境，请根据实际实验环境替换上述 IP 地址。
+> **注意**：请根据实际实验环境替换上述 IP 地址。
 
 **基础准备：**
 
@@ -53,18 +52,22 @@ GPMall 商城是一个典型的微服务架构应用，本实验为了简化教�
 {% nocopy %}
 
 ```bash
+# 部署k8s
+[root@master ~]# ./install.sh
 [root@master ~]# tar -zxvf GPMall.tar.gz
 [root@master ~]# cd gpmall/
+# 导入centos镜像
+[ root@master gpmall]# docker load -i centos-centos7.5.1804
 ```
 
 {% endnocopy %}
 
-查看并配置本地 Yum 源文件（用于容器内部安装软件）：
+创建本地 Yum 源文件（用于容器内部安装软件）：
 
 {% nocopy %}
 
 ```bash
-[root@master gpmall]# cat local.repo 
+[root@master gpmall]# vi local.repo 
 [gpmall]
 name=gpmall
 baseurl=file:///opt/gpmall
@@ -80,9 +83,10 @@ Redis 用于商城的缓存服务。
 
 1. **编写 Dockerfile**
 
-    查看 `Dockerfile-redis` 文件内容：
+    创建 `Dockerfile-redis` ：
 
-    ```dockerfile
+    ```bash
+    [root@master gpmall]# vi Dockerfile-redis
     FROM centos:centos7.5.1804
     MAINTAINER Guo
     
@@ -141,9 +145,10 @@ MariaDB 用于存储商城的用户和商品数据。
 
 2. **编写 Dockerfile**
 
-    查看 `Dockerfile-mariadb`：
+    创建 `Dockerfile-mariadb`：
 
-    ```dockerfile
+    ```bash
+    [root@master gpmall]# vi Dockerfile-mariadb
     FROM centos:centos7.5.1804
     MAINTAINER Chinaskill
     
@@ -186,7 +191,7 @@ ZooKeeper 用于管理 Kafka 集群，Kafka 用于消息队列。
 
     ```bash
     # 编辑 Dockerfile (略，主要涉及 JDK 安装和 ZK 解压配置)
-    [root@master gpmall]# cat Dockerfile-zookeeper
+    [root@master gpmall]# vi Dockerfile-zookeeper
     FROM centos:centos7.5.1804
     MAINTAINER Chinaskill
 
@@ -229,7 +234,7 @@ ZooKeeper 用于管理 Kafka 集群，Kafka 用于消息队列。
 
     ```bash
     # 编辑 Dockerfile
-    [root@master gpmall]# cat Dockerfile-kafka
+    [root@master gpmall]# vi Dockerfile-kafka
     FROM centos:centos7.5.1804
     MAINTAINER Chinaskill
 
@@ -316,7 +321,7 @@ ZooKeeper 用于管理 Kafka 集群，Kafka 用于消息队列。
 编写并构建 `Dockerfile-nginx`：
 
 ```bash
-[root@master gpmall]# cat Dockerfile-nginx
+[root@master gpmall]# vi Dockerfile-nginx
 FROM centos:centos7.5.1804
 MAINTAINER Chinaskill
 
@@ -356,23 +361,7 @@ CMD nginx -g "daemon off;"
 
 ## Kubernetes 编排部署
 
-### 1. 推送镜像至 Harbor
-
-为了让 K8s 集群的所有节点都能下载镜像，必须将构建好的本地镜像推送到 Harbor 私有仓库。
-
-{% nocopy %}
-
-```bash
-# 批量打标签并推送 (将 IP 10.24.2.156 替换为你的 Harbor 地址)
-[root@master gpmall]# for i in `docker images|grep gpmall|awk '{print$1":"$2}'`; do \
-    docker tag $i 10.24.2.156/library/$i; \
-    docker push 10.24.2.156/library/$i; \
-done
-```
-
-{% endnocopy %}
-
-### 2. 编写编排文件 (gpmall.yaml)
+### 编写编排文件 (gpmall.yaml)
 
 我们将创建一个名为 `chinaskill-mall` 的 Pod，其中包含上述 5 个容器。
 
@@ -394,35 +383,35 @@ spec:
   containers:
   # 1. 数据库容器
   - name: chinaskill-mariadb
-    image: 10.24.2.156/library/gpmall-mariadb:v1.0
+    image: gpmall-mariadb:v1.0
     imagePullPolicy: IfNotPresent
     ports:
     - containerPort: 3306
 
   # 2. Redis容器
   - name: chinaskill-redis
-    image: 10.24.2.156/library/gpmall-redis:v1.0
+    image: gpmall-redis:v1.0
     imagePullPolicy: IfNotPresent
     ports:
     - containerPort: 6379
 
   # 3. Zookeeper容器
   - name: chinaskill-zookeeper
-    image: 10.24.2.156/library/gpmall-zookeeper:v1.0
+    image: gpmall-zookeeper:v1.0
     imagePullPolicy: IfNotPresent
     ports:
     - containerPort: 2181
 
   # 4. Kafka容器
   - name: chinaskill-kafka
-    image: 10.24.2.156/library/gpmall-kafka:v1.0
+    image: gpmall-kafka:v1.0
     imagePullPolicy: IfNotPresent
     ports:
     - containerPort: 9092
 
   # 5. 前端与应用容器
   - name: chinaskill-nginx
-    image: 10.24.2.156/library/gpmall-nginx:v1.0
+    image: gpmall-nginx:v1.0
     imagePullPolicy: IfNotPresent
     ports:
     - containerPort: 80
@@ -454,7 +443,7 @@ spec:
   type: NodePort
 ```
 
-### 3. 部署与验证
+### 部署与验证
 
 1. **应用配置**
 
