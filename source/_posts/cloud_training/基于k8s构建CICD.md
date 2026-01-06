@@ -305,7 +305,7 @@ Harbor 用于存储我们后续所需的 K8s 系统镜像。
 ### 基础准备
 
 * 已部署双节点 Kubernetes 集群
-* 准备好离线安装包 `CICD_Offline.tar`。
+* 准备好离线安装包 `CICD_Offline.tar.gz`。
 
 ## 案例实施
 
@@ -327,7 +327,7 @@ Harbor 用于存储我们后续所需的 K8s 系统镜像。
 
 ```bash
 # 解压 CI/CD 离线安装包到 /opt 目录
-[root@master ~]# tar -zxvf CICD_Offline.tar -C /opt/
+[root@master ~]# tar -zxvf CICD_Offline.tar.gz -C /opt/
 
 # 导入 Jenkins 镜像到本地 Docker 仓库，供后续容器启动使用
 [root@master ~]# cd /opt/
@@ -340,6 +340,7 @@ Harbor 用于存储我们后续所需的 K8s 系统镜像。
 
 ```bash
 # 创建并进入 Jenkins 工作目录
+[root@master opt]# cd ~
 [root@master ~]# mkdir jenkins && cd jenkins
 
 # 编写 Docker Compose 编排文件
@@ -384,9 +385,12 @@ services:
 [root@master ~]# docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
 ```
 
-访问 `http://192.168.88.100:8080`，使用查看到的密码登录，并根据提示创建新用户。
+访问 `http://192.168.88.100:8080`，使用查看到的密码登录，依次选择“系统管理”、“管理用户”并根据提示创建新用户。
 
+<img src="https://lsky.taojie.fun:52222/i/2026/01/05/2026-01-05-1767581896.png" alt="1767581906095.png" title="1767581906095.png" />
 <img src="https://lsky.taojie.fun:52222/i/2026/01/03/2026-01-03-1767433525.png" alt="1767433534673.png" title="1767433534673.png" />
+
+> 退出admin用户，使用新用户登录！！！
 
 退出admin用户登录，使用新创建的用户登录，在“系统配置”中设置 Jenkins URL 为 `http://192.168.88.100:8080`。
 
@@ -482,13 +486,19 @@ services:
 
 #### Jenkins 对接配置
 
-在 Jenkins “系统管理” -> “系统配置” 中添加 GitLab 服务器信息，取消勾选“Enable authentication for '/project' end-point”，并使用上一步生成的 Token 创建凭据。点击 `Test Connection` 确认连接成功。
+在 Jenkins “系统管理” -> “系统配置” 中添加 GitLab 服务器信息，取消勾选“Enable authentication for '/project' end-point”。
 
 <img src="https://lsky.taojie.fun:52222/i/2026/01/03/2026-01-03-1767434293.png" alt="1767434303186.png" title="1767434303186.png" />
 
-<img src="https://lsky.taojie.fun:52222/i/2026/01/03/2026-01-03-1767434330.png" alt="1767434339601.png" title="1767434339601.png" />
+`Connection name`和`Gitlab host URL`分别设置为`springcloud`和`http://192.168.88.100:81`。
 
 <img src="https://lsky.taojie.fun:52222/i/2026/01/03/2026-01-03-1767434378.png" alt="1767434387638.png" title="1767434387638.png" />
+
+添加凭据，类型选择`GitLab API token`，粘贴上一步生成的 Token 创建凭据。选中创建的凭据、点击 `Test Connection` 确认连接成功。
+
+<img src="https://lsky.taojie.fun:52222/i/2026/01/03/2026-01-03-1767434330.png" alt="1767434339601.png" title="1767434339601.png" />
+
+<img src="https://lsky.taojie.fun:52222/i/2026/01/05/2026-01-05-1767582398.png" alt="1767582407720.png" title="1767582407720.png" />
 
 ### 配置 Maven 构建环境
 
@@ -505,7 +515,7 @@ services:
 [root@344d4fa5b8ea /]# tar -zxvf /var/jenkins_home/apache-maven-3.6.3-bin.tar.gz -C .
 # 移动并重命名 Maven 目录
 [root@344d4fa5b8ea /]# mv apache-maven-3.6.3/ /usr/local/maven
-# 配置系统环境变量
+# 文件最后添加，配置系统环境变量
 [root@344d4fa5b8ea /]# vi /etc/profile
 export M2_HOME=/usr/local/maven
 export PATH=$PATH:$M2_HOME/bin
@@ -545,7 +555,7 @@ source /etc/profile
 
 #### 编写 Pipeline 脚本
 
-配置流水线：
+切换到流水线页面：
 
 <img src="https://lsky.taojie.fun:52222/i/2026/01/03/2026-01-03-1767445021.png" alt="1767445031238.png" title="1767445031238.png" />
 
@@ -559,13 +569,13 @@ source /etc/profile
 
 添加凭据后选择凭据：
 
-<img src="https://lsky.taojie.fun:52222/i/2026/01/03/2026-01-03-1767445133.png" alt="1767445144545.png" title="1767445144545.png" />
+<img src="https://lsky.taojie.fun:52222/i/2026/01/05/2026-01-05-1767585075.png" alt="1767585085058.png" title="1767585085058.png" />
 
-点击“生成流水线脚本”，记录生成的值：
+点击“生成流水线脚本”，记录生成的第一个单引号内的字符串：
 
-<img src="https://lsky.taojie.fun:52222/i/2026/01/03/2026-01-03-1767445188.png" alt="1767445198119.png" title="1767445198119.png" />
+<img src="https://lsky.taojie.fun:52222/i/2026/01/05/2026-01-05-1767582721.png" alt="1767582731153.png" title="1767582731153.png" />
 
-在流水线配置中输入以下脚本，其中**`gitlab-auth-id`**为上图生成的凭据ID：
+在流水线配置中输入以下脚本，其中`gitlab-auth-id`为上图生成的凭据ID：
 
 ```groovy
 node{
@@ -665,7 +675,9 @@ node{
 # 重启 Jenkins 使配置生效
 [root@master ~]# docker restart jenkins
 
+# 等两分钟，确认jenkins重启完成后再执行下一步
 # 在 Master 节点提交代码，触发 GitLab Webhook 自动调用 Jenkins 流水线
+[root@master ~]# cd /opt/springcloud
 [root@master springcloud]# git add .
 [root@master springcloud]# git commit -m "trigger build"
 [root@master springcloud]# git push -u origin master
