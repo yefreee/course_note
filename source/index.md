@@ -18,3 +18,4 @@ tags:
 1. {% post_link linux_shell/9.流编辑器sed %}  
 1. {% post_link linux_shell/10.文本处理工具awk %}  
 1. {% post_link linux_shell/11.监控脚本构建-监控脚本框架与基础运行环境检测 %}  
+1. {% post_link linux_shell/12.监控脚本构建-交互式菜单与存储资源监控 %}  
