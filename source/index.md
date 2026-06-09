@@ -20,3 +20,5 @@ tags:
 1. {% post_link linux_shell/11.监控脚本构建-监控脚本框架与基础运行环境检测 %}  
 1. {% post_link linux_shell/12.监控脚本构建-交互式菜单与存储资源监控 %}  
 1. {% post_link linux_shell/13.监控脚本构建-内存、存储与流量监控 %}  
+1. {% post_link linux_shell/14.多机部署MySQL %}  
+
