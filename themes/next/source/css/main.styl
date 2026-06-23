@@ -70,3 +70,13 @@ for $inject_style in hexo-config('injects.style')
     font-size: 18px; // 确保内部 code 标签也同步缩放
   }
 }
+.course-markdown-container {
+    display: block;
+}
+@media (min-width: 768px) {
+    .course-markdown-container {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0 40px;
+    }
+}
