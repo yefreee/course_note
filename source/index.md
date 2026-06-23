@@ -28,7 +28,7 @@ tags:
 
 </div>
 
-<div>
+<!-- <div>
 
 ## 私有云服务架构与运维-64课时
 
@@ -46,6 +46,6 @@ tags:
 1. {% post_link private_clouds/12.OpenStack计量服务 %}
 1. {% post_link private_clouds/13.OpenStack运维案例 %}
 
-</div>
+</div> -->
 
 </div>
