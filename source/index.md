@@ -7,6 +7,8 @@ tags:
 
 <div class="course-markdown-container">
 
+<div>
+
 ## Linux Shell编程-48课时
 
 1. {% post_link linux_shell/1.Shell初识、编辑器的使用 %}
@@ -24,6 +26,10 @@ tags:
 1. {% post_link linux_shell/13.监控脚本构建-内存、存储与流量监控 %}
 1. {% post_link linux_shell/14.多机部署MySQL %}
 
+</div>
+
+<div>
+
 ## 私有云服务架构与运维-64课时
 
 1. {% post_link private_clouds/1.云计算与OpenStack %}
@@ -39,5 +45,7 @@ tags:
 1. {% post_link private_clouds/11.OpenStack编排服务 %}
 1. {% post_link private_clouds/12.OpenStack计量服务 %}
 1. {% post_link private_clouds/13.OpenStack运维案例 %}
+
+</div>
 
 </div>
